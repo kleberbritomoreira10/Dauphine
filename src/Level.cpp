@@ -90,6 +90,7 @@ Level::~Level()
 void Level::changeCheckpoints( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpointsX_,
 		std::vector <double> checkpointsY_ )
 {
+  // Updating the position of checkpoint.
 	this -> checkpointsX = checkpointsX_;
 	this -> checkpointsY = checkpointsY_;
 	this -> NUMBER_OF_CHECKPOINTS = NUMBER_OF_CHECKPOINTS_;
@@ -212,6 +213,7 @@ void Level::clearEnemies()
 */
 void Level::clearDocuments()
 {
+  // Empting documents.
 	for( auto document : this -> documents )
 	{
 		delete document;

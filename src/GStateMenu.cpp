@@ -81,10 +81,12 @@ void GStateMenu::load()
 
 	Game::instance().getAudioHandler().changeMusic("res/audio/menu.mid");
 
+	// Getting information from lua script.
 	LuaScript luaMenu("lua/Menu.lua");
 	const std::string pathTitleScreen = luaMenu.unlua_get<std::string>("menu.images.titleScreen");
 	const std::string pathCursor = luaMenu.unlua_get<std::string>("menu.images.cursor");
 
+	// Load the configurations used in menu.
     this -> menuImage = Game::instance().getResources().get( pathTitleScreen );
     this -> menuSelector = Game::instance().getResources().get( pathCursor );
     this -> attractModeBg = Game::instance().getResources().get("res/images/title_background.png");
@@ -102,6 +104,7 @@ void GStateMenu::load()
 */
 void GStateMenu::unload()
 {
+	// Exiting of the menu and cleaning its entities.
 	Log( DEBUG ) << "\tUnloading menu...";
 	this -> attractClip.y = 0;
 	cleanEntities();
@@ -131,8 +134,9 @@ void GStateMenu::update( const double dt_ )
   // Changing the menu state showing the animation and gettint out for there.
 	if( this -> shwingIsActivated )
 	{
-		 this -> shwingAnimation -> changeAnimation( 0, 0, 12, false, 2 );
-		 this -> shwingIsActivated = false;
+		// Showing animation for actived state.
+		this -> shwingAnimation -> changeAnimation( 0, 0, 12, false, 2 );
+		this -> shwingIsActivated = false;
 	}
 
 }
@@ -165,6 +169,7 @@ void GStateMenu::render()
     // Checking if the time rendering the menu is higher than 75 seconds.    
 		if( this -> passedTime > 75 )
 		{
+      // Zering the passed time and attract for clip in axis y.
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 		}
@@ -177,6 +182,7 @@ void GStateMenu::render()
     // Checking if the image of menu is not null.    
 		if( this -> menuImage != nullptr )
 		{
+      // Setting and rendering the menu image when it is not null.
 			this -> menuImage -> render( 0, 0, nullptr, true );
 
 			this -> menuSelector -> setWidth( 50 );
@@ -214,6 +220,7 @@ void GStateMenu::handleSelectorMenu()
     // Configuring when the update is prohibited.
 		if( shouldIgnore )
 		{
+      // Zering the passed time and attract for clip in axis y.      
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
@@ -231,8 +238,9 @@ void GStateMenu::handleSelectorMenu()
 			else
 			{
 				currentSelection = Selection::NEWGAME;
-			}
-			
+      }
+      
+      // Zering the passed time and attract for clip in axis y.			
 			this->passedTime = 0.0;
 			this->attractClip.y = 0;
 		}
@@ -244,6 +252,7 @@ void GStateMenu::handleSelectorMenu()
     // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
+      // Zering the passed time and attract for clip in axis y.      
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
@@ -261,7 +270,8 @@ void GStateMenu::handleSelectorMenu()
 			else
 			{
 				currentSelection = ( Selection::TOTAL - 1 );
-			}
+      }
+      // Zering the passed time and attract for clip in axis y.      
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 		}
@@ -273,12 +283,14 @@ void GStateMenu::handleSelectorMenu()
     // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
+      // Zering the passed time and attract for clip in axis y.      
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
+    // Zering the passed time and attract for clip in axis y.    
 		Game::instance().setState(Game::GStates::NEW_GAME);
 		this -> passedTime = 0.0;
 		this -> attractClip.y = 0;
@@ -290,12 +302,14 @@ void GStateMenu::handleSelectorMenu()
     // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
+      // Zering the passed time and attract for clip in axis y.      
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
+    // Zering the passed time and attract for clip in axis y.    
 		Game::instance().setState( Game::GStates::CONTINUE );
 		this -> passedTime = 0.0;
 		this -> attractClip.y = 0;
@@ -307,12 +321,14 @@ void GStateMenu::handleSelectorMenu()
     // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
+      // Zering the passed time and attract for clip in axis y.      
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
+    // Zering the passed time and attract for clip in axis y.    
 		Game::instance().setState( Game::GStates::OPTIONS );
 		this -> passedTime = 0.0;
 		this -> attractClip.y = 0;
@@ -324,12 +340,14 @@ void GStateMenu::handleSelectorMenu()
     // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
+      // Zering the passed time and attract for clip in axis y.      
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
-		}
-
+    }
+    
+    // Zering the passed time and attract for clip in axis y.
 		Game::instance().setState( Game::GStates::CREDITS );
 		this -> passedTime = 0.0;
 		this -> attractClip.y = 0;

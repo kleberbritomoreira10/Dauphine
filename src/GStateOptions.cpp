@@ -51,6 +51,7 @@ GStateOptions::GStateOptions() :
 	volumeMusic( nullptr ),
 	volumeSFX( nullptr )	
 {
+	// Adding the init usability settings.
 	this -> resolution = new Text( 830.0, 365.0, "res/fonts/maturasc.ttf", 45, \
 		possibleResolutions[currentResolution].c_str() );
 	this -> volumeMusic = new Text( 830.0, 468.0, "res/fonts/maturasc.ttf", 45, \
@@ -93,6 +94,7 @@ void GStateOptions::update( const double dt_ )
 {
 	this -> elapsedTime += dt_;
 
+	// Adding the gamer experience settings.	
 	this -> resolution -> changeText( possibleResolutions[ currentResolution ].c_str() );
 	this -> volumeMusic -> changeText( Util::toString( this -> musicVolume).c_str() );
 	this -> volumeSFX -> changeText( Util::toString( this -> sfxVolume ).c_str() );
@@ -254,6 +256,7 @@ void GStateOptions::update( const double dt_ )
 	if( keyStates[ GameKeys::SPACE ] == true && this -> currentOption == O_RETURN )
 	{
 		Game::instance().setState( Game::GStates::MENU );
+	// Adding the init usability settings.
 	}
 }
 
@@ -274,6 +277,7 @@ void GStateOptions::render()
 		Log( WARN ) << "No image set for the options screen!";
 	}
 
+	// Emptying gamer experience settings.	
 	this -> resolution -> render( 0, 0 );
 	this -> volumeMusic -> render( 0, 0 );
 	this -> volumeSFX -> render( 0, 0 );
@@ -303,10 +307,12 @@ void GStateOptions::load()
 {
 	Log( DEBUG ) << "Loading options...";
 
+	// Render lua settings.
 	LuaScript luaOptions("lua/Options.lua");
 	const std::string pathOptions = luaOptions.unlua_get<std::string>("options.images.dummy");
 	const std::string pathCursor = luaOptions.unlua_get<std::string>("options.images.cursor");
 
+	// Configuring resolution.	
 	this -> currentResolution = R_960_540;
 	this -> currentOption = O_RESOLUTION;
 	

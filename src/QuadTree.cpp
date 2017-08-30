@@ -54,6 +54,7 @@ void QuadTree::clear()
 		// Deleting the nodes of the vector.
 		if( this -> nodes[ i ] != nullptr)
 		{
+			// Clearing the nodes of the tree.
 			this -> nodes[ i ] -> clear();
 			this -> nodes[ i ] = nullptr;
 		}
@@ -70,11 +71,13 @@ void QuadTree::split()
 	const int x = this -> bounds.x;
 	const int y = this -> bounds.y;
 
+	// Configuring sdl objects;
 	SDL_Rect rect0 = { x + subWidth, y, subWidth, subHeight };
 	SDL_Rect rect1 = { x, y, subWidth, subHeight };
 	SDL_Rect rect2 = { x, y + subHeight, subWidth, subHeight };
 	SDL_Rect rect3 = { x + subWidth, y + subHeight, subWidth, subHeight };
 
+	// Setting the initial nodes of the tree.
 	this -> nodes[ 0 ] = new QuadTree( this -> level+1, rect0 );
 	this -> nodes[ 1 ] = new QuadTree( this -> level+1, rect1 );
 	this -> nodes[ 2 ] = new QuadTree(this -> level+1, rect2 );
@@ -166,6 +169,7 @@ void QuadTree::insert( CollisionRect rect_ ){
 			// Verifying if the value of index is different of one negative.			
 			if( index != -1 )
 			{
+				// Define the comportament when ocurres a collision.
 				CollisionRect moveRect = this -> objects.at( i );
 				this -> objects.erase( this -> objects.begin() + i );
 				nodes[ index ] -> insert( moveRect );

@@ -21,6 +21,7 @@ void PStateClimbing::enter()
 
 	this -> player -> isClimbing = true;
 	
+	// Define the characteristcs of the climbing movement.
    	this -> box.x = 58;
     this -> box.y = 72;
     this -> box.w = 130;
@@ -49,6 +50,7 @@ void PStateClimbing::enter()
 */
 void PStateClimbing::exit()
 {
+	// Define the characteristcs to exiting of the climbing movement.	
 	this -> player -> isClimbing = false;
 	isMoving = false;
 }
@@ -100,6 +102,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 	// Verifying if the player is climbing.	
 	if( !this -> player -> isClimbing)
 	{
+		// Define the change of state of the player when it is climbing.		
 		this -> player -> vy = -1000;
 		this -> player -> changeState( Player::PStates::AERIAL );
 		return;

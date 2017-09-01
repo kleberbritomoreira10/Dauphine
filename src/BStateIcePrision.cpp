@@ -20,7 +20,7 @@ double prisionTime = 0.0;
 */
 void BStateIcePrision::enter()
 {
-  // Log(DEBUG) << "STATE ICE PRISION BOSS";
+  // Define the animation and attributes for the boss when it entering in the ie prision state.
   this -> boss -> power = Game::instance().getResources().get("res/images/ice_prision.png");
   this -> boss -> powerAnimation -> changeWidthHeight( 340,1020 );
   this -> boss -> powerAnimation -> changeAnimation( 0, 0, 2, false, 0.5 );
@@ -37,6 +37,7 @@ void BStateIcePrision::enter()
 */
 void BStateIcePrision::exit()
 {
+  // Define the movements for the exiting of the state of ice prision to the boss.
   this -> boss -> powerIsActivated = false;
   this -> boss -> player -> isVulnerable = true;
   this -> boss -> powerAnimation -> changeAnimation( 0, 0, 1, false, 0 );
@@ -63,6 +64,7 @@ void BStateIcePrision::update( const double dt_ )
       // Applying updates in ice prision for boss
       if( this -> boss -> player -> isVulnerable)
       {
+          // The update of attributes for when the boss enter or exit of ice prision.
           this -> boss -> player -> canMove = false;
           this -> boss -> player -> isVulnerable = false;
           this -> boss -> player -> vx = 0;

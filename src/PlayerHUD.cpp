@@ -45,6 +45,7 @@ PlayerHUD::~PlayerHUD()
 	// Deleting the potions in left.
 	if( this -> potionsLeft != nullptr)
 	{
+		// Clearing the potions in the left.
 		delete this -> potionsLeft;
 		this -> potionsLeft = nullptr;
 	}
@@ -109,6 +110,7 @@ void PlayerHUD::render()
 */
 void PlayerHUD::initializeSprites()
 {
+	// Define the sprits of player in the diferents states.
 	this -> playerHudSprites[ 0 ] = Game::instance().getResources().get("res/images/hud/health_0.png");
 	this -> playerHudSprites[ 1 ] = Game::instance().getResources().get("res/images/hud/health_33.png");
 	this -> playerHudSprites[ 2 ] = Game::instance().getResources().get("res/images/hud/health_66.png");

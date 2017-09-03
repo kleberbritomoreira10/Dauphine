@@ -53,6 +53,7 @@ SDL_Rect& Camera::getClip()
 */
 void Camera::updatePosition()
 {
+  // Define the axis y and axis x for clip position.
   this -> clip.x = ( this -> entity -> x + this -> entity -> getWidth() / 2 ) - ( this -> clip.w / 2 );
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );
 
@@ -94,6 +95,7 @@ void Camera::centralizeOn(Entity* const entity_)
 */
 void Camera::setLevelWH( const unsigned int width_, const unsigned int height_ )
 {
+  // Seting the width and height for the camera.
   this -> levelW = width_;
   this -> levelH = height_;
 }

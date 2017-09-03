@@ -15,6 +15,7 @@
 */
 void BStateShield::enter()
 {
+	// Define settings when the boss enter in the shield state.
 	Log( DEBUG ) << "STATE SHIELD BOSS";
 	this -> boss -> getAnimation() -> changeAnimation( 0, 0, 1, false, 0 );
 	this->boss->hasShield = true;

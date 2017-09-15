@@ -4,6 +4,7 @@
  * @BStateIcePrision.cpp
  * The state of the ice prision of the boss.
  * Class that controll the ice prision of the boss.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "BStateIcePrision.h"

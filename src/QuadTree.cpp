@@ -4,6 +4,7 @@
  * @QuadTree.cpp
  * The control of the trees in the game.
  * Class that controll the tree movements of the game.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "QuadTree.h"

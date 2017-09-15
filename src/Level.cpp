@@ -4,6 +4,7 @@
  * @Level.cpp
  * The levels of the game.
  * Class that controll the levels of the game.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "Level.h"

@@ -4,6 +4,7 @@
  * @PStateClimbing.cpp
  * The state of the climbing of the player.
  * Class that controll the climbing of the player.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "PStateClimbing.h"

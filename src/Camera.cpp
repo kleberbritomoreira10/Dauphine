@@ -4,6 +4,7 @@
  * @Camera.cpp
  * The state of the Camera of the game.
  * Class that controll the camera of the game.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "Camera.h"

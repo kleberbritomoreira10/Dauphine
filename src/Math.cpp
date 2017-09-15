@@ -4,6 +4,7 @@
  * @Math.cpp
  * The math operations of the game.
  * Class that do the math operations in the game.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "Math.h"

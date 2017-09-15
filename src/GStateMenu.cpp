@@ -4,6 +4,7 @@
  * @GStateMenu.cpp
  * The control of state of the menu of the game.
  * Class that controll the state of menu of the game.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "GStateMenu.h"

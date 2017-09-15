@@ -4,6 +4,7 @@
  * @PStateAerial.cpp
  * The state of the aerial postions of the player.
  * Class that controll the aerial states of the player.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "PStateAerial.h"

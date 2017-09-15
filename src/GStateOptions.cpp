@@ -4,6 +4,7 @@
  * @GStateOptions.cpp
  * The control of state of the options of the game.
  * Class that controll the state of options of the game.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "GStateOptions.h"

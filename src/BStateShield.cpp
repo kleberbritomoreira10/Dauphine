@@ -4,6 +4,7 @@
  * @BStateShield.cpp
  * The state of the shield of the boss.
  * Class that controll the shield of the boss.
+ * License: Copyright (C) 2014 Alke Games.
 */
 
 #include "BStateShield.h"

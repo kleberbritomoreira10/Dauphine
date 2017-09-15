@@ -11,9 +11,9 @@
 #include "Collision.h"
 #include "Logger.h"
 
-double tptime = 0;
-double pX = 0;
-double pY = 0;
+double tptime = 0; // Teleport time that tetermines the behavior of the boss.
+double pX = 0; // X-axis position.
+double pY = 0; // Y-axis position.
 int powerCollisionWidth = 0;
 int powerCollisionHeight = 0;
 int offset = 33;

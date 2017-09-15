@@ -69,17 +69,17 @@ class GStateNewGame : public StateGame
 
 		};
 
-		Sprite *background; /**< Background image. */
-		Sprite *selector; /**< Image for the slot selector. */
-		double passedTime; /**< The time already elapsed since the beggining of the menu. */
+		Sprite *background; // Background image.
+		Sprite *selector; // Image for the slot selector.
+		double passedTime; // The time already elapsed since the beggining of the menu.
 
 		int currentSelection;
-		int selectorXPosition; /**< The X position of the slot selector. */
-		int selectorYPosition [ Selection::TOTAL ]; /**< The Y position of the slot selector. */
+		int selectorXPosition; // The X position of the slot selector.
+		int selectorYPosition [ Selection::TOTAL ]; // The Y position of the slot selector.
 
-		Text *slot1;
-		Text *slot2;
-		Text *slot3;
+		Text *slot1; // Reference to slot 1 text and font
+		Text *slot2; // Reference to slot 2 text and font
+		Text *slot3; // Reference to slot 3 text and font
 };
 
 #endif // INCLUDE_GSTATEMENU_H

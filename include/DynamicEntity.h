@@ -62,21 +62,21 @@ class DynamicEntity : public Entity
 		*/
 		virtual void setLevelWH ( const unsigned int width_, const unsigned int height_ );
 
-		double vx; /**< The dynamic entity's speed on the x axis. */
-		double vy; /**< The dynamic entity's speed on the y axis. */
-		double speed; /**< Speed that moves dynamic entity on input. */
-		double maxSpeed; /**< Dynamic entity max speed. */
-		bool isGrounded; /**< Check for if the dynamic entity is on the ground. */
-		double nextX;
-		double nextY;
-		bool reachedLevelEnd;
+		double vx; // The dynamic entity's speed on the x axis.
+		double vy; // The dynamic entity's speed on the y axis.
+		double speed; // Speed that moves dynamic entity on input.
+		double maxSpeed; // Dynamic entity max speed.
+		bool isGrounded; // Check for if the dynamic entity is on the ground.
+		double nextX; // Used to update next position on x-axis.
+		double nextY; // Used to update next position on y-axis.
+		bool reachedLevelEnd; // Boolean value to evaluate the level end.
 
 	    bool activated;
 	    int strength;
 	    int distance;
 	    double flightTime;
 
-	    bool isClimbing;
+	    bool isClimbing; // Boolean value evaluate the character's climbing condition
 
 	protected:
 		/**
@@ -103,8 +103,8 @@ class DynamicEntity : public Entity
 
 		virtual void updateBoundingBox () = 0;
 
-		unsigned int levelW; /**< The width of the level. */
-		unsigned int levelH; /**< The height of the level. */
+		unsigned int levelW; // The width of the level.
+		unsigned int levelH; // The height of the level.
 
 };
 

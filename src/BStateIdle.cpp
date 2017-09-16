@@ -1,17 +1,17 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @BStateIdle.cpp
- * The state of the idle of the boss.
- * Class that controll the idle of the boss.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @BStateIdle.cpp
+* The state of the idle of the boss.
+* Class that controll the idle of the boss.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "BStateIdle.h"
 #include "Logger.h"
 
 /**
- * Shows the animation of the boss entering in idle.
+* Shows the animation of the boss entering in idle.
 */
 void BStateIdle::enter()
 {
@@ -20,7 +20,7 @@ void BStateIdle::enter()
 }
 
 /**
- * Ends with idleness of the boss.
+* Ends with idleness of the boss.
 */
 void BStateIdle::exit()
 {
@@ -28,7 +28,7 @@ void BStateIdle::exit()
 }
 
 /**
- * Changing the static position of the boss in idle.
+* Changing the static position of the boss in idle.
 */
 void BStateIdle::update( const double dt_ )
 {
@@ -60,8 +60,8 @@ void BStateIdle::update( const double dt_ )
 }
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 BStateIdle::BStateIdle( Boss* const boss_ ) :
 	StateBoss( boss_ )

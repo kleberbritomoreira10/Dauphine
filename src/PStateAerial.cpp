@@ -1,10 +1,10 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @PStateAerial.cpp
- * The state of the aerial postions of the player.
- * Class that controll the aerial states of the player.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @PStateAerial.cpp
+* The state of the aerial postions of the player.
+* Class that controll the aerial states of the player.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "PStateAerial.h"
@@ -12,7 +12,7 @@
 #include "Game.h"
 
 /**
- * Shows the animation of the player entering in aerial state.
+* Shows the animation of the player entering in aerial state.
 */
 void PStateAerial::enter()
 {
@@ -28,7 +28,7 @@ void PStateAerial::enter()
 }
 
 /**
- * Ends with the aerial state of the player.
+* Ends with the aerial state of the player.
 */
 void PStateAerial::exit()
 {
@@ -36,8 +36,8 @@ void PStateAerial::exit()
 }
 
 /**
- * Controlls the input for player entering in aerial mode.
- * @param keyStates_: Array with frames of player positions.
+* Controlls the input for player entering in aerial mode.
+* @param keyStates_: Array with frames of player positions.
 */
 void PStateAerial::handleInput( const std::array<bool, GameKeys::MAX> keyStates_ )
 {
@@ -63,8 +63,8 @@ void PStateAerial::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
 }
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 PStateAerial::PStateAerial( Player* const player_ ) :
 	StatePlayer( player_ )

@@ -1,18 +1,18 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @Camera.cpp
- * The state of the Camera of the game.
- * Class that controll the camera of the game.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @Camera.cpp
+* The state of the Camera of the game.
+* Class that controll the camera of the game.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "Camera.h"
 #include "Configuration.h"
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 Camera::Camera( Entity* const entity_ ):
   entity( entity_ ),
@@ -24,7 +24,7 @@ Camera::Camera( Entity* const entity_ ):
 }
 
 /**
- * The destructor.
+* The destructor.
 */
 Camera::~Camera()
 {
@@ -32,7 +32,7 @@ Camera::~Camera()
 }
 
 /**
- * Changing the camera position in the game.
+* Changing the camera position in the game.
 */
 void Camera::update()
 {
@@ -45,7 +45,7 @@ SDL_Rect& Camera::getClip()
 }
 
 /**
- * Changing the camera position in the game.
+* Changing the camera position in the game.
 */
 void Camera::updatePosition()
 {
@@ -75,8 +75,8 @@ void Camera::updatePosition()
 }
 
 /**
- * Changing the camera position in the game for the center.
- * @param entity_: Character of the game that will be in the center.
+* Changing the camera position in the game for the center.
+* @param entity_: Character of the game that will be in the center.
 */
 void Camera::centralizeOn(Entity* const entity_)
 {
@@ -84,9 +84,9 @@ void Camera::centralizeOn(Entity* const entity_)
 }
 
 /**
- * Changing the camera position in the game based in configured width and height.
- * @param width__: Width will be configured in the camera.
- * @param height_: Height will be configured in the camera.
+* Changing the camera position in the game based in configured width and height.
+* @param width__: Width will be configured in the camera.
+* @param height_: Height will be configured in the camera.
 */
 void Camera::setLevelWH( const unsigned int width_, const unsigned int height_ )
 {

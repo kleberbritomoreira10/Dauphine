@@ -1,10 +1,10 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @GStateOptions.cpp
- * The control of state of the options of the game.
- * Class that controll the state of options of the game.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @GStateOptions.cpp
+* The control of state of the options of the game.
+* Class that controll the state of options of the game.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "GStateOptions.h"
@@ -18,8 +18,8 @@
 const std::string GStateOptions::possibleResolutions[3] = {"800x600", "768x432", "960x540"};
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 GStateOptions::GStateOptions() :
 	elapsedTime( 0.0 ),
@@ -46,7 +46,7 @@ GStateOptions::GStateOptions() :
 }
 
 /**
- * The destructor.
+* The destructor.
 */
 GStateOptions::~GStateOptions()
 {
@@ -70,7 +70,7 @@ GStateOptions::~GStateOptions()
 }
 
 /**
- * Changing the state for options of the game.
+* Changing the state for options of the game.
 */
 void GStateOptions::update( const double dt_ )
 {
@@ -211,7 +211,7 @@ void GStateOptions::update( const double dt_ )
 }
 
 /**
- * Showing the options of the game.
+* Showing the options of the game.
 */
 void GStateOptions::render()
 {
@@ -244,7 +244,7 @@ void GStateOptions::render()
 }
 
 /**
- * Load the options of the game.
+* Load the options of the game.
 */
 void GStateOptions::load()
 {
@@ -264,7 +264,7 @@ void GStateOptions::load()
 }
 
 /**
- * Unloading the game options and cleaning the display.
+* Unloading the game options and cleaning the display.
 */
 void GStateOptions::unload()
 {
@@ -273,7 +273,7 @@ void GStateOptions::unload()
 }
 
 /**
- * Applying the options in the game.
+* Applying the options in the game.
 */
 void GStateOptions::applyOptions()
 {

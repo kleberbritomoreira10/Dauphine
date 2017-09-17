@@ -46,6 +46,8 @@ void BStateIcePrision::exit()
 
 /**
 * Changing the position of the boss in ice prision.
+* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+*   of processing speed.
 */
 void BStateIcePrision::update( const double dt_ )
 {

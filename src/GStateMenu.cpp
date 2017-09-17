@@ -92,6 +92,8 @@ void GStateMenu::unload()
 
 /**
 * Changing the state menu of the game.
+* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* 	of processing speed.
 */
 void GStateMenu::update( const double dt_ )
 {

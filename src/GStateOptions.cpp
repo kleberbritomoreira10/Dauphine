@@ -71,6 +71,8 @@ GStateOptions::~GStateOptions()
 
 /**
 * Changing the state for options of the game.
+* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* 	of processing speed.
 */
 void GStateOptions::update( const double dt_ )
 {

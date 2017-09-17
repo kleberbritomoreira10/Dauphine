@@ -30,6 +30,8 @@ void BStateShield::exit()
 
 /**
 * Changing the state of the boss shield.
+* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+*   of processing speed.
 */
 void BStateShield::update( const double dt_ )
 {

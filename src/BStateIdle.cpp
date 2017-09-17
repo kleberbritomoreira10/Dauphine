@@ -29,6 +29,8 @@ void BStateIdle::exit()
 
 /**
 * Changing the static position of the boss in idle.
+* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+*   of processing speed.
 */
 void BStateIdle::update( const double dt_ )
 {

@@ -14,6 +14,18 @@
 /**
 * The constructor.
 * Initializes the attributes.
+* @param width : Used for manage the breadth of the level to the game.
+* @param height : Used for manage the stature of the level to the game.
+* @param player : Used for manage the player in the differents levels of the game.
+* @param camera : Used for manage the camera in the differents levels of the game.
+* @param tileMap : Used for the attribute the name of the map of the level.
+* @param quadTree : Manage the trees of the game in levels.
+* @param background : Used for manipulate the background of the level of the game.
+* @param backgroundTop : Used for manipulate the background of the top in the level of the game.
+* @param checkpointsX : The position in the axis x to the checkpoint.
+* @param checkpointsY : The position in the axis y to the checkpoint.
+* @param checkpointsVisited: Analyzes if the checkpoint is visited or not.
+* @param NUMBER_OF_CHECKPOINTS : Count the number of checkpoint sellecting the limit.
 */
 Level::Level() :
 	width( 0 ),

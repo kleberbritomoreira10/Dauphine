@@ -16,6 +16,22 @@
 /**
 * The constructor.
 * Initializes the attributes.
+* @param shouldIgnore : Analyzes when some action will be ignored or not.
+* @param menuImage : Render the images of menu for manage the states.
+* @param attractModeBg : Render the image of title of the game in background.
+* @param attractMode : Render the image which explains the context of the game of the game.
+* @param passedTime : Count the time useds for select some option in menu.
+* @param currentSelection : Manages the exhibition for the current option selected in menu.
+* @param selectorXPositionLeft : Manages the exhibition for the iten in axis X and left position in menu.
+* @param selectorYPositionLeft : Manages the exhibition for the iten in axis Y and left position in menu.
+* @param selectorXPositionRight : Manages the exhibition for the iten in axis X and right position in menu.
+* @param selectorYPositionRight : Manages the exhibition for the iten in axis Y and right position in menu.
+* @param attractHeightSize : Count and update the height size of the attract itens.
+* @param attractChangeSpeed : Count and update the speed of the attract itens.
+* @param shwingAnimation : Render the animation for change of selector in menu.
+* @param shwingIsActivated : Render the animation if the iten is actived.
+* @param shwing : Render the logo of the game.
+* @param shwingClip : Auxiliar variable used for render the updates.
 */
 GStateMenu::GStateMenu() :
 	shouldIgnore( false ),
@@ -93,6 +109,8 @@ void GStateMenu::unload()
 
 /**
 * Changing the state menu of the game.
+* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* 	of processing speed.
 */
 void GStateMenu::update( const double dt_ )
 {
@@ -187,6 +205,7 @@ void GStateMenu::handleSelectorMenu()
 {
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 
+	// @param selectorDelayTime : Used for manage the delay for change of options in select of the menu.
 	const double selectorDelayTime = 0.2;
 
   // Showing and updating the animation for selector of the menu.

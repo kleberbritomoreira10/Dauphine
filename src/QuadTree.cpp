@@ -17,6 +17,12 @@
 /**
 * The constructor.
 * Initializes the attributes.
+* @param maxObjects : Definig the number maximum for creation of objects.
+* @param maxLevels : Definig the number maximum of levels.
+* @param level : The level of the game.
+* @param objects : The nodes of the tree of objects.
+* @param bounds : The limits of sizes of trees.
+* @param nodes : Nodes objects for the trees.
 */
 QuadTree::QuadTree( int level_, SDL_Rect bounds_ ) :
 	maxObjects( 10 ),

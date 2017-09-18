@@ -20,6 +20,20 @@ const std::string GStateOptions::possibleResolutions[3] = {"800x600", "768x432",
 /**
 * The constructor.
 * Initializes the attributes.
+* @param elapsedTime : Count the time useds for select some option.
+* @param optionsImage : 
+* @param currentResolution : Define the current resolution of the game.
+* @param currentOption : Manages the exhibition for the current option selected.
+* @param selector : Manages the exhibition for the current option selected.
+* @param selectorXPositionLeft : Manages the exhibition for the iten in axis X and left position.
+* @param selectorYPositionLeft : Manages the exhibition for the iten in axis Y and left position.
+* @param selectorXPositionRight : Manages the exhibition for the iten in axis X and right position.
+* @param selectorYPositionRight : Manages the exhibition for the iten in axis Y and right position.
+* @param musicVolume : Used for define the music for the game.
+* @param sfxVolume : Used for define the musical effects for the cheange option.
+* @param resolution : Is the resolution for the game.
+* @param volumeMusic : Manage the volume of music theme.
+* @param volumeSFX : Manage the volume for the special effects.
 */
 GStateOptions::GStateOptions() :
 	elapsedTime( 0.0 ),
@@ -91,6 +105,7 @@ void GStateOptions::update( const double dt_ )
 		Game::instance().setState( Game::GStates::MENU );
 	}
 
+	// @param selectorDelayTime : Used for manage the delay for change of options in select of the menu.
 	const double selectorDelayTime = 0.2;
 
 	// Verifying if the keys for state down are valids.

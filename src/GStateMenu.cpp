@@ -45,6 +45,7 @@ GStateMenu::GStateMenu() :
 */
 GStateMenu::~GStateMenu()
 {
+  // Checking if the object is not null, if not, it is deleted.
 	if( this -> shwingAnimation != nullptr )
 	{
 		delete this -> shwingAnimation;
@@ -101,12 +102,15 @@ void GStateMenu::update( const double dt_ )
 
 	this -> shwingAnimation -> update( this -> shwingClip, dt_ );	
 
-	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+  std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+  
+  // Stopping with the menu update in case of quit of the menu.
 	if( keyStates[ GameKeys::ESCAPE ] == true )
 	{
 		Game::instance().stop();
 	}
 
+  // Changing the menu state showing the animation and gettint out for there.
 	if( this -> shwingIsActivated )
 	{
 		 this -> shwingAnimation -> changeAnimation( 0, 0, 12, false, 2 );
@@ -121,27 +125,38 @@ void GStateMenu::update( const double dt_ )
 void GStateMenu::render()
 {
 
+  // Checking if the time rendering the menu is higher than 10 seconds.
 	if( this -> passedTime > 10 )
 	{
 		this -> attractModeBg -> render( 0, 0, nullptr, true );
 		this -> attractMode -> render( 0, 0, &this -> attractClip, true );
 		shouldIgnore = true;
-		if( this -> attractClip.y < ( int ) this -> attractMode -> getHeight() - this -> attractHeightSize )
+    
+    // Checking if the attractClip in axys y is smaller than height of the attract mode.
+    if( this -> attractClip.y < ( int ) this -> attractMode -> getHeight() - this -> attractHeightSize )
 		{
 			this -> attractClip.y  += this -> attractChangeSpeed;
-		}
+    }
+    
+    // Checking if the attractClip in axys y is not smaller than height of the attract mode.    
 		else
 		{
 			//shwing->render(340,50,&this->shwingClip);
-		}
+    }
+
+    // Checking if the time rendering the menu is higher than 75 seconds.    
 		if( this -> passedTime > 75 )
 		{
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 		}
-	}
+  }
+  
+  // Checking if the time rendering the menu is not higher than 10 seconds.  
 	else
 	{
+    
+    // Checking if the image of menu is not null.    
 		if( this -> menuImage != nullptr )
 		{
 			this -> menuImage -> render( 0, 0, nullptr, true );
@@ -154,7 +169,9 @@ void GStateMenu::render()
 			this -> menuSelector -> render( selectorXPositionRight[ currentSelection ],
 				selectorYPositionRight[ currentSelection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
 
-		}
+    }
+    
+    // Checking if the image of menu is null
 		else
 		{
 			Log( WARN ) << "No image set to display on the menu!";
@@ -172,19 +189,22 @@ void GStateMenu::handleSelectorMenu()
 
 	const double selectorDelayTime = 0.2;
 
+  // Showing and updating the animation for selector of the menu.
 	if( keyStates[ GameKeys::DOWN ] == true || keyStates[ GameKeys::RIGHT ] == true )
 	{
-
+    // Configuring when the update is prohibited.
 		if( shouldIgnore )
 		{
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
-		}
-
+    }
+    
+    // Setting a delay for big waiting time for selection.
 		if( this -> passedTime >= selectorDelayTime )
 		{
+      // Changing the position of the cursor in the options of menu
 			if( currentSelection < ( Selection::TOTAL - 1 ) )
 			{
 				currentSelection++;
@@ -197,9 +217,12 @@ void GStateMenu::handleSelectorMenu()
 			this->passedTime = 0.0;
 			this->attractClip.y = 0;
 		}
-	}
+  }
+  
+  // Showing and updating the animation for selector of the menu.
 	else if( keyStates[ GameKeys::UP ] == true || keyStates[GameKeys::LEFT] == true )
 	{
+    // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
 			this -> passedTime = 0.0;
@@ -208,8 +231,10 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}
 
+    // Setting a delay for big waiting time for selection
 		if( this -> passedTime >= selectorDelayTime )
 		{
+      // Changing the position of the cursor in the options of menu for "new game"      
 			if( currentSelection > Selection::NEWGAME )
 			{
 				currentSelection--;
@@ -221,9 +246,12 @@ void GStateMenu::handleSelectorMenu()
 			this -> passedTime = 0.0;
 			this -> attractClip.y = 0;
 		}
-	}
+  }
+  
+  // Showing and updating the animation for selector of the menu in the "new game" option.
 	else if( currentSelection == Selection::NEWGAME && keyStates[ GameKeys::SPACE ] == true )
 	{
+    // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
 			this -> passedTime = 0.0;
@@ -237,8 +265,10 @@ void GStateMenu::handleSelectorMenu()
 		this -> attractClip.y = 0;
 	}
 
+  // Showing and updating the animation for selector of the menu in the "continue" option.
 	else if( currentSelection == Selection::CONTINUE && keyStates[ GameKeys::SPACE ] == true)
 	{
+    // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
 			this -> passedTime = 0.0;
@@ -252,8 +282,10 @@ void GStateMenu::handleSelectorMenu()
 		this -> attractClip.y = 0;
 	}
 
+  // Showing and updating the animation for selector of the menu in the "options" option.
 	else if( currentSelection == Selection::OPTIONS && keyStates[ GameKeys::SPACE ] == true)
 	{
+    // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
 			this -> passedTime = 0.0;
@@ -267,8 +299,10 @@ void GStateMenu::handleSelectorMenu()
 		this -> attractClip.y = 0;
 	}
 
+  // Showing and updating the animation for selector of the menu in the "credits" option.
 	else if( currentSelection == Selection::CREDITS && keyStates[ GameKeys::SPACE ] == true )
 	{
+    // Configurin when the update is prohibited.
 		if( shouldIgnore )
 		{
 			this -> passedTime = 0.0;

@@ -40,24 +40,28 @@ Level::~Level()
 {
 	this -> player = nullptr;
 
+  // Checking if the object is not null, if not, it is deleted.
 	if( this -> camera != nullptr )
 	{
 		delete this -> camera;
 		this -> camera = nullptr;
 	}
 
+  // Checking if the object is not null, if not, it is deleted.  
 	if( this -> playerHud != nullptr )
 	{
 		delete this -> playerHud;
 		this -> playerHud = nullptr;
 	}
 
+  // Checking if the object is not null, if not, it is deleted.  
 	if( this -> tileMap != nullptr )
 	{
 		delete this -> tileMap;
 		this -> tileMap = nullptr;
 	}
 
+  // Checking if the object is not null, if not, it is deleted.  
 	if( this -> quadTree != nullptr )
 	{
 		delete this -> quadTree;
@@ -97,11 +101,14 @@ void Level::setPlayer( Player* const player_ )
 {
 	this -> player = player_;
 
+  // Checking if the player is not null, if is not, the level is setted.
 	if( this -> player != nullptr)
 	{
 		this -> player -> setLevelWH( this -> width, this -> height );
 		addEntity( this -> player );
-	}
+  }
+  
+  // Checking if the player is null and blocking the actions.  
 	else
 	{
 		Log( WARN ) << "Setting a null player for the level!";
@@ -115,19 +122,25 @@ void Level::setPlayer( Player* const player_ )
 */
 void Level::setCamera(Camera *const camera_)
 {
-	this -> camera = camera_;
-
+  this -> camera = camera_;
+  
+  // Checking if the camera is not null, if is not and the player too, the camera is setted in the correct level.
 	if( this -> camera != nullptr )
 	{
+    // Checking if the player is not null, if is not, the camera is setted in the correct level.    
 		if( this -> player != nullptr)
 		{
 			this -> camera -> setLevelWH( this -> width, this -> height );
-		}
+    }
+    
+    // Checking if the player is null and blocking the actions.      
 		else
 		{
 			Log( WARN ) << "Shouldn't set the camera before the player, in Level!";
 		}
-	}
+  }
+  
+  // Checking if the camera is null and blocking the actions.    
 	else
 	{
 		Log( WARN ) << "Setting a null camera!";
@@ -142,17 +155,25 @@ void Level::setCamera(Camera *const camera_)
 void Level::setBoss( Boss *const boss_ ){
 	this -> boss = boss_;
 
+  /* Checking if the boss is not null, if is not and the player too, the boss
+  * is setted in the correct level.
+  */
 	if( this -> boss != nullptr )
 	{
+    // Checking if the player is not null, if is not, the boss is setted in the correct level.    
 		if( this -> player != nullptr )
 		{
 			this -> boss -> setLevelWH( this -> width, this -> height );
-		}
+    }
+    
+    // Checking if the boss is null and blocking the actions.      
 		else
 		{
 			Log( WARN ) << "Shouldn't set the boss before the player, in Level!";
 		}
-	}
+  }
+  
+  // Checking if the boss is null and blocking the actions.    
 	else
 	{
 		Log( WARN ) << "Setting a null boss!";

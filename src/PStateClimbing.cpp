@@ -109,6 +109,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 /**
 * The constructor.
 * Initializes the attributes.
+* @param player_ : The player of the game.
 */
 PStateClimbing::PStateClimbing( Player *const player_ ) :
 	StatePlayer( player_ )

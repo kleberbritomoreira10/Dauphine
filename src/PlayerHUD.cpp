@@ -1,8 +1,23 @@
+/* Dauphine
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @PlayerHUD.cpp
+* The settings of the player.
+* Class that controll the initial configutations of the player.
+* License: Copyright (C) 2014 Alke Games.
+*/
+
 #include "PlayerHUD.h"
 #include "Game.h"
 #include "Util.h"
 #include "Logger.h"
 
+/**
+* The constructor.
+* Initializes the attributes.
+* @param player_ : The player of the game.
+* @param potionsLeft : The potions in left side.
+*/
 PlayerHUD::PlayerHUD( Player *const player_ ):
 	player( player_ ),
 	potionsLeft( new Text( 200.0, 25.0, "res/fonts/maturasc.ttf", 50, "Potions: x" ) )
@@ -21,6 +36,10 @@ PlayerHUD::PlayerHUD( Player *const player_ ):
 
 }
 
+/**
+* The destructor.
+* Deletes the instance.
+*/
 PlayerHUD::~PlayerHUD()
 {
 	// Deleting the potions in left.
@@ -31,6 +50,9 @@ PlayerHUD::~PlayerHUD()
 	}
 }
 
+/**
+* Controll tthe uodates of the player.
+*/
 void PlayerHUD::update()
 {
 	// Verifying if the the player is not null.	
@@ -55,6 +77,9 @@ void PlayerHUD::update()
 	}
 }
 
+/**
+* Controlls the renderization of the states of player.
+*/
 void PlayerHUD::render()
 {
 	for( int i = 0; i < TOTAL_HUD; i++)
@@ -79,6 +104,9 @@ void PlayerHUD::render()
 	}
 }
 
+/**
+* Controlls the initialization of the sprites.
+*/
 void PlayerHUD::initializeSprites()
 {
 	this -> playerHudSprites[ 0 ] = Game::instance().getResources().get("res/images/hud/health_0.png");

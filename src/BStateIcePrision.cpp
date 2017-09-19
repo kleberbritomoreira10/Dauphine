@@ -82,6 +82,7 @@ void BStateIcePrision::update( const double dt_ )
 /**
 * The constructor.
 * Initializes the attributes.
+* @params boss_ : The boss will be applyed the ice prision.
 */
 BStateIcePrision::BStateIcePrision( Boss* const boss_ ) :
   StateBoss(boss_)

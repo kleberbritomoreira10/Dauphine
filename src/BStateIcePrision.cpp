@@ -50,12 +50,17 @@ void BStateIcePrision::exit()
 void BStateIcePrision::update( const double dt_ )
 {
   prisionTime += dt_;
+
+  // Checking if the prision time is suficient for apply the updates
   if( prisionTime > 1 )
   {
     this -> boss -> powerAnimation -> changeAnimation( 2, 0, 1, false, 0 );
-    if( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(),  {( int )this -> boss -> powerX, 
-    ( int ) this -> boss -> powerY, 340,1020 }))
+
+    // Checking the power of boss
+    if( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(),
+    {( int )this -> boss -> powerX, ( int ) this -> boss -> powerY, 340,1020 }))
     {
+      // Applying updates in ice prision for boss
       if( this -> boss -> player -> isVulnerable)
       {
           this -> boss -> player -> canMove = false;
@@ -66,6 +71,8 @@ void BStateIcePrision::update( const double dt_ )
       }
     }
   }
+
+  // Upgrading the boss based in the time of prision.
   if( prisionTime > 4 )
   {
     this -> boss -> changeState( Boss::BStates::IDLE );

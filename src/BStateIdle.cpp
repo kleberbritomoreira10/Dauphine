@@ -34,24 +34,31 @@ void BStateIdle::update( const double dt_ )
 {
 	( ( void )dt_ ); // Unused.
 
+	// Defining the new position of the boss based in the current position
 	if( this -> boss -> isRight && this -> boss -> x > 1960 )
 	{
 		this -> boss -> isRight = false;
 	}
+
+	// Defining the new position of the boss based in the current position
 	else if( !this -> boss -> isRight && this -> boss -> x < 300 )
 	{
 		this -> boss -> isRight = true;
 	}
 	
+	// Defining the new position of the boss based in the current position
 	if( this -> boss -> isRight )
 	{
 		this -> boss -> move( false, true );
 	}
+
+	// Defining the new position of the boss based in the current position	
 	else
 	{
 		this -> boss -> move( true, false );
 	}
 
+	// Defining the new position of the boss based in the current position	
 	if( this -> boss -> sawPlayer )
 	{
 		this -> boss -> changeState( Boss::BStates::ATTACK );

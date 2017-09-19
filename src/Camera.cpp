@@ -52,22 +52,22 @@ void Camera::updatePosition()
   this -> clip.x = ( this -> entity -> x + this -> entity -> getWidth() / 2 ) - ( this -> clip.w / 2 );
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );
 
-  // Left wall.
+  // Applying camera in left wall.
   if( this -> clip.x < 0 )
   {
     this -> clip.x = 0;
   }
-  // Right wall.
+  // Applying camera in right wall.
   else if( this -> clip.x > ( int )this -> levelW - this -> clip.w )
   {
     this -> clip.x = ( int ) this -> levelW - this -> clip.w;
   }
-  // Top wall.
+  // Applying camera in top wall.
   if( this -> clip.y < 0)
   {
     this -> clip.y = 0;
   }
-  // Bottom wall.
+  // Applying camera in bottom wall.
   else if( this -> clip.y > ( int ) this -> levelH - this -> clip.h)
   {
     this -> clip.y = ( int ) this -> levelH - this -> clip.h;

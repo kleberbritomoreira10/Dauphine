@@ -42,13 +42,14 @@ void PStateAerial::exit()
 void PStateAerial::handleInput( const std::array<bool, GameKeys::MAX> keyStates_ )
 {
 
-	// Idle
+	// Changing the position of player for aerial mode.
   if( this -> player -> isGrounded)
   {
     this -> player -> changeState( Player::PStates::IDLE );
     return;
   }
 
+	// Defining the movements for atack aerial.
   if( keyStates_[ GameKeys::LATTACK ])
   {
     this -> player -> changeState( Player::PStates::ATTACKJUMPING );

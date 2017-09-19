@@ -16,14 +16,18 @@
 */
 int Math::sign( const int number_ )
 {
+  // Checking if the number is positive and definig the state
   if( number_ > 0 )
   { 
     return 1;
   }
+
+  // Checking if the number is negative and definig the state
   else if( number_ < 0 )
   {
     return -1;
   }
+  // Checking if the number is zero and definig the state
   else
   {
     return 0;
@@ -37,14 +41,19 @@ int Math::sign( const int number_ )
 */
 int Math::sign( const double number_ )
 {
+  // Checking if the number is positive and definig the state
   if( number_ > 0.0 )
   { 
     return 1;
   }
+
+  // Checking if the number is negative and definig the state
   else if( number_ < 0.0 )
   {
     return -1;
   }
+
+  // Checking if the number is zero and definig the state
   else
   {
     return 0;

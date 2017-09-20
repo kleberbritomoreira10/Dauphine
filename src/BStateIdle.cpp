@@ -29,6 +29,7 @@ void BStateIdle::exit()
 
 /**
 * Changing the static position of the boss in idle.
+* @param dt_ : The difference of the time betwen two events.
 */
 void BStateIdle::update( const double dt_ )
 {
@@ -69,6 +70,7 @@ void BStateIdle::update( const double dt_ )
 /**
 * The constructor.
 * Initializes the attributes.
+* @param boss_ : The boss of the level of the game.
 */
 BStateIdle::BStateIdle( Boss* const boss_ ) :
 	StateBoss( boss_ )

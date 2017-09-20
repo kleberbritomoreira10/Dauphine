@@ -13,6 +13,10 @@
 /**
 * The constructor.
 * Initializes the attributes.
+* @param entity_ : The object will be in the center of the focus of the camera.
+* @param levelH : The level of height in focus of camera.
+* @param levelW : The level of width in focus of camera.
+* @param clip : The distance of the camera of the width and height.
 */
 Camera::Camera( Entity* const entity_ ):
   entity( entity_ ),

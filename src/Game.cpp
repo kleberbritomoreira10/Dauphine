@@ -35,7 +35,29 @@ Game& Game::instance ()
 	return *instance;
 }
 
-//Initializes method constructor with fundamental elements for playing the game. 
+/**
+* The constructor.
+* Initializes the attributes.
+* @param isCutscene : Analyzes if the scene is a cutscente.
+* @param isPaused : Analyzes if the game is saved.
+* @param currentLine : Analyzes the state of the current line.
+* @param transitionTo : Controlls the screens transitions.
+* @param window : The size of the windows of the game.
+* @param isRunning : Analyzes if the character is runing.
+* @param pauseImage : The image used for pause the game.
+* @param pauseSelector : The state when the selector is stoped in a option.
+* @param audioHandler : The manager of audio for the game.
+* @param inputHandler : The manager of inputs for the game.
+* @param gameSave : The file of save datas for the game.
+* @param currentState : The current state of the object analyzed.
+* @param statesMap : The conduct of the maps.
+* @param passedTime : The time passed bettwen two events.
+* @param currentSelection : The current option selected in menu.
+* @param selectorXPositionLeft : Selector is in left position in axis x.
+* @param selectorYPositionLeft : Selector is in left position in axis y..
+* @param selectorXPositionRight : Selector is in right position in axis x..
+* @param selectorYPositionRight : Selector is in right position in axis y..
+*/ 
 Game::Game () :
 	isCutscene( false ),
 	isPaused( false ),

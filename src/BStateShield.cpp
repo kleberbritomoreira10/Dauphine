@@ -30,6 +30,7 @@ void BStateShield::exit()
 
 /**
 * Changing the state of the boss shield.
+* @param dt_ : The difference of the time betwen two events.
 */
 void BStateShield::update( const double dt_ )
 {
@@ -41,6 +42,7 @@ void BStateShield::update( const double dt_ )
 /**
 * The constructor.
 * Initializes the attributes.
+* @param boss_ : The boss of the level of the game.
 */
 BStateShield::BStateShield( Boss* const boss_ ) :
 	StateBoss( boss_ )

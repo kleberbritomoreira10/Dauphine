@@ -50,18 +50,21 @@ GStateOptions::GStateOptions() :
 */
 GStateOptions::~GStateOptions()
 {
+	// Deleting resolution.
 	if( this -> resolution != nullptr )
 	{
 		delete this -> resolution;
 		this -> resolution = nullptr;
 	}
 
+	// Deleting volume of music.	
 	if( this -> volumeMusic != nullptr )
 	{
 		delete this -> volumeMusic;
 		this -> volumeMusic = nullptr;
 	}
 
+	// Deleting volume of selector.	
 	if( this -> volumeSFX != nullptr )
 	{
 		delete this -> volumeSFX;
@@ -82,6 +85,7 @@ void GStateOptions::update( const double dt_ )
 
 	const std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 
+	// Verifying if the keys for escape are valids.
 	if( keyStates[ GameKeys::ESCAPE ] == true)
 	{
 		Game::instance().setState( Game::GStates::MENU );
@@ -89,14 +93,19 @@ void GStateOptions::update( const double dt_ )
 
 	const double selectorDelayTime = 0.2;
 
+	// Verifying if the keys for state down are valids.
 	if( keyStates[ GameKeys::DOWN ] == true )
 	{
+		// Verifying if time used for select a option is higher than a expected by default.
 		if( this -> elapsedTime >= selectorDelayTime )
 		{
+			// Verifying if the current option is equal of the last of the list.
 			if( this -> currentOption == (O_TOTAL - 1 ) )
 			{
 				this -> currentOption = O_RESOLUTION;
 			}
+
+			// Verifying if the current option is different of the last of the list.			
 			else
 			{
 				this -> currentOption++;
@@ -105,14 +114,18 @@ void GStateOptions::update( const double dt_ )
 		}
 	}
 
+	// Verifying if the keys for state up are valids.	
 	if( keyStates[ GameKeys::UP ] == true )
 	{
+		// Verifying if time used for select a option is higher than a expected by default.		
 		if( this -> elapsedTime >= selectorDelayTime)
 		{
+			// Verifying if the current option is equal of the first of the list.			
 			if( this -> currentOption == O_RESOLUTION )
 			{
 				this -> currentOption = ( O_TOTAL - 1 );
 			}
+			// Verifying if the current option is different of the first of the list.
 			else
 			{
 				this -> currentOption--;
@@ -121,33 +134,41 @@ void GStateOptions::update( const double dt_ )
 		}
 	}
 
+	// Verifying if the keys for state left are valids.
 	if( keyStates[ GameKeys::LEFT ] == true)
 	{
+		// Verifying if time used for select a option is higher than a expected by default.				
 		if( this->elapsedTime >= selectorDelayTime )
 		{
-			// Option == Resolution
+			// Verifying if the current option is equal of the resolution.			
 			if( this -> currentOption == O_RESOLUTION )
 			{
+				// Verifying if the current resolution is equal the expected.
 				if( this -> currentResolution == R_800_600 )
 				{
 					this -> currentResolution = ( R_TOTAL - 1 );
 				}
+				// Verifying if the current resolution is different of the expected.				
 				else
 				{
 					this -> currentResolution--;
 				}
 			}
-			// Option == VOLUME MUSIC
+
+			// Verifying if the current option is equal of the volume of the music.			
 			else if( this -> currentOption == O_VOLUME_MUSIC )
 			{
+				// Verifying if the volume of music is higher than zero.				
 				if( this -> musicVolume > 0 )
 				{	
 					this -> musicVolume -= 5;
 				}
 			}
-			// Option == VOLUME SFX
+
+			// Verifying if the current option is equal of the volume of the selector.						
 			else if( this -> currentOption == O_VOLUME_SFX )
 			{
+				// Verifying if the volume of selector is higher than zero.				
 				if( this -> sfxVolume > 0)
 				{
 					this -> sfxVolume -= 5;
@@ -158,31 +179,38 @@ void GStateOptions::update( const double dt_ )
 		}
 	}
 
+	// Verifying if the keys for state right are valids.	
 	if( keyStates[ GameKeys::RIGHT ] == true )
 	{
+		// Verifying if time used for select a option is higher than a expected by default.		
 		if( this -> elapsedTime >= selectorDelayTime )
 		{
-			// Option == Resolution
+			// Verifying if the current option is equal of the resolution.			
 			if( this -> currentOption == O_RESOLUTION )
 			{
+				// Verifying if the current resolution is equal of the larger value possible.				
 				if( this -> currentResolution == ( R_TOTAL - 1 ) )
 				{
 					this -> currentResolution = R_800_600;
 				}
+				// Verifying if the current resolution is different of the larger value possible.								
 				else
 				{
 					this -> currentResolution++;
 				}
 			}
-			// Option == VOLUME MUSIC
+
+			// Verifying if the current option is equal of the volume of the music.						
 			else if( this -> currentOption == O_VOLUME_MUSIC )
 			{
+				// Verifying if the volume of music is smaller than a hundread.				
 				if( this -> musicVolume < 100 )
 				{
 					this -> musicVolume += 5;
 				}
 			}
-			// Option == VOLUME SFX
+
+			// Verifying if the current option is equal of the volume of the selector.
 			else if( this -> currentOption == O_VOLUME_SFX )
 			{
 				if( this -> sfxVolume < 100 )
@@ -190,6 +218,8 @@ void GStateOptions::update( const double dt_ )
 					this -> sfxVolume += 5;
 				}
 			}
+
+			// Verifying if the option is different of the cases implemented.
 			else
 			{
 				// Condition not implemented
@@ -199,11 +229,13 @@ void GStateOptions::update( const double dt_ )
 		}
 	}
 
+	// Verifying if the keys for state space are valids and have not been applied.	
 	if( keyStates[ GameKeys::SPACE ] == true && this -> currentOption == O_APPLY )
 	{
 		applyOptions();
 	}
 
+	// Verifying if the keys for state space are valids and have been applied.		
 	if( keyStates[ GameKeys::SPACE ] == true && this -> currentOption == O_RETURN )
 	{
 		Game::instance().setState( Game::GStates::MENU );
@@ -215,10 +247,13 @@ void GStateOptions::update( const double dt_ )
 */
 void GStateOptions::render()
 {
+	// Verifying if the option of image is not null.
 	if( this -> optionsImage != nullptr )
 	{
 		this -> optionsImage -> render( 0, 0, nullptr, true );
 	}
+
+	// Verifying if the option of image is null.	
 	else
 	{
 		Log( WARN ) << "No image set for the options screen!";
@@ -228,6 +263,7 @@ void GStateOptions::render()
 	this -> volumeMusic -> render( 0, 0 );
 	this -> volumeSFX -> render( 0, 0 );
 
+	// Verifying if the selector is not null.	
 	if( this -> selector != nullptr )
 	{
 		this -> selector -> render( selectorXPositionLeft[ currentOption ],
@@ -236,6 +272,8 @@ void GStateOptions::render()
 		this -> selector -> render( selectorXPositionRight[ currentOption ],
 			selectorYPositionRight[ currentOption ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
 	}
+
+	// Verifying if the option of image is null.	
 	else
 	{
 		Log( WARN ) << "No image set for the selector.";
@@ -277,15 +315,19 @@ void GStateOptions::unload()
 */
 void GStateOptions::applyOptions()
 {
-	// Apply resolution
+	// Verifying if the resolution is equal a 800x600.	
 	if( this -> currentResolution == R_800_600 )
 	{
 		Game::instance().resizeWindow( 800, 600 );
 	}
+
+	// Verifying if the resolution is equal a 768x432.		
 	else if( this -> currentResolution == R_768_432 )
 	{
 		Game::instance().resizeWindow( 768, 432 );
 	}
+
+	// Verifying if the resolution is equal a 960x540.		
 	else if( this -> currentResolution == R_960_540 )
 	{
 		Game::instance().resizeWindow( 960, 540 );

@@ -45,6 +45,7 @@ void QuadTree::clear()
 
 	for( int i = 0; i < 4; i++ )
 	{
+		// Deleting the nodes of the vector.
 		if( this -> nodes[ i ] != nullptr)
 		{
 			this -> nodes[ i ] -> clear();
@@ -92,10 +93,13 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 	// Object can completely fit within the left quadrants
 	if( rect_.x < verticalMidpoint && rect_.x + rect_.w < verticalMidpoint )
 	{
+		// Verifying if the value of the top quadrant is valid.		
 		if( topQuadrant )
 		{
 			index = 1;
 		}
+
+		// Verifying if the value of the bottom quadrant is valid.
 		else if ( bottomQuadrant )
 		{
 			index = 2;
@@ -104,10 +108,13 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 	// Object can completely fit within the right quadrants
 	else if ( rect_.x > verticalMidpoint )
 	{
+		// Verifying if the value of the top quadrant is valid.
 		if (topQuadrant)
 		{
 			index = 0;
 		}
+
+		// Verifying if the value of the top quadrant is valid.				
 		else if ( bottomQuadrant )
 		{
 			index = 3;
@@ -122,10 +129,12 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 * @param rect_: object used for manage the postions in the axys.
 */
 void QuadTree::insert( CollisionRect rect_ ){
+	// Verifying if the value of nodes in position zero is not null.	
 	if( nodes[ 0 ] != nullptr )
 	{
 		int index = getIndex( rect_.rect );
 
+		// Verifying if the value of index is different of one negative.
 		if( index != -1 )
 		{
 			nodes[ index ] -> insert( rect_ );
@@ -137,6 +146,7 @@ void QuadTree::insert( CollisionRect rect_ ){
 
 	if((int)this -> objects.size() > this -> maxObjects && level < this->maxObjects )
 	{
+		// Verifying if the value of nodes in position zero is null.		
 		if( nodes[ 0 ] == nullptr )
 		{
 			split();
@@ -146,12 +156,16 @@ void QuadTree::insert( CollisionRect rect_ ){
 		while( i < ( int ) this -> objects.size())
 		{
 			int index = getIndex(this->objects.at(i).rect);
+			
+			// Verifying if the value of index is different of one negative.			
 			if( index != -1 )
 			{
 				CollisionRect moveRect = this -> objects.at( i );
 				this -> objects.erase( this -> objects.begin() + i );
 				nodes[ index ] -> insert( moveRect );
 			}
+			
+			// Verifying if the value of index is equal of one negative.			
 			else
 			{
 				i++;
@@ -163,6 +177,9 @@ void QuadTree::insert( CollisionRect rect_ ){
 std::vector<CollisionRect> QuadTree::retrieve( std::vector<CollisionRect>& returnObjects_, SDL_Rect rect_ )
 {
 	int index = getIndex( rect_ );
+	
+	// Verifying if the value of index is different of one negative and the value of 
+	// nodes in position zero is not null.	
 	if( index != -1 && nodes[ 0 ] != nullptr )
 	{
 		nodes[ index ] -> retrieve( returnObjects_, rect_ );

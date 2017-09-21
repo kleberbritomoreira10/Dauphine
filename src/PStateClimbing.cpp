@@ -28,11 +28,15 @@ void PStateClimbing::enter()
 
     this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
 
-    this -> player -> vy = 0;
+	this -> player -> vy = 0;
+	
+	// Verifying if the player is in the right.
     if( !this -> player -> isRight )
     {
 		this -> player -> vx = -0.001;
-    }
+	}
+	
+	// Verifying if the player is not the in right.	
 	else
 	{
 		this -> player -> vx = 0.0;
@@ -54,6 +58,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 
 	this -> player -> moveVertical( keyStates_[GameKeys::UP], keyStates_[ GameKeys::DOWN ]);
 
+	// Verifying if the player is not in the right position.	
 	if( abs( this -> player -> vy ) < 1 )
 	{
 		this -> player -> getAnimation() -> changeAnimation( this -> player -> getAnimation() -> getCurrentFrame() - 1,
@@ -62,6 +67,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 	}
 	else
 	{
+		// Verifying if the player is in movement.		
 		if( isMoving )
 		{
 			this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
@@ -69,16 +75,19 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 		}
 	}
 
-	// Jump
+	// Verifying if the keys of the game is equal a space and it is pressed.	
 	if( keyStates_[ GameKeys::SPACE ] )
 	{
 		Log( DEBUG ) << "entrou";		
 		this -> player -> vy = -700;
 
+		// Verifying if the player is in the right.
 		if( this -> player -> isRight)
 		{
 			this -> player -> vx = -500;
 		}
+
+		// Verifying if the player is not in the right.		
 		else
 		{
 			this -> player -> vx = 500;
@@ -88,6 +97,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 		return;
 	}
 
+	// Verifying if the player is climbing.	
 	if( !this -> player -> isClimbing)
 	{
 		this -> player -> vy = -1000;

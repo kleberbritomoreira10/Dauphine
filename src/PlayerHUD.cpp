@@ -23,6 +23,7 @@ PlayerHUD::PlayerHUD( Player *const player_ ):
 
 PlayerHUD::~PlayerHUD()
 {
+	// Deleting the potions in left.
 	if( this -> potionsLeft != nullptr)
 	{
 		delete this -> potionsLeft;
@@ -32,6 +33,7 @@ PlayerHUD::~PlayerHUD()
 
 void PlayerHUD::update()
 {
+	// Verifying if the the player is not null.	
 	if( this -> player != nullptr )
 	{
 		switch( this -> player -> life)
@@ -57,16 +59,20 @@ void PlayerHUD::render()
 {
 	for( int i = 0; i < TOTAL_HUD; i++)
 	{
+		// Verifying if the element of the vector is valid.	
 		if( this -> canRenderHud[ i ])
 		{
 			this -> playerHudSprites[ i ] -> render( 0, 0 );
 		}
 	}
 
+	// Verifying if the potions of the left are not null.
 	if( this -> potionsLeft != nullptr)
 	{
 		this -> potionsLeft -> render( 0, 0 );
 	}
+
+	// Verifying if the potions of the left are null.	
 	else 
 	{
 		Log( WARN ) << "Potions left HUD text is null";

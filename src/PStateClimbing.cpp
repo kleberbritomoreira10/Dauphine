@@ -1,8 +1,19 @@
+/* Dauphine
+ * Universidade de Brasília - FGA
+ * Técnicas de Programação, 2/2017
+ * @PStateClimbing.cpp
+ * The state of the climbing of the player.
+ * Class that controll the climbing of the player.
+*/
+
 #include "PStateClimbing.h"
 #include "Logger.h"
 
 bool isMoving = false;
 
+/**
+ * Shows the animation of the player entering in climbing state.
+*/
 void PStateClimbing::enter()
 {
 	Log( DEBUG ) << "STATE CLIMBING";
@@ -28,6 +39,9 @@ void PStateClimbing::enter()
 
 }
 
+/**
+ * Ends with climbing state of the player.
+*/
 void PStateClimbing::exit()
 {
 	this -> player -> isClimbing = false;
@@ -81,6 +95,10 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 	}
 }
 
+/**
+ * The constructor.
+ * Initializes the attributes.
+*/
 PStateClimbing::PStateClimbing( Player *const player_ ) :
 	StatePlayer( player_ )
 {

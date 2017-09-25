@@ -1,3 +1,11 @@
+/* Dauphine
+ * Universidade de Brasília - FGA
+ * Técnicas de Programação, 2/2017
+ * @GStateOptions.cpp
+ * The control of state of the options of the game.
+ * Class that controll the state of options of the game.
+*/
+
 #include "GStateOptions.h"
 #include "LuaScript.h"
 #include "Game.h"
@@ -8,6 +16,10 @@
 
 const std::string GStateOptions::possibleResolutions[3] = {"800x600", "768x432", "960x540"};
 
+/**
+ * The constructor.
+ * Initializes the attributes.
+*/
 GStateOptions::GStateOptions() :
 	elapsedTime( 0.0 ),
 	optionsImage( nullptr ),
@@ -32,6 +44,9 @@ GStateOptions::GStateOptions() :
 		Util::toString( this -> sfxVolume ).c_str() );
 }
 
+/**
+ * The destructor.
+*/
 GStateOptions::~GStateOptions()
 {
 	if( this -> resolution != nullptr )
@@ -53,6 +68,9 @@ GStateOptions::~GStateOptions()
 	}
 }
 
+/**
+ * Changing the state for options of the game.
+*/
 void GStateOptions::update( const double dt_ )
 {
 	this -> elapsedTime += dt_;
@@ -191,6 +209,9 @@ void GStateOptions::update( const double dt_ )
 	}
 }
 
+/**
+ * Showing the options of the game.
+*/
 void GStateOptions::render()
 {
 	if( this -> optionsImage != nullptr )
@@ -221,6 +242,9 @@ void GStateOptions::render()
 
 }
 
+/**
+ * Load the options of the game.
+*/
 void GStateOptions::load()
 {
 	Log( DEBUG ) << "Loading options...";
@@ -238,12 +262,18 @@ void GStateOptions::load()
     this -> selector -> setWidth( 50 );
 }
 
+/**
+ * Unloading the game options and cleaning the display.
+*/
 void GStateOptions::unload()
 {
 	Log( DEBUG ) << "\tUnloading options...";
 	cleanEntities();
 }
 
+/**
+ * Applying the options in the game.
+*/
 void GStateOptions::applyOptions()
 {
 	// Apply resolution

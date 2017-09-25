@@ -1,9 +1,21 @@
+/* Dauphine
+ * Universidade de Brasília - FGA
+ * Técnicas de Programação, 2/2017
+ * @GStateMenu.cpp
+ * The control of state of the menu of the game.
+ * Class that controll the state of menu of the game.
+*/
+
 #include "GStateMenu.h"
 #include "LuaScript.h"
 #include "Game.h"
 
 #include <string>
 
+/**
+ * The constructor.
+ * Initializes the attributes.
+*/
 GStateMenu::GStateMenu() :
 	shouldIgnore( false ),
 	menuImage( nullptr ),
@@ -27,6 +39,9 @@ GStateMenu::GStateMenu() :
 
 }
 
+/**
+ * The destructor.
+*/
 GStateMenu::~GStateMenu()
 {
 	if( this -> shwingAnimation != nullptr )
@@ -36,6 +51,9 @@ GStateMenu::~GStateMenu()
 	}
 }
 
+/**
+ * Load the menu of the game showing the options and playing the music.
+*/
 void GStateMenu::load()
 {
 	Log( DEBUG ) << "Loading menu...";
@@ -61,6 +79,9 @@ void GStateMenu::load()
     Game::instance().getFade().fadeOut( 0, 0.002 );
 }
 
+/**
+ * Exiting of the menu and cleaning the display.
+*/
 void GStateMenu::unload()
 {
 	Log( DEBUG ) << "\tUnloading menu...";
@@ -68,6 +89,9 @@ void GStateMenu::unload()
 	cleanEntities();
 }
 
+/**
+ * Changing the state menu of the game.
+*/
 void GStateMenu::update( const double dt_ )
 {
 	this -> passedTime += dt_;
@@ -90,6 +114,9 @@ void GStateMenu::update( const double dt_ )
 
 }
 
+/**
+ * Show the menu of the game with your properties.
+*/
 void GStateMenu::render()
 {
 
@@ -135,6 +162,9 @@ void GStateMenu::render()
 
 }
 
+/**
+ * Controlls the user input for enter in menu of the game.
+*/
 void GStateMenu::handleSelectorMenu()
 {
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();

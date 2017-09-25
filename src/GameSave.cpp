@@ -4,7 +4,7 @@
  * @GameSave.cpp
  * The game save.
  * Class that save the level in the game
- */
+*/
 
 #include "GameSave.h"
 #include "Logger.h"

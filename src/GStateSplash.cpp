@@ -22,6 +22,8 @@ GStateSplash::GStateSplash() :
 	lifeTime( 0.0 ),
 	ix( -300.0 )
 {
+
+	// Setting null for all the splash images.
 	for ( unsigned int i = 0; i < SplashImages::TOTAL_SPLASH_IMAGES; i++ )
 	{
 		this -> images[i] = nullptr;
@@ -44,6 +46,7 @@ void GStateSplash::load()
 {
 	Log( DEBUG ) << "Loading splash screens...";
 
+	// Loading all the lua splash images.
 	LuaScript luaSplash( "lua/Splash.lua" );
 	const std::string pathLogo = luaSplash.unlua_get<std::string>( "splash.images.alke" );
 	const std::string pathTechs = luaSplash.unlua_get<std::string>( "splash.images.techs" );
@@ -51,6 +54,7 @@ void GStateSplash::load()
 	const std::string pathEsrb = luaSplash.unlua_get<std::string>( "splash.images.esrb" );
 	const double luaLifeTime = luaSplash.unlua_get<double>( "splash.lifeTime" );
 
+	// Loading splash images resources.
 	this -> images[SplashImages::ALKE_LOGO] = Game::instance().getResources().get( pathLogo );
 	this -> images[SplashImages::TECHS] = Game::instance().getResources().get( pathTechs );
 	this -> images[SplashImages::LICENSES] = Game::instance().getResources().get( pathLicenses );
@@ -86,6 +90,7 @@ void GStateSplash::update( const double dt_ )
 		this -> ix += 5.0;
 	}
 
+	// Updating splash images.
 	if ( this -> passedTime >= this -> lifeTime )
 	{
 		if ( this -> currentSplash >= SplashImages::TOTAL_SPLASH_IMAGES - 1 )
@@ -101,7 +106,7 @@ void GStateSplash::update( const double dt_ )
 	}
 
 	// Check if SPACE was pressed, to skip the splash images.
-	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+	std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 	if ( keyStates[GameKeys::SPACE] == true )
 	{
 		Game::instance().setState( Game::GStates::MENU );
@@ -117,9 +122,10 @@ void GStateSplash::update( const double dt_ )
 */
 void GStateSplash::render()
 {
-	if ( this -> images[this -> currentSplash] != nullptr )
+	// Rendering current splash.
+	if ( this -> images[ this -> currentSplash] != nullptr )
 	{
-		this -> images[this -> currentSplash] -> render( this -> ix, 0, nullptr, true );
+		this -> images[ this -> currentSplash ] -> render( this -> ix, 0, nullptr, true );
 	} else
 	{
 		Log( WARN ) << "No image set for the splash screen!";

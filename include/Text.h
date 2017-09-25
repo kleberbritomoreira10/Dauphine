@@ -3,6 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @Text.h
  * The state of the text in the game.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_TEXT_H
@@ -11,9 +12,6 @@
 #include "SDLWrapper.h"
 #include "Entity.h"
 
-/**
-* @todo Actually make this work.
-*/
 class Text : public Entity
 {
 

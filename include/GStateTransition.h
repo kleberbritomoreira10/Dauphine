@@ -4,6 +4,7 @@
  * @GStateTransition.h
  * The state for the initial splash screen.
  * Game state that will contain the initial splash images, before the main menu state is called.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_STATETRANSITION_H

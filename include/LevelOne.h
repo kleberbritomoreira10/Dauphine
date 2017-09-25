@@ -4,6 +4,7 @@
  * @LevelOne.h
  * The first level of the game.
  * Derived from Level class
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_LEVELONE_H

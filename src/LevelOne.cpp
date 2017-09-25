@@ -4,6 +4,7 @@
  * @LevelOne.cpp
  * The first level of the game.
  * Derived from Level class
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "LevelOne.h"
@@ -19,6 +20,7 @@
 
 double ok = 0;
 
+// Quantity of items that can be caught in phase 1.
 LevelOne::LevelOne ():
 	Level(),
 	items {{ 59 * 64, 114 * 64, 0, 0 },{ 1750, 1750, 0, 0 }},
@@ -58,6 +60,7 @@ void LevelOne::load ()
 	this -> backgroundTop = Game::instance (). getResources (). get (
 	 "res/images/lv1_parallax_top.png" );
 
+	 // Load the number of checkpoints achieved
 	for ( int i = 0; i < this -> NUMBER_OF_CHECKPOINTS; ++i )
 	{
 
@@ -375,7 +378,7 @@ void LevelOne::update ( const double dt_ )
 		}
 	}
 
-	// Documents check
+	// Checks the condition of the document to render
 	for ( auto document : this -> documents )
 	{
 
@@ -437,7 +440,7 @@ void LevelOne::render ()
 		}
 	}
 
-	// Document text image
+	// Render the document text
 	for ( auto document : this -> documents )
 	{
 

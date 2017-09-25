@@ -2,12 +2,17 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @Text.cpp
- *  The state of the text in the game.
+ * The state of the text in the game.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "Text.h"
 #include "Logger.h"
 
+/*
+* @param x_ : position in x axis.
+* @param y_ : position in y axis.
+*/
 Text::Text ( const double x_, const double y_, const char *path_, const int size_,
 	const char *text_, const SDL_Color color_ ) :
 

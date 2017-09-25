@@ -41,10 +41,12 @@ void GStateGameOver::load()
 {
 	Log( DEBUG ) << "Loading Game Over...";
 
+	// Loading game over images from lua.
 	LuaScript luaGameOver( "lua/GameOver.lua" );
 	const std::string pathGameOver = luaGameOver.unlua_get<std::string>( "gameOver.images.gameOver" );
 	const double luaLifeTime = luaGameOver.unlua_get<double>( "gameOver.lifeTime" );
 
+	// Getting game over images resources.
     this -> gameOverImage = Game::instance().getResources().get( pathGameOver );
 	this -> lifeTime = luaLifeTime;
 
@@ -75,14 +77,16 @@ void GStateGameOver::update( const double dt_ )
 {
 	this -> passedTime += dt_;
 
-	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+	std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 
-	if ( keyStates[GameKeys::SPACE] || keyStates[GameKeys::LATTACK] )
+	// Setting menu state when getting space or lattack input.
+	if ( keyStates[ GameKeys::SPACE ] || keyStates[ GameKeys::LATTACK ] )
 	{
 		Game::instance().setState( Game::GStates::MENU );
 		return;
 	}
 
+	// Setting menu state when player is dead.
 	if ( this -> passedTime >= this -> lifeTime )
 	{
 		Game::instance().setState( Game::GStates::MENU );
@@ -95,7 +99,9 @@ void GStateGameOver::update( const double dt_ )
 * Always renders on 0,0 position.
 * @see Sprite::render
 */
-void GStateGameOver::render(){
+void GStateGameOver::render()
+{
+	// Rendering game over image.
 	if ( this -> gameOverImage != nullptr )
 	{
 		this -> gameOverImage -> render( 0, 0, nullptr, true );

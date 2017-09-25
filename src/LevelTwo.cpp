@@ -1,3 +1,10 @@
+/* Dauphine
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @LevelTwo.cpp
+* The first level of the game derived from Level class.
+*/
+
 #include "LevelTwo.h"
 #include "Game.h"
 #include "LuaScript.h"
@@ -8,6 +15,10 @@
 #include "Collision.h"
 #include "Crosshair.h"
 
+/**
+* The constructor.
+* @see Level::Level()
+*/
 LevelTwo::LevelTwo () :
   Level (),
   items{ { 4090 - 3 * 64, 7870 - 3 * 64, 0, 0 },{ 2776, 1700, 0, 0 } },
@@ -16,11 +27,18 @@ LevelTwo::LevelTwo () :
   this -> changeCheckpoints ( 2, { 4090, 7870 }, { 2776, 1700 } );
 }
 
+/**
+* The destructor.
+*/
 LevelTwo::~LevelTwo ()
 {
 
 }
 
+/**
+* Loads the level.
+* From the Level1.lua script, loads all the necessary objects.
+*/
 void LevelTwo::load ()
 {
   // Changing the music.
@@ -105,6 +123,10 @@ void LevelTwo::load ()
   Game::instance ().getFade ().fadeOut ( 0, 0.002 );
 }
 
+/**
+* Updates the objects within the Level.
+* @param dt_ : Delta time. Time elapsed between one frame and the other.
+*/
 void LevelTwo::unload ()
 {
   Log ( DEBUG ) << "\tUnloading level 2...";
@@ -121,6 +143,10 @@ void LevelTwo::unload ()
   //this->checkpointVisited = false;  
 }
 
+/**
+* Unloads everything that was loaded.
+* @see LevelTwo::load()
+*/
 void LevelTwo::update ( const double dt_ )
 {
   // Populating the QuadTree.
@@ -285,6 +311,11 @@ void LevelTwo::update ( const double dt_ )
   }
 }
 
+/**
+* Renders the level.
+* Always renders on 0,0 position.
+* @see Sprite::render()
+*/
 void LevelTwo::render ()
 {
   const int cameraX = this -> camera -> getClip ().x;

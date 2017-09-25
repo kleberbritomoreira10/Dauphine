@@ -4,12 +4,14 @@
  * @GStateVictory.cpp
  * The state for the initial menu screen.
  * Game state that will contain the game over screen.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "GStateVictory.h"
 #include "Game.h"
 #include "Logger.h"
 
+// Initializes all the attributes.
 GStateVictory::GStateVictory () :
 
 	victoryImage ( nullptr ),

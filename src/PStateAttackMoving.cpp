@@ -2,12 +2,17 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @PStateAttackMoving.cpp
- * The state when the player is idle.
+ * The state when the player attack moving.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "PStateAttackMoving.h"
 #include "Logger.h"
 
+/*
+Initializes all attributes and character animation
+@see StatePlayer::enter
+*/
 void PStateAttackMoving::enter ()
 {
 
@@ -28,6 +33,7 @@ void PStateAttackMoving::handleInput ( const std::array < bool, GameKeys::MAX > 
 {
 	this -> player -> move ( keyStates_ [ GameKeys::LEFT ], keyStates_ [ GameKeys::RIGHT ] );
 
+	// When the character is in motion, it checks to see if a given frame has been reached to change the animation
 	if ( this -> player -> getAnimation () -> getCurrentFrame () == 9 )
 	{
 		this -> player -> changeState ( Player::PStates::MOVING );

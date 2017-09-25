@@ -4,6 +4,7 @@
  * @GStateVictory.h
  * The state for the initial menu screen.
  * Game state that will contain the game over screen.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_GSTATEVICTORY_H

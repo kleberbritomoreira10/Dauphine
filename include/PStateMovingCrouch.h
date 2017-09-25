@@ -3,6 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @PStateMovingCrouch.h
  * The state when the player is idle.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_PSTATEMOVINGCROUCH_H

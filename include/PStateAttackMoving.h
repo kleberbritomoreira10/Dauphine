@@ -3,8 +3,9 @@
  * Técnicas de Programação, 2/2017
  * @PStateAttackMoving.h
  * The state when the player is idle.
+ * License: Copyright (C) 2014 Alke Games.
  */
- 
+
 #ifndef INCLUDE_PSTATEATTACKMOVING_H
 #define INCLUDE_PSTATEATTACKMOVING_H
 

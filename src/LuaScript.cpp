@@ -14,7 +14,7 @@
  * Initializes a new lua state, and loads the desired script.
  * @param filename_ : Path to the desired script, i.e. "lua/level1/Player.lua".
  */
-LuaScript::LuaScript(const std::string& filename_) 
+LuaScript::LuaScript( const std::string& filename_) 
 {
   // @todo Log an error message for different lua error codes.
   this -> level = 0;
@@ -22,7 +22,8 @@ LuaScript::LuaScript(const std::string& filename_)
 
   const int loadedFile = luaL_loadfile( this -> luaState, filename_.c_str());
   const int calledFunction = lua_pcall(luaState, 0, 0, 0);
-
+  
+  //Struct control to open libs. Otherwise load file
   if ( loadedFile == LUA_OK && calledFunction == LUA_OK ) 
   {
     if ( this -> luaState != nullptr )
@@ -53,23 +54,25 @@ LuaScript::~LuaScript()
  * @param name_ : The table which contains the int vector. 
  */
 std::vector<int> LuaScript::unlua_getIntVector( const std::string& name_ ) 
-{
+{ 
+  //std was declared to use the vector in standard library
   std::vector<int> v;
   unlua_getToStack(name_);
 
-  // If the array is not found
+  //If the array is not found
   if ( lua_isnil( this -> luaState, -1) ) 
   {
     return std::vector<int>();
   }
-
+  
   lua_pushnil( this -> luaState );
-  while(lua_next( this -> luaState, -2) ) 
+  while( lua_next( this -> luaState, -2) ) 
   {
     v.push_back((int)lua_tonumber( this -> luaState, -1 ));
     lua_pop( this -> luaState, 1 );
   }
-    
+  
+  //Method to clean  
   unlua_clean();
   return v;
 }
@@ -90,24 +93,27 @@ std::vector<std::string> LuaScript::unlua_getTableKeys( const std::string& name_
   "return s "
   "end"; 
   
-  // execute code
+  //Execute code
   luaL_loadstring( this -> luaState, code.c_str()); 
+  //Execute function
   lua_pcall( this -> luaState, 0, 0, 0);
-  // get function
+  //Get function
   lua_getglobal( this -> luaState, "getKeys"); 
   lua_pushstring( this -> luaState, name_.c_str());
-  // execute function
+  //Execute function
   lua_pcall( this -> luaState, 1 , 1, 0 ); 
-
+  
+  //Declare constant test and convert to string the LuaState
   const std::string test = lua_tostring( luaState, -1 );
   std::vector<std::string> strings;
   std::string temp = "";
 
   Log(DEBUG) << "TEMP: " << test;
-
-  for ( unsigned int i = 0; i < test.size(); i++) 
+  
+  //Repetition structure to check debug.
+  for ( unsigned int i = 0; i < test.size(); i++ ) 
   {
-    if(test.at(i) != ',') 
+    if ( test.at(i) != ',' ) 
     {
       temp += test.at(i);
     } else {
@@ -128,15 +134,17 @@ bool LuaScript::unlua_getToStack( const std::string& variableName_ )
 {
   this -> level = 0;
   std::string var = "";
+
+  //Structure repetition to check whether the name is set or not
   for ( unsigned int i = 0; i < variableName_.size(); i++ ) 
   {
     if ( variableName_.at(i) == '.') 
     {
       if ( this -> level == 0) 
       {
-        lua_getglobal( this -> luaState, var.c_str());
+        lua_getglobal( this -> luaState, var.c_str() );
       } else {
-          lua_getfield( this -> luaState, -1, var.c_str());
+          lua_getfield( this -> luaState, -1, var.c_str() );
         }
       if ( lua_isnil( this -> luaState, -1)) 
       {
@@ -154,7 +162,7 @@ bool LuaScript::unlua_getToStack( const std::string& variableName_ )
   {
     lua_getglobal( this -> luaState, var.c_str() );
   } else {
-      lua_getfield( this -> luaState, -1, var.c_str());
+      lua_getfield( this -> luaState, -1, var.c_str() );
     }
   if ( lua_isnil(luaState, -1) ) 
   {

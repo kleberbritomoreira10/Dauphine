@@ -14,7 +14,8 @@
  * @see StatePlayer::enter
  */
 void PStateHit::enter()
-{
+{ 
+  //Displays this log on the terminal
   Log(DEBUG) << "STATE ATTACK JUMPING";
 	
   this -> box.x = 58;

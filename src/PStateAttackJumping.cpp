@@ -43,11 +43,12 @@ void PStateAttackJumping::handleInput( const std::array<bool, GameKeys::MAX> key
 {
 	Log( DEBUG ) << "STATE ATTACK JUMPING";
 
+	// Changing the state.
 	if ( this -> player -> getAnimation() -> getCurrentFrame() == 7 )
-  {
+  	{
 		this -> player -> changeState( Player::PStates::AERIAL );
 	}
-	// Gravity.
+	// Applying gravity.
 	this -> player -> applyGravity();
 
 	// Move ( while on air ).

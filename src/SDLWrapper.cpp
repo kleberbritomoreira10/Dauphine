@@ -1,6 +1,18 @@
+/* Dauphine
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @SDLWrapper.cpp
+* Handles player input. Using SDL event handling, recieves the player input accordingly.
+*/
+
 #include "SDLWrapper.h"
 #include "Logger.h"
 
+/**
+* The system initializer.
+* Initializes all the SDL systems and/or subsystems.
+* @return True if every system was initialized successfully, else it returns false.
+*/
 bool SDLWrapper::initialize()
 {
 	bool successSDL = false;
@@ -85,6 +97,11 @@ bool SDLWrapper::initialize()
 	return ( successSDL && successIMG && successMixer && successTTF );
 }
 
+/**
+* Closes all open systems.
+* Closes all systems and/or subsystems opened by the initializer method.
+* @see initialize()
+*/
 void SDLWrapper::close ()
 {
 	Log(DEBUG) << "Closing SDL.";
@@ -103,6 +120,13 @@ void SDLWrapper::close ()
 	TTF_Quit();
 }
 
+/**
+* Logs the SDL API version.
+* @param what_ : What API is being logged about.
+* @param compiled_ : The compiled version.
+* @param linked_ : The linked version.
+* @param revision_ : If any, the revision.
+*/
 void SDLWrapper::logSDLVersion ( const std::string& what_, const SDL_version& compiled_,
 	std::string revision_ )
 {

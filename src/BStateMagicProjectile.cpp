@@ -1,3 +1,10 @@
+/* Dauphine
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @BStateMagicProtectile.cpp
+* State of battle of boss.
+*/
+
 #include "BStateMagicProjectile.h"
 #include "Logger.h"
 #include "Sprite.h"
@@ -10,6 +17,9 @@ double mpX = 0;
 double mpY = 0;
 double hypotenuse = 0;
 
+/**
+* @see StateBoss::enter
+*/
 void BStateMagicProjectile::enter ()
 {
   // Log(DEBUG) << "STATE MAGIC PROJECTILE BOSS";
@@ -29,6 +39,9 @@ void BStateMagicProjectile::enter ()
   mpY /= hypotenuse;
 }
 
+/**
+* @see StateBoss::exit
+*/
 void BStateMagicProjectile::exit ()
 {
   this -> boss -> powerIsActivated = false;
@@ -39,6 +52,9 @@ void BStateMagicProjectile::exit ()
   this -> boss -> powerAnimation -> changeWidthHeight( 50, 50 );
 }
 
+/**
+* @see StateBoss::update 
+*/
 void BStateMagicProjectile::update ( const double dt_ ) 
 {
   projectileTime += dt_;
@@ -59,6 +75,10 @@ void BStateMagicProjectile::update ( const double dt_ )
   }
 }
 
+/**
+* The constructor.
+* @param boss_ : Reference to the Boss.
+*/
 BStateMagicProjectile::BStateMagicProjectile( Boss* const boss_ ) :
   StateBoss( boss_ )
 {

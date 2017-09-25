@@ -17,6 +17,7 @@
 * Initializes all the attributes.
 */
 GStateCredits::GStateCredits() :
+
 	creditsImage( nullptr ),
 	creditsHeightSize( 600 ),
 	creditsChangeSpeed( 2 ),
@@ -40,9 +41,10 @@ void GStateCredits::update( const double dt_ )
 {
 	( void( dt_ ) ); //unused
 
-	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+	std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 
-	if ( keyStates[GameKeys::LATTACK] == true )
+	// Setting the menu state.
+	if ( keyStates[ GameKeys::LATTACK ] == true )
 	{
 		Game::instance().setState( Game::GStates::MENU );
 	}
@@ -56,9 +58,11 @@ void GStateCredits::load()
 {
 	Log( DEBUG ) << "Loading credits...";
 
+	// Loading lua modules.
 	LuaScript luaCredits( "lua/Credits.lua" );
 	const std::string pathCredits = luaCredits.unlua_get<std::string>( "credits.images.dummy" );
 
+	// Loading credits image.
     this ->  creditsImage = Game::instance().getResources().get( pathCredits );
     this ->  creditsClip.w = this ->  creditsImage ->  getWidth();
 }
@@ -81,6 +85,7 @@ void GStateCredits::unload()
 */
 void GStateCredits::render()
 {
+	// Rendering the credits with the image and speed determined.
 	if ( this ->  creditsImage != nullptr )
 	{
 		if ( this ->  creditsClip.y < ( int )this ->  creditsImage ->  getHeight() - this ->  creditsHeightSize )

@@ -27,15 +27,17 @@ AudioHandler::AudioHandler() :
 */
 AudioHandler::~AudioHandler()
 {
-	if ( this->currentMusic != nullptr )
+	// Unload the current music.
+	if ( this -> currentMusic != nullptr )
 	{
-		Mix_FreeMusic( this->currentMusic );
-		this->currentMusic = nullptr;
+		Mix_FreeMusic( this -> currentMusic );
+		this -> currentMusic = nullptr;
 	}
 
 	// Log( DEBUG ) << "Still had " << this->currentEffects.size() << " sfx on vector.";
 
-	for ( auto sfx : this->currentEffects )
+	// Clearing effects.
+	for ( auto sfx : this -> currentEffects )
 	{
 		Mix_FreeChunk( sfx.effect );
 	}
@@ -48,15 +50,15 @@ AudioHandler::~AudioHandler()
 * If one already exists, frees it first.
 * @param path_ : The path to the desired music.
 */
-void AudioHandler::setCurrentMusic( const std::string& path_ )
+void AudioHandler::setCurrentMusic( const std::string &path_ )
 {
-	if ( this->currentMusic != nullptr )
+	if ( this -> currentMusic != nullptr )
 	{
-		Mix_FreeMusic( this->currentMusic );
-		this->currentMusic = nullptr;
+		Mix_FreeMusic( this -> currentMusic );
+		this -> currentMusic = nullptr;
 	}
 
-	this->currentMusic = Mix_LoadMUS( path_.c_str() );
+	this -> currentMusic = Mix_LoadMUS( path_.c_str() );
 }
 
 /**
@@ -66,9 +68,9 @@ void AudioHandler::setCurrentMusic( const std::string& path_ )
 */
 void AudioHandler::playMusic( const int times_ )
 {
-	if ( this->currentMusic )
+	if ( this -> currentMusic )
 	{
-		Mix_PlayMusic( this->currentMusic, times_ );
+		Mix_PlayMusic( this -> currentMusic, times_ );
 	}
 	else{
 		Log( WARN ) << "There is no song loaded.";
@@ -101,7 +103,7 @@ void AudioHandler::setMusicVolume( const unsigned int percent_ )
 */
 void AudioHandler::addSoundEffect( const std::string& path_ )
 {
-	Mix_Chunk* effect = Mix_LoadWAV( path_.c_str() );
+	Mix_Chunk *effect = Mix_LoadWAV( path_.c_str() ); // Sound effect.
 	SoundEffect sfx = {effect, -1};
 
 	if ( effect == nullptr )
@@ -122,14 +124,15 @@ void AudioHandler::addSoundEffect( const std::string& path_ )
 */
 void AudioHandler::playEffect( const int times_ )
 {
-	const int playedChannel = Mix_PlayChannel( -1, this->currentEffects.back().effect, times_ );
+	const int playedChannel = Mix_PlayChannel( -1, 
+			this -> currentEffects.back().effect, times_ ); // Channel played with effects
 
 	if ( playedChannel == -1 )
 	{
 		Log( ERROR ) << "Failed to play sound effect on channel " << playedChannel << ". " << Mix_GetError();
 	}
 
-	this->currentEffects.back().channel = playedChannel;
+	this -> currentEffects.back().channel = playedChannel;
 
 	Mix_ChannelFinished( AudioHandler::channelDone );
 }
@@ -163,15 +166,16 @@ void AudioHandler::changeMusic( const std::string& path_ )
 */
 void AudioHandler::clearChannel( const int channel_ )
 {
-	std::vector<SoundEffect>::iterator it;
+	std::vector< SoundEffect >::iterator it;
 
-	for ( it = this->currentEffects.begin(); it != this->currentEffects.end(); )
+	// Clearing all the effetcs played in the channel.
+	for ( it = this -> currentEffects.begin(); it != this -> currentEffects.end(); )
 	{
-		if ( it->channel == channel_ )
+		if ( it -> channel == channel_ )
 		{
-			Mix_FreeChunk( it->effect );
-			it->effect = nullptr;
-			this->currentEffects.erase( it );
+			Mix_FreeChunk( it -> effect );
+			it -> effect = nullptr;
+			this -> currentEffects.erase( it );
 		} else
 		{
 			it++;

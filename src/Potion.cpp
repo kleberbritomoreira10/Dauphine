@@ -23,16 +23,18 @@ Potion::Potion( const double x_, const double y_, const std::string &path_, cons
 
 	DynamicEntity( x_, y_, path_ ),
 	activated( true ),
-    canExplode( true ),
-    isExploding( true ),
+  canExplode( true ),
+  isExploding( true ),
 	strength( strength_ ),
 	distance( distance_ ),
 	flightTime( 0.0 ),
-  	animation( nullptr )
+  animation( nullptr )
 {
-  this -> width = 192;
 
+  this -> width = 192;
 	this -> isRight = isRight_;
+
+  // Loading potion width.
 	if ( this -> isRight )
 	{
 		this -> x -= this -> width;
@@ -41,10 +43,9 @@ Potion::Potion( const double x_, const double y_, const std::string &path_, cons
         this -> x -= this -> width;
   }
 
+    // Loading animation and potion characteristics.
     this -> animation = new Animation( 0, 0, 192, 192, 13, false );
-
     this -> y = this -> y + 100;
-
     this -> vx = 5 + abs( inertia_/80 );
     this -> vy = 5;
 }
@@ -66,15 +67,18 @@ Potion::~Potion()
 void Potion::update( const double dt_ )
 {
 
-	const int angle = 360 - 45;
-	const double gravity = 35;
+	const int angle = 360 - 45; // Potion animation angle.
+	const double gravity = 35; // Gravity value.
 
+  // Updating Bounding box and animation.
   updateBoundingBox();
   this -> animation -> update( this -> animationClip, dt_ );
 
+  // Detecting collisions and handling.
 	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
   handleCollision( detections );
 
+  // Updating all the potion characteristics.
 	if ( this -> activated )
 	{
 
@@ -82,6 +86,7 @@ void Potion::update( const double dt_ )
 
 		this -> flightTime +=dt_;
 
+    // Calculating potion's speed in Y axis and in X axis.
 		const double speedXIdk = ( this -> distance/300.0 )*( this -> vx + this -> strength * cos( angle/57.29 ) * flightTime );
 		const double speedYIdk = ( this -> vy + this -> strength * sin( angle/57.29 ) *
 															flightTime - 0.5*gravity*flightTime*flightTime );
@@ -97,6 +102,7 @@ void Potion::update( const double dt_ )
 		this -> y -= speedYIdk;
 	} else
 	{
+        // Changing animation if can explode.
         if ( this -> canExplode )
 				{
             this -> getAnimation() -> changeAnimation( 1, 0, 12, false, 0.8 );
@@ -116,6 +122,8 @@ void Potion::update( const double dt_ )
 */
 void Potion::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ )
 {
+
+  // Handling SOLID_TOP collision.
   if ( detections_.at( CollisionSide::SOLID_TOP ) )
 	{
 		if ( ( int )this -> y%64 > 0 )
@@ -126,12 +134,14 @@ void Potion::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
     }
 	}
 
+  // Handling SOLID_BOTOM collision.
 	if ( detections_.at( CollisionSide::SOLID_BOTTOM ) )
 	{
   	this -> strength = 0.0;
   	this -> activated = false;
   }
 
+  // Handling SOLID_LEFT collision.
   if ( detections_.at( CollisionSide::SOLID_LEFT ) )
 	{
 		this -> x -= ( int )( this -> x + this -> width )%64 + 1;
@@ -139,6 +149,7 @@ void Potion::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
     this -> activated = false;
   }
 
+  // Handling SOLID_RIGHT collision.
   if ( detections_.at( CollisionSide::SOLID_RIGHT ) )
 	{
     if ( ( int )this -> x%64 > 0 )
@@ -161,8 +172,8 @@ void Potion::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
 void Potion::render( const double cameraX_, const double cameraY_ )
 {
 
-	const double dx = this -> x - cameraX_ + this -> width - 64;
-  const double dy = this -> y - cameraY_ - this -> height;
+	const double dx = this -> x - cameraX_ + this -> width - 64; // Potion's position in X axis.
+  const double dy = this -> y - cameraY_ - this -> height; // Potion's position in Y axis.
 
   /*Actual.
  SDL_Rect actualRect = {( int )dx, ( int )dy, ( int )this -> width, ( int )this -> height};
@@ -173,9 +184,10 @@ void Potion::render( const double cameraX_, const double cameraY_ )
  SDL_SetRenderDrawColor(  Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF );
  SDL_RenderFillRect( Window::getRenderer(), &boundingBox2 );*/
 
+  // Rendering sprite if it is not null and if it is exploding.
   if ( this -> sprite != nullptr && this -> isExploding )
 	{
-		this -> sprite -> render( dx, dy, &this -> animationClip, false, this -> vx*3/2, nullptr, SDL_FLIP_HORIZONTAL );
+		this -> sprite -> render( dx, dy, &this -> animationClip, false, this -> vx * 3/2, nullptr, SDL_FLIP_HORIZONTAL );
   }
 }
 

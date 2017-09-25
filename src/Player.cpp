@@ -57,13 +57,15 @@ Player::Player( const double x_, const double y_, const std::string &path_ ) :
 {
     initializeStates();
 
+    // Loading lua modules.
     LuaScript luaPlayer( "lua/Player.lua" );
     this ->  width = luaPlayer.unlua_get<int>( "player.dimensions.width" );
     this -> height = luaPlayer.unlua_get<int>( "player.dimensions.height" );
 
-    // Shouldn't be here?
+    // Loading animation.
     this -> animation = new Animation( 0, 3, this -> width, this -> height, 11, false );
 
+    // Verifying if the sprite is available.
     if ( this -> sprite != nullptr )
     {
         this -> currentState = this -> statesMap.at( IDLE );
@@ -81,12 +83,15 @@ Player::Player( const double x_, const double y_, const std::string &path_ ) :
 */
 Player::~Player()
 {
+
+    // Exiting the current state.
     if ( this -> currentState != nullptr )
     {
         this -> currentState -> exit();
         this -> currentState = nullptr;
     }
 
+    // Deleting animation.
     if ( this -> animation != nullptr )
     {
         delete this -> animation;
@@ -104,26 +109,30 @@ Player::~Player()
 */
 void Player::update( const double dt_ )
 {
+
+    // Getting inputs to update the player.
     std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 
+    // Vrifying if the player can move.
     if ( this -> canMove )
     {
         this -> currentState -> handleInput( keyStates );
     }
 
+    // Updating the actions.
     Game::instance().clearKeyFromInput( GameKeys::ACTION );
-
     scoutPosition( dt_ );
-
     updateBoundingBox();
 
+    // Loading collision.
     const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
     handleCollision( detections );
-
     updatePosition( dt_ );
 
+    // Updating animation.
     this -> animation -> update( this -> animationClip, dt_ );
 
+    // Updating potions if activated.
     for ( auto potion : this -> potions )
     {
         if ( !potion -> activated )
@@ -133,6 +142,7 @@ void Player::update( const double dt_ )
         potion -> update(dt_);
     }
 
+    // Verifying if the player is vulnerable, if not, the player can attack.
     if ( !this -> isVulnerable )
     {
         this -> invulnerableTime += dt_;
@@ -144,6 +154,7 @@ void Player::update( const double dt_ )
         }
     }
 
+    // Verifying if player is climbing.
     if ( this -> isClimbing && !isCurrentState(PStates::CLIMBING) )
     {
         changeState( PStates::CLIMBING );
@@ -157,11 +168,14 @@ void Player::update( const double dt_ )
 */
 void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ )
 {
+    // Verifying if the collision is COLLIDED_TOP.
     if ( detections_.at(CollisionSide::SOLID_TOP) )
     {
         Log(DEBUG) << "COLLIDED_TOP";
         this -> vy = 0.0;
     }
+
+    // Verifying if the collision is SOLID_BOTTOM.
     if ( detections_.at(CollisionSide::SOLID_BOTTOM) )
     {
         if ( isCurrentState( PStates::AERIAL ) || isCurrentState( PStates::ATTACKJUMPING )
@@ -180,17 +194,22 @@ void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
         }
     } else
     {
+        // Changing the player's state.
         if ( !isCurrentState( PStates::AERIAL ) && !isCurrentState( PStates::ATTACKJUMPING )
             && !isCurrentState( PStates::CLIMBING ) && !isCurrentState( PStates::DEAD ))
         {
             changeState( PStates::AERIAL );
         }
     }
+
+    //Verifying if the collision side is left.
     if ( detections_.at( CollisionSide::SOLID_LEFT ) )
     {
         this -> nextX = this -> x;
         this -> vx = 0.0;
     }
+
+    // Verifying if the collision side is right.
     if ( detections_.at( CollisionSide::SOLID_RIGHT ) )
     {
         this -> nextX = this -> x;
@@ -221,6 +240,7 @@ void Player::render( const double cameraX_, const double cameraY_ )
     SDL_SetRenderDrawColor( Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderFillRect(Window::getRenderer(), &boundingBox2); */
 
+    // Rendering SDL_FLIP.
     if ( this -> sprite != nullptr )
     {
         SDL_RendererFlip flip = getFlip();
@@ -234,11 +254,13 @@ void Player::render( const double cameraX_, const double cameraY_ )
         }
     }
 
+    // Rendering crosshair.
     if ( this -> crosshair != nullptr )
     {
         this -> crosshair -> render( cameraX_, cameraY_ );
     }
 
+    // Rendering potions.
     for ( auto potion : this -> potions )
     {
         potion -> render( cameraX_, cameraY_ );
@@ -253,11 +275,13 @@ void Player::render( const double cameraX_, const double cameraY_ )
 */
 void Player::usePotion( const int strength_, const int distance_ )
 {
+
+    // Using potions if the potions' quantity is > 0.
     if ( this -> potionsLeft > 0 )
     {
         this -> potionsLeft--;
         const double potionX = (( this -> isRight ) ? this -> boundingBox.x + this -> boundingBox.w : this -> boundingBox.x );
-        Potion* potion = new Potion( potionX , this -> y, "res/images/explosion_with_potion.png",
+        Potion *potion = new Potion( potionX , this -> y, "res/images/explosion_with_potion.png",
         strength_, this -> vx, distance_, this -> isRight );
         this -> potions.push_back( potion );
     }
@@ -269,6 +293,7 @@ void Player::usePotion( const int strength_, const int distance_ )
 */
 void Player::addPotions( const unsigned int quantity_ )
 {
+    // Adding potions if the total of potions is < maximum number of potions.
     if ( this -> potionsLeft + quantity_ > this -> maxPotions )
     {
         this -> potionsLeft = this -> maxPotions;
@@ -284,6 +309,7 @@ void Player::addPotions( const unsigned int quantity_ )
 */
 void Player::initializeStates()
 {
+    // Loading all the states.
     ADD_STATE_INSERT( IDLE,         PStateIdle );
     ADD_STATE_INSERT( MOVING,       PStateMoving );
     ADD_STATE_INSERT( AERIAL,       PStateAerial );

@@ -18,7 +18,7 @@
 #include "Collision.h"
 #include "Crosshair.h"
 
-double ok = 0;
+double ok = 0; // iterator that determines when to change the state to game over
 
 // Quantity of items that can be caught in phase 1.
 LevelOne::LevelOne ():

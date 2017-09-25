@@ -2,7 +2,8 @@
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
 * @BStateTeleport.cpp
-* Objects in this class control the behavior of teleportation
+* Objects in this class control the behavior of teleportation to the boss
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "BStateTeleport.h"
@@ -19,6 +20,10 @@ int offset = 33;
 bool right;
 int direction = 0;
 
+/*
+ Method called on load.
+ @see StateBoss::enter
+ */
 void BStateTeleport::enter ()
 {
 	// Log(DEBUG) << "STATE TELEPORT BOSS";
@@ -31,7 +36,10 @@ void BStateTeleport::enter ()
 
 }
 
-
+/*
+* Method called on unload.
+* @see StateBoss::exit
+*/
 void BStateTeleport::exit ()
 {
 	this -> boss -> powerIsActivated = false;
@@ -42,6 +50,11 @@ void BStateTeleport::exit ()
 	tptime = 0.0;
 }
 
+/**
+* Update method for the state.
+* While the Boss is on the state, this method runs every update.
+* @param dt_ : Delta time. Time elapsed between one frame and the other.
+*/
 void BStateTeleport::update ( const double dt_ )
 {
 	tptime += dt_;
@@ -51,7 +64,7 @@ void BStateTeleport::update ( const double dt_ )
 		this -> boss -> vx = 0;
 		this -> boss -> vy = 0;
 
-	}else if ( tptime >= 3 && tptime <= 3.05 )
+	} else if ( tptime >= 3 && tptime <= 3.05 )
 	{
 
 		this -> boss -> getAnimation() -> changeAnimation ( 0, 0, 1, false, 0 );

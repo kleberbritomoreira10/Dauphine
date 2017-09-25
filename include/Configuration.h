@@ -3,6 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @Configuration.h
  * Game configuration class
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_CONFIGURATION_H

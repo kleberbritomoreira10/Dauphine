@@ -4,7 +4,8 @@
  * @DynamicEntity.h
  * Subclass of Entity.
  * The objects of this class are entities, but have physics applied to them (such as velocity).
- */
+ * License: Copyright (C) 2014 Alke Games.
+  */
 
 #ifndef INCLUDE_DYNAMICENTITY_H
 #define INCLUDE_DYNAMICENTITY_H
@@ -62,7 +63,7 @@ class DynamicEntity : public Entity
 		virtual void setLevelWH ( const unsigned int width_, const unsigned int height_ );
 
 		double vx; /**< The dynamic entity's speed on the x axis. */
-		double vy; /**< The dynamic entity's speed on the x axis. */
+		double vy; /**< The dynamic entity's speed on the y axis. */
 		double speed; /**< Speed that moves dynamic entity on input. */
 		double maxSpeed; /**< Dynamic entity max speed. */
 		bool isGrounded; /**< Check for if the dynamic entity is on the ground. */

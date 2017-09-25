@@ -3,6 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @BStateTeleport.h
  * Objects in this class control the behavior of teleportation.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_BSTATETELEPORT_H

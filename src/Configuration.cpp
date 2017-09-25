@@ -3,13 +3,14 @@
  * Técnicas de Programação, 2/2017
  * @Configuration.cpp
  * Game configuration class
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "Configuration.h"
 #include "LuaScript.h"
 
 
-// 16:10
+// Default screen ratio is 16:10
 const unsigned int Configuration::resolutionWidth = 192;
 const unsigned int Configuration::resolutionHeight = 108;
 
@@ -24,8 +25,7 @@ unsigned int Configuration::cameraDistanceHeight = 0;
 // Starts the settings menu.
 void Configuration::initialize ()
 {
-	/// @todo Make sure recieved ints are not negative.
-
+	// Initializing all settings through the Lua.
 	LuaScript luaConfig( "lua/Config.lua" );
 
 	Configuration::maxFramerate =
@@ -51,55 +51,55 @@ void Configuration::initialize ()
 
 }
 
-// The game's width resolution. (16)
+// @return The game's width resolution. (16)
 unsigned int Configuration::getResolutionWidth ()
 {
 	return Configuration::resolutionWidth;
 }
 
-// The game's height resolution. (10)
+// @return The game's height resolution. (10)
 unsigned int Configuration::getResolutionHeight ()
 {
 	return Configuration::resolutionHeight;
 }
 
-// The game's max framerate
+// @return The game's max framerate
 uint32_t Configuration::getMaxFramerate ()
 {
 	return Configuration::maxFramerate;
 }
 
-// < The game window's title.
+// @return The game window's title.
 std::string Configuration::getWindowTitle ()
 {
 	return Configuration::windowTitle;
 }
 
-// The size of the logical rendering.
+// @return The size of the logical rendering.
 unsigned int Configuration::getLogicalRenderSize ()
 {
 	return Configuration::logicalRenderSize;
 }
 
-// The screen width.
+// @return The screen width.
 unsigned int Configuration::getScreenWidth ()
 {
 	return Configuration::screenWidth;
 }
 
-// The screen height.
+// @return The screen height.
 unsigned int Configuration::getScreenHeight ()
 {
 	return Configuration::screenHeight;
 }
 
-// The width distance of the camera.
+// @return The width distance of the camera.
 unsigned int Configuration::getCameraDistanceWidth ()
 {
 	return Configuration::cameraDistanceWidth;
 }
 
-// The height distance of the camera.
+// @return The height distance of the camera.
 unsigned int Configuration::getCameraDistanceHeight ()
 {
 	return Configuration::cameraDistanceHeight;

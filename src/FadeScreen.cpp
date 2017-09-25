@@ -1,8 +1,10 @@
-/* Dauphine
+/*
+ * Dauphine
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @FadeScreen.cpp
  * Objects in this class are responsible for determining the behavior of the fade on the screen.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "FadeScreen.h"
@@ -11,7 +13,7 @@
 
 FadeScreen::FadeScreen() :
 
-
+	// Load de image of fade from a file
 	fadeImage ( Game::instance (). getResources (). get ( "res/images/black_screen.png" ) ),
 	fadeHandler ( new FadeHandler ( this -> fadeImage ) )
 
@@ -40,6 +42,7 @@ void FadeScreen::update ( const double dt_ )
 	fadeHandler -> update ( dt_ );
 }
 
+// Verify condition to Render the image
 void FadeScreen::render ()
 {
 
@@ -49,7 +52,8 @@ void FadeScreen::render ()
 	}
 }
 
-
+/* Verify condition to Fade (false or true)
+ * @return A bool variable when the currently percentage is reached. */
 bool FadeScreen::isFaded ()
 {
 

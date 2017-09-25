@@ -1,8 +1,10 @@
-/* Dauphine
+/*
+ * Dauphine
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @FadeScreen.h
  * Objects in this class are responsible for determining the behavior of the fade on the screen.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_FADESCREEN_H

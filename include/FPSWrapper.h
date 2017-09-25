@@ -3,6 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @FPSWrapper.cpp
  * Objects in this class are responsible for FPS manager and sets framerate.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_FPSWRAPPER_H

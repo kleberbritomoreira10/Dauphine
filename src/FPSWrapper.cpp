@@ -3,6 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @FPSWrapper.cpp
  * Objects in this file are responsible for FPS manager and sets framerate.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "FPSWrapper.h"

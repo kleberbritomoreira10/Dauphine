@@ -2,7 +2,8 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @GStateNewGame.h
-* The state for the Continue menu screen.
+ * The state for the Continue menu screen.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_GSTATENEWGAME_H

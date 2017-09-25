@@ -4,6 +4,7 @@
  * @Document.h
  * Subclass of Entity.
  * The objects of this class are entities, but have physics applied to them.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_DOCUMENT_H
@@ -39,7 +40,7 @@ class Document : public Entity
 
 		void renderDocumentText ();
 
-		bool shouldRender;
+		bool shouldRender; // Bool variable to set when the Render of document should set
 
 	private:
 		Sprite *documentText; // A text sprite from a Document

@@ -2,7 +2,8 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @GStateNewGame.cpp
-* The state for the Continue menu screen.
+ * The state for the New Game menu screen.
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #include "GStateNewGame.h"
@@ -13,6 +14,9 @@
 
 #include <string>
 
+/*
+The state for the New Game menu screen.
+The player can start a new game by selecting a new slot to save the game */
 GStateNewGame::GStateNewGame () :
 
 	background ( nullptr ),
@@ -23,6 +27,11 @@ GStateNewGame::GStateNewGame () :
 	selectorYPosition { 500, 610, 723 }
 {
 
+	/*
+	Only 3 slots are instantiated for a new game.
+	When loading the font of the text appears "Empty slot" or the level that the
+	player stopped in the slot that was taken.
+	*/
 	this -> slot1 = new Text ( 615.0, 520.0, "res/fonts/maturasc.ttf",
 		45, "Empty Slot");
 
@@ -34,6 +43,7 @@ GStateNewGame::GStateNewGame () :
 
 }
 
+// Check whether the slot has already been used or not
 GStateNewGame::~GStateNewGame ()
 {
 
@@ -67,6 +77,7 @@ void GStateNewGame::load ()
 
 	Log ( DEBUG ) << "Loading Choose Slot Screen...";
 
+	// Start a new game on slot 1.
 	if ( Game::instance (). getSaves (). isSaved ( SLOT_1 ) )
 	{
 
@@ -89,6 +100,7 @@ void GStateNewGame::load ()
 		this -> slot1 -> changeText ( "Empty Slot" );
 	}
 
+	// Start a new game on slot 2.
 	if ( Game::instance (). getSaves (). isSaved ( SLOT_2 ) )
 	{
 
@@ -111,6 +123,7 @@ void GStateNewGame::load ()
 		this -> slot2 -> changeText ( "Empty Slot" );
 	}
 
+	// Start a new game on slot 3.
 	if ( Game::instance (). getSaves (). isSaved ( SLOT_3 ) )
 	{
 
@@ -202,7 +215,7 @@ void GStateNewGame::render ()
 	}
 }
 
-// Handle with the input that player select on menu in the game
+// Handle with the input that player select on menu in the game.
 void GStateNewGame::handleSelectorMenu ()
 {
 
@@ -210,6 +223,7 @@ void GStateNewGame::handleSelectorMenu ()
 
 	const double selectorDelayTime = 0.2;
 
+	// When an attack key is pressed the game returns to the start menu.
 	if ( keyStates [ GameKeys::LATTACK ] == true )
 	{
 
@@ -219,6 +233,7 @@ void GStateNewGame::handleSelectorMenu ()
 		}
 	}
 
+	// When the down or right key is pressed the selection goes to the next slot.
 	if ( keyStates [ GameKeys::DOWN ] == true || keyStates [ GameKeys::RIGHT ]
 		 == true )
 	{
@@ -237,7 +252,8 @@ void GStateNewGame::handleSelectorMenu ()
 			this -> passedTime = 0.0;
 
 		}
-	}else if ( keyStates [ GameKeys::UP ] == true || keyStates [ GameKeys::LEFT ]
+	// When the up or left key is pressed the selection goes to the previous slot.
+	} else if ( keyStates [ GameKeys::UP ] == true || keyStates [ GameKeys::LEFT ]
 				 == true)
 			{
 
@@ -257,6 +273,7 @@ void GStateNewGame::handleSelectorMenu ()
 			this -> passedTime = 0.0;
 		}
 
+	// When the selection is in slot 1 and the space key is pressed, a new game starts saved in slot 1.
 	}else if ( currentSelection == Selection::SLOT_1 && keyStates [ GameKeys::SPACE ]
 			 	== true)
 			{
@@ -267,6 +284,7 @@ void GStateNewGame::handleSelectorMenu ()
 		Game::instance (). transitionTo = Game::GStates::LEVEL_ONE;
 		Game::instance (). setState( Game::GStates::TRANSITION );
 
+	// When the selection is in slot 2 and the space key is pressed, a new game starts saved in slot 2.
 	}else if ( currentSelection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ]
 				== true)
 			{
@@ -277,6 +295,7 @@ void GStateNewGame::handleSelectorMenu ()
 		Game::instance (). transitionTo = Game::GStates::LEVEL_ONE; //should be level one, two is here for testing purposes
 		Game::instance (). setState ( Game::GStates::TRANSITION );
 
+	// When the selection is in slot 3 and the space key is pressed, a new game starts saved in slot 3.
 	}else if ( currentSelection == Selection::SLOT_3 && keyStates[GameKeys::SPACE]
 				== true)
 			{

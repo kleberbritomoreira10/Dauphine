@@ -4,8 +4,9 @@
  * @Document.cpp
  * Subclass of Entity.
  * The objects of this class are entities, but have physics applied to them.
+ * License: Copyright (C) 2014 Alke Games.
  */
- 
+
 #include "Document.h"
 #include "Logger.h"
 #include "Game.h"
@@ -58,6 +59,10 @@ void Document::render ( const double cameraX_, const double cameraY_ )
 	}
 }
 
+/*
+Render the document
+Always renders on 0,0 position.
+*/
 void Document::renderDocumentText ()
 {
 	this -> documentText -> render ( 0, 0, nullptr, true );

@@ -1,10 +1,10 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @Level.cpp
- * The levels of the game.
- * Class that controll the levels of the game.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @Level.cpp
+* The levels of the game.
+* Class that controll the levels of the game.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "Level.h"
@@ -12,8 +12,8 @@
 #include "Game.h"
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 Level::Level() :
 	width( 0 ),
@@ -34,7 +34,7 @@ Level::Level() :
 }
 
 /**
- * The destructor.
+* The destructor.
 */
 Level::~Level()
 {
@@ -66,11 +66,11 @@ Level::~Level()
 }
 
 /**
- * Change the current checkpoint, updating for the last reached checkpoint.
- * @param NUMBER_OF_CHECKPOINTS_: the number maximun of checkpoints.
- * @param checkpointsX_: vector for checkpoint position in axis x of the.
- * @param checkpointsY_: vector for checkpoint position in axis y of the.
- */
+* Change the current checkpoint, updating for the last reached checkpoint.
+* @param NUMBER_OF_CHECKPOINTS_: the number maximun of checkpoints.
+* @param checkpointsX_: vector for checkpoint position in axis x of the.
+* @param checkpointsY_: vector for checkpoint position in axis y of the.
+*/
 void Level::changeCheckpoints( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpointsX_,
 		std::vector <double> checkpointsY_ )
 {
@@ -90,9 +90,9 @@ unsigned int Level::getHeight()
 }
 
 /**
- * Sets the proprieties for the players of the game.
- * @param player_: the current object player will be configured.
- */
+* Sets the proprieties for the players of the game.
+* @param player_: the current object player will be configured.
+*/
 void Level::setPlayer( Player* const player_ )
 {
 	this -> player = player_;
@@ -110,9 +110,9 @@ void Level::setPlayer( Player* const player_ )
 }
 
 /**
- * Sets the proprieties for the cameras of the game.
- * @param camera_: the current object camera will be configured.
- */
+* Sets the proprieties for the cameras of the game.
+* @param camera_: the current object camera will be configured.
+*/
 void Level::setCamera(Camera *const camera_)
 {
 	this -> camera = camera_;
@@ -136,9 +136,9 @@ void Level::setCamera(Camera *const camera_)
 }
 
 /**
- * Sets the proprieties for the boss of the game.
- * @param bos_: the object bos will be configured.
- */
+* Sets the proprieties for the boss of the game.
+* @param bos_: the object bos will be configured.
+*/
 void Level::setBoss( Boss *const boss_ ){
 	this -> boss = boss_;
 
@@ -161,7 +161,7 @@ void Level::setBoss( Boss *const boss_ ){
 }
 
 /**
- * Ends with enemies in the screen.
+* Ends with enemies in the screen.
 */
 void Level::clearEnemies()
 {
@@ -175,7 +175,7 @@ void Level::clearEnemies()
 }
 
 /**
- * Ends with documents useds in the game..
+* Ends with documents useds in the game..
 */
 void Level::clearDocuments()
 {

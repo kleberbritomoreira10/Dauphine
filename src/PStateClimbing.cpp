@@ -1,10 +1,10 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @PStateClimbing.cpp
- * The state of the climbing of the player.
- * Class that controll the climbing of the player.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @PStateClimbing.cpp
+* The state of the climbing of the player.
+* Class that controll the climbing of the player.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "PStateClimbing.h"
@@ -13,7 +13,7 @@
 bool isMoving = false;
 
 /**
- * Shows the animation of the player entering in climbing state.
+* Shows the animation of the player entering in climbing state.
 */
 void PStateClimbing::enter()
 {
@@ -41,7 +41,7 @@ void PStateClimbing::enter()
 }
 
 /**
- * Ends with climbing state of the player.
+* Ends with climbing state of the player.
 */
 void PStateClimbing::exit()
 {
@@ -97,8 +97,8 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 }
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 PStateClimbing::PStateClimbing( Player *const player_ ) :
 	StatePlayer( player_ )

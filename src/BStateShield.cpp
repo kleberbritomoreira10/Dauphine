@@ -1,17 +1,17 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @BStateShield.cpp
- * The state of the shield of the boss.
- * Class that controll the shield of the boss.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @BStateShield.cpp
+* The state of the shield of the boss.
+* Class that controll the shield of the boss.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "BStateShield.h"
 #include "Logger.h"
 
 /**
- * Shows the animation of the boss getting a shield.
+* Shows the animation of the boss getting a shield.
 */
 void BStateShield::enter()
 {
@@ -21,7 +21,7 @@ void BStateShield::enter()
 }
 
 /**
- * Shows the boss losing a shield.
+* Shows the boss losing a shield.
 */
 void BStateShield::exit()
 {
@@ -29,7 +29,7 @@ void BStateShield::exit()
 }
 
 /**
- * Changing the state of the boss shield.
+* Changing the state of the boss shield.
 */
 void BStateShield::update( const double dt_ )
 {
@@ -39,8 +39,8 @@ void BStateShield::update( const double dt_ )
 }
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 BStateShield::BStateShield( Boss* const boss_ ) :
 	StateBoss( boss_ )

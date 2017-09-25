@@ -1,10 +1,10 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @GStateMenu.cpp
- * The control of state of the menu of the game.
- * Class that controll the state of menu of the game.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @GStateMenu.cpp
+* The control of state of the menu of the game.
+* Class that controll the state of menu of the game.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "GStateMenu.h"
@@ -14,8 +14,8 @@
 #include <string>
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 GStateMenu::GStateMenu() :
 	shouldIgnore( false ),
@@ -41,7 +41,7 @@ GStateMenu::GStateMenu() :
 }
 
 /**
- * The destructor.
+* The destructor.
 */
 GStateMenu::~GStateMenu()
 {
@@ -53,7 +53,7 @@ GStateMenu::~GStateMenu()
 }
 
 /**
- * Load the menu of the game showing the options and playing the music.
+* Load the menu of the game showing the options and playing the music.
 */
 void GStateMenu::load()
 {
@@ -81,7 +81,7 @@ void GStateMenu::load()
 }
 
 /**
- * Exiting of the menu and cleaning the display.
+* Exiting of the menu and cleaning the display.
 */
 void GStateMenu::unload()
 {
@@ -91,7 +91,7 @@ void GStateMenu::unload()
 }
 
 /**
- * Changing the state menu of the game.
+* Changing the state menu of the game.
 */
 void GStateMenu::update( const double dt_ )
 {
@@ -116,7 +116,7 @@ void GStateMenu::update( const double dt_ )
 }
 
 /**
- * Show the menu of the game with your properties.
+* Show the menu of the game with your properties.
 */
 void GStateMenu::render()
 {
@@ -164,7 +164,7 @@ void GStateMenu::render()
 }
 
 /**
- * Controlls the user input for enter in menu of the game.
+* Controlls the user input for enter in menu of the game.
 */
 void GStateMenu::handleSelectorMenu()
 {

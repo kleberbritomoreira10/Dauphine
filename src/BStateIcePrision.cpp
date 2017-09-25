@@ -1,10 +1,10 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @BStateIcePrision.cpp
- * The state of the ice prision of the boss.
- * Class that controll the ice prision of the boss.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @BStateIcePrision.cpp
+* The state of the ice prision of the boss.
+* Class that controll the ice prision of the boss.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "BStateIcePrision.h"
@@ -16,7 +16,7 @@
 double prisionTime = 0.0;
 
 /**
- * Shows the animation of the boss entering in the state of ice prision.
+* Shows the animation of the boss entering in the state of ice prision.
 */
 void BStateIcePrision::enter()
 {
@@ -33,7 +33,7 @@ void BStateIcePrision::enter()
 }
 
 /**
- * Ends with the state of ice prision of the boss.
+* Ends with the state of ice prision of the boss.
 */
 void BStateIcePrision::exit()
 {
@@ -45,7 +45,7 @@ void BStateIcePrision::exit()
 }
 
 /**
- * Changing the position of the boss in ice prision.
+* Changing the position of the boss in ice prision.
 */
 void BStateIcePrision::update( const double dt_ )
 {
@@ -73,8 +73,8 @@ void BStateIcePrision::update( const double dt_ )
 }
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 BStateIcePrision::BStateIcePrision( Boss* const boss_ ) :
   StateBoss(boss_)

@@ -1,22 +1,22 @@
 /* Dauphine
- * Universidade de Brasília - FGA
- * Técnicas de Programação, 2/2017
- * @QuadTree.cpp
- * The control of the trees in the game.
- * Class that controll the tree movements of the game.
- * License: Copyright (C) 2014 Alke Games.
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @QuadTree.cpp
+* The control of the trees in the game.
+* Class that controll the tree movements of the game.
+* License: Copyright (C) 2014 Alke Games.
 */
 
 #include "QuadTree.h"
 
 /*
-Thanks to:
-http://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
+* Thanks to:
+* http://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
 */
 
 /**
- * The constructor.
- * Initializes the attributes.
+* The constructor.
+* Initializes the attributes.
 */
 QuadTree::QuadTree( int level_, SDL_Rect bounds_ ) :
 	maxObjects( 10 ),
@@ -29,7 +29,7 @@ QuadTree::QuadTree( int level_, SDL_Rect bounds_ ) :
 }
 
 /**
- * The destructor.
+* The destructor.
 */
 QuadTree::~QuadTree()
 {
@@ -37,7 +37,7 @@ QuadTree::~QuadTree()
 }
 
 /**
- * Clearing the nodes objects of the Quad Tree on the game.
+* Clearing the nodes objects of the Quad Tree on the game.
 */
 void QuadTree::clear()
 {
@@ -54,7 +54,7 @@ void QuadTree::clear()
 }
 
 /**
- * Applying the split in objects of the Quad Tree on the game.
+* Applying the split in objects of the Quad Tree on the game.
 */
 void QuadTree::split()
 {
@@ -75,8 +75,8 @@ void QuadTree::split()
 }
 
 /**
- * Getting the index for objects of the Quad Tree on the game.
- * @param rect_: object used for manage the postions in the axys.
+* Getting the index for objects of the Quad Tree on the game.
+* @param rect_: object used for manage the postions in the axys.
 */
 int QuadTree::getIndex( SDL_Rect rect_ )
 {
@@ -118,8 +118,8 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 }
 
 /**
- * Managing the insertion for colisions objects of the Quad Tree on the game.
- * @param rect_: object used for manage the postions in the axys.
+* Managing the insertion for colisions objects of the Quad Tree on the game.
+* @param rect_: object used for manage the postions in the axys.
 */
 void QuadTree::insert( CollisionRect rect_ ){
 	if( nodes[ 0 ] != nullptr )
@@ -174,8 +174,8 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector<CollisionRect>& retur
 }
 
 /**
- * Updating the objects in the game after the colisions.
- * @param object_: object used for manage after the colisions.
+* Updating the objects in the game after the colisions.
+* @param object_: object used for manage after the colisions.
 */
 void QuadTree::setObjects( std::vector<CollisionRect>& objects_ )
 {

@@ -14,6 +14,7 @@
 void PStateCrouching::enter()
 {
 
+	// Getting bounding box position parameters.
 	this -> box.x = ( int )this -> player -> getWidth() / 4 - 33;
   	this -> box.w = ( int )this -> player -> getWidth() / 1.7;
 	this -> box.y = ( int )this -> player -> getHeight() / 2;
@@ -42,6 +43,7 @@ void PStateCrouching::handleInput( const std::array<bool, GameKeys::MAX> keyStat
 {
 	this -> player -> getAnimation() -> changeAnimation( 8,9,1,false,0 );
 
+	// Getting idle.
 	if ( !keyStates_[GameKeys::CROUCH] )
 	{
 		this -> player -> changeState( Player::PStates::IDLE );
@@ -58,12 +60,14 @@ void PStateCrouching::handleInput( const std::array<bool, GameKeys::MAX> keyStat
 		return;
 	}
 
+	// Moving player.
 	if ( keyStates_[GameKeys::LEFT] || keyStates_[GameKeys::RIGHT] )
 	{
 		this -> player -> changeState( Player::PStates::MOVINGCROUCH );
 		return;
 	}
 
+	// Rolling player.
 	if ( keyStates_[GameKeys::ROLL] )
 	{
 		this -> player -> changeState( Player::PStates::ROLLING );

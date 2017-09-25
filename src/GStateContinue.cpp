@@ -1,9 +1,20 @@
+/* Dauphine
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @GStateContinue.cpp
+* The state for the Continue menu screen.
+*/
+
 #include "GStateContinue.h"
 #include "LuaScript.h"
 #include "Game.h"
 #include "Util.h"
 #include <string>
 
+/**
+* The constructor.
+* Initializes all the attributes.
+*/
 GStateContinue::GStateContinue() :
 	background ( nullptr ),
 	selector ( nullptr ),
@@ -17,6 +28,9 @@ GStateContinue::GStateContinue() :
 	this -> slot3 = new Text ( 615.0, 730.0, "res/fonts/maturasc.ttf", 45, "Empty Slot" );
 }
 
+/**
+* The destructor.
+*/
 GStateContinue::~GStateContinue ()
 {
 	if ( this -> slot1 != nullptr )
@@ -38,6 +52,10 @@ GStateContinue::~GStateContinue ()
 	}
 }
 
+/**
+* Loads the level.
+* From the menu.lua script, loads all the necessary objects.
+*/
 void GStateContinue::load ()
 {
 	Log(DEBUG) << "Loading Continue Screen...";
@@ -127,12 +145,20 @@ void GStateContinue::load ()
 	Game::instance().getFade().fadeOut ( 0, 0.002);
 }
 
+/**
+* Updates the objects within the StateGame.
+* @param dt_ : Delta time. Time elapsed between one frame and the other.
+*/
 void GStateContinue::unload ()
 {
 	Log(DEBUG) << "\tUnloading menu...";
 	cleanEntities();
 }
 
+/**
+* Unloads everything that was loaded.
+* @see GStateContinue::load
+*/
 void GStateContinue::update ( const double dt_ )
 {
 	this -> passedTime += dt_;
@@ -147,6 +173,11 @@ void GStateContinue::update ( const double dt_ )
 
 }
 
+/**
+* Renders the state.
+* Always renders on 0,0 position.
+* @see Sprite::render
+*/
 void GStateContinue::render(){
 
 	if( this -> background != nullptr )
@@ -167,6 +198,9 @@ void GStateContinue::render(){
 	}
 }
 
+/**
+* Treats the slots selection menu for the game
+*/
 void GStateContinue::handleSelectorMenu ()
 {
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();

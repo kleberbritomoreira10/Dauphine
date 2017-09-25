@@ -17,10 +17,12 @@ ControllerHandler::ControllerHandler() :
     gameController( nullptr )
 {
 
+    // Loading controller
 	if ( SDL_NumJoysticks() > 0 ){
          this -> gameController = SDL_GameControllerOpen( 0 );
  	}
 
+    // Vreifying if there are any activated controller.
 	if ( this -> gameController == nullptr ){
 		Log(INFO) << "Unable to find a controller, defaulting to keyboard.";
     }
@@ -45,6 +47,7 @@ void ControllerHandler::handleInput( SDL_Event& sdlEvent_ )
 
     static int pressed = 0;
 
+    // Handling controller inputs.
     if ( sdlEvent_.type == SDL_CONTROLLERBUTTONDOWN )
     {
 
@@ -181,6 +184,7 @@ void ControllerHandler::handleInput( SDL_Event& sdlEvent_ )
         }
 	}
 
+    // Handling jey states.
 	if ( sdlEvent_.type == SDL_CONTROLLERAXISMOTION ){
 
 		switch( sdlEvent_.caxis.axis )

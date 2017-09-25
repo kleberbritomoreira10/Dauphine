@@ -4,7 +4,8 @@
 * @AudioHandler.cpp
 * The audio handler.
 * The state for the initial menu screen.
-* Game state that will contain the game over screen.*/
+* Game state that will contain the game over screen.
+* License: Copyright (C) 2014 Alke Games.*/
 
 
 #include "GStateGameOver.h"

@@ -4,7 +4,8 @@
 * @AudioHandler.cpp
 * The audio handler.
 * Class that handles all the audio in the game. Is a singleton, so should be called in each
-* 	state.*/
+* 	state.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "AudioHandler.h"
 #include "Game.h"

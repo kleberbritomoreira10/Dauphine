@@ -2,7 +2,8 @@
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
 * @Potion.cpp
-* Class for the bomb potion.*/
+* Class for the bomb potion.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "Potion.h"
 #include "Logger.h"

@@ -4,7 +4,9 @@
 * @AudioHandler.cpp
 * The audio handler.
 * The state for the initial splash screen.
-* Game state that will contain the initial splash images, before the main menu state is called.*/
+* Game state that will contain the initial splash images, 
+before the main menu state is called.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "GStateSplash.h"
 #include "LuaScript.h"

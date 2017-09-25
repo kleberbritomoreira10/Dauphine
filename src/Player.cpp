@@ -3,7 +3,8 @@
 * Técnicas de Programação, 2/2017
 * @Player.cpp
 * The player entity class.
-* Contains all the relevant implementation relative to the player.*/
+* Contains all the relevant implementation relative to the player.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "Player.h"
 #include "Game.h"

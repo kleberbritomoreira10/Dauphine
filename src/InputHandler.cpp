@@ -1,6 +1,17 @@
+/* Dauphine
+* Universidade de Brasília - FGA
+* Técnicas de Programação, 2/2017
+* @InputHandler.cpp
+* Handles player input. Using SDL event handling, recieves the player input accordingly.
+*/
+
 #include "InputHandler.h"
 #include "Logger.h"
 
+/**
+* The constructor.
+* Used to create the input handler instance.
+*/
 InputHandler::InputHandler() :
 	controllerHandler ( new ControllerHandler() ),
 	quitFlag ( false )
@@ -8,6 +19,10 @@ InputHandler::InputHandler() :
 	this -> keyStates.fill ( false );
 }
 
+/**
+* The destructor.
+* Deletes the InputHandler instance.
+*/
 InputHandler::~InputHandler()
 {
 	if ( this -> controllerHandler != nullptr )
@@ -17,6 +32,10 @@ InputHandler::~InputHandler()
 	}	
 }
 
+/**
+* Handles the input.
+* Detects the pending events, and handles them appropriately.
+*/
 void InputHandler::handleInput ()
 {
 	this -> keyStates[ GameKeys::SPACE ] = false;
@@ -186,21 +205,32 @@ void InputHandler::handleInput ()
 	} while(pendingEvent != 0);
 }
 
+/**
+* @return InputHandler::keyStates
+*/
 std::array<bool, GameKeys::MAX> InputHandler::getKeyStates ()
 {
 	return this -> keyStates;
 }
 
+/**
+* @return InputHandler::quitFlag
+*/
 bool InputHandler::isQuitFlag ()
 {
 	return this -> quitFlag;
 }
 
+/**
+* Sets InputHandler::quitFlag to true.
+*/
 void InputHandler::signalExit ()
 {
 	this -> quitFlag = true;
 }
-
+/**
+* Sets InputHandler::keyStates to false.
+*/
 void InputHandler::clearKey ( const GameKeys key_ )
 {
 	this -> keyStates.at( key_ ) = false;

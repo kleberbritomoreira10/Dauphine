@@ -52,21 +52,21 @@ void EStateCurious::update( const double dt_)
 		this -> enemy -> changeState( Enemy::EStates::AERIAL );
 		return;
 	}
-
+  
 	if ( this -> enemy -> x - Enemy::px < 0.0)
 	{
-		this -> enemy->vx += this -> enemy->speed;
+		this -> enemy -> vx += this -> enemy -> speed;
 	} else {
-		  this -> enemy->vx -= this -> enemy->speed;
+		  this -> enemy -> vx -= this -> enemy -> speed;
 	  }
-
-	// 
-	if ( abs( this -> enemy->x - Enemy::px) < Enemy::alertRange && abs( this -> enemy->y-Enemy::py) < Enemy::alertRange)
+ 
+	if ( abs( this -> enemy->x - Enemy::px) < Enemy::alertRange && abs( this -> enemy->y-Enemy::py ) < Enemy::alertRange)
 	{
 		this -> enemy -> changeState(Enemy::EStates::ALERT);
 		return;
 	}
-
+  
+  //if the time elapsed is greater than the time observing the enemy returns to patrol.
 	if ( timeElapsed >= MAX_CURIOUS_TIME )
 	{
 		this -> enemy -> changeState(Enemy::EStates::PATROLLING);

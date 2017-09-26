@@ -2,7 +2,8 @@
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
 * @BStateAttack.cpp
-* The state when the player able to attack.*/
+* The state when the player able to attack.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "BStateAttack.h"
 #include "Logger.h"

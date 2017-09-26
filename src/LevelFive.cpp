@@ -3,7 +3,8 @@
 * Técnicas de Programação, 2/2017
 * @LevelFive.cpp
 * The first level of the game.
-* Derived from Level class.*/
+* Derived from Level class.
+* License: Copyright (C) 2014 Alke Games.*/
 
 
 #include "LevelFive.h"

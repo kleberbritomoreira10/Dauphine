@@ -14,7 +14,7 @@ Logger::Logger()
 }
 
 /*
- * Method to display the logger
+ * Method to print and clean the logger
  */
 Logger::~Logger()
 {

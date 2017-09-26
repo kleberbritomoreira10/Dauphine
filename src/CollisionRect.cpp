@@ -29,8 +29,9 @@ CollisionRect::~CollisionRect()
  * Method for checking the type collision.
  * @param strType_ : type collision 
  */
-TypeCollision CollisionRect::stringToType( const std::string& strType_)
-{
+TypeCollision CollisionRect::stringToType( const std::string& strType_ )
+{   
+	//Control structure to check the type of collision
 	if ( strType_ == "collision")
 	{
 		return COLLISION;

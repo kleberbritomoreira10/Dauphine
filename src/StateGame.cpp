@@ -2,7 +2,8 @@
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
 * @StateGame.cpp
-* Parent class for other game states.*/
+* Parent class for other game states.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "StateGame.h"
 

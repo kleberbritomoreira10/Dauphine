@@ -56,14 +56,16 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player -> isGrounded = false;
     return;
   }
-
+  
+  //Use potion
   if ( keyStates_[GameKeys::ACTION] )
   {
     // Game::instance().getAudioHandler().addSoundEffect("res/audio/FX_NADINE/WOOSH_NADINE_03.wav");
     this -> player->usePotion(THROW_STRENGTH, THROW_DISTANCE);
     return;
   }
-
+  
+  //Change state player
   if ( keyStates_[GameKeys::LATTACK])
   {
     this -> player -> changeState(Player::PStates::ATTACKMOVING);
@@ -71,7 +73,8 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   }
 
   this -> player -> move(keyStates_[GameKeys::LEFT], keyStates_[GameKeys::RIGHT]);
-
+  
+  //Verify if roll player
   if ( keyStates_[GameKeys::ROLL])
   {
     this -> player->changeState(Player::PStates::ROLLING);

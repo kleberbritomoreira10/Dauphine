@@ -2,7 +2,8 @@
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
 * @ControllerHandler.cpp
-* The input handler for joysticks.*/
+* The input handler for joysticks.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "ControllerHandler.h"
 #include "Logger.h"

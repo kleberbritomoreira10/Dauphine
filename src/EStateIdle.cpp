@@ -56,6 +56,7 @@ void EStateIdle::update( const double dt_)
 		this -> enemy -> changeState(Enemy::EStates::ALERT);
 		return;
 	}
+	//Check the range to change to the curious state.
 	else if ( abs ( this -> enemy->x - Enemy::px) < Enemy::curiousRange )
 	{
 		this -> enemy -> changeState(Enemy::EStates::CURIOUS);

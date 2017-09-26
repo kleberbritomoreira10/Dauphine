@@ -2,7 +2,8 @@
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
 * @PStateAttackJumping.cpp
-* The state when the player is idle.*/
+* The state when the player is idle.
+* License: Copyright (C) 2014 Alke Games.*/
 
 #include "PStateAttackJumping.h"
 #include "Logger.h"

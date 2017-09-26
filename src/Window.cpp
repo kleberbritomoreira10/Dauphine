@@ -180,5 +180,6 @@ SDL_Renderer* Window::getRenderer()
  */
 void Window::getLogicalSize(int* w, int* h)
 {
+  //Render window based on height and width. 
   SDL_RenderGetLogicalSize(Window::getRenderer(), w, h);
 }

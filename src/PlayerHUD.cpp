@@ -75,9 +75,9 @@ void PlayerHUD::render()
 
 void PlayerHUD::initializeSprites()
 {
-	this -> player_hud_sprites[ 0 ] = Game::instance().getResources().get("res/images/hud/health_0.png");
-	this -> player_hud_sprites[ 1 ] = Game::instance().getResources().get("res/images/hud/health_33.png");
-	this -> player_hud_sprites[ 2 ] = Game::instance().getResources().get("res/images/hud/health_66.png");
-	this -> player_hud_sprites[ 3 ] = Game::instance().getResources().get("res/images/hud/health_99.png");
-	this -> player_hud_sprites[ 4 ] = Game::instance().getResources().get("res/images/hud/hud_no_health.png");	
+	this -> player_hud_sprites[ 0 ] = Game::instance().get_resources().get("res/images/hud/health_0.png");
+	this -> player_hud_sprites[ 1 ] = Game::instance().get_resources().get("res/images/hud/health_33.png");
+	this -> player_hud_sprites[ 2 ] = Game::instance().get_resources().get("res/images/hud/health_66.png");
+	this -> player_hud_sprites[ 3 ] = Game::instance().get_resources().get("res/images/hud/health_99.png");
+	this -> player_hud_sprites[ 4 ] = Game::instance().get_resources().get("res/images/hud/hud_no_health.png");	
 }

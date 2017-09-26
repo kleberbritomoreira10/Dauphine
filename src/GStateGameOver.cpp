@@ -48,7 +48,7 @@ void GStateGameOver::load()
 	const double luaLifeTime = luaGameOver.unlua_get<double>( "gameOver.lifeTime" );
 
 	// Getting game over images resources.
-    this -> gameOverImage = Game::instance().getResources().get( pathGameOver );
+    this -> gameOverImage = Game::instance().get_resources().get( pathGameOver );
 	this -> lifeTime = luaLifeTime;
 
 	// Changing the music.
@@ -83,14 +83,14 @@ void GStateGameOver::update( const double DELTA_TIME )
 	// Setting menu state when getting space or lattack input.
 	if ( keyStates[ GameKeys::SPACE ] || keyStates[ GameKeys::LATTACK ] )
 	{
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 		return;
 	}
 
 	// Setting menu state when player is dead.
 	if ( this -> passed_time >= this -> lifeTime )
 	{
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 		return;
 	}
 }

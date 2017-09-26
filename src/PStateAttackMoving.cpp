@@ -36,7 +36,7 @@ void PStateAttackMoving::handleInput ( const std::array < bool, GameKeys::MAX > 
 	// When the character is in motion, it checks to see if a given frame has been reached to change the animation
 	if ( this -> player -> getAnimation () -> getCurrentFrame () == 9 )
 	{
-		this -> player -> changeState ( Player::player_states::MOVING );
+		this -> player -> change_state ( Player::player_states::MOVING );
 	}
 }
 

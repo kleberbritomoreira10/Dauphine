@@ -47,19 +47,19 @@ void BStateAttack::update( const double DELTA_TIME )
 
 	if ( attackIndex == 3 )
 	{
-		this -> boss -> changeState( Boss::BStates::SHIELD );
+		this -> boss -> change_state( Boss::BStates::SHIELD );
 	}
 	else if ( attackIndex == 0 )
 	{
-		this -> boss -> changeState( Boss::BStates::TELEPORT );
+		this -> boss -> change_state( Boss::BStates::TELEPORT );
 	}
 	else if ( attackIndex == 2 )
 	{
-		this -> boss -> changeState( Boss::BStates::ICEPRISION );
+		this -> boss -> change_state( Boss::BStates::ICEPRISION );
 	}
 	else if ( attackIndex == 1 )
 	{
-		this -> boss -> changeState( Boss::BStates::MAGICPROJECTILE );
+		this -> boss -> change_state( Boss::BStates::MAGICPROJECTILE );
 	} else
 	{
 

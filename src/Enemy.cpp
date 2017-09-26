@@ -181,7 +181,7 @@ void Enemy::destroyStates()
  * Method used to exchange enemy of position
  * @param state_ : Define state enemy
  */
-void Enemy::changeState( const EStates state_)
+void Enemy::change_state( const EStates state_)
 {
 	this -> current_state -> exit();
 	this -> current_state = this -> states_map.at(state_);
@@ -207,22 +207,22 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 		{
 			this -> nextY -= fmod( this -> nextY, 64.0 ) - 16.0;
 			this -> velocity_y_axis = 0.0;
-			if ( this -> isDead() )
+			if ( this -> is_dead() )
 			{
-				this -> changeState(EStates::DEAD);
+				this -> change_state(EStates::DEAD);
 			}
 			if ( this -> patrol )
 			{
-				this -> changeState(EStates::PATROLLING);
+				this -> change_state(EStates::PATROLLING);
 			} else {
-				  this -> changeState(EStates::IDLE);
+				  this -> change_state(EStates::IDLE);
 				  return;
 			  }
 		}
 	} else {
 		  if ( this -> current_state != this -> states_map.at(EStates::AERIAL) )
 		  {
-			  changeState(EStates::AERIAL);
+			  change_state(EStates::AERIAL);
 		  }
 	  }
 	//Collision on left
@@ -258,17 +258,17 @@ Animation *Enemy::getAnimation()
 
 /*
  * Setting enemy is dead
- * @param isDead_ : It says if it is alive or dead
+ * @param is_dead_ : It says if it is alive or dead
  */
-void Enemy::set_dead( bool isDead_)
+void Enemy::set_dead( bool is_dead_)
 {
-	this -> dead = isDead_;
+	this -> dead = is_dead_;
 }
 
 /*
  * Inform that enemy is dead
  */
-bool Enemy::isDead()
+bool Enemy::is_dead()
 {
 	return this -> dead;
 }

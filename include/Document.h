@@ -38,7 +38,7 @@ class Document : public Entity
 		*/
 		virtual void render ( const double cameraX_, const double cameraY_ );
 
-		void renderDocumentText ();
+		void render_document_text ();
 
 		bool should_render; // Bool variable to set when the Render of document should set
 

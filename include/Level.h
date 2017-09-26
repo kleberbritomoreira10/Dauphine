@@ -62,7 +62,7 @@ class Level : public StateGame
 		virtual void clear_enemies();
 		virtual void clear_documents();
 
-		void changeCheckpoints ( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
+		void change_checkpoints ( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
 		std::vector <double> checkpoints_Y_ );
 
 		unsigned int width; /**< Width that defines the horizontal limits. */

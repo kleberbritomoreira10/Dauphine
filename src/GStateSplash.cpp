@@ -57,10 +57,10 @@ void GStateSplash::load()
 	const double luaLifeTime = luaSplash.unlua_get<double>( "splash.lifeTime" );
 
 	// Loading splash images resources.
-	this -> images[SplashImages::ALKE_LOGO] = Game::instance().getResources().get( pathLogo );
-	this -> images[SplashImages::TECHS] = Game::instance().getResources().get( pathTechs );
-	this -> images[SplashImages::LICENSES] = Game::instance().getResources().get( pathLicenses );
-	this -> images[SplashImages::ESRB] = Game::instance().getResources().get( pathEsrb );
+	this -> images[SplashImages::ALKE_LOGO] = Game::instance().get_resources().get( pathLogo );
+	this -> images[SplashImages::TECHS] = Game::instance().get_resources().get( pathTechs );
+	this -> images[SplashImages::LICENSES] = Game::instance().get_resources().get( pathLicenses );
+	this -> images[SplashImages::ESRB] = Game::instance().get_resources().get( pathEsrb );
 
 	this -> lifeTime = luaLifeTime;
 }
@@ -97,7 +97,7 @@ void GStateSplash::update( const double DELTA_TIME )
 	{
 		if ( this -> currentSplash >= SplashImages::TOTAL_SPLASH_IMAGES - 1 )
 		{
-			Game::instance().setState( Game::GStates::MENU );
+			Game::instance().set_state( Game::GStates::MENU );
 		} else
 		{
 			Game::instance().get_fade().fadeIn( 100, 0.002 );
@@ -111,7 +111,7 @@ void GStateSplash::update( const double DELTA_TIME )
 	std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 	if ( keyStates[GameKeys::SPACE] == true )
 	{
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 		return;
 	}
 

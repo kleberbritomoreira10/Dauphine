@@ -45,7 +45,7 @@ class Camera {
 		* @param width_,height_ : Tells the camera what the width and height of the level is.
 		* @see Level::update()
 		*/
-		void setLevelWH ( const unsigned int width_, const unsigned int height_ );
+		void set_level_width_height ( const unsigned int width_, const unsigned int height_ );
 
 	private:
 		/**

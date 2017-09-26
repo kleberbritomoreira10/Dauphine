@@ -24,7 +24,7 @@ LevelTwo::LevelTwo () :
   items{ { 4090 - 3 * 64, 7870 - 3 * 64, 0, 0 },{ 2776, 1700, 0, 0 } },
   caught_items{ false, false, true, false }
 {
-  this -> changeCheckpoints ( 2, { 4090, 7870 }, { 2776, 1700 } );
+  this -> change_checkpoints ( 2, { 4090, 7870 }, { 2776, 1700 } );
 }
 
 /**
@@ -48,17 +48,17 @@ void LevelTwo::load ()
   this -> tile_map = new TileMap( "res/maps/level2.tmx" );
 
   // Setting the level width/height.
-  this -> width = this -> tile_map -> getMapWidth ();
-  this -> height = this -> tile_map -> getMapHeight ();
+  this -> width = this -> tile_map -> get_map_width ();
+  this -> height = this -> tile_map -> get_map_height ();
   SDL_Rect bounds = {0, 0, ( int )this -> width, ( int )this -> height};
   this -> quadTree = new QuadTree ( 0, bounds );
 
-  this -> background = Game::instance (). getResources ().get ( "res/images/lv1_background.png" );
+  this -> background = Game::instance (). get_resources ().get ( "res/images/lv1_background.png" );
   for( int i = 0; i < this -> NUMBER_OF_CHECKPOINTS; ++i )
   {
-    this -> checkpoints.push_back ( Game::instance ().getResources ().get ( "res/images/checkpoint.png" ) );
+    this -> checkpoints.push_back ( Game::instance ().get_resources ().get ( "res/images/checkpoint.png" ) );
   }
-  this -> image = Game::instance ().getResources ().get ( "res/images/potion.png" );
+  this -> image = Game::instance ().get_resources ().get ( "res/images/potion.png" );
 
   // Getting information from lua script.
   LuaScript luaLevel1 ( "lua/Level1.lua" );
@@ -109,7 +109,7 @@ void LevelTwo::load ()
         enemy -> set_dead ( true );
       }
     }
-    enemy -> setLevelWH ( this -> width, this -> height );
+    enemy -> set_level_width_height ( this -> width, this -> height );
     this -> enemies.push_back ( enemy );
   }
 
@@ -149,7 +149,7 @@ void LevelTwo::unload ()
 void LevelTwo::update ( const double DELTA_TIME )
 {
   // Populating the QuadTree.
-  this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
+  this -> quadTree -> set_objects ( this -> tile_map -> get_collision_rects () );
 
   // Updating the entities, using the QuadTree.
   std::vector<CollisionRect> return_objects;
@@ -157,7 +157,7 @@ void LevelTwo::update ( const double DELTA_TIME )
   {
     return_objects.clear ();
     this->quadTree -> retrieve ( return_objects, entity -> get_bounding_box () );
-    entity -> setCollisionRects ( return_objects );
+    entity -> set_collision_rects ( return_objects );
     entity -> update( DELTA_TIME );
   }
 
@@ -166,14 +166,14 @@ void LevelTwo::update ( const double DELTA_TIME )
   {
     return_objects.clear();
     this -> quadTree->retrieve ( return_objects, enemy->get_bounding_box () );
-    enemy -> setCollisionRects ( return_objects );
+    enemy -> set_collision_rects ( return_objects );
     enemy -> update ( DELTA_TIME );
   }
 
   // Set to GameOver if the player is dead.
-  if( this -> player -> isDead () )
+  if( this -> player -> is_dead () )
   {
-    Game::instance ().setState ( Game::GStates::GAMEOVER );
+    Game::instance ().set_state ( Game::GStates::GAMEOVER );
     return;
   }
 
@@ -182,7 +182,7 @@ void LevelTwo::update ( const double DELTA_TIME )
   {
     return_objects.clear ();
     this -> quadTree -> retrieve ( return_objects, potion->get_bounding_box () );
-    potion -> setCollisionRects ( return_objects );
+    potion -> set_collision_rects ( return_objects );
   }
 
   /// @todo Maybe refactor this static Enemy::px, Enemy::py.
@@ -208,7 +208,7 @@ void LevelTwo::update ( const double DELTA_TIME )
     {
       this -> player -> life--;
       Enemy::points_life = this -> player -> life;
-      this -> player -> changeState ( Player::player_states::HITED );
+      this -> player -> change_state ( Player::player_states::HITED );
       this -> player -> is_vulnerable = false;
     }
     else
@@ -226,8 +226,8 @@ void LevelTwo::update ( const double DELTA_TIME )
   // Set next level if end is reached.
   if ( this -> player -> reached_level_end )
   {
-    Game::instance ().transitionTo = Game::GStates::LEVEL_THREE;
-    Game::instance ().setState ( Game::GStates::TRANSITION );
+    Game::instance ().transition_to = Game::GStates::LEVEL_THREE;
+    Game::instance ().set_state ( Game::GStates::TRANSITION );
     return;
   }
 
@@ -250,7 +250,7 @@ void LevelTwo::update ( const double DELTA_TIME )
 
           if( enemy -> life <= 0 )
           {
-            enemy -> changeState ( Enemy::EStates::DEAD );
+            enemy -> change_state ( Enemy::EStates::DEAD );
           }
         }
       }
@@ -269,14 +269,14 @@ void LevelTwo::update ( const double DELTA_TIME )
           
           if ( enemy -> life > 0 && this -> player -> can_attack )
           {
-            enemy -> life -= this -> player -> attackStrength;
+            enemy -> life -= this -> player -> attack_strength;
             this -> player -> can_attack = false;
           }
           // Log(DEBUG) << "Enemy Life = " << enemy->life;
 
           if( enemy -> life <= 0 )
           {
-            enemy -> changeState ( Enemy::EStates::DEAD );
+            enemy -> change_state ( Enemy::EStates::DEAD );
           }
         }
     }
@@ -290,7 +290,7 @@ void LevelTwo::update ( const double DELTA_TIME )
             this -> player -> get_bounding_box().y >= checkpoints_Y [ j ]
         && this -> player -> get_bounding_box().y <= checkpoints_Y [ j ] + 200 )
     {
-      this -> checkpoints [ j ] = Game::instance ().getResources ().get( "res/images/checkpoint_visited.png" );
+      this -> checkpoints [ j ] = Game::instance ().get_resources ().get( "res/images/checkpoint_visited.png" );
       Game::instance ().get_saves ().saveLevel ( 2, this -> player, this -> enemies, Game::instance ().current_slot );
       this -> checkpoints_visited [ j ] = true;
     } 
@@ -358,7 +358,7 @@ void LevelTwo::render ()
     document -> render( CAMERA_X, CAMERA_Y );
     if ( document -> should_render )
     {
-      document -> renderDocumentText ();
+      document -> render_document_text ();
     }
   }
 }

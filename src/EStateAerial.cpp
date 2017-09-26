@@ -16,11 +16,11 @@ void EStateAerial::update(const double DELTA_TIME){
 	// Idle
 	if(this->enemy->isGrounded){
 		if(this->enemy->patrol){
-			this->enemy->changeState(Enemy::EStates::PATROLLING);
+			this->enemy->change_state(Enemy::EStates::PATROLLING);
 			return;
 		}
 		else{
-			this->enemy->changeState(Enemy::EStates::IDLE);
+			this->enemy->change_state(Enemy::EStates::IDLE);
 			return;
 		}
 	}

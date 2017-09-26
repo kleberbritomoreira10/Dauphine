@@ -68,13 +68,13 @@ void GStateMenu::load()
 	const std::string pathTitleScreen = luaMenu.unlua_get<std::string>("menu.images.titleScreen");
 	const std::string pathCursor = luaMenu.unlua_get<std::string>("menu.images.cursor");
 
-    this -> menu_image = Game::instance().getResources().get( pathTitleScreen );
-    this -> menu_selector = Game::instance().getResources().get( pathCursor );
-    this -> attrack_mode_background = Game::instance().getResources().get("res/images/title_background.png");
-    this -> attract_mode = Game::instance().getResources().get("res/images/attract.png");
+    this -> menu_image = Game::instance().get_resources().get( pathTitleScreen );
+    this -> menu_selector = Game::instance().get_resources().get( pathCursor );
+    this -> attrack_mode_background = Game::instance().get_resources().get("res/images/title_background.png");
+    this -> attract_mode = Game::instance().get_resources().get("res/images/attract.png");
     this -> attractClip.w = this -> attract_mode -> getWidth();
     this -> shwing_animation = new Animation( 0, 0, 795, 360, 3, false );
-    this -> shwing = Game::instance().getResources().get("res/images/shwing_sheet.png");
+    this -> shwing = Game::instance().get_resources().get("res/images/shwing_sheet.png");
     this -> shwing_animation -> ANIMATION_LIMIT = 2;
 
     Game::instance().get_fade().fade_out( 0, 0.002 );
@@ -234,7 +234,7 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}
 
-		Game::instance().setState(Game::GStates::NEW_GAME);
+		Game::instance().set_state(Game::GStates::NEW_GAME);
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}
@@ -249,7 +249,7 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}
 
-		Game::instance().setState( Game::GStates::CONTINUE );
+		Game::instance().set_state( Game::GStates::CONTINUE );
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}
@@ -264,7 +264,7 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}
 
-		Game::instance().setState( Game::GStates::OPTIONS );
+		Game::instance().set_state( Game::GStates::OPTIONS );
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}
@@ -279,7 +279,7 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}
 
-		Game::instance().setState( Game::GStates::CREDITS );
+		Game::instance().set_state( Game::GStates::CREDITS );
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}

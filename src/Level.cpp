@@ -71,7 +71,7 @@ Level::~Level()
 * @param checkpoints_X_: vector for checkpoint position in axis x of the.
 * @param checkpoints_Y_: vector for checkpoint position in axis y of the.
 */
-void Level::changeCheckpoints( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
+void Level::change_checkpoints( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
 		std::vector <double> checkpoints_Y_ )
 {
 	this -> checkpoints_X = checkpoints_X_;
@@ -99,7 +99,7 @@ void Level::set_player( Player* const player_ )
 
 	if( this -> player != nullptr)
 	{
-		this -> player -> setLevelWH( this -> width, this -> height );
+		this -> player -> set_level_width_height( this -> width, this -> height );
 		addEntity( this -> player );
 	}
 	else
@@ -121,7 +121,7 @@ void Level::set_camera(Camera *const camera_)
 	{
 		if( this -> player != nullptr)
 		{
-			this -> camera -> setLevelWH( this -> width, this -> height );
+			this -> camera -> set_level_width_height( this -> width, this -> height );
 		}
 		else
 		{
@@ -146,7 +146,7 @@ void Level::setBoss( Boss *const BOSS ){
 	{
 		if( this -> player != nullptr )
 		{
-			this -> boss -> setLevelWH( this -> width, this -> height );
+			this -> boss -> set_level_width_height( this -> width, this -> height );
 		}
 		else
 		{

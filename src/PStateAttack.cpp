@@ -39,7 +39,7 @@ void PStateAttack::handleInput ( const std::array<bool, GameKeys::MAX> keyStates
   
   if ( this -> player -> getAnimation() -> getCurrentFrame() == 14 )
   {
-    this -> player -> changeState( Player::player_states::IDLE );
+    this -> player -> change_state( Player::player_states::IDLE );
   }
 }
 

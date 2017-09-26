@@ -46,7 +46,7 @@ Player::Player( const double x_, const double y_, const std::string &PATH ) :
     maxPotions( 3 ),
     crosshair( new Crosshair(0.0, 0.0, "res/images/alvo.png" )),
     life( 3 ),
-    attackStrength( 50 ),
+    attack_strength( 50 ),
     can_attack( true ),
     currentItem(PItems::POTION),
     closestEnemyIsRight( true ),
@@ -158,7 +158,7 @@ void Player::update( const double DELTA_TIME )
     // Verifying if player is climbing.
     if ( this -> isClimbing && !is_current_state(player_states::CLIMBING) )
     {
-        changeState( player_states::CLIMBING );
+        change_state( player_states::CLIMBING );
     }
 
 }
@@ -190,7 +190,7 @@ void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
             this -> velocity_y_axis = 0.0;
             if ( !is_current_state( player_states::DEAD ) )
             {
-                changeState( player_states::IDLE );
+                change_state( player_states::IDLE );
             }
         }
     } else
@@ -199,7 +199,7 @@ void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
         if ( !is_current_state( player_states::AERIAL ) && !is_current_state( player_states::ATTACKJUMPING )
             && !is_current_state( player_states::CLIMBING ) && !is_current_state( player_states::DEAD ))
         {
-            changeState( player_states::AERIAL );
+            change_state( player_states::AERIAL );
         }
     }
 
@@ -345,7 +345,7 @@ void Player::destroyStates()
 * Every new state implemented should be deleted here.
   @param state_: The state to be changed.
 */
-void Player::changeState( const player_states state_ )
+void Player::change_state( const player_states state_ )
 {
     this -> current_state -> exit();
     this -> current_state = this -> states_map.at( state_ );
@@ -385,7 +385,7 @@ void Player::updateBoundingBox()
 * Verify is the player is dead.
 * @return: Return true or false if the player is dead.
 */
-bool Player::isDead()
+bool Player::is_dead()
 {
     return ( this -> life <= 0 );
 }

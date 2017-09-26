@@ -38,7 +38,7 @@ void PStateAiming::handleInput(const std::array<bool, GameKeys::MAX> keyStates_)
 	this->player->crosshair->render(0.0, 0.0);
 
 	if(!keyStates_[GameKeys::AIM]){
-		this->player->changeState(Player::player_states::IDLE);
+		this->player->change_state(Player::player_states::IDLE);
 		return;
 	}
 

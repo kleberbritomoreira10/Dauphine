@@ -37,7 +37,7 @@ void BStateShield::update( const double DELTA_TIME )
 {
 	( ( void )DELTA_TIME ); // Unused.
 
-	this -> boss -> changeState( Boss::BStates::IDLE );
+	this -> boss -> change_state( Boss::BStates::IDLE );
 }
 
 /**

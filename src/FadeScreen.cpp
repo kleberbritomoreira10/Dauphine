@@ -14,7 +14,7 @@
 FadeScreen::FadeScreen() :
 
 	// Load de image of fade from a file
-	fadeImage ( Game::instance (). getResources (). get ( "res/images/black_screen.png" ) ),
+	fadeImage ( Game::instance (). get_resources (). get ( "res/images/black_screen.png" ) ),
 	fadeHandler ( new FadeHandler ( this -> fadeImage ) )
 
 {

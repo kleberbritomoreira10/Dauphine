@@ -69,7 +69,7 @@ class Game
 		* @see StateGame::unload()
 		* @param state_ : The state you want to be changed into.
 		*/
-		void setState ( const GStates state_ );
+		void set_state ( const GStates state_ );
 
 		/**
 		* @return The Game audio_handler.
@@ -84,7 +84,7 @@ class Game
 		/**
 		* @return The resource manager.
 		*/
-		ResourceManager &getResources ();
+		ResourceManager &get_resources ();
 
 		FadeScreen& get_fade ();
 
@@ -108,7 +108,7 @@ class Game
 
 		Sprite *dialog[total_number_of_lines];
 
-		GStates transitionTo;
+		GStates transition_to;
 
 	private:
 		/**

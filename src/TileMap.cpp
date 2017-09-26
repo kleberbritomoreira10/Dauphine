@@ -228,19 +228,19 @@ void TileMap::renderLayer(const double cameraX_, const double cameraY_, const un
 }
 
 void TileMap::addTileSet(const std::string& PATH){
-	Sprite* newTileSet = Game::instance().getResources().get(PATH);
+	Sprite* newTileSet = Game::instance().get_resources().get(PATH);
 	this->tilesetSprites.push_back(newTileSet);
 }
 
-std::vector <CollisionRect>& TileMap::getCollisionRects(){
+std::vector <CollisionRect>& TileMap::get_collision_rects(){
 	return this->collisionRects;
 }
 
-unsigned int TileMap::getMapWidth(){
+unsigned int TileMap::get_map_width(){
 	return this->mapWidth * TILE_SIZE;
 }
 
-unsigned int TileMap::getMapHeight(){
+unsigned int TileMap::get_map_height(){
 	return this->mapHeight * TILE_SIZE;
 }
 

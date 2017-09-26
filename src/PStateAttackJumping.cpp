@@ -47,7 +47,7 @@ void PStateAttackJumping::handleInput( const std::array<bool, GameKeys::MAX> key
 	// Changing the state.
 	if ( this -> player -> getAnimation() -> getCurrentFrame() == 7 )
   	{
-		this -> player -> changeState( Player::player_states::AERIAL );
+		this -> player -> change_state( Player::player_states::AERIAL );
 	}
 	// Applying gravity.
 	this -> player -> applyGravity();

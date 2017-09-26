@@ -56,7 +56,7 @@ class Boss : public DynamicEntity
 
     void initializeStates ();
     void destroyStates ();
-    void changeState ( const BStates state_ );
+    void change_state ( const BStates state_ );
 
     /**
      * Renders the player.
@@ -70,8 +70,8 @@ class Boss : public DynamicEntity
     void usePotion ( const int strength_, const int distance_ );
 
     Animation *getAnimation ();
-    bool isDead ();
-    void set_dead ( bool isDead_ );
+    bool is_dead ();
+    void set_dead ( bool is_dead_ );
 
     enum BossSkills : uint8_t
     {

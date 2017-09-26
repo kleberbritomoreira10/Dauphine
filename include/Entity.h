@@ -53,7 +53,7 @@ class Entity
  
 		SDL_Rect& get_bounding_box ();
 
-		virtual void setCollisionRects ( const std::vector < CollisionRect > &collisionRects_ );
+		virtual void set_collision_rects ( const std::vector < CollisionRect > &collisionRects_ );
 
 		double x; /**< The position in the x axis. */
 		double y; /**< The position in the y axis. */

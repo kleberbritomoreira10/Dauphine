@@ -47,7 +47,7 @@ void GStateCredits::update( const double DELTA_TIME )
 	// Setting the menu state.
 	if ( keyStates[ GameKeys::LATTACK ] == true )
 	{
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 	}
 }
 
@@ -64,7 +64,7 @@ void GStateCredits::load()
 	const std::string pathCredits = luaCredits.unlua_get<std::string>( "credits.images.dummy" );
 
 	// Loading credits image.
-    this ->  creditsImage = Game::instance().getResources().get( pathCredits );
+    this ->  creditsImage = Game::instance().get_resources().get( pathCredits );
     this ->  creditsClip.w = this ->  creditsImage ->  getWidth();
 }
 

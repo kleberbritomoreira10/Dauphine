@@ -141,8 +141,8 @@ void GStateContinue::load ()
 	//Declaring constant as path to receive background image
 	const std::string PATH_SELECTOR = luaMenu.unlua_get<std::string>( "continue.images.selector" );
 
-	this -> background = Game::instance().getResources().get( PATH_BACKGROUND );
-	this -> selector = Game::instance().getResources().get( PATH_SELECTOR );
+	this -> background = Game::instance().get_resources().get( PATH_BACKGROUND );
+	this -> selector = Game::instance().get_resources().get( PATH_SELECTOR );
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
 	this -> current_selection = Selection::SLOT_1;
@@ -173,7 +173,7 @@ void GStateContinue::update ( const double DELTA_TIME )
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 	if ( keyStates [ GameKeys::ESCAPE ] == true )
   {
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 	}
 
 }
@@ -216,7 +216,7 @@ void GStateContinue::handleSelectorMenu ()
   {
 		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
     {
-			Game::instance().setState( Game::GStates::MENU );
+			Game::instance().set_state( Game::GStates::MENU );
 		}
 	}
 
@@ -263,33 +263,33 @@ void GStateContinue::handleSelectorMenu ()
     {
 			Game::instance().current_slot = Selection::SLOT_1;
 			case 1:
-				Game::instance().transitionTo = Game::GStates::LEVEL_ONE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_ONE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 2:
-				Game::instance().transitionTo = Game::GStates::LEVEL_TWO;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_TWO;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 3:
-				Game::instance().transitionTo = Game::GStates::LEVEL_THREE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_THREE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 4:
-				Game::instance().transitionTo = Game::GStates::LEVEL_FOUR;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_FOUR;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 5:
-				Game::instance().transitionTo = Game::GStates::LEVEL_FIVE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_FIVE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 6:
-				Game::instance().transitionTo = Game::GStates::LEVEL_BOSS;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_BOSS;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	default:
@@ -305,34 +305,34 @@ void GStateContinue::handleSelectorMenu ()
 		switch( Game::instance().get_saves().get_saved_level( Selection::SLOT_2 ) ){
 			Game::instance().current_slot = Selection::SLOT_2;
 			case 1:
-				Game::instance().transitionTo = Game::GStates::LEVEL_ONE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_ONE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 
 			case 2:
-				Game::instance().transitionTo = Game::GStates::LEVEL_TWO;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_TWO;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 			
       case 3:
-				Game::instance().transitionTo = Game::GStates::LEVEL_THREE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_THREE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 			
       case 4:
-				Game::instance().transitionTo = Game::GStates::LEVEL_FOUR;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_FOUR;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 			
       case 5:
 				//CHANGE THIS AFTER CREATING FIFTH LEVEL
-				Game::instance().transitionTo = Game::GStates::LEVEL_FIVE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_FIVE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 			
       case 6:
-				Game::instance().transitionTo = Game::GStates::LEVEL_BOSS;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_BOSS;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 			
       default:
@@ -349,34 +349,34 @@ void GStateContinue::handleSelectorMenu ()
     {
 			Game::instance().current_slot = Selection::SLOT_3;
 			case 1:
-				Game::instance().transitionTo = Game::GStates::LEVEL_ONE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_ONE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 2:
-				Game::instance().transitionTo = Game::GStates::LEVEL_TWO;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_TWO;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 3:
-				Game::instance().transitionTo = Game::GStates::LEVEL_THREE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_THREE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 4:
-				Game::instance().transitionTo = Game::GStates::LEVEL_FOUR;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_FOUR;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 5:
 				//CHANGE THIS AFTER CREATING FIFTH LEVEL
-				Game::instance().transitionTo = Game::GStates::LEVEL_FIVE;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_FIVE;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	case 6:
-				Game::instance().transitionTo = Game::GStates::LEVEL_BOSS;
-				Game::instance().setState( Game::instance().transitionTo );
+				Game::instance().transition_to = Game::GStates::LEVEL_BOSS;
+				Game::instance().set_state( Game::instance().transition_to );
 				break;
 		
     	default:

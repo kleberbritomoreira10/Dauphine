@@ -66,10 +66,10 @@ class Enemy : public DynamicEntity
 
 		void initializeStates ();
 		void destroyStates ();
-		void changeState ( const EStates state_ );
+		void change_state ( const EStates state_ );
 		Animation* getAnimation ();
-		bool isDead ();
-		void set_dead ( bool isDead_ );
+		bool is_dead ();
+		void set_dead ( bool is_dead_ );
 
 		static double px; // Position of the enemy in the origin of the x axis.
 		static double py; // Position of the enemy in the origin of the y axis.

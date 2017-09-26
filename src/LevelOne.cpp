@@ -26,7 +26,7 @@ LevelOne::LevelOne ():
 	items {{ 59 * 64, 114 * 64, 0, 0 },{ 1750, 1750, 0, 0 }},
 	caught_items { false, false, true, true }
 {
-	this -> changeCheckpoints ( 2, { 4000, 7500 }, { 1600, 1600 });
+	this -> change_checkpoints ( 2, { 4000, 7500 }, { 1600, 1600 });
 }
 
 LevelOne::~LevelOne ()
@@ -46,25 +46,25 @@ void LevelOne::load ()
 	this -> tile_map = new TileMap ( "res/maps/level1.tmx" );
 
 	// Setting the level width/height.
-	this -> width = this -> tile_map -> getMapWidth ();
+	this -> width = this -> tile_map -> get_map_width ();
 
-	this -> height = this -> tile_map -> getMapHeight ();
+	this -> height = this -> tile_map -> get_map_height ();
 
 	SDL_Rect bounds = { 0, 0, ( int )this -> width, ( int )this -> height };
 
 	this -> quadTree = new QuadTree ( 0, bounds );
 
-	this -> background = Game::instance (). getResources (). get (
+	this -> background = Game::instance (). get_resources (). get (
 	 "res/images/lv1_background_parallax.png" );
 
-	this -> backgroud_top = Game::instance (). getResources (). get (
+	this -> backgroud_top = Game::instance (). get_resources (). get (
 	 "res/images/lv1_parallax_top.png" );
 
 	 // Load the number of checkpoints achieved
 	for ( int i = 0; i < this -> NUMBER_OF_CHECKPOINTS; ++i )
 	{
 
-		this -> checkpoints.push_back ( Game::instance (). getResources (). get (
+		this -> checkpoints.push_back ( Game::instance (). get_resources (). get (
 		 "res/images/checkpoint.png" ));
 
 	}
@@ -108,7 +108,7 @@ void LevelOne::load ()
 	Camera *level_camera = new Camera ( level_player );
 
 	// Loading the refill of potion.
-	this -> image = Game::instance (). getResources (). get( "res/images/potion.png" );
+	this -> image = Game::instance (). get_resources (). get( "res/images/potion.png" );
 
 	this -> player_Hud = new PlayerHUD( level_player );
 
@@ -133,7 +133,7 @@ void LevelOne::load ()
 			}
 		}
 
-		enemy -> setLevelWH ( this -> width, this -> height );
+		enemy -> set_level_width_height ( this -> width, this -> height );
 		this -> enemies. push_back ( enemy );
 
 	}
@@ -173,7 +173,7 @@ void LevelOne::update ( const double DELTA_TIME )
 {
 
 	// Populating the QuadTree.
-	this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
+	this -> quadTree -> set_objects ( this -> tile_map -> get_collision_rects () );
 
 	// Updating the entities, using the QuadTree.
 	std::vector < CollisionRect > return_objects;
@@ -185,7 +185,7 @@ void LevelOne::update ( const double DELTA_TIME )
 
 		this -> quadTree -> retrieve ( return_objects, entity -> get_bounding_box () );
 
-		entity -> setCollisionRects ( return_objects );
+		entity -> set_collision_rects ( return_objects );
 
 		entity -> update( DELTA_TIME );
 
@@ -199,24 +199,24 @@ void LevelOne::update ( const double DELTA_TIME )
 
 		this -> quadTree -> retrieve ( return_objects, enemy -> get_bounding_box () );
 
-		enemy -> setCollisionRects ( return_objects );
+		enemy -> set_collision_rects ( return_objects );
 
 		enemy -> update( DELTA_TIME );
 
 	}
 
 	// Set to GameOver if the player is dead.
-	if ( this -> player -> isDead () )
+	if ( this -> player -> is_dead () )
 	{
 
-		this -> player -> changeState ( Player::player_states::DEAD );
+		this -> player -> change_state ( Player::player_states::DEAD );
 
 		ok = ok + DELTA_TIME;
 
 		if( ok > 3 )
 		{
 
-			Game::instance (). setState ( Game::GStates::GAMEOVER );
+			Game::instance (). set_state ( Game::GStates::GAMEOVER );
 
 		}
 
@@ -232,7 +232,7 @@ void LevelOne::update ( const double DELTA_TIME )
 
 		this -> quadTree -> retrieve ( return_objects, potion -> get_bounding_box () );
 
-		potion -> setCollisionRects ( return_objects );
+		potion -> set_collision_rects ( return_objects );
 
 	}
 
@@ -264,7 +264,7 @@ void LevelOne::update ( const double DELTA_TIME )
 
 			this -> player -> life--;
 			Enemy::points_life = this -> player -> life;
-			this -> player -> changeState ( Player::player_states::HITED );
+			this -> player -> change_state ( Player::player_states::HITED );
 			this -> player -> is_vulnerable = false;
 		}else
 		{
@@ -282,8 +282,8 @@ void LevelOne::update ( const double DELTA_TIME )
 	if ( this -> player -> reached_level_end )
 	{
 
-		Game::instance (). transitionTo = Game::GStates::LEVEL_TWO;
-		Game::instance (). setState ( Game::GStates::TRANSITION );
+		Game::instance (). transition_to = Game::GStates::LEVEL_TWO;
+		Game::instance (). set_state ( Game::GStates::TRANSITION );
 		return;
 
 	}
@@ -313,7 +313,7 @@ void LevelOne::update ( const double DELTA_TIME )
 					if ( enemy -> life <= 0 )
 					{
 
-						enemy -> changeState ( Enemy::EStates::DEAD );
+						enemy -> change_state ( Enemy::EStates::DEAD );
 
 					}
 				}
@@ -339,7 +339,7 @@ void LevelOne::update ( const double DELTA_TIME )
 					if ( enemy -> life > 0 && this -> player -> can_attack )
 					{
 
-						enemy -> life -= this -> player -> attackStrength;
+						enemy -> life -= this -> player -> attack_strength;
 						this -> player -> can_attack = false;
 
 					}
@@ -349,7 +349,7 @@ void LevelOne::update ( const double DELTA_TIME )
 					if ( enemy -> life <= 0 )
 					{
 
-						enemy -> changeState ( Enemy::EStates::DEAD );
+						enemy -> change_state ( Enemy::EStates::DEAD );
 
 					}
 				}
@@ -367,7 +367,7 @@ void LevelOne::update ( const double DELTA_TIME )
 		    && this -> player -> get_bounding_box (). y <= checkpoints_Y [ j ] + 200 )
 		{
 
-			this -> checkpoints [ j ] = Game::instance (). getResources (). get (
+			this -> checkpoints [ j ] = Game::instance (). get_resources (). get (
 				"res/images/checkpoint_visited.png" );
 
 			Game::instance (). get_saves ().saveLevel ( 1, this -> player, this -> enemies,
@@ -448,7 +448,7 @@ void LevelOne::render ()
 
 		if ( document -> should_render )
 		{
-			document -> renderDocumentText ();
+			document -> render_document_text ();
 		}
 	}
 

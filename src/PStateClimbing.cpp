@@ -84,14 +84,14 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 			this -> player -> velocity_x_axis = 500;
 		}
 
-		this -> player -> changeState( Player::player_states::AERIAL );
+		this -> player -> change_state( Player::player_states::AERIAL );
 		return;
 	}
 
 	if( !this -> player -> isClimbing)
 	{
 		this -> player -> velocity_y_axis = -1000;
-		this -> player -> changeState( Player::player_states::AERIAL );
+		this -> player -> change_state( Player::player_states::AERIAL );
 		return;
 	}
 }

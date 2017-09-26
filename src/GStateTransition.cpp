@@ -35,10 +35,10 @@ void GStateTransition::load ()
 
 	Log ( DEBUG ) << "Loading transition...";
 
-	this -> loading = Game::instance (). getResources (). get (
+	this -> loading = Game::instance (). get_resources (). get (
 		"res/images/loading.png" );
 
-	this -> point = Game::instance (). getResources (). get(
+	this -> point = Game::instance (). get_resources (). get(
 		"res/images/point.png");
 
 	if ( this -> loading == nullptr )
@@ -80,7 +80,7 @@ void GStateTransition::update ( const double DELTA_TIME )
 
 	if ( this -> passed_time >= this -> lifeTime )
 	{
-		Game::instance (). setState ( Game::instance (). transitionTo );
+		Game::instance (). set_state ( Game::instance (). transition_to );
 	}
 
 }

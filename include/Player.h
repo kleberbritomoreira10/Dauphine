@@ -97,7 +97,7 @@ class Player : public DynamicEntity
 		* @see StatePlayer::unload
 		* @param state_ : The state you want to be changed into. All states are inside Player.
 		*/
-		void changeState( const player_states state_ );
+		void change_state( const player_states state_ );
 
 		/**
 		* @return Whether the player is currently in player_states::state_ or not.
@@ -119,13 +119,13 @@ class Player : public DynamicEntity
 		Crosshair *crosshair;
 
 		unsigned int life;
-		unsigned int attackStrength;
+		unsigned int attack_strength;
 		//unsigned int maxLife;
 
 		bool can_attack;
 		unsigned int currentItem;
 
-		bool isDead();
+		bool is_dead();
 		bool closestEnemyIsRight;
 
 		bool is_vulnerable;

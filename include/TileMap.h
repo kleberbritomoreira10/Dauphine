@@ -35,9 +35,9 @@ class TileMap
 		*/
 		void render( const double cameraX_, const double cameraY_ );
 
-		unsigned int getMapWidth();
-		unsigned int getMapHeight();
-		std::vector <CollisionRect> &getCollisionRects();
+		unsigned int get_map_width();
+		unsigned int get_map_height();
+		std::vector <CollisionRect> &get_collision_rects();
 
 		double get_initial_x();
 		double get_initial_y();

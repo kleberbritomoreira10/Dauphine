@@ -46,7 +46,7 @@ DynamicEntity::~DynamicEntity ()
 
 // @param width_,height_ : Tells the player what the width and height of the level is.
 
-void DynamicEntity::setLevelWH ( const unsigned int width_, const unsigned int height_ )
+void DynamicEntity::set_level_width_height ( const unsigned int width_, const unsigned int height_ )
 {
 
 	this -> level_width = width_;

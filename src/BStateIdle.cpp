@@ -56,7 +56,7 @@ void BStateIdle::update( const double DELTA_TIME )
 
 	if( this -> boss -> saw_player )
 	{
-		this -> boss -> changeState( Boss::BStates::ATTACK );
+		this -> boss -> change_state( Boss::BStates::ATTACK );
 	}
 
 }

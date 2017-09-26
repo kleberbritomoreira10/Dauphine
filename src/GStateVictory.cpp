@@ -35,7 +35,7 @@ void GStateVictory::load ()
 
 	Log ( DEBUG ) << "Loading victory...";
 
-    this -> victoryImage = Game::instance (). getResources (). get(
+    this -> victoryImage = Game::instance (). get_resources (). get(
     	"res/images/victory.png" );
 
 	this -> lifeTime = 5.0;
@@ -70,7 +70,7 @@ void GStateVictory::update ( const double DELTA_TIME )
 
 	if ( this -> passed_time >= this -> lifeTime )
 	{
-		Game::instance (). setState ( Game::GStates::CREDITS );
+		Game::instance (). set_state ( Game::GStates::CREDITS );
 		return;
 
 	}

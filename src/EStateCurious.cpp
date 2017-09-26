@@ -24,7 +24,7 @@ void EStateCurious::enter()
 	if ( enemy -> life <= 0)
 	{
 		enemy -> velocity_y_axis = 0;
-		enemy -> changeState(Enemy::EStates::DEAD);
+		enemy -> change_state(Enemy::EStates::DEAD);
 	}
 }
 
@@ -49,7 +49,7 @@ void EStateCurious::update( const double DELTA_TIME)
 	// Aerial
 	if ( !this -> enemy -> isGrounded )
 	{
-		this -> enemy -> changeState( Enemy::EStates::AERIAL );
+		this -> enemy -> change_state( Enemy::EStates::AERIAL );
 		return;
 	}
   
@@ -62,14 +62,14 @@ void EStateCurious::update( const double DELTA_TIME)
  
 	if ( abs( this -> enemy->x - Enemy::px) < Enemy::alert_range && abs( this -> enemy->y-Enemy::py ) < Enemy::alert_range)
 	{
-		this -> enemy -> changeState(Enemy::EStates::ALERT);
+		this -> enemy -> change_state(Enemy::EStates::ALERT);
 		return;
 	}
   
   //if the time elapsed is greater than the time observing the enemy returns to patrol.
 	if ( time_elapsed >= MAX_CURIOUS_TIME )
 	{
-		this -> enemy -> changeState(Enemy::EStates::PATROLLING);
+		this -> enemy -> change_state(Enemy::EStates::PATROLLING);
 		return;
 	}
 }

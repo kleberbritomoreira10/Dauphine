@@ -9,7 +9,7 @@ void EStatePatrolling::enter(){
 
 	if(enemy->life <= 0){
 		enemy->velocity_y_axis = 0;
-		enemy->changeState(Enemy::EStates::DEAD);
+		enemy->change_state(Enemy::EStates::DEAD);
 	}
 }
 
@@ -41,11 +41,11 @@ void EStatePatrolling::update(const double DELTA_TIME){
 
 	/// @todo Make the range be only in the direciton the enemy is facing.
 	if(abs(this->enemy->x - Enemy::px) < Enemy::alert_range && abs(this->enemy->y - Enemy::py) < Enemy::alert_range){
-		this->enemy->changeState(Enemy::EStates::ALERT);
+		this->enemy->change_state(Enemy::EStates::ALERT);
 		return;
 	}
 	else if(abs(this->enemy->x - Enemy::px) < Enemy::curious_range && abs(this->enemy->y - Enemy::py) < Enemy::curious_range){
-		this->enemy->changeState(Enemy::EStates::CURIOUS);
+		this->enemy->change_state(Enemy::EStates::CURIOUS);
 		return;
 	}
 	

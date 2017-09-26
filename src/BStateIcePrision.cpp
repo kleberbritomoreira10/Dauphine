@@ -21,7 +21,7 @@ double prisionTime = 0.0;
 void BStateIcePrision::enter()
 {
   // Log(DEBUG) << "STATE ICE PRISION BOSS";
-  this -> boss -> power = Game::instance().getResources().get("res/images/ice_prision.png");
+  this -> boss -> power = Game::instance().get_resources().get("res/images/ice_prision.png");
   this -> boss -> power_animation -> changeWidthHeight( 340,1020 );
   this -> boss -> power_animation -> changeAnimation( 0, 0, 2, false, 0.5 );
   this -> boss -> velocity_x_axis = 0;
@@ -70,7 +70,7 @@ void BStateIcePrision::update( const double DELTA_TIME )
   }
   if( prisionTime > 4 )
   {
-    this -> boss -> changeState( Boss::BStates::IDLE );
+    this -> boss -> change_state( Boss::BStates::IDLE );
   }
 }
 

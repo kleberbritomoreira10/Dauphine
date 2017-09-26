@@ -92,7 +92,7 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 	
   	for ( auto enemy : enemies )
     {
-			this -> saveFile << enemy -> isDead() << " ";
+			this -> saveFile << enemy -> is_dead() << " ";
 		}
 		
 		this -> saveFile.close();

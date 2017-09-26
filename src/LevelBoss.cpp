@@ -26,12 +26,12 @@ void LevelBoss::load(){
 	this->tile_map = new TileMap("res/maps/levelBoss.tmx");
 
 	// Setting the level width/height.
-	this->width = this->tile_map->getMapWidth();
-	this->height = this->tile_map->getMapHeight();
+	this->width = this->tile_map->get_map_width();
+	this->height = this->tile_map->get_map_height();
 	SDL_Rect bounds = {0, 0, (int)this->width, (int)this->height};
 	this->quadTree = new QuadTree(0, bounds);
 
-	this->background = Game::instance().getResources().get("res/images/lv1_background.png");
+	this->background = Game::instance().get_resources().get("res/images/lv1_background.png");
 
 	// Getting information from lua script.
 	LuaScript luaLevel1("lua/Level1.lua");
@@ -76,20 +76,20 @@ void LevelBoss::unload(){
 void LevelBoss::update(const double DELTA_TIME){
 
 	// Populating the QuadTree.
-	this->quadTree->setObjects(this->tile_map->getCollisionRects());
+	this->quadTree->set_objects(this->tile_map->get_collision_rects());
 
 	// Updating the entities, using the QuadTree.
 	std::vector<CollisionRect> return_objects;
 	for (auto entity : this->entities) {
 		return_objects.clear();
 		this->quadTree->retrieve(return_objects, entity->get_bounding_box());
-		entity->setCollisionRects(return_objects);
+		entity->set_collision_rects(return_objects);
 		entity->update(DELTA_TIME);
 	}
 
 	// Set to GameOver if the player is dead.
-	if(this->player->isDead()){
-		Game::instance().setState(Game::GStates::GAMEOVER);
+	if(this->player->is_dead()){
+		Game::instance().set_state(Game::GStates::GAMEOVER);
 		return;
 	}
 
@@ -97,7 +97,7 @@ void LevelBoss::update(const double DELTA_TIME){
 	for(auto potion : this->player->potions){
 		return_objects.clear();
 		this->quadTree->retrieve(return_objects, potion->get_bounding_box());
-		potion->setCollisionRects(return_objects);
+		potion->set_collision_rects(return_objects);
 	}
 
 	if(this->boss->x < this->player->x + 10 && this->boss->x > this->player->x - 10){
@@ -119,7 +119,7 @@ void LevelBoss::update(const double DELTA_TIME){
 
 	// Set next level if end is reached.
 	if(this->player->reached_level_end){
-		Game::instance().setState(Game::GStates::VICTORY);
+		Game::instance().set_state(Game::GStates::VICTORY);
 		return;
 	}
 
@@ -183,7 +183,7 @@ void LevelBoss::render(){
 	for(auto document : this->documents){
 		document->render(CAMERA_X, CAMERA_Y);
 		if(document->should_render){
-			document->renderDocumentText();
+			document->render_document_text();
 		}
 	}
 }

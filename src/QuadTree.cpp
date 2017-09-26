@@ -177,7 +177,7 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector<CollisionRect>& retur
 * Updating the objects in the game after the colisions.
 * @param object_: object used for manage after the colisions.
 */
-void QuadTree::setObjects( std::vector<CollisionRect>& objects_ )
+void QuadTree::set_objects( std::vector<CollisionRect>& objects_ )
 {
 	this -> objects.clear();
 	this -> objects = objects_;

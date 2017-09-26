@@ -16,7 +16,7 @@
 @param y_ : position in y axis.
 */
 Document::Document( const double x_, const double y_, const std::string& PATH, const std::string& pathDocumentText_) :
-	Entity(x_, y_, PATH ), should_render(false), documentText(Game::instance().getResources().get(pathDocumentText_ ))
+	Entity(x_, y_, PATH ), should_render(false), documentText(Game::instance().get_resources().get(pathDocumentText_ ))
 {
 	if ( documentText == nullptr )
 	{
@@ -63,7 +63,7 @@ void Document::render ( const double cameraX_, const double cameraY_ )
 Render the document
 Always renders on 0,0 position.
 */
-void Document::renderDocumentText ()
+void Document::render_document_text ()
 {
 	this -> documentText -> render ( 0, 0, nullptr, true );
 }

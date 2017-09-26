@@ -154,8 +154,8 @@ void GStateNewGame::load ()
 	const std::string PATH_SELECTOR = luaMenu.unlua_get < std::string > (
 		"continue.images.selector" );
 
-	this -> background = Game::instance (). getResources (). get ( PATH_BACKGROUND );
-    this -> selector = Game::instance (). getResources (). get ( PATH_SELECTOR );
+	this -> background = Game::instance (). get_resources (). get ( PATH_BACKGROUND );
+    this -> selector = Game::instance (). get_resources (). get ( PATH_SELECTOR );
 
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
@@ -186,7 +186,7 @@ void GStateNewGame::update ( const double DELTA_TIME )
 
 	if ( keyStates [ GameKeys::ESCAPE ] == true )
 	{
-		Game::instance ().setState ( Game::GStates::MENU );
+		Game::instance ().set_state ( Game::GStates::MENU );
 	}
 }
 
@@ -229,7 +229,7 @@ void GStateNewGame::handleSelectorMenu ()
 
 		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
-			Game::instance (). setState ( Game::GStates::MENU );
+			Game::instance (). set_state ( Game::GStates::MENU );
 		}
 	}
 
@@ -281,8 +281,8 @@ void GStateNewGame::handleSelectorMenu ()
 		Game::instance (). current_slot = Selection::SLOT_1;
 		Game::instance (). get_saves (). setSlot ( Selection::SLOT_1 );
 		Game::instance (). get_saves (). createSave ();
-		Game::instance (). transitionTo = Game::GStates::LEVEL_ONE;
-		Game::instance (). setState( Game::GStates::TRANSITION );
+		Game::instance (). transition_to = Game::GStates::LEVEL_ONE;
+		Game::instance (). set_state( Game::GStates::TRANSITION );
 
 	// When the selection is in slot 2 and the space key is pressed, a new game starts saved in slot 2.
 	}else if ( current_selection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ]
@@ -292,8 +292,8 @@ void GStateNewGame::handleSelectorMenu ()
 		Game::instance (). current_slot = Selection::SLOT_2;
 		Game::instance (). get_saves (). setSlot ( Selection::SLOT_2 );
 		Game::instance (). get_saves (). createSave ();
-		Game::instance (). transitionTo = Game::GStates::LEVEL_ONE; //should be level one, two is here for testing purposes
-		Game::instance (). setState ( Game::GStates::TRANSITION );
+		Game::instance (). transition_to = Game::GStates::LEVEL_ONE; //should be level one, two is here for testing purposes
+		Game::instance (). set_state ( Game::GStates::TRANSITION );
 
 	// When the selection is in slot 3 and the space key is pressed, a new game starts saved in slot 3.
 	}else if ( current_selection == Selection::SLOT_3 && keyStates[GameKeys::SPACE]
@@ -303,8 +303,8 @@ void GStateNewGame::handleSelectorMenu ()
 		Game::instance (). current_slot = Selection::SLOT_3;
 		Game::instance (). get_saves (). setSlot ( Selection::SLOT_3 );
 		Game::instance (). get_saves (). createSave ();
-		Game::instance (). transitionTo = Game::GStates::LEVEL_BOSS; //should be level one, boss is here for testing purposes
-		Game::instance (). setState ( Game::GStates::TRANSITION );
+		Game::instance (). transition_to = Game::GStates::LEVEL_BOSS; //should be level one, boss is here for testing purposes
+		Game::instance (). set_state ( Game::GStates::TRANSITION );
 	}
 
 }

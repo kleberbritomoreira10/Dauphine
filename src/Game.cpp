@@ -40,7 +40,7 @@ Game::Game () :
 	is_cut_scene( false ),
 	is_paused( false ),
 	current_line( 0 ),
-	transitionTo( LEVEL_ONE ),
+	transition_to( LEVEL_ONE ),
 	window( nullptr ),
 	is_running( false ),
 	pause_image( nullptr ),
@@ -72,7 +72,7 @@ Game::Game () :
 	for( int i = 0; i < total_number_of_lines; i++ )
 	{
 		this->dialog[ i ] = nullptr;
-		this->dialog[ i ] = getResources().get( path + Util::toString(i) + extension );
+		this->dialog[ i ] = get_resources().get( path + Util::toString(i) + extension );
 
 		if( this->dialog[i] == nullptr )
 		{
@@ -80,8 +80,8 @@ Game::Game () :
 		}
 	}
 
-	this->pause_image = getResources().get("res/images/pause_overlay.png");
-	this->pause_selector = getResources().get("res/images/cursor_regular.png");
+	this->pause_image = get_resources().get("res/images/pause_overlay.png");
+	this->pause_selector = get_resources().get("res/images/cursor_regular.png");
 	this->pause_selector -> setWidth(50);
 
 	this->is_running = true;
@@ -208,7 +208,7 @@ void Game::runGame()
 
 }
 
-void Game::setState( const GStates state_ )
+void Game::set_state( const GStates state_ )
 {
 	/// @todo Implement the transition between states.
 	this -> current_state -> unload();
@@ -340,7 +340,7 @@ void Game::handleSelectorMenu()
 
 	else if( current_selection == PSelection::EXIT && keyStates[ GameKeys::SPACE ] == true)
 	{
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 		this -> is_paused = false;
 	}
 }
@@ -364,7 +364,7 @@ std::array<bool, GameKeys::MAX> Game::getInput()
 	return this -> input_handler -> getKeyStates();
 }
 
-ResourceManager& Game::getResources()
+ResourceManager& Game::get_resources()
 {
 	return ( *( this -> resource_manager ) );
 }

@@ -47,7 +47,7 @@ Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* c
 	this -> animation = new Animation(0, 0, this -> width, this -> height, 7, false);
 	this -> power_animation = new Animation(0, 0, 0, 0, 0, false);
 	this -> shield_animation = new Animation(0, 0, 340, 340, 6, false);
-	this -> shield = Game::instance().getResources().get("res/images/shield.png");
+	this -> shield = Game::instance().get_resources().get("res/images/shield.png");
 	this -> shield_animation->changeAnimation(0,0,3,false,1);
 	this -> current_state = this -> states_map.at(IDLE);
 	this -> current_state->enter();
@@ -217,7 +217,7 @@ void Boss::destroyStates()
  * Exchange current state to Boss.
  * @param state_ : constant to know the state of the boss.
  */
-void Boss::changeState( const BStates state_)
+void Boss::change_state( const BStates state_)
 { 
 	this -> current_state -> exit();
 	this -> current_state = this -> states_map.at(state_);
@@ -281,17 +281,17 @@ Animation *Boss::getAnimation()
 
 /*
  * Verify condition to Boss (dead or alive)
- * @param isDead_ : boolean variable to check the boss's condition. 
+ * @param is_dead_ : boolean variable to check the boss's condition. 
  */
-void Boss::set_dead(bool isDead_)
+void Boss::set_dead(bool is_dead_)
 {
-	this -> dead = isDead_;
+	this -> dead = is_dead_;
 }
 
 /*
  * Check if Boss is alive
  */
-bool Boss::isDead()
+bool Boss::is_dead()
 { 
 	return this -> dead;
 }

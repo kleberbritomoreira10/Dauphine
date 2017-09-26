@@ -86,7 +86,7 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	if( keyStates[ GameKeys::ESCAPE ] == true)
 	{
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 	}
 
 	const double SELECTOR_DELAY_TIME = 0.2;
@@ -208,7 +208,7 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	if( keyStates[ GameKeys::SPACE ] == true && this -> current_option == O_RETURN )
 	{
-		Game::instance().setState( Game::GStates::MENU );
+		Game::instance().set_state( Game::GStates::MENU );
 	}
 }
 
@@ -259,8 +259,8 @@ void GStateOptions::load()
 	this -> current_resolution = R_960_540;
 	this -> current_option = O_RESOLUTION;
 	
-    this -> options_image = Game::instance().getResources().get( pathOptions );
-    this -> selector = Game::instance().getResources().get( pathCursor );
+    this -> options_image = Game::instance().get_resources().get( pathOptions );
+    this -> selector = Game::instance().get_resources().get( pathCursor );
 
     this -> selector -> setWidth( 50 );
 }

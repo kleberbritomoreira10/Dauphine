@@ -7,7 +7,7 @@ void EStateAlert::enter(){
 
 	if(enemy->life <= 0){
 		enemy->velocity_y_axis = 0;
-		enemy->changeState(Enemy::EStates::DEAD);
+		enemy->change_state(Enemy::EStates::DEAD);
 	}
 }
 
@@ -20,7 +20,7 @@ void EStateAlert::update(const double DELTA_TIME){
 	
 	// Aerial
 	if(!this->enemy->isGrounded){
-		this->enemy->changeState(Enemy::EStates::AERIAL);
+		this->enemy->change_state(Enemy::EStates::AERIAL);
 		return;
 	}
 
@@ -34,12 +34,12 @@ void EStateAlert::update(const double DELTA_TIME){
 
 	if(abs(this->enemy->x - Enemy::px) < 100){
 		if(abs(this->enemy->y - Enemy::py) < 200){
-			this->enemy->changeState(Enemy::EStates::ATTACK);
+			this->enemy->change_state(Enemy::EStates::ATTACK);
 		}
 	}
 
 	if(!(abs(this->enemy->x - Enemy::px) < Enemy::alert_range*2 && abs(this->enemy->y - Enemy::py) < Enemy::alert_range)){
-		this->enemy->changeState(Enemy::EStates::PATROLLING);
+		this->enemy->change_state(Enemy::EStates::PATROLLING);
 		return;
 	}	
 }

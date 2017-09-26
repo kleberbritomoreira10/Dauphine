@@ -88,7 +88,7 @@ void Camera::centralizeOn(Entity* const entity_)
 * @param width__: Width will be configured in the camera.
 * @param height_: Height will be configured in the camera.
 */
-void Camera::setLevelWH( const unsigned int width_, const unsigned int height_ )
+void Camera::set_level_width_height( const unsigned int width_, const unsigned int height_ )
 {
   this -> level_width = width_;
   this -> level_height = height_;

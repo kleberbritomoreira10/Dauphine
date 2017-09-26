@@ -27,7 +27,7 @@ int direction = 0;
 void BStateTeleport::enter ()
 {
 	// Log(DEBUG) << "STATE TELEPORT BOSS";
-	this -> boss -> power = Game::instance (). getResources (). get(
+	this -> boss -> power = Game::instance (). get_resources (). get(
 		"res/images/laser_sheet.png" );
 
 	this -> boss -> power_animation -> changeWidthHeight ( 700, 340 );
@@ -178,7 +178,7 @@ void BStateTeleport::update ( const double DELTA_TIME )
 
 	}else if ( tptime > 5 )
 	{
-		this -> boss -> changeState ( Boss::BStates::IDLE );
+		this -> boss -> change_state ( Boss::BStates::IDLE );
 	}
 }
 

@@ -45,13 +45,13 @@ void PStateAerial::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
 	// Idle
   if( this -> player -> isGrounded)
   {
-    this -> player -> changeState( Player::player_states::IDLE );
+    this -> player -> change_state( Player::player_states::IDLE );
     return;
   }
 
   if( keyStates_[ GameKeys::LATTACK ])
   {
-    this -> player -> changeState( Player::player_states::ATTACKJUMPING );
+    this -> player -> change_state( Player::player_states::ATTACKJUMPING );
     return;
   }
 

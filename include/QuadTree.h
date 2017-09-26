@@ -39,7 +39,7 @@ class QuadTree
 		*/
 		std::vector < CollisionRect > retrieve ( std::vector < CollisionRect > &returnObjects_, SDL_Rect rect_ );
 
-		void setObjects ( std::vector < CollisionRect > &objects_ );
+		void set_objects ( std::vector < CollisionRect > &objects_ );
 
 	private:
 

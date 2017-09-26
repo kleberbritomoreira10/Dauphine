@@ -10,7 +10,7 @@ void EStateAttack::enter(){
 
 	if(enemy->life <= 0){
 		enemy->velocity_y_axis = 0;
-		enemy->changeState(Enemy::EStates::DEAD);
+		enemy->change_state(Enemy::EStates::DEAD);
 	}
 }
 
@@ -36,7 +36,7 @@ void EStateAttack::update(const double DELTA_TIME){
 		if(Enemy::position_vulnerable){
 			Enemy::points_life--;
 		}
-		this->enemy->changeState(Enemy::EStates::ALERT);
+		this->enemy->change_state(Enemy::EStates::ALERT);
 	}
 }
 

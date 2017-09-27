@@ -1,8 +1,9 @@
+
 #include "EStateAlert.h"
 #include "Logger.h"
 
 void EStateAlert::enter(){
-	this->enemy->getAnimation()->changeAnimation(1, 0, 9, false, 0.9);
+	this->enemy->getAnimation()->change_animation(1, 0, 9, false, 0.9);
 	this->enemy->speed = 6.5;
 
 	if(enemy->life <= 0){

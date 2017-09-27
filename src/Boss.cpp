@@ -48,7 +48,7 @@ Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* c
 	this -> power_animation = new Animation(0, 0, 0, 0, 0, false);
 	this -> shield_animation = new Animation(0, 0, 340, 340, 6, false);
 	this -> shield = Game::instance().get_resources().get("res/images/shield.png");
-	this -> shield_animation->changeAnimation(0,0,3,false,1);
+	this -> shield_animation->change_animation(0,0,3,false,1);
 	this -> current_state = this -> states_map.at(IDLE);
 	this -> current_state->enter();
 

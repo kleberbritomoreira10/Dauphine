@@ -21,7 +21,7 @@ void PStateAttackMoving::enter ()
 	this -> box.w = 130;
 	this -> box.h = 160;
 
-	this -> player -> getAnimation () -> changeAnimation ( 5, 8, 9, false, 0.7 );
+	this -> player -> getAnimation () -> change_animation ( 5, 8, 9, false, 0.7 );
 }
 
 void PStateAttackMoving::exit ()

@@ -22,7 +22,7 @@ void PStateHit::enter()
   this -> box.y = 72;
   this -> box.w = 130;
   this -> box.h = 145;
-  this -> player -> getAnimation() -> changeAnimation(4, 8, 1, false, 0);
+  this -> player -> getAnimation() -> change_animation(4, 8, 1, false, 0);
 
   int direction = 1;
   if ( this -> player -> is_right )

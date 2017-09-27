@@ -4,7 +4,7 @@
 double attackTime; // NO
 
 void EStateAttack::enter(){
-	this->enemy->getAnimation()->changeAnimation(2, 1, 6, false, 0.6);
+	this->enemy->getAnimation()->change_animation(2, 1, 6, false, 0.6);
 	this->enemy->speed = 7.0;
 	attackTime = 0;
 

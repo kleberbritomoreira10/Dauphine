@@ -31,7 +31,7 @@ void BStateTeleport::enter ()
 		"res/images/laser_sheet.png" );
 
 	this -> boss -> power_animation -> changeWidthHeight ( 700, 340 );
-	this -> boss -> power_animation -> changeAnimation ( 0, 0, 3, false, 0.5 );
+	this -> boss -> power_animation -> change_animation ( 0, 0, 3, false, 0.5 );
 	this -> boss -> player -> is_vulnerable = true;
 
 }
@@ -44,7 +44,7 @@ void BStateTeleport::exit ()
 {
 	this -> boss -> power_is_activated = false;
 	this -> boss -> player -> is_vulnerable = true;
-	this -> boss -> power_animation -> changeAnimation( 0, 0, 1, false, 0 );
+	this -> boss -> power_animation -> change_animation( 0, 0, 1, false, 0 );
 	powerCollisionWidth = 0;
 	powerCollisionHeight = 0;
 	tptime = 0.0;
@@ -67,7 +67,7 @@ void BStateTeleport::update ( const double DELTA_TIME )
 	} else if ( tptime >= 3 && tptime <= 3.05 )
 	{
 
-		this -> boss -> getAnimation() -> changeAnimation ( 0, 0, 1, false, 0 );
+		this -> boss -> getAnimation() -> change_animation ( 0, 0, 1, false, 0 );
 		this -> boss -> velocity_x_axis = 0;
 
 		if ( this -> boss -> player -> is_right )
@@ -156,7 +156,7 @@ void BStateTeleport::update ( const double DELTA_TIME )
 		}if ( tptime >= 4.5 )
 		{
 
-			this -> boss -> power_animation -> changeAnimation ( 2, 0, 1, false, 0 );
+			this -> boss -> power_animation -> change_animation ( 2, 0, 1, false, 0 );
 			powerCollisionWidth = 665;
 			powerCollisionHeight = 262;
 

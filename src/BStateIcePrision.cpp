@@ -23,7 +23,7 @@ void BStateIcePrision::enter()
   // Log(DEBUG) << "STATE ICE PRISION BOSS";
   this -> boss -> power = Game::instance().get_resources().get("res/images/ice_prision.png");
   this -> boss -> power_animation -> changeWidthHeight( 340,1020 );
-  this -> boss -> power_animation -> changeAnimation( 0, 0, 2, false, 0.5 );
+  this -> boss -> power_animation -> change_animation( 0, 0, 2, false, 0.5 );
   this -> boss -> velocity_x_axis = 0;
   this -> boss -> velocity_y_axis = 0;
   this -> boss -> power_is_activated = true;
@@ -39,7 +39,7 @@ void BStateIcePrision::exit()
 {
   this -> boss -> power_is_activated = false;
   this -> boss -> player -> is_vulnerable = true;
-  this -> boss -> power_animation -> changeAnimation( 0, 0, 1, false, 0 );
+  this -> boss -> power_animation -> change_animation( 0, 0, 1, false, 0 );
   prisionTime = 0.0;
   this -> boss -> player -> canMove = true;
 }
@@ -54,7 +54,7 @@ void BStateIcePrision::update( const double DELTA_TIME )
   prisionTime += DELTA_TIME;
   if( prisionTime > 1 )
   {
-    this -> boss -> power_animation -> changeAnimation( 2, 0, 1, false, 0 );
+    this -> boss -> power_animation -> change_animation( 2, 0, 1, false, 0 );
     if( Collision::rects_collided( this -> boss -> player -> get_bounding_box(),  {( int )this -> boss -> power_X, 
     ( int ) this -> boss -> power_Y, 340,1020 }))
     {
@@ -64,7 +64,7 @@ void BStateIcePrision::update( const double DELTA_TIME )
           this -> boss -> player -> is_vulnerable = false;
           this -> boss -> player -> velocity_x_axis = 0;
           this -> boss -> player -> velocity_y_axis = 0;
-          this -> boss -> player -> getAnimation() -> changeAnimation( 4, 8, 1, false, 0 );
+          this -> boss -> player -> getAnimation() -> change_animation( 4, 8, 1, false, 0 );
       }
     }
   }

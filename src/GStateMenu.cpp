@@ -111,7 +111,7 @@ void GStateMenu::update( const double DELTA_TIME )
 
 	if( this -> is_shwing_activated )
 	{
-		 this -> shwing_animation -> changeAnimation( 0, 0, 12, false, 2 );
+		 this -> shwing_animation -> change_animation( 0, 0, 12, false, 2 );
 		 this -> is_shwing_activated = false;
 	}
 

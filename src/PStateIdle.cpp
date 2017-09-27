@@ -17,7 +17,7 @@ void PStateIdle::enter(){
 	// this->box.w = (int)this->player->getWidth() / 1.7;
 	// this->box.h = (int)this->player->getHeight() / 3.5;
 
-	this->player->getAnimation()->changeAnimation(0, 0, 26, false, 2.6);
+	this->player->getAnimation()->change_animation(0, 0, 26, false, 2.6);
 	this->player->isGrounded = true;
 }
 

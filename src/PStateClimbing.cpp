@@ -26,7 +26,7 @@ void PStateClimbing::enter()
     this -> box.w = 130;
     this -> box.h = 145;
 
-    this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
+    this -> player -> getAnimation() -> change_animation( 0, 6, 4, false, 1 );
 
     this -> player -> velocity_y_axis = 0;
     if( !this -> player -> is_right )
@@ -56,7 +56,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 
 	if( abs( this -> player -> velocity_y_axis ) < 1 )
 	{
-		this -> player -> getAnimation() -> changeAnimation( this -> player -> getAnimation() -> getCurrentFrame() - 1,
+		this -> player -> getAnimation() -> change_animation( this -> player -> getAnimation() -> getCurrentFrame() - 1,
 			6, 1, false, 0 );
 			isMoving = true;
 	}
@@ -64,7 +64,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 	{
 		if( isMoving )
 		{
-			this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
+			this -> player -> getAnimation() -> change_animation( 0, 6, 4, false, 1 );
 			isMoving = false;
 		}
 	}

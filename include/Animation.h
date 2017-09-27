@@ -46,7 +46,7 @@ class Animation
 		* Changes the animation to another.
 		* @note See Animation::Animation for the parameters descriptions.
 		*/
-		void changeAnimation ( const int x_, const int y_, const unsigned int numberOfImages_,
+		void change_animation ( const int x_, const int y_, const unsigned int numberOfImages_,
 		 const bool loop_, const double totalTime_ );
 
 		unsigned int ANIMATION_LIMIT;

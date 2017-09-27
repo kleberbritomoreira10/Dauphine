@@ -1,3 +1,4 @@
+
 /* Dauphine
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
@@ -18,7 +19,7 @@
  */
 void EStateCurious::enter()
 {
-	this -> enemy -> getAnimation() -> changeAnimation(1, 0, 9, false, 1.2);
+	this -> enemy -> getAnimation() -> change_animation(1, 0, 9, false, 1.2);
 	this -> enemy -> speed = 5.0;
 
 	if ( enemy -> life <= 0)

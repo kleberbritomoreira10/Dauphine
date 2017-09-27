@@ -96,7 +96,7 @@ void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
 * Changes the animation to another.
 * @note See Animation::Animation for the parameters descriptions.
 */
-void Animation::changeAnimation ( const int x_, const int y_, const unsigned int numberOfImages_,
+void Animation::change_animation ( const int x_, const int y_, const unsigned int numberOfImages_,
 	const bool loop_, const double totalTime_ )
 {
 

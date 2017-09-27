@@ -83,7 +83,7 @@ void Potion::update( const double DELTA_TIME )
 	if ( this -> activated )
 	{
 
-    this -> getAnimation() -> changeAnimation( 0, 0, 1, false, 0 );
+    this -> getAnimation() -> change_animation( 0, 0, 1, false, 0 );
 
 		this -> flightTime +=DELTA_TIME;
 
@@ -106,7 +106,7 @@ void Potion::update( const double DELTA_TIME )
         // Changing animation if can explode.
         if ( this -> canExplode )
 				{
-            this -> getAnimation() -> changeAnimation( 1, 0, 12, false, 0.8 );
+            this -> getAnimation() -> change_animation( 1, 0, 12, false, 0.8 );
             this -> canExplode = false;
         }
         if ( this -> getAnimation() -> getCurrentFrame() == 12 )

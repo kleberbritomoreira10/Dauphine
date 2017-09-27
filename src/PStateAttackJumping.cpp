@@ -21,7 +21,7 @@ void PStateAttackJumping::enter()
     this -> box.w = 130;
     this -> box.h = 145;
 
-    this -> player -> getAnimation() -> changeAnimation( 3, 9, 7, false, 0.4 );
+    this -> player -> getAnimation() -> change_animation( 3, 9, 7, false, 0.4 );
 }
 
 /**

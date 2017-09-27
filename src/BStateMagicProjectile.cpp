@@ -25,7 +25,7 @@ void BStateMagicProjectile::enter ()
   // Log(DEBUG) << "STATE MAGIC PROJECTILE BOSS";
   this -> boss -> power = Game::instance().get_resources().get( "res/images/projectile.png" );
   this -> boss -> power_animation -> changeWidthHeight( 50, 50 );
-  this -> boss -> power_animation -> changeAnimation( 0, 0, 4, false, 0.5 );
+  this -> boss -> power_animation -> change_animation( 0, 0, 4, false, 0.5 );
   this -> boss -> velocity_x_axis = 0;
   this -> boss -> velocity_y_axis = 0;
   this -> boss -> power_X = this -> boss -> x + 50;

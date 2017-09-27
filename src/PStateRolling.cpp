@@ -8,7 +8,7 @@ void PStateRolling::enter ()
   this -> box.y = 72;
   this -> box.w = 140;
   this -> box.h = 160;
-  this -> player -> getAnimation() -> changeAnimation( 6, 4, 9, true, 0.6 );
+  this -> player -> getAnimation() -> change_animation( 6, 4, 9, true, 0.6 );
   this -> player -> roll();
 
   Game::instance().get_audio_handler().addSoundEffect( "res/audio/FX_NADINE/ROLLING_NADINE_01.wav" );

@@ -21,7 +21,7 @@ void PStateCrouching::enter()
 	this -> box.y = ( int )this -> player -> getHeight() / 2;
 	this -> box.h = ( int )this -> player -> getHeight() / 2;
 
-	this -> player -> getAnimation() -> changeAnimation( 10,13,2,false,0.3 );
+	this -> player -> getAnimation() -> change_animation( 10,13,2,false,0.3 );
 	this -> player -> isGrounded = true;
 }
 
@@ -31,7 +31,7 @@ void PStateCrouching::enter()
 */
 void PStateCrouching::exit()
 {
-	this -> player -> getAnimation() -> changeAnimation( 1,14,2,false,0.3 );
+	this -> player -> getAnimation() -> change_animation( 1,14,2,false,0.3 );
 }
 
 /** 
@@ -42,7 +42,7 @@ void PStateCrouching::exit()
 */
 void PStateCrouching::handleInput( const std::array<bool, GameKeys::MAX> keyStates_ )
 {
-	this -> player -> getAnimation() -> changeAnimation( 8,9,1,false,0 );
+	this -> player -> getAnimation() -> change_animation( 8,9,1,false,0 );
 
 	// Getting idle.
 	if ( !keyStates_[GameKeys::CROUCH] )

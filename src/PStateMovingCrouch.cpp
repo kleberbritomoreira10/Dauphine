@@ -23,7 +23,7 @@ void PStateMovingCrouch::enter ()
 	this -> box.h = ( int ) this -> player -> getHeight () / 2;
 
   // Changes the previous animation to crouch.
-	this -> player -> getAnimation () -> changeAnimation ( 3, 10, 6, true, 1 );
+	this -> player -> getAnimation () -> change_animation ( 3, 10, 6, true, 1 );
 	this -> player -> isGrounded = true;
 	this -> player -> maxSpeed /= 2;
 	this -> player -> speed = 15;

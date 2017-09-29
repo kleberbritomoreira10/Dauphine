@@ -72,12 +72,12 @@ void Potion::update( const double DELTA_TIME )
 	const double gravity = 35; // Gravity value.
 
   // Updating Bounding box and animation.
-  updateBoundingBox();
-  this -> animation -> update( this -> animationClip, DELTA_TIME );
+  update_bounding_box();
+  this -> animation -> update( this -> animation_clip, DELTA_TIME );
 
   // Detecting collisions and handling.
-	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
-  handleCollision( detections );
+	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detect_collision();
+  handle_collision( detections );
 
   // Updating all the potion characteristics.
 	if ( this -> activated )
@@ -121,7 +121,7 @@ void Potion::update( const double DELTA_TIME )
 * Handle the detected collisions.
 * @param detections_: Array of detected collisions.
 */
-void Potion::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ )
+void Potion::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ )
 {
 
   // Handling SOLID_TOP collision.
@@ -167,35 +167,35 @@ void Potion::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
 * Renders the potion.
 * Uses the player's sprite render method.
 * @see Sprite::render
-* @param cameraX_ : The x position of the camera.
-* @param cameraY_ : The y position of the camera.
+* @param camera_position_x : The x position of the camera.
+* @param camera_position_y : The y position of the camera.
 */
-void Potion::render( const double cameraX_, const double cameraY_ )
+void Potion::render( const double camera_position_x, const double camera_position_y )
 {
 
-	const double dx = this -> x - cameraX_ + this -> width - 64; // Potion's position in X axis.
-  const double dy = this -> y - cameraY_ - this -> height; // Potion's position in Y axis.
+	const double dx = this -> x - camera_position_x + this -> width - 64; // Potion's position in X axis.
+  const double dy = this -> y - camera_position_y - this -> height; // Potion's position in Y axis.
 
   /*Actual.
  SDL_Rect actualRect = {( int )dx, ( int )dy, ( int )this -> width, ( int )this -> height};
  SDL_SetRenderDrawColor(  Window::getRenderer(), 0x00, 0x00, 0x00, 0xFF );
  SDL_RenderFillRect( Window::getRenderer(), &actualRect );
  Bounding box.
- SDL_Rect boundingBox2 = {( int )( this -> boundingBox.x - cameraX_ ), ( int )( this -> boundingBox.y - cameraY_ ), ( int )this -> boundingBox.w, ( int )this -> boundingBox.h};
+ SDL_Rect boundingBox2 = {( int )( this -> boundingBox.x - camera_position_x ), ( int )( this -> boundingBox.y - camera_position_y ), ( int )this -> boundingBox.w, ( int )this -> boundingBox.h};
  SDL_SetRenderDrawColor(  Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF );
  SDL_RenderFillRect( Window::getRenderer(), &boundingBox2 );*/
 
   // Rendering sprite if it is not null and if it is exploding.
   if ( this -> sprite != nullptr && this -> isExploding )
 	{
-		this -> sprite -> render( dx, dy, &this -> animationClip, false, this -> velocity_x_axis * 3/2, nullptr, SDL_FLIP_HORIZONTAL );
+		this -> sprite -> render( dx, dy, &this -> animation_clip, false, this -> velocity_x_axis * 3/2, nullptr, SDL_FLIP_HORIZONTAL );
   }
 }
 
 /**
 * Update the bounding box.
 */
-void Potion::updateBoundingBox()
+void Potion::update_bounding_box()
 {
   this -> boundingBox.x = ( int ) this -> x + this -> width;
   this -> boundingBox.y = ( int ) this -> y - 32;

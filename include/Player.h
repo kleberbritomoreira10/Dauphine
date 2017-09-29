@@ -64,7 +64,7 @@ class Player : public DynamicEntity
 
 		/**
 		* Updates the player.
-		* @see Player::updateInput, Player::updatePosition
+		* @see Player::updateInput, Player::update_position
 		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 		* 	of processing speed.
 		*/
@@ -74,22 +74,22 @@ class Player : public DynamicEntity
 		* Renders the player.
 		* Uses the player's sprite render method.
 		* @see Sprite::render
-		* @param cameraX_ : The x position of the camera.
-		* @param cameraY_ : The y position of the camera.
+		* @param camera_position_x : The x position of the camera.
+		* @param camera_position_y : The y position of the camera.
 		*/
-		virtual void render( const double cameraX_, const double cameraY_ );
+		virtual void render( const double camera_position_x, const double camera_position_y );
 
 		/**
 		* Loads all the states.
 		* Every new state implemented should be INITIALIZED here.
 		*/
-		void initializeStates();
+		void initialize_states();
 
 		/**
 		* Deletes all the loaded states.
 		* Every new state implemented should be deleted here.
 		*/
-		void destroyStates();
+		void destroy_states();
 
 		/**
 		* Sets the current game state.
@@ -133,8 +133,8 @@ class Player : public DynamicEntity
 		bool canMove;
 
 	private:
-		virtual void updateBoundingBox();
-		virtual void handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ );
+		virtual void update_bounding_box();
+		virtual void handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ );
 
 		Animation *animation; /**< Current player animation. */
 		StatePlayer *current_state; /**< The current state, which the player is in. */

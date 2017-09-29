@@ -22,7 +22,7 @@
 #define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> states_map.emplace(stateEnum, new stateClass( this ))
 #define ADD_STATE_INSERT(stateEnum, stateClass) this -> states_map.insert(std::make_pair<BStates, StateBoss*>(stateEnum, new stateClass( this )));
 
-double timePasssed = 0;
+double time_passsed = 0;
 
 /*
  * Method used to create all characteristics Boss
@@ -37,7 +37,7 @@ Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* c
 	  power_clip{0,0,0,0}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{0,0,0,0},
 	  current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
-	initializeStates();
+	initialize_states();
 
 	// Initialize all the states for the Boss.
 	this -> is_right = true;
@@ -93,7 +93,7 @@ Boss::~Boss()
 
 	this -> player = nullptr;
 
-	destroyStates();
+	destroy_states();
 }
 
 /*
@@ -103,22 +103,22 @@ Boss::~Boss()
 void Boss::update( const double DELTA_TIME)
 {
 	
-	timePasssed += DELTA_TIME;
+	time_passsed += DELTA_TIME;
 
-	scoutPosition(DELTA_TIME);
+	scout_position(DELTA_TIME);
   
   //Characteristics boss to update
-	this -> animation -> update( this -> animationClip, DELTA_TIME);
+	this -> animation -> update( this -> animation_clip, DELTA_TIME);
 	this -> power_animation -> update( this -> power_clip, DELTA_TIME);
 	this -> shield_animation -> update( this -> shield_clip, DELTA_TIME);
 
-	updateBoundingBox();
+	update_bounding_box();
   
   //Array to detect collision
-	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
-	handleCollision( detections );
+	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detect_collision();
+	handle_collision( detections );
 
-	updatePosition( DELTA_TIME);
+	update_position( DELTA_TIME);
 
 	//Update current_state Boss
 	this -> current_state -> update( DELTA_TIME);
@@ -135,30 +135,30 @@ void Boss::update( const double DELTA_TIME)
 
 /*
  * Render the characteristics Boss
- * @param cameraX_ : Position on the x-axis of the camera.
- * @param cameraY_ : Position on the y-axis of the camera.
+ * @param camera_position_x : Position on the x-axis of the camera.
+ * @param camera_position_y : Position on the y-axis of the camera.
  */
-void Boss::render( const double cameraX_, const double cameraY_)
+void Boss::render( const double camera_position_x, const double camera_position_y)
 {
-	const double dx = this -> x - cameraX_;
-	const double dy = this -> y - cameraY_;
+	const double dx = this -> x - camera_position_x;
+	const double dy = this -> y - camera_position_y;
 	
 	if ( this -> sprite != nullptr )
 	{
 		// Sprite render.
-		SDL_RendererFlip flip = getFlip();
+		SDL_RendererFlip flip = get_flip();
 
 		if ( flip == SDL_FLIP_HORIZONTAL )
 		{
-			this -> sprite -> render( dx - 120, dy, &this -> animationClip, false, 0.0, nullptr, flip );
+			this -> sprite -> render( dx - 120, dy, &this -> animation_clip, false, 0.0, nullptr, flip );
 		} else {
-			  this -> sprite -> render( dx, dy, &this->animationClip, false, 0.0, nullptr, flip );
+			  this -> sprite -> render( dx, dy, &this->animation_clip, false, 0.0, nullptr, flip );
 		  }
 	}
 	// Shield render.	
 	if ( this -> has_shield )
 	{
-		SDL_RendererFlip flip = getFlip();
+		SDL_RendererFlip flip = get_flip();
 		if ( flip == SDL_FLIP_HORIZONTAL )
 		{
 			this -> shield->render( dx, dy, &this -> shield_clip );
@@ -168,8 +168,8 @@ void Boss::render( const double cameraX_, const double cameraY_)
 	}
 
 	//Constants for define position x e y to camera
-	const double pdx = this -> power_X - cameraX_;
-	const double pdy = this -> power_Y - cameraY_;
+	const double pdx = this -> power_X - camera_position_x;
+	const double pdy = this -> power_Y - camera_position_y;
 
 	//Power render
 	if ( this -> power != nullptr && this -> power_is_activated )
@@ -184,14 +184,14 @@ void Boss::render( const double cameraX_, const double cameraY_)
  
   for ( auto potion : this -> potions ) 
   {
-    potion -> render( cameraX_, cameraY_);
+    potion -> render( camera_position_x, camera_position_y);
   }
 }
 
 /*
  * Initialize all the states in Boss.
  */
-void Boss::initializeStates()
+void Boss::initialize_states()
 {
 	ADD_STATE_INSERT(IDLE,				BStateIdle);
 	ADD_STATE_INSERT(ATTACK,			BStateAttack);
@@ -204,7 +204,7 @@ void Boss::initializeStates()
 /*
  * Delete all the states in Boss.
  */
-void Boss::destroyStates()
+void Boss::destroy_states()
 {
 	std::map<BStates, StateBoss*>::const_iterator it;
 	for ( it = this -> states_map.begin(); it != this -> states_map.end(); it++)
@@ -228,7 +228,7 @@ void Boss::change_state( const BStates state_)
  * Method for handling the type of collision.
  * @param detections_ : array to detect collisions.
  */
-void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_)
+void Boss::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_)
 { 
 	//Check collision occurrence on top
 	if ( detections_.at( CollisionSide::SOLID_TOP ) )
@@ -244,13 +244,13 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 	//Check collision occurrence on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT ))
 	{
-		this -> nextX = this -> x;
+		this -> next_position_x = this -> x;
 		this -> velocity_x_axis = 0.0;
 	}
 	//Check collision occurrence on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
 	{
-		this -> nextX = this -> x;
+		this -> next_position_x = this -> x;
 		this -> velocity_x_axis = -0.001;
 	}
 }
@@ -299,7 +299,7 @@ bool Boss::is_dead()
 /*
  * Updating boundaries for the boss
  */
-void Boss::updateBoundingBox()
+void Boss::update_bounding_box()
 { 
 	this -> boundingBox.x = (int) this -> x + 40;
 	this -> boundingBox.y = (int) this -> y + 40;

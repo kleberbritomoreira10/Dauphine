@@ -31,10 +31,10 @@ class Entity
 		* Renders the entity.
 		* Pure virtual function. Purpose is to copy the entity's texture onto the renderer.
 		* @note Usually just calls the render method from the Sprite class.
-		* @param cameraX_ : The x position of the camera.
-		* @param cameraY_ : The y position of the camera.
+		* @param camera_position_x : The x position of the camera.
+		* @param camera_position_y : The y position of the camera.
 		*/
-		virtual void render ( const double cameraX_, const double cameraY_ ) = 0;
+		virtual void render ( const double camera_position_x, const double camera_position_y ) = 0;
 
 		/**
 		* @return The Entity width.
@@ -47,9 +47,9 @@ class Entity
 		unsigned int getHeight ();
 
 		/**
-		* @return The Entity::animationClip.
+		* @return The Entity::animation_clip.
 		*/
-		SDL_Rect& getAnimationClip ();
+		SDL_Rect& getanimation_clip ();
  
 		SDL_Rect& get_bounding_box ();
 
@@ -80,7 +80,7 @@ class Entity
 		Sprite *sprite; /**< The Sprite attributed to the entity. */
 		unsigned int width; /**< The entitys width, from its sprite. */
 		unsigned int height; /**< The entitys height, from its sprite. */
-		SDL_Rect animationClip; /**< The current clip on the spritesheet, to determine animation. */
+		SDL_Rect animation_clip; /**< The current clip on the spritesheet, to determine animation. */
 		SDL_Rect boundingBox;
 
 		std::vector < CollisionRect > collisionRects; /**< The SDL_Rects containing collidable tiles 

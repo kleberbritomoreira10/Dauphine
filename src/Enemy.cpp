@@ -49,7 +49,7 @@ Enemy::Enemy( const double x_, const double y_, const std::string& PATH, const b
   patrol_length(patrolLength_), life(100), current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
 	// Initialize all the states in Enemy.
-	initializeStates();
+	initialize_states();
 
 	this -> speed = 3.0;
 
@@ -90,7 +90,7 @@ Enemy::~Enemy()
     this -> animation = nullptr;
   }
 
-	destroyStates();
+	destroy_states();
 }
 
 /*
@@ -103,28 +103,28 @@ void Enemy::update( const double DELTA_TIME)
 	this -> current_state -> update( DELTA_TIME);
 	forceMaxSpeed();
 
-	scoutPosition( DELTA_TIME);
+	scout_position( DELTA_TIME);
 
-	this -> animation -> update( this -> animationClip, DELTA_TIME);
+	this -> animation -> update( this -> animation_clip, DELTA_TIME);
 
-	updateBoundingBox();
+	update_bounding_box();
 
   //Array to detect collision with enemy
-	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
-	handleCollision(detections);
+	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detect_collision();
+	handle_collision(detections);
 
-	updatePosition( DELTA_TIME);
+	update_position( DELTA_TIME);
 }
 
 /*
  * Method to update characteristics of the enemy
- * @param cameraX_ : Define the locate for the camera on the x-axis
- * @param cameraY_ : Define the locate for the camera on the y-axis
+ * @param camera_position_x : Define the locate for the camera on the x-axis
+ * @param camera_position_y : Define the locate for the camera on the y-axis
  */
-void Enemy::render( const double cameraX_, const double cameraY_)
+void Enemy::render( const double camera_position_x, const double camera_position_y)
 {
-	const double dx = this -> x - cameraX_;
-	const double dy = this -> y - cameraY_;
+	const double dx = this -> x - camera_position_x;
+	const double dy = this -> y - camera_position_y;
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// // Actual.
@@ -133,20 +133,20 @@ void Enemy::render( const double cameraX_, const double cameraY_)
 	// SDL_RenderFillRect(Window::getRenderer(), &actualRect);
 
 	// Bounding box.
-	// SDL_Rect boundingBox2 = {(int)(this->boundingBox.x - cameraX_), (int)(this->boundingBox.y - cameraY_), (int)this->boundingBox.w, (int)this->boundingBox.h};
+	// SDL_Rect boundingBox2 = {(int)(this->boundingBox.x - camera_position_x), (int)(this->boundingBox.y - camera_position_y), (int)this->boundingBox.w, (int)this->boundingBox.h};
 	// SDL_SetRenderDrawColor( Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 	// SDL_RenderFillRect(Window::getRenderer(), &boundingBox2);
 	// ///////////////////////////////////////////////////////////////////////////////////////////
 
 	if ( this -> sprite != nullptr )
 	{
-		SDL_RendererFlip flip = getFlip();
+		SDL_RendererFlip flip = get_flip();
 
 		if ( flip == SDL_FLIP_HORIZONTAL )
 		{
-			this -> sprite->render(dx - 120, dy, &this -> animationClip, false, 0.0, nullptr, flip);
+			this -> sprite->render(dx - 120, dy, &this -> animation_clip, false, 0.0, nullptr, flip);
 		} else {
-			  this -> sprite -> render(dx, dy, &this -> animationClip, false, 0.0, nullptr, flip);
+			  this -> sprite -> render(dx, dy, &this -> animation_clip, false, 0.0, nullptr, flip);
 		  }
 	}
 }
@@ -154,7 +154,7 @@ void Enemy::render( const double cameraX_, const double cameraY_)
 /*
  * Initialize all the states in Enemy here.
  */
-void Enemy::initializeStates()
+void Enemy::initialize_states()
 {
 	ADD_STATE_INSERT(IDLE,         EStateIdle);
 	ADD_STATE_INSERT(CURIOUS,      EStateCurious);
@@ -168,7 +168,7 @@ void Enemy::initializeStates()
 /*
  * Delete all the states in Enemy here.
  */
-void Enemy::destroyStates()
+void Enemy::destroy_states()
 {
 	std::map<EStates, StateEnemy*>::const_iterator it;
 	for ( it = this -> states_map.begin(); it != this -> states_map.end(); it++ )
@@ -192,7 +192,7 @@ void Enemy::change_state( const EStates state_)
  * Method used to check collision in enemy
  * @param detections : Pass an array of array containing the type of collision.
  */
-void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_)
+void Enemy::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_)
 {
 	//Collision on top
 	if ( detections_.at(CollisionSide::SOLID_TOP) )
@@ -228,13 +228,13 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	//Collision on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT) )
 	{
-		this -> nextX = this -> x;
+		this -> next_position_x = this -> x;
 		this -> velocity_x_axis = 0.0;
 	}
 	//Collision on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
 	{
-		this -> nextX = this -> x;
+		this -> next_position_x = this -> x;
 		this -> velocity_x_axis = -0.001;
 	}
 }
@@ -276,10 +276,10 @@ bool Enemy::is_dead()
 /*
  * Method to delimit enemy dimensions update
  */
-void Enemy::updateBoundingBox()
+void Enemy::update_bounding_box()
 {
 	//Bounding box at x position
-	this -> boundingBox.x = (int) this -> nextX + 40;
+	this -> boundingBox.x = (int) this -> next_position_x + 40;
 	//Bounding box at y position
 	this -> boundingBox.y = (int) this -> nextY + 40;
 	//Bounding box at width

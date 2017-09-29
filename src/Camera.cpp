@@ -36,7 +36,7 @@ Camera::~Camera()
 */
 void Camera::update()
 {
-  updatePosition();
+  update_position();
 }
 
 SDL_Rect& Camera::getClip()
@@ -47,7 +47,7 @@ SDL_Rect& Camera::getClip()
 /**
 * Changing the camera position in the game.
 */
-void Camera::updatePosition()
+void Camera::update_position()
 {
   this -> clip.x = ( this -> entity -> x + this -> entity -> getWidth() / 2 ) - ( this -> clip.w / 2 );
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );

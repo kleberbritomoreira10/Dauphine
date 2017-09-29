@@ -132,7 +132,7 @@ void TileMap::load(const std::string& mapPath_){
 	}
 }
 
-void TileMap::render(const double cameraX_, const double cameraY_){
+void TileMap::render(const double camera_position_x, const double camera_position_y){
 	assert((this->tilesetSprites.size() > 0) && "No tilesets detected for the TileMap!");
 
 	const Tmx::Layer* currentLayer;
@@ -144,28 +144,28 @@ void TileMap::render(const double cameraX_, const double cameraY_){
 		}
 
 		if(currentLayer->GetName() == "Background02"){
-			renderLayer(cameraX_/20, cameraY_, i);
+			renderLayer(camera_position_x/20, camera_position_y, i);
 		}
 		else if(currentLayer->GetName() == "Background01"){
-			renderLayer(cameraX_/10, cameraY_, i);
+			renderLayer(camera_position_x/10, camera_position_y, i);
 		}
 		else if(currentLayer->GetName() == "Background00"){
-			renderLayer(cameraX_/1.6, cameraY_, i);
+			renderLayer(camera_position_x/1.6, camera_position_y, i);
 		}
 		else{
-			renderLayer(cameraX_, cameraY_, i);
+			renderLayer(camera_position_x, camera_position_y, i);
 		}
 	}
 }
 
 
-void TileMap::renderLayer(const double cameraX_, const double cameraY_, const unsigned int layer_){
+void TileMap::renderLayer(const double camera_position_x, const double camera_position_y, const unsigned int layer_){
 	const int tilesInX = this->tileMatrix.size();
 	const int tilesInY = this->tileMatrix[0].size();
 
 	const Tmx::Layer* currentLayer = this->map->GetLayer(layer_);
 
-	SDL_Rect camera = {(int)cameraX_, (int)cameraY_, (int)Configuration::getCameraDistanceWidth(), (int)Configuration::getCameraDistanceHeight()};
+	SDL_Rect camera = {(int)camera_position_x, (int)camera_position_y, (int)Configuration::getCameraDistanceWidth(), (int)Configuration::getCameraDistanceHeight()};
 
 	for (int x = 0; x < tilesInX; x++){
 		for (int y = 0; y < tilesInY; y++){
@@ -194,8 +194,8 @@ void TileMap::renderLayer(const double cameraX_, const double cameraY_, const un
 				// If its a valid tile.
 				if (tilePosition > 0){
 					// The x,y position in the level of the tile.
-					const double posX = ((x * TILE_SIZE) - cameraX_);
-					const double posY = ((y * TILE_SIZE) - cameraY_);
+					const double posX = ((x * TILE_SIZE) - camera_position_x);
+					const double posY = ((y * TILE_SIZE) - camera_position_y);
 
 					// Which tileset sprite the tile belongs to.
 					const int tilesetId = currentLayer->GetTileTilesetIndex(x,y);

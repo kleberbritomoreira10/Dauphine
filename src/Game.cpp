@@ -64,7 +64,7 @@ Game::Game () :
 
 	assert( this->window != nullptr && "The window should not be null!" );
 
-	initializeStates();
+	initialize_states();
 
 	std::string path = "res/images/Dialog/dialog";
 	std::string extension = ".png";
@@ -95,7 +95,7 @@ Game::~Game()
 		this -> current_state -> unload();
 	}
 
-	destroyStates();
+	destroy_states();
 
 	if( this -> audio_handler != nullptr )
 	{
@@ -216,7 +216,7 @@ void Game::set_state( const GStates state_ )
 	this -> current_state -> load();
 }
 
-void Game::initializeStates()
+void Game::initialize_states()
 {
 	// Initialize all the states in Game here.
 
@@ -345,7 +345,7 @@ void Game::handleSelectorMenu()
 	}
 }
 
-void Game::destroyStates()
+void Game::destroy_states()
 {
 	std::map<GStates, StateGame*>::const_iterator iterator;
     for( iterator = this -> states_map.begin(); iterator != this -> states_map.end(); iterator++ )

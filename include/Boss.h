@@ -48,24 +48,24 @@ class Boss : public DynamicEntity
 
     /**
      * Updates the player.
-     * @see Player::updateInput, Player::updatePosition
+     * @see Player::updateInput, Player::update_position
      * @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
      *   of processing speed.
      */
     virtual void update ( const double DELTA_TIME );
 
-    void initializeStates ();
-    void destroyStates ();
+    void initialize_states ();
+    void destroy_states ();
     void change_state ( const BStates state_ );
 
     /**
      * Renders the player.
      * Uses the player's sprite render method.
      * @see Sprite::render
-     * @param cameraX_ : The x position of the camera.
-     * @param cameraY_ : The y position of the camera.
+     * @param camera_position_x : The x position of the camera.
+     * @param camera_position_y : The y position of the camera.
      */
-    virtual void render ( const double cameraX_, const double cameraY_ );
+    virtual void render ( const double camera_position_x, const double camera_position_y );
 
     void usePotion ( const int strength_, const int distance_ );
 
@@ -111,8 +111,8 @@ class Boss : public DynamicEntity
     SDL_Rect shield_clip; // A structure that contains the definition of a rectangle, with the origin at the upper left.
 
   private:
-    virtual void updateBoundingBox ();
-    virtual void handleCollision ( std::array < bool, CollisionSide::SOLID_TOTAL > detections_ );
+    virtual void update_bounding_box ();
+    virtual void handle_collision ( std::array < bool, CollisionSide::SOLID_TOTAL > detections_ );
 
     StateBoss *current_state; // Get the current state of the boss.
     Animation *animation; // Copy to the animation of the boss.

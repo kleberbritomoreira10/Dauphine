@@ -18,7 +18,7 @@
 * @param y_ : position in y axis.
 * @param sprite_ : which sprite to use.
 */
-Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x( x_ ), y( y_ ), is_right( true ), sprite(Game::instance().get_resources().get(PATH)), width( 0 ), height( 0 ), animationClip{ 0, 0, 0, 0 }, 
+Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x( x_ ), y( y_ ), is_right( true ), sprite(Game::instance().get_resources().get(PATH)), width( 0 ), height( 0 ), animation_clip{ 0, 0, 0, 0 }, 
   boundingBox{ (int)x_, (int)y_, 0, 0 }
 {
   // Only serves as the initializer for the derived classes.
@@ -44,7 +44,7 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
 * @param y_ : position in y axis.
 */
 Entity::Entity ( const double x_, const double y_ ) : x( x_ ), y( y_ ), is_right( true ), sprite( nullptr ), 
-  width( 0 ), height( 0 ), animationClip{ 0, 0, 0, 0 }, boundingBox{ ( int )x_, ( int )y_, 0, 0 }
+  width( 0 ), height( 0 ), animation_clip{ 0, 0, 0, 0 }, boundingBox{ ( int )x_, ( int )y_, 0, 0 }
 {
     // Only serves as the initializer for the derived classes.
 }
@@ -74,11 +74,11 @@ unsigned int Entity::getHeight ()
 }
 
 /**
-* @return The Entity::animationClip.
+* @return The Entity::animation_clip.
 */
-SDL_Rect& Entity::getAnimationClip ()
+SDL_Rect& Entity::getanimation_clip ()
 {
-	return this -> animationClip;
+	return this -> animation_clip;
 }
 
 /**

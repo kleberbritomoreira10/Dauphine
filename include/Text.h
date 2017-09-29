@@ -32,10 +32,10 @@ class Text : public Entity
 
 		/**
 		* Renders the text.
-		* @param cameraX_ : The x position of the camera.
-		* @param cameraY_ : The y position of the camera.
+		* @param camera_position_x : The x position of the camera.
+		* @param camera_position_y : The y position of the camera.
 		*/
-		virtual void render( const double cameraX_, const double cameraY_ );
+		virtual void render( const double camera_position_x, const double camera_position_y );
 
 		virtual void changeText( const char *text_, const SDL_Color color_ );
 		virtual void changeText( const char *text_ );

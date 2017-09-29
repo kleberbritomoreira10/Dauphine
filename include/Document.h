@@ -33,10 +33,10 @@ class Document : public Entity
 
 		/*
 		Render the text sprite according to position x and y of the camera
-		@param cameraX_ : The x position of the camera.
-		@param cameraY_ : The y position of the camera.
+		@param camera_position_x : The x position of the camera.
+		@param camera_position_y : The y position of the camera.
 		*/
-		virtual void render ( const double cameraX_, const double cameraY_ );
+		virtual void render ( const double camera_position_x, const double camera_position_y );
 
 		void render_document_text ();
 

@@ -25,7 +25,7 @@ class Camera {
 
 		/**
 		* Updates the camera.
-		* @see Camera::updatePosition
+		* @see Camera::update_position
 		* Centralizes the player on the screen.
 		*/
 		void update ();
@@ -52,7 +52,7 @@ class Camera {
 		* Updates the cameras position.
 		* Based on the players position, change cameras position.
 		*/
-		void updatePosition ();
+		void update_position ();
 
 		Entity *entity; /**< Reference to the entity. */
 		unsigned int level_width; /**< The width of the level. */

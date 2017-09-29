@@ -29,7 +29,7 @@ class Potion : public DynamicEntity
 		*
 		*
 		*/
-		virtual void render( const double cameraX_, const double cameraY_ );
+		virtual void render( const double camera_position_x, const double camera_position_y );
 
 		bool activated;
 
@@ -41,8 +41,8 @@ class Potion : public DynamicEntity
 	private:
 		/**
 		*/
-		virtual void handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ );
-		virtual void updateBoundingBox();
+		virtual void handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ );
+		virtual void update_bounding_box();
 		int strength;
 		int distance;
 		double flightTime;

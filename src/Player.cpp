@@ -56,7 +56,7 @@ Player::Player( const double x_, const double y_, const std::string &PATH ) :
     animation( nullptr ),
     current_state( nullptr )
 {
-    initializeStates();
+    initialize_states();
 
     // Loading lua modules.
     LuaScript luaPlayer( "lua/Player.lua" );
@@ -99,12 +99,12 @@ Player::~Player()
         this -> animation = nullptr;
     }
 
-    destroyStates();
+    destroy_states();
 }
 
 /**
 * Updates the player.
-* @see Player::updateInput, Player::updatePosition
+* @see Player::updateInput, Player::update_position
 * @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 *   of processing speed.
 */
@@ -122,16 +122,16 @@ void Player::update( const double DELTA_TIME )
 
     // Updating the actions.
     Game::instance().clearKeyFromInput( GameKeys::ACTION );
-    scoutPosition( DELTA_TIME );
-    updateBoundingBox();
+    scout_position( DELTA_TIME );
+    update_bounding_box();
 
     // Loading collision.
-    const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
-    handleCollision( detections );
-    updatePosition( DELTA_TIME );
+    const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detect_collision();
+    handle_collision( detections );
+    update_position( DELTA_TIME );
 
     // Updating animation.
-    this -> animation -> update( this -> animationClip, DELTA_TIME );
+    this -> animation -> update( this -> animation_clip, DELTA_TIME );
 
     // Updating potions if activated.
     for ( auto potion : this -> potions )
@@ -167,7 +167,7 @@ void Player::update( const double DELTA_TIME )
 * Handle player's collision.
   @param detections_: Array of detected collisions.
 */
-void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ )
+void Player::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_ )
 {
     // Verifying if the collision is COLLIDED_TOP.
     if ( detections_.at(CollisionSide::SOLID_TOP) )
@@ -206,14 +206,14 @@ void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
     //Verifying if the collision side is left.
     if ( detections_.at( CollisionSide::SOLID_LEFT ) )
     {
-        this -> nextX = this -> x;
+        this -> next_position_x = this -> x;
         this -> velocity_x_axis = 0.0;
     }
 
     // Verifying if the collision side is right.
     if ( detections_.at( CollisionSide::SOLID_RIGHT ) )
     {
-        this -> nextX = this -> x;
+        this -> next_position_x = this -> x;
         this -> velocity_x_axis = -0.001;
     }
 
@@ -223,13 +223,13 @@ void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
 * Renders the player.
 * Uses the player's sprite render method.
 * @see Sprite::render
-* @param cameraX_ : The x position of the camera.
-* @param cameraY_ : The y position of the camera.
+* @param camera_position_x : The x position of the camera.
+* @param camera_position_y : The y position of the camera.
 */
-void Player::render( const double cameraX_, const double cameraY_ )
+void Player::render( const double camera_position_x, const double camera_position_y )
 {
-    const double dx = this -> x - cameraX_;
-    const double dy = this -> y - cameraY_;
+    const double dx = this -> x - camera_position_x;
+    const double dy = this -> y - camera_position_y;
 
     /*Actual.
     SDL_Rect actualRect = {(int)dx, (int)dy, (int)this -> width, (int)this -> height};
@@ -237,34 +237,34 @@ void Player::render( const double cameraX_, const double cameraY_ )
     SDL_RenderFillRect(Window::getRenderer(), &actualRect);
 
     Bounding box.
-    SDL_Rect boundingBox2 = {(int)(this -> boundingBox.x - cameraX_), (int)(this -> boundingBox.y - cameraY_), (int)this -> boundingBox.w, (int)this -> boundingBox.h};
+    SDL_Rect boundingBox2 = {(int)(this -> boundingBox.x - camera_position_x), (int)(this -> boundingBox.y - camera_position_y), (int)this -> boundingBox.w, (int)this -> boundingBox.h};
     SDL_SetRenderDrawColor( Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderFillRect(Window::getRenderer(), &boundingBox2); */
 
     // Rendering SDL_FLIP.
     if ( this -> sprite != nullptr )
     {
-        SDL_RendererFlip flip = getFlip();
+        SDL_RendererFlip flip = get_flip();
 
         if ( flip == SDL_FLIP_HORIZONTAL )
         {
-            this -> sprite -> render( dx - 100, dy, &this -> animationClip, false, 0.0, nullptr, flip );
+            this -> sprite -> render( dx - 100, dy, &this -> animation_clip, false, 0.0, nullptr, flip );
         } else
         {
-            this -> sprite -> render( dx, dy, &this -> animationClip, false, 0.0, nullptr, flip );
+            this -> sprite -> render( dx, dy, &this -> animation_clip, false, 0.0, nullptr, flip );
         }
     }
 
     // Rendering crosshair.
     if ( this -> crosshair != nullptr )
     {
-        this -> crosshair -> render( cameraX_, cameraY_ );
+        this -> crosshair -> render( camera_position_x, camera_position_y );
     }
 
     // Rendering potions.
     for ( auto potion : this -> potions )
     {
-        potion -> render( cameraX_, cameraY_ );
+        potion -> render( camera_position_x, camera_position_y );
     }
 
 }
@@ -308,7 +308,7 @@ void Player::addPotions( const unsigned int quantity_ )
 * Loads all the states.
 * Every new state implemented should be INITIALIZED here.
 */
-void Player::initializeStates()
+void Player::initialize_states()
 {
     // Loading all the states.
     ADD_STATE_INSERT( IDLE,         PStateIdle );
@@ -330,7 +330,7 @@ void Player::initializeStates()
 * Deletes all the loaded states.
 * Every new state implemented should be deleted here.
 */
-void Player::destroyStates()
+void Player::destroy_states()
 {
     // Delete all the states in Player here.
     std::map<player_states, StatePlayer*>::const_iterator it;
@@ -373,9 +373,9 @@ bool Player::is_current_state(const player_states state_)
 /**
 * Update the bounding box.
 */
-void Player::updateBoundingBox()
+void Player::update_bounding_box()
 {
-    this -> boundingBox.x = (int) this -> nextX + this -> current_state -> box.x;
+    this -> boundingBox.x = (int) this -> next_position_x + this -> current_state -> box.x;
     this -> boundingBox.y = (int) this -> nextY + this -> current_state -> box.y;
     this -> boundingBox.w = this -> current_state -> box.w;
     this -> boundingBox.h = this -> current_state -> box.h;

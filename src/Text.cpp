@@ -167,14 +167,14 @@ void Text::update ( const double DELTA_TIME )
 
 /**
 * Renders the text.
-* @param cameraX_ : The x position of the camera.
-* @param cameraY_ : The y position of the camera.
+* @param camera_position_x : The x position of the camera.
+* @param camera_position_y : The y position of the camera.
 */
-void Text::render ( const double cameraX_, const double cameraY_ )
+void Text::render ( const double camera_position_x, const double camera_position_y )
 {
 
-	const int dx = this -> x - cameraX_;
-	const int dy = this -> y - cameraY_;
+	const int dx = this -> x - camera_position_x;
+	const int dy = this -> y - camera_position_y;
 
 	if ( this -> sprite != nullptr )
 	{

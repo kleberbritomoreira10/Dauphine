@@ -1,3 +1,4 @@
+
 #ifndef INCLUDE_TILEMAP_H
 #define INCLUDE_TILEMAP_H
 
@@ -30,10 +31,10 @@ class TileMap
 		/**
 		* Renders the TileMap.
 		* 
-		* @param cameraX_ : The x position of the camera.
-		* @param cameraY_ : The y position of the camera.
+		* @param camera_position_x : The x position of the camera.
+		* @param camera_position_y : The y position of the camera.
 		*/
-		void render( const double cameraX_, const double cameraY_ );
+		void render( const double camera_position_x, const double camera_position_y );
 
 		unsigned int get_map_width();
 		unsigned int get_map_height();
@@ -60,10 +61,10 @@ class TileMap
 		/**
 		* Renders a certain layer from the TileMap.
 		* 
-		* @param cameraX_ : The x position of the camera.
-		* @param cameraY_ : The y position of the camera.
+		* @param camera_position_x : The x position of the camera.
+		* @param camera_position_y : The y position of the camera.
 		*/
-		void renderLayer( const double cameraX_, const double cameraY_, const unsigned int layer_ );
+		void renderLayer( const double camera_position_x, const double camera_position_y, const unsigned int layer_ );
 
 		Tmx::Map *map;
 

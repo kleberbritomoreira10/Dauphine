@@ -31,7 +31,7 @@ class PlayerHUD
 
 		/**
 		* Updates the HUD.
-		* @see Player::updateInput, Player::updatePosition
+		* @see Player::updateInput, Player::update_position
 		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 		* 	of processing speed.
 		*/
@@ -41,8 +41,8 @@ class PlayerHUD
 		* Renders the HUD.
 		* Uses the HUD's sprite render method.
 		* @see Sprite::render
-		* @param cameraX_ : The x position of the camera.
-		* @param cameraY_ : The y position of the camera.
+		* @param camera_position_x : The x position of the camera.
+		* @param camera_position_y : The y position of the camera.
 		*/
 		void render ();
 

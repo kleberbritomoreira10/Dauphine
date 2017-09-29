@@ -1,3 +1,4 @@
+
 /* Dauphine
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
@@ -40,14 +41,14 @@ void Document::update ( const double DELTA_TIME )
 
 /*
 Render the text sprite according to position x and y of the camera
-@param cameraX_ : The x position of the camera.
-@param cameraY_ : The y position of the camera.
+@param camera_position_x : The x position of the camera.
+@param camera_position_y : The y position of the camera.
 */
-void Document::render ( const double cameraX_, const double cameraY_ )
+void Document::render ( const double camera_position_x, const double camera_position_y )
 {
 
-	const double dx = this -> x - cameraX_;
-	const double dy = this -> y - cameraY_;
+	const double dx = this -> x - camera_position_x;
+	const double dy = this -> y - camera_position_y;
 
 	if ( this -> sprite != nullptr )
 	{

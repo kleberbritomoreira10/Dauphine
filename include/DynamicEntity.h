@@ -67,7 +67,7 @@ class DynamicEntity : public Entity
 		double speed; // Speed that moves dynamic entity on input.
 		double maxSpeed; // Dynamic entity max speed.
 		bool isGrounded; // Check for if the dynamic entity is on the ground.
-		double nextX; // Used to update next position on x-axis.
+		double next_position_x; // Used to update next position on x-axis.
 		double nextY; // Used to update next position on y-axis.
 		bool reached_level_end; // Boolean value to evaluate the level end.
 
@@ -85,23 +85,23 @@ class DynamicEntity : public Entity
 		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 		* 	of processing speed.
 		*/
-		virtual void updatePosition ( const double DELTA_TIME );
+		virtual void update_position ( const double DELTA_TIME );
 
-		virtual void scoutPosition ( const double DELTA_TIME );
+		virtual void scout_position ( const double DELTA_TIME );
 
 		/**
 		* @return A bool array with the sides the DynamicEntity collided.
 		*/
-		virtual std::array < bool, CollisionSide::SOLID_TOTAL > detectCollision ();
+		virtual std::array < bool, CollisionSide::SOLID_TOTAL > detect_collision ();
 
 		/**
 		* Handles the collision.
 		*/
-		virtual void handleCollision (std::array < bool, CollisionSide::SOLID_TOTAL > detections_ ) = 0;
+		virtual void handle_collision (std::array < bool, CollisionSide::SOLID_TOTAL > detections_ ) = 0;
 
-		virtual SDL_RendererFlip getFlip ();
+		virtual SDL_RendererFlip get_flip ();
 
-		virtual void updateBoundingBox () = 0;
+		virtual void update_bounding_box () = 0;
 
 		unsigned int level_width; // The width of the level.
 		unsigned int level_height; // The height of the level.

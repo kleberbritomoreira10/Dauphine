@@ -98,7 +98,7 @@ std::vector<std::string> LuaScript::unlua_getTableKeys( const std::string& name_
   //Execute function
   lua_pcall( this -> lua_state, 0, 0, 0);
   //Get function
-  lua_get_global( this -> lua_state, "getKeys"); 
+  lua_getglobal( this -> lua_state, "getKeys"); 
   lua_pushstring( this -> lua_state, name_.c_str());
   //Execute function
   lua_pcall( this -> lua_state, 1 , 1, 0 ); 
@@ -142,9 +142,9 @@ bool LuaScript::unlua_getToStack( const std::string& variable_name )
     {
       if ( this -> level == 0) 
       {
-        lua_get_global( this -> lua_state, var.c_str() );
+        lua_getglobal( this -> lua_state, var.c_str() );
       } else {
-          lua_get_field( this -> lua_state, -1, var.c_str() );
+          lua_getfield( this -> lua_state, -1, var.c_str() );
         }
       if ( lua_isnil( this -> lua_state, -1)) 
       {
@@ -160,9 +160,9 @@ bool LuaScript::unlua_getToStack( const std::string& variable_name )
   }
   if ( level == 0 ) 
   {
-    lua_get_global( this -> lua_state, var.c_str() );
+    lua_getglobal( this -> lua_state, var.c_str() );
   } else {
-      lua_get_field( this -> lua_state, -1, var.c_str() );
+      lua_getfield( this -> lua_state, -1, var.c_str() );
     }
   if ( lua_isnil(lua_state, -1) ) 
   {

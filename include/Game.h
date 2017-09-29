@@ -123,13 +123,13 @@ class Game
 		* Loads all the states.
 		* Every new state implemented should be INITIALIZED here.
 		*/
-		void initializeStates ();
+		void initialize_states ();
 
 		/**
 		* Deletes all the loaded states.
 		* Every new state implemented should be deleted here.
 		*/
-		void destroyStates ();
+		void destroy_states ();
 
 		void renderPause ();
 

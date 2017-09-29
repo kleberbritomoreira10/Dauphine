@@ -33,9 +33,9 @@ class LuaScript
 		/**
 		* The constructor.
 		* Initializes a new lua state, and loads the desired script.
-		* @param filename_ : Path to the desired script, i.e. "lua/level1/Player.lua".
+		* @param file_name : Path to the desired script, i.e. "lua/level1/Player.lua".
 		*/
-		LuaScript ( const std::string &filename_ );
+		LuaScript ( const std::string &file_name );
 
 		/**
 		* The destructor.
@@ -46,11 +46,11 @@ class LuaScript
 		/**
 		* Gets value of desired variable.
 		* Template for the different get methods, which recieve a different type of value.
-		* @param variableName_ : The varaible you want to get a value from.
-		* @return The T value stored in 'variableName_' inside the lua script.
+		* @param variable_name : The varaible you want to get a value from.
+		* @return The T value stored in 'variable_name' inside the lua script.
 		*/
 		template < typename T >
-		T unlua_get ( const std::string &variableName_ );
+		T unlua_get ( const std::string &variable_name );
 		
 		/**
 		* Gets an int vector.
@@ -69,31 +69,31 @@ class LuaScript
 		std::vector < std::string > unlua_getTableKeys ( const std::string &name_ );
 
 	private:
-		lua_State *luaState; /**< The lua state. */
+		lua_State *lua_state; /**< The lua state. */
 		int level; /**< Current level. */
 
 		inline void unlua_clean ()
 		{
-		    int n = lua_gettop ( this -> luaState );
-		    lua_pop ( this -> luaState, n );
+		    int n = lua_gettop ( this -> lua_state );
+		    lua_pop ( this -> lua_state, n );
 		}
 
 		/**
 		* Validates existance of the variable.
-		* Checks where the 'variableName_' variable exists inside the lua script.
-		* @param variableName_ : The varaible you want to get a value from.
+		* Checks where the 'variable_name' variable exists inside the lua script.
+		* @param variable_name : The varaible you want to get a value from.
 		* @return True for success, false for failure to get variable.
 		*/
-		bool unlua_getToStack ( const std::string &variableName_ );		
+		bool unlua_getToStack ( const std::string &variable_name );		
 
 		/**
 		* Gets a T type value from lua script.
 		*
-		* @param variableName_ : The varaible you want to get a value from.
+		* @param variable_name : The varaible you want to get a value from.
 		* @return T type value.
 		*/
 		template < typename T >
-		T unlua_getValue ( const std::string &variableName_ );
+		T unlua_getValue ( const std::string &variable_name );
 
 		/**
 		* Gets a default value.

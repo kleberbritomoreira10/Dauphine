@@ -24,7 +24,7 @@ DynamicEntity::DynamicEntity ( const double x_, const double y_, const std::stri
 	speed ( 20.0 ),
 	maxSpeed ( 550.0 ),
 	isGrounded ( false ),
-	nextX ( x_ ),
+	next_position_x ( x_ ),
 	nextY ( y_ ),
 	reached_level_end ( false ),
     activated ( false ),
@@ -59,12 +59,12 @@ void DynamicEntity::set_level_width_height ( const unsigned int width_, const un
 * @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 * of processing speed.
 */
-void DynamicEntity::updatePosition ( const double DELTA_TIME )
+void DynamicEntity::update_position ( const double DELTA_TIME )
 {
 
 	( ( void ) DELTA_TIME ); // Unused?
 
-	this -> x = this -> nextX;
+	this -> x = this -> next_position_x;
 	this -> y = this -> nextY;
 
 	this -> is_right = ( this -> velocity_x_axis >= 0.0 );
@@ -75,15 +75,15 @@ Update is based on what input was recieved, and the players velocity.
 @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 of processing speed.
 */
-void DynamicEntity::scoutPosition ( const double DELTA_TIME )
+void DynamicEntity::scout_position ( const double DELTA_TIME )
 {
 	//
-	this -> nextX += this -> velocity_x_axis * DELTA_TIME;
+	this -> next_position_x += this -> velocity_x_axis * DELTA_TIME;
 	this -> nextY += this -> velocity_y_axis * DELTA_TIME;
 
 }
 
-std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detectCollision ()
+std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detect_collision ()
 {
 
 	std::array < bool, CollisionSide::SOLID_TOTAL > detections;
@@ -379,7 +379,7 @@ void DynamicEntity::aim ( Crosshair *const crosshair, const double direction)
 
 }
 
-SDL_RendererFlip DynamicEntity::getFlip ()
+SDL_RendererFlip DynamicEntity::get_flip ()
 {
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

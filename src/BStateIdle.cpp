@@ -16,7 +16,7 @@
 void BStateIdle::enter()
 {
 	Log( DEBUG ) << "STATE IDLE BOSS";
-	this -> boss -> getAnimation() -> change_animation( 0, 0, 7, false, 1 );
+	this -> boss -> get_animation() -> change_animation( 0, 0, 7, false, 1 );
 }
 
 /**

@@ -107,7 +107,7 @@ class Player : public DynamicEntity
 		/**
 		* @return The players current animation setting.
 		*/
-		Animation *getAnimation();
+		Animation *get_animation();
 
 		void usePotion( const int strength_, const int distance_ );
 		void addPotions( const unsigned int quantity_ );

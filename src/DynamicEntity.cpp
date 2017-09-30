@@ -25,7 +25,7 @@ DynamicEntity::DynamicEntity ( const double x_, const double y_, const std::stri
 	maxSpeed ( 550.0 ),
 	isGrounded ( false ),
 	next_position_x ( x_ ),
-	nextY ( y_ ),
+	next_position_y ( y_ ),
 	reached_level_end ( false ),
     activated ( false ),
     strength ( 0 ),
@@ -65,7 +65,7 @@ void DynamicEntity::update_position ( const double DELTA_TIME )
 	( ( void ) DELTA_TIME ); // Unused?
 
 	this -> x = this -> next_position_x;
-	this -> y = this -> nextY;
+	this -> y = this -> next_position_y;
 
 	this -> is_right = ( this -> velocity_x_axis >= 0.0 );
 }
@@ -79,7 +79,7 @@ void DynamicEntity::scout_position ( const double DELTA_TIME )
 {
 	//
 	this -> next_position_x += this -> velocity_x_axis * DELTA_TIME;
-	this -> nextY += this -> velocity_y_axis * DELTA_TIME;
+	this -> next_position_y += this -> velocity_y_axis * DELTA_TIME;
 
 }
 
@@ -93,7 +93,7 @@ std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detect_collision 
 	{
 
 		const Collision::RectangleSide side = Collision::rectsCollidedSide (
-			this -> boundingBox, tileBox.rect);
+			this -> bounding_box, tileBox.rect);
 
 		if ( side != Collision::RectangleSide::NONE )
 		{
@@ -133,8 +133,8 @@ std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detect_collision 
 						}
 
 						// Going down and goes through tile top
-						if ( this -> velocity_y_axis >= 0.0 && ( this -> boundingBox.y
-							+ this -> boundingBox.h ) > tileBox.rect.y + tileBox.rect.h )
+						if ( this -> velocity_y_axis >= 0.0 && ( this -> bounding_box.y
+							+ this -> bounding_box.h ) > tileBox.rect.y + tileBox.rect.h )
 						{
 
 							detections.at ( SOLID_BOTTOM ) = false;

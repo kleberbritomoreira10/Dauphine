@@ -40,7 +40,7 @@ class Enemy : public DynamicEntity
 		* The constructor.
 		*/
 		Enemy ( const double x_, const double y_, const std::string& PATH, const bool patrol_,
-			const double patrolLength_ );
+			const double patrol_length );
 
 		/**
 		* The destructor.
@@ -67,7 +67,7 @@ class Enemy : public DynamicEntity
 		void initialize_states ();
 		void destroy_states ();
 		void change_state ( const EStates state_ );
-		Animation* getAnimation ();
+		Animation* get_animation ();
 		bool is_dead ();
 		void set_dead ( bool is_dead_ );
 
@@ -88,7 +88,7 @@ class Enemy : public DynamicEntity
 		virtual void update_bounding_box ();
 		virtual void handle_collision ( std::array < bool, CollisionSide::SOLID_TOTAL > detections_ );
 
-		void forceMaxSpeed ();
+		void force_max_speed ();
 
 		StateEnemy *current_state;
 		Animation *animation;

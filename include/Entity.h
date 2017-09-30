@@ -49,7 +49,7 @@ class Entity
 		/**
 		* @return The Entity::animation_clip.
 		*/
-		SDL_Rect& getanimation_clip ();
+		SDL_Rect& get_animation_clip ();
  
 		SDL_Rect& get_bounding_box ();
 
@@ -81,7 +81,7 @@ class Entity
 		unsigned int width; /**< The entitys width, from its sprite. */
 		unsigned int height; /**< The entitys height, from its sprite. */
 		SDL_Rect animation_clip; /**< The current clip on the spritesheet, to determine animation. */
-		SDL_Rect boundingBox;
+		SDL_Rect bounding_box;
 
 		std::vector < CollisionRect > collisionRects; /**< The SDL_Rects containing collidable tiles 
 			positions. */

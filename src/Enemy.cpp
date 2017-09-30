@@ -42,11 +42,11 @@ double Enemy::curious_range = 600.0;
  * @param y_ : Position on the y axis of the enemy
  * @param PATH : The path to the desired sprite
  * @param patrol_ : Defines if the enemy patrols.
- * @param patrolLength_ : Defines the space traveled by the patrolman
+ * @param patrol_length : Defines the space traveled by the patrolman
  */
 Enemy::Enemy( const double x_, const double y_, const std::string& PATH, const bool patrol_,
-	const double patrolLength_ ) : DynamicEntity(x_, y_, PATH), original_X(x_), patrol(patrol_),
-  patrol_length(patrolLength_), life(100), current_state(nullptr), animation(nullptr), states_map(), dead(false)
+	const double patrol_length ) : DynamicEntity(x_, y_, PATH), original_X(x_), patrol(patrol_),
+  patrol_length(patrol_length), life(100), current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
 	// Initialize all the states in Enemy.
 	initialize_states();
@@ -101,7 +101,7 @@ void Enemy::update( const double DELTA_TIME)
 {
 	//const double dt is passed as a parameter to know the time elapsed.
 	this -> current_state -> update( DELTA_TIME);
-	forceMaxSpeed();
+	force_max_speed();
 
 	scout_position( DELTA_TIME);
 
@@ -129,13 +129,13 @@ void Enemy::render( const double camera_position_x, const double camera_position
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// // Actual.
 	// SDL_Rect actualRect = {(int)dx, (int)dy, (int)this->width, (int)this->height};
-	// SDL_SetRenderDrawColor( Window::getRenderer(), 0x00, 0x00, 0x00, 0xFF);
-	// SDL_RenderFillRect(Window::getRenderer(), &actualRect);
+	// SDL_SetRenderDrawColor( Window::get_renderer(), 0x00, 0x00, 0x00, 0xFF);
+	// SDL_RenderFillRect(Window::get_renderer(), &actualRect);
 
 	// Bounding box.
-	// SDL_Rect boundingBox2 = {(int)(this->boundingBox.x - camera_position_x), (int)(this->boundingBox.y - camera_position_y), (int)this->boundingBox.w, (int)this->boundingBox.h};
-	// SDL_SetRenderDrawColor( Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-	// SDL_RenderFillRect(Window::getRenderer(), &boundingBox2);
+	// SDL_Rect bounding_box2 = {(int)(this->bounding_box.x - camera_position_x), (int)(this->bounding_box.y - camera_position_y), (int)this->bounding_box.w, (int)this->bounding_box.h};
+	// SDL_SetRenderDrawColor( Window::get_renderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+	// SDL_RenderFillRect(Window::get_renderer(), &bounding_box2);
 	// ///////////////////////////////////////////////////////////////////////////////////////////
 
 	if ( this -> sprite != nullptr )
@@ -205,7 +205,7 @@ void Enemy::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
 		if ( this -> current_state == this -> states_map.at(EStates::AERIAL) || this -> current_state == this -> states_map.at
 			(EStates::DEAD))
 		{
-			this -> nextY -= fmod( this -> nextY, 64.0 ) - 16.0;
+			this -> next_position_y -= fmod( this -> next_position_y, 64.0 ) - 16.0;
 			this -> velocity_y_axis = 0.0;
 			if ( this -> is_dead() )
 			{
@@ -242,7 +242,7 @@ void Enemy::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
 /*
  * Designates maximum velocity on the x-axis and y
  */
-void Enemy::forceMaxSpeed()
+void Enemy::force_max_speed()
 {
 	this -> velocity_x_axis = ( this -> velocity_x_axis >= this -> maxSpeed) ? this -> maxSpeed : this -> velocity_x_axis ;
 	this -> velocity_y_axis = ( this -> velocity_y_axis >= this -> maxSpeed) ? this -> maxSpeed : this -> velocity_y_axis ;
@@ -251,7 +251,7 @@ void Enemy::forceMaxSpeed()
 /*
  * Reference the specific animation.
  */
-Animation *Enemy::getAnimation()
+Animation *Enemy::get_animation()
 {
 	return ( this -> animation );
 }
@@ -279,11 +279,11 @@ bool Enemy::is_dead()
 void Enemy::update_bounding_box()
 {
 	//Bounding box at x position
-	this -> boundingBox.x = (int) this -> next_position_x + 40;
+	this -> bounding_box.x = (int) this -> next_position_x + 40;
 	//Bounding box at y position
-	this -> boundingBox.y = (int) this -> nextY + 40;
+	this -> bounding_box.y = (int) this -> next_position_y + 40;
 	//Bounding box at width
-	this -> boundingBox.w = 150;
+	this -> bounding_box.w = 150;
 	//Bounding box at height
-	this -> boundingBox.h = 200;
+	this -> bounding_box.h = 200;
 }

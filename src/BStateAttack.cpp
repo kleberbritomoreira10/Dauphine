@@ -1,3 +1,4 @@
+
 /* Dauphine
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
@@ -21,7 +22,7 @@ int attackIndex = 0;
 void BStateAttack::enter()
 {
 	Log( DEBUG ) << "STATE ATTACK BOSS";
-	this -> boss -> getAnimation() -> change_animation( 0, 0, 7, false, 1 );
+	this -> boss -> get_animation() -> change_animation( 0, 0, 7, false, 1 );
 	this -> boss -> saw_player = false;
 	attackIndex = rand()%4;
 }

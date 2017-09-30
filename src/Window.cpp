@@ -116,7 +116,7 @@ void Window::create(const unsigned int width_, const unsigned int height_)
 	  if ( linearFilter )
 	  {
 	    Log(INFO) << "Linear texture filtering enabled!";
-		rescale(Configuration::getLogicalRenderSize());
+		rescale(Configuration::get_logical_render_size());
 	  } else {
 		  Log(WARN) << "Linear texture filtering disabled!";
 		}
@@ -161,25 +161,25 @@ void Window::rescale( unsigned int size_)
 	Log(WARN) << "Trying to rescale for a value too big.";
   }
 
-  SDL_RenderSetLogicalSize( Window::sdl_renderer, Configuration::getResolutionWidth() * size_,
-  Configuration::getResolutionHeight() * size_);
+  SDL_RenderSetLogicalSize( Window::sdl_renderer, Configuration::get_resolution_width() * size_,
+  Configuration::get_resolution_height() * size_);
 }
 
 /*
  * @return The renderer attribute.
  */
-SDL_Renderer* Window::getRenderer()
+SDL_Renderer* Window::get_renderer()
 {
   return Window::sdl_renderer;
 }
 
 /*
  * Get logical size
- * @param w : width
- * @param h : heigth
+ * @param width : width
+ * @param height : heigth
  */
-void Window::getLogicalSize(int* w, int* h)
+void Window::get_logical_size(int* width, int* height)
 {
   //Render window based on height and width. 
-  SDL_RenderGetLogicalSize(Window::getRenderer(), w, h);
+  SDL_Renderget_logical_size(Window::get_renderer(), width, height);
 }

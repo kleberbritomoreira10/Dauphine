@@ -83,7 +83,7 @@ void Potion::update( const double DELTA_TIME )
 	if ( this -> activated )
 	{
 
-    this -> getAnimation() -> change_animation( 0, 0, 1, false, 0 );
+    this -> get_animation() -> change_animation( 0, 0, 1, false, 0 );
 
 		this -> flightTime +=DELTA_TIME;
 
@@ -106,10 +106,10 @@ void Potion::update( const double DELTA_TIME )
         // Changing animation if can explode.
         if ( this -> canExplode )
 				{
-            this -> getAnimation() -> change_animation( 1, 0, 12, false, 0.8 );
+            this -> get_animation() -> change_animation( 1, 0, 12, false, 0.8 );
             this -> canExplode = false;
         }
-        if ( this -> getAnimation() -> getCurrentFrame() == 12 )
+        if ( this -> get_animation() -> getCurrentFrame() == 12 )
 				{
             this -> isExploding =false;
         }
@@ -178,12 +178,12 @@ void Potion::render( const double camera_position_x, const double camera_positio
 
   /*Actual.
  SDL_Rect actualRect = {( int )dx, ( int )dy, ( int )this -> width, ( int )this -> height};
- SDL_SetRenderDrawColor(  Window::getRenderer(), 0x00, 0x00, 0x00, 0xFF );
- SDL_RenderFillRect( Window::getRenderer(), &actualRect );
+ SDL_SetRenderDrawColor(  Window::get_renderer(), 0x00, 0x00, 0x00, 0xFF );
+ SDL_RenderFillRect( Window::get_renderer(), &actualRect );
  Bounding box.
- SDL_Rect boundingBox2 = {( int )( this -> boundingBox.x - camera_position_x ), ( int )( this -> boundingBox.y - camera_position_y ), ( int )this -> boundingBox.w, ( int )this -> boundingBox.h};
- SDL_SetRenderDrawColor(  Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF );
- SDL_RenderFillRect( Window::getRenderer(), &boundingBox2 );*/
+ SDL_Rect bounding_box2 = {( int )( this -> bounding_box.x - camera_position_x ), ( int )( this -> bounding_box.y - camera_position_y ), ( int )this -> bounding_box.w, ( int )this -> bounding_box.h};
+ SDL_SetRenderDrawColor(  Window::get_renderer(), 0xFF, 0xFF, 0xFF, 0xFF );
+ SDL_RenderFillRect( Window::get_renderer(), &bounding_box2 );*/
 
   // Rendering sprite if it is not null and if it is exploding.
   if ( this -> sprite != nullptr && this -> isExploding )
@@ -197,17 +197,17 @@ void Potion::render( const double camera_position_x, const double camera_positio
 */
 void Potion::update_bounding_box()
 {
-  this -> boundingBox.x = ( int ) this -> x + this -> width;
-  this -> boundingBox.y = ( int ) this -> y - 32;
-  this -> boundingBox.w = ( int ) 32;
-  this -> boundingBox.h = ( int ) 32;
+  this -> bounding_box.x = ( int ) this -> x + this -> width;
+  this -> bounding_box.y = ( int ) this -> y - 32;
+  this -> bounding_box.w = ( int ) 32;
+  this -> bounding_box.h = ( int ) 32;
 }
 
 /**
 * Get the potion's animation.
 * @return: Return the animation.
 */
-Animation *Potion::getAnimation()
+Animation *Potion::get_animation()
 {
 	return ( this -> animation );
 }

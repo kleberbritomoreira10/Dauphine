@@ -52,13 +52,13 @@ void Configuration::initialize ()
 }
 
 // @return The game's width resolution. (16)
-unsigned int Configuration::getResolutionWidth ()
+unsigned int Configuration::get_resolution_width ()
 {
 	return Configuration::resolutionWidth;
 }
 
 // @return The game's height resolution. (10)
-unsigned int Configuration::getResolutionHeight ()
+unsigned int Configuration::get_resolution_height ()
 {
 	return Configuration::resolutionHeight;
 }
@@ -76,7 +76,7 @@ std::string Configuration::getWindowTitle ()
 }
 
 // @return The size of the logical rendering.
-unsigned int Configuration::getLogicalRenderSize ()
+unsigned int Configuration::get_logical_render_size ()
 {
 	return Configuration::logicalRenderSize;
 }

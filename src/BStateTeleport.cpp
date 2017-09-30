@@ -67,7 +67,7 @@ void BStateTeleport::update ( const double DELTA_TIME )
 	} else if ( tptime >= 3 && tptime <= 3.05 )
 	{
 
-		this -> boss -> getAnimation() -> change_animation ( 0, 0, 1, false, 0 );
+		this -> boss -> get_animation() -> change_animation ( 0, 0, 1, false, 0 );
 		this -> boss -> velocity_x_axis = 0;
 
 		if ( this -> boss -> player -> is_right )

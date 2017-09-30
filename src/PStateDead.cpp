@@ -22,7 +22,7 @@ void PStateDead::enter()
 	this -> box.w = 130;
 	this -> box.h = 160;
 
-	this -> player -> getAnimation()  -> change_animation( 8, 4, 1, false, 0 ) ;
+	this -> player -> get_animation()  -> change_animation( 8, 4, 1, false, 0 ) ;
 	this -> player -> isGrounded = false;
 }
 

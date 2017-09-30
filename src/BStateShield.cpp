@@ -16,7 +16,7 @@
 void BStateShield::enter()
 {
 	Log( DEBUG ) << "STATE SHIELD BOSS";
-	this -> boss -> getAnimation() -> change_animation( 0, 0, 1, false, 0 );
+	this -> boss -> get_animation() -> change_animation( 0, 0, 1, false, 0 );
 	this->boss->has_shield = true;
 }
 

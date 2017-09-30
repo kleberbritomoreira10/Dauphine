@@ -19,7 +19,7 @@
 * @param sprite_ : which sprite to use.
 */
 Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x( x_ ), y( y_ ), is_right( true ), sprite(Game::instance().get_resources().get(PATH)), width( 0 ), height( 0 ), animation_clip{ 0, 0, 0, 0 }, 
-  boundingBox{ (int)x_, (int)y_, 0, 0 }
+  bounding_box{ (int)x_, (int)y_, 0, 0 }
 {
   // Only serves as the initializer for the derived classes.
   if ( this -> sprite != nullptr )
@@ -27,8 +27,8 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
     this -> width = this -> sprite -> getWidth();
     this -> height = this -> sprite -> getHeight();
     
-    this -> boundingBox.w = this -> width;
-    this -> boundingBox.h = this -> height;
+    this -> bounding_box.w = this -> width;
+    this -> bounding_box.h = this -> height;
   }
 
   else
@@ -44,7 +44,7 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
 * @param y_ : position in y axis.
 */
 Entity::Entity ( const double x_, const double y_ ) : x( x_ ), y( y_ ), is_right( true ), sprite( nullptr ), 
-  width( 0 ), height( 0 ), animation_clip{ 0, 0, 0, 0 }, boundingBox{ ( int )x_, ( int )y_, 0, 0 }
+  width( 0 ), height( 0 ), animation_clip{ 0, 0, 0, 0 }, bounding_box{ ( int )x_, ( int )y_, 0, 0 }
 {
     // Only serves as the initializer for the derived classes.
 }
@@ -76,17 +76,17 @@ unsigned int Entity::getHeight ()
 /**
 * @return The Entity::animation_clip.
 */
-SDL_Rect& Entity::getanimation_clip ()
+SDL_Rect& Entity::get_animation_clip ()
 {
 	return this -> animation_clip;
 }
 
 /**
-* @return The Entity::boundingBox.
+* @return The Entity::bounding_box.
 */
 SDL_Rect& Entity::get_bounding_box ()
 {
-  return this -> boundingBox;
+  return this -> bounding_box;
 }
 /*
 * set rect of collision.

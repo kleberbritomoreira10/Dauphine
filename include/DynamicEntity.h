@@ -68,7 +68,7 @@ class DynamicEntity : public Entity
 		double maxSpeed; // Dynamic entity max speed.
 		bool isGrounded; // Check for if the dynamic entity is on the ground.
 		double next_position_x; // Used to update next position on x-axis.
-		double nextY; // Used to update next position on y-axis.
+		double next_position_y; // Used to update next position on y-axis.
 		bool reached_level_end; // Boolean value to evaluate the level end.
 
 	    bool activated;

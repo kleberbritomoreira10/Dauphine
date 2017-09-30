@@ -21,7 +21,7 @@ void PStateAttackJumping::enter()
     this -> box.w = 130;
     this -> box.h = 145;
 
-    this -> player -> getAnimation() -> change_animation( 3, 9, 7, false, 0.4 );
+    this -> player -> get_animation() -> change_animation( 3, 9, 7, false, 0.4 );
 }
 
 /**
@@ -45,7 +45,7 @@ void PStateAttackJumping::handleInput( const std::array<bool, GameKeys::MAX> key
 	Log( DEBUG ) << "STATE ATTACK JUMPING";
 
 	// Changing the state.
-	if ( this -> player -> getAnimation() -> getCurrentFrame() == 7 )
+	if ( this -> player -> get_animation() -> getCurrentFrame() == 7 )
   	{
 		this -> player -> change_state( Player::player_states::AERIAL );
 	}

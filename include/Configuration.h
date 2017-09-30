@@ -28,12 +28,12 @@ class Configuration
 		/**
 		* @return resolutionWidth
 		*/
-		static unsigned int getResolutionWidth ();
+		static unsigned int get_resolution_width ();
 
 		/**
 		* @return resolutionHeight
 		*/
-		static unsigned int getResolutionHeight ();
+		static unsigned int get_resolution_height ();
 
 		/**
 		* @return maxFramerate
@@ -49,7 +49,7 @@ class Configuration
 		* @return initialMultiplier
 		* @see Window::rescale
 		*/
-		static unsigned int getLogicalRenderSize ();
+		static unsigned int get_logical_render_size ();
 
 		/**
 		* @return cameraDistanceWidth

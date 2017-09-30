@@ -64,7 +64,7 @@ void BStateIcePrision::update( const double DELTA_TIME )
           this -> boss -> player -> is_vulnerable = false;
           this -> boss -> player -> velocity_x_axis = 0;
           this -> boss -> player -> velocity_y_axis = 0;
-          this -> boss -> player -> getAnimation() -> change_animation( 4, 8, 1, false, 0 );
+          this -> boss -> player -> get_animation() -> change_animation( 4, 8, 1, false, 0 );
       }
     }
   }

@@ -52,7 +52,7 @@ void LevelBoss::load(){
 	this->player_Hud = new PlayerHUD(level_player);
 
 	Boss* lBoss = new Boss(1200, 684.0, "res/images/boss_sheet.png", level_player);
-	lBoss->getAnimation()->change_animation(0,0,1,false,0.0);
+	lBoss->get_animation()->change_animation(0,0,1,false,0.0);
 	
 	// Test text.
 	// Text* text = new Text(200.0, 900.0, "res/fonts/KGFeeling22.ttf", 50, "dauphine");

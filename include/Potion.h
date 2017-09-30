@@ -33,7 +33,7 @@ class Potion : public DynamicEntity
 
 		bool activated;
 
-		Animation *getAnimation();
+		Animation *get_animation();
 
 		bool canExplode;
 		bool isExploding;

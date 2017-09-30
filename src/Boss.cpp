@@ -238,7 +238,7 @@ void Boss::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	//Check collision occurrence on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM ) )
 	{		
-		this -> nextY -= fmod( this -> nextY, 64.0) - 16.0;
+		this -> next_position_y -= fmod( this -> next_position_y, 64.0) - 16.0;
 		this -> velocity_y_axis = 0.0;
 	}
 	//Check collision occurrence on left
@@ -265,7 +265,7 @@ void Boss::usePotion( const int strength_, const int distance_)
   if ( this -> potions_left > 0)
   {
     this -> potions_left--;
-    const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this->boundingBox.x);
+    const double potionX = (( this -> is_right ) ? this -> bounding_box.x + this -> bounding_box.w : this->bounding_box.x);
     Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> velocity_x_axis, distance_, this ->is_right);
     this -> potions.push_back( potion );
   }
@@ -274,7 +274,7 @@ void Boss::usePotion( const int strength_, const int distance_)
 /*
  * Reference the animation.
  */
-Animation *Boss::getAnimation()
+Animation *Boss::get_animation()
 {
 	return ( this -> animation );
 }
@@ -301,8 +301,8 @@ bool Boss::is_dead()
  */
 void Boss::update_bounding_box()
 { 
-	this -> boundingBox.x = (int) this -> x + 40;
-	this -> boundingBox.y = (int) this -> y + 40;
-	this -> boundingBox.w = 150;
-	this -> boundingBox.h = 200;
+	this -> bounding_box.x = (int) this -> x + 40;
+	this -> bounding_box.y = (int) this -> y + 40;
+	this -> bounding_box.w = 150;
+	this -> bounding_box.h = 200;
 }

@@ -37,7 +37,7 @@ Sprite::~Sprite(){
 }
 
 void Sprite::loadFrom(const std::string& PATH){
-	assert(Window::getRenderer() != nullptr && "Window renderer should not be null!");
+	assert(Window::get_renderer() != nullptr && "Window renderer should not be null!");
 
 
 	SDL_Surface* loadedSurface = IMG_Load(PATH.c_str());
@@ -68,13 +68,13 @@ void Sprite::render(const double x_, const double y_, SDL_Rect* const clip_,
 
 	int logicalW = 0;
 	int logicalH = 0;
-	Window::getLogicalSize(&logicalW, &logicalH);
+	Window::get_logical_size(&logicalW, &logicalH);
 	SDL_Rect stretch = {(int)x_, (int)y_, logicalW, logicalH};
 
 	const int successfullRender = (!stretch_) ?
-		SDL_RenderCopyEx(Window::getRenderer(), this->sdlTexture, clip_,
+		SDL_RenderCopyEx(Window::get_renderer(), this->sdlTexture, clip_,
 			&renderQuad, angle_, center_, flip_) :
-		SDL_RenderCopyEx(Window::getRenderer(), this->sdlTexture, clip_,
+		SDL_RenderCopyEx(Window::get_renderer(), this->sdlTexture, clip_,
 			&stretch, angle_, center_, flip_);
 	
 	if(successfullRender != 0){
@@ -104,7 +104,7 @@ SDL_Texture* Sprite::surfaceToTexture(SDL_Surface* const surface_){
 
 	if(surface_ != nullptr){
 		// Create texture from the surface pixels.
-        newTexture = SDL_CreateTextureFromSurface(Window::getRenderer(), surface_);
+        newTexture = SDL_CreateTextureFromSurface(Window::get_renderer(), surface_);
 		if(newTexture != nullptr){
 			// Set the Sprites width and height, from the loaded surface.
 			this->width = surface_->w;

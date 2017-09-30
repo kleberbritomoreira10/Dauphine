@@ -69,7 +69,7 @@ class Boss : public DynamicEntity
 
     void usePotion ( const int strength_, const int distance_ );
 
-    Animation *getAnimation ();
+    Animation *get_animation ();
     bool is_dead ();
     void set_dead ( bool is_dead_ );
 

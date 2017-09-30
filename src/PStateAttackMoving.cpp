@@ -21,7 +21,7 @@ void PStateAttackMoving::enter ()
 	this -> box.w = 130;
 	this -> box.h = 160;
 
-	this -> player -> getAnimation () -> change_animation ( 5, 8, 9, false, 0.7 );
+	this -> player -> get_animation () -> change_animation ( 5, 8, 9, false, 0.7 );
 }
 
 void PStateAttackMoving::exit ()
@@ -34,7 +34,7 @@ void PStateAttackMoving::handleInput ( const std::array < bool, GameKeys::MAX > 
 	this -> player -> move ( keyStates_ [ GameKeys::LEFT ], keyStates_ [ GameKeys::RIGHT ] );
 
 	// When the character is in motion, it checks to see if a given frame has been reached to change the animation
-	if ( this -> player -> getAnimation () -> getCurrentFrame () == 9 )
+	if ( this -> player -> get_animation () -> getCurrentFrame () == 9 )
 	{
 		this -> player -> change_state ( Player::player_states::MOVING );
 	}

@@ -1,3 +1,4 @@
+
 /* Dauphine
 * Universidade de Brasília - FGA
 * Técnicas de Programação, 2/2017
@@ -186,7 +187,7 @@ void Player::handle_collision( std::array<bool, CollisionSide::SOLID_TOTAL> dete
             const double magic = 32.0;
             const double aerialToIdleCorrection = 8.0;
 
-            this -> nextY -= fmod( this -> nextY, 64.0 ) - magic + aerialToIdleCorrection;
+            this -> next_position_y -= fmod( this -> next_position_y, 64.0 ) - magic + aerialToIdleCorrection;
             this -> velocity_y_axis = 0.0;
             if ( !is_current_state( player_states::DEAD ) )
             {
@@ -233,13 +234,13 @@ void Player::render( const double camera_position_x, const double camera_positio
 
     /*Actual.
     SDL_Rect actualRect = {(int)dx, (int)dy, (int)this -> width, (int)this -> height};
-    SDL_SetRenderDrawColor( Window::getRenderer(), 0x00, 0x00, 0x00, 0xFF);
-    SDL_RenderFillRect(Window::getRenderer(), &actualRect);
+    SDL_SetRenderDrawColor( Window::get_renderer(), 0x00, 0x00, 0x00, 0xFF);
+    SDL_RenderFillRect(Window::get_renderer(), &actualRect);
 
     Bounding box.
-    SDL_Rect boundingBox2 = {(int)(this -> boundingBox.x - camera_position_x), (int)(this -> boundingBox.y - camera_position_y), (int)this -> boundingBox.w, (int)this -> boundingBox.h};
-    SDL_SetRenderDrawColor( Window::getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderFillRect(Window::getRenderer(), &boundingBox2); */
+    SDL_Rect bounding_box2 = {(int)(this -> bounding_box.x - camera_position_x), (int)(this -> bounding_box.y - camera_position_y), (int)this -> bounding_box.w, (int)this -> bounding_box.h};
+    SDL_SetRenderDrawColor( Window::get_renderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderFillRect(Window::get_renderer(), &bounding_box2); */
 
     // Rendering SDL_FLIP.
     if ( this -> sprite != nullptr )
@@ -281,7 +282,7 @@ void Player::usePotion( const int strength_, const int distance_ )
     if ( this -> potions_left > 0 )
     {
         this -> potions_left--;
-        const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this -> boundingBox.x );
+        const double potionX = (( this -> is_right ) ? this -> bounding_box.x + this -> bounding_box.w : this -> bounding_box.x );
         Potion *potion = new Potion( potionX , this -> y, "res/images/explosion_with_potion.png",
         strength_, this -> velocity_x_axis, distance_, this -> is_right );
         this -> potions.push_back( potion );
@@ -356,7 +357,7 @@ void Player::change_state( const player_states state_ )
 * Get the player's animation.
 * @return The players current animation setting.
 */
-Animation *Player::getAnimation()
+Animation *Player::get_animation()
 {
     return ( this -> animation );
 }
@@ -375,10 +376,10 @@ bool Player::is_current_state(const player_states state_)
 */
 void Player::update_bounding_box()
 {
-    this -> boundingBox.x = (int) this -> next_position_x + this -> current_state -> box.x;
-    this -> boundingBox.y = (int) this -> nextY + this -> current_state -> box.y;
-    this -> boundingBox.w = this -> current_state -> box.w;
-    this -> boundingBox.h = this -> current_state -> box.h;
+    this -> bounding_box.x = (int) this -> next_position_x + this -> current_state -> box.x;
+    this -> bounding_box.y = (int) this -> next_position_y + this -> current_state -> box.y;
+    this -> bounding_box.w = this -> current_state -> box.w;
+    this -> bounding_box.h = this -> current_state -> box.h;
 }
 
 /**

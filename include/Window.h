@@ -80,9 +80,9 @@ class Window
 		/**
 		* @return The renderer attribute.
 		*/
-		static SDL_Renderer *getRenderer();
+		static SDL_Renderer *get_renderer();
 
-		static void getLogicalSize( int *w, int *h );
+		static void get_logical_size( int *w, int *h );
 
 	private:
 		/**

@@ -22,7 +22,7 @@ void PStateMoving::enter()
   this -> box.y = 72;
   this -> box.w = 130;
   this -> box.h = 160;
-  this -> player -> getAnimation()->change_animation(4,2,9,false,0.7);
+  this -> player -> get_animation()->change_animation(4,2,9,false,0.7);
 
   Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/RUNNING_NADINE_01.wav");
 }

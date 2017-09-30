@@ -21,7 +21,7 @@ void PStateAerial::enter()
   this -> box.w = 130;
   this -> box.h = 145;
 
-	this -> player -> getAnimation() -> change_animation( 4, 3, 14, false, 1.4 );
+	this -> player -> get_animation() -> change_animation( 4, 3, 14, false, 1.4 );
 	this -> player -> isGrounded = false;
 
     Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/FALL_NADINE_01.wav");

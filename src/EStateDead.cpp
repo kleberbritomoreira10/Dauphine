@@ -19,7 +19,7 @@ void EStateDead::enter()
 {
 	this -> enemy -> life = 0;
 	this -> enemy -> set_dead(true);
-	this -> enemy -> getAnimation() -> change_animation(1, 1, 1, false, 0);
+	this -> enemy -> get_animation() -> change_animation(1, 1, 1, false, 0);
 }
 
 /*

@@ -51,13 +51,13 @@ void EStateIdle::update( const double dt_)
 	}
 
 	/// @todo Make the range be only in the direciton the enemy is facing.
-	if ( abs ( this -> enemy->x - Enemy::px) < Enemy::alertRange )
+	if ( abs ( this -> enemy->x - Enemy::px) < Enemy::alert_range )
 	{
 		this -> enemy -> changeState(Enemy::EStates::ALERT);
 		return;
 	}
 	//Check the range to change to the curious state.
-	else if ( abs ( this -> enemy->x - Enemy::px) < Enemy::curiousRange )
+	else if ( abs ( this -> enemy->x - Enemy::px) < Enemy::curious_range )
 	{
 		this -> enemy -> changeState(Enemy::EStates::CURIOUS);
 		return;

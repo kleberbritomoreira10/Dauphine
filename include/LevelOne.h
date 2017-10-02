@@ -58,7 +58,7 @@ class LevelOne : public Level
 
 		Sprite *image; // the image attributed to the Sprite
 		int items [ 2 ] [ NUMBER_ITEMS ]; // upper index of items on the game
-		bool caughtItems [ NUMBER_ITEMS ]; // boolean for the number of items that were caught or not
+		bool caught_items [ NUMBER_ITEMS ]; // boolean for the number of items that were caught or not
 
 };
 

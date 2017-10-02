@@ -24,12 +24,12 @@ void BStateMagicProjectile::enter ()
 {
   // Log(DEBUG) << "STATE MAGIC PROJECTILE BOSS";
   this -> boss -> power = Game::instance().getResources().get( "res/images/projectile.png" );
-  this -> boss -> powerAnimation -> changeWidthHeight( 50, 50 );
-  this -> boss -> powerAnimation -> changeAnimation( 0, 0, 4, false, 0.5 );
+  this -> boss -> power_animation -> changeWidthHeight( 50, 50 );
+  this -> boss -> power_animation -> changeAnimation( 0, 0, 4, false, 0.5 );
   this -> boss -> vx = 0;
   this -> boss -> vy = 0;
-  this -> boss -> powerX = this -> boss -> x + 50;
-  this -> boss -> powerY = this -> boss -> y + 150;
+  this -> boss -> power_X = this -> boss -> x + 50;
+  this -> boss -> power_Y = this -> boss -> y + 150;
 
   mpX = this -> boss -> player -> getBoundingBox().x + 50 - this -> boss -> getBoundingBox().x;
   mpY = this -> boss -> player -> getBoundingBox().y + 50 - this -> boss -> getBoundingBox().y;
@@ -44,12 +44,12 @@ void BStateMagicProjectile::enter ()
 */
 void BStateMagicProjectile::exit ()
 {
-  this -> boss -> powerIsActivated = false;
+  this -> boss -> power_is_activated = false;
   projectileTime = 0.0;
   mpX = 0;
   mpY = 0;
   hypotenuse = 0;
-  this -> boss -> powerAnimation -> changeWidthHeight( 50, 50 );
+  this -> boss -> power_animation -> changeWidthHeight( 50, 50 );
 }
 
 /**
@@ -58,12 +58,12 @@ void BStateMagicProjectile::exit ()
 void BStateMagicProjectile::update ( const double dt_ ) 
 {
   projectileTime += dt_;
-  this -> boss -> powerX += mpX * 15;
-  this -> boss -> powerY += mpY * 15;
-  this -> boss -> powerIsActivated = true;
+  this -> boss -> power_X += mpX * 15;
+  this -> boss -> power_Y += mpY * 15;
+  this -> boss -> power_is_activated = true;
 
-  if ( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(), { ( int )this -> boss -> powerX, 
-    (int)this -> boss -> powerY, 50, 50 } ) )
+  if ( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(), { ( int )this -> boss -> power_X, 
+    (int)this -> boss -> power_Y, 50, 50 } ) )
   {
     this -> boss -> player -> life--;
     this -> boss -> changeState( Boss::BStates::IDLE );

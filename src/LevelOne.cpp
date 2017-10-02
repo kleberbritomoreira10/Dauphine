@@ -24,7 +24,7 @@ double ok = 0; // iterator that determines when to change the state to game over
 LevelOne::LevelOne ():
 	Level(),
 	items {{ 59 * 64, 114 * 64, 0, 0 },{ 1750, 1750, 0, 0 }},
-	caughtItems { false, false, true, true }
+	caught_items { false, false, true, true }
 {
 	this -> changeCheckpoints ( 2, { 4000, 7500 }, { 1600, 1600 });
 }
@@ -161,7 +161,7 @@ void LevelOne::unload ()
 	for ( int i = 0; i < NUMBER_ITEMS; ++i )
 	{
 
-		caughtItems [ i ] = false;
+		caught_items [ i ] = false;
 	}
 }
 
@@ -246,12 +246,12 @@ void LevelOne::update ( const double dt_ )
 	{
 
 		if ( Collision::rectsCollided ( this -> player -> getBoundingBox (),
-			{ items [ 0 ] [ i ], items [ 1 ] [ i ], 192, 192 } ) && caughtItems [ i ] == false )
+			{ items [ 0 ] [ i ], items [ 1 ] [ i ], 192, 192 } ) && caught_items [ i ] == false )
 		{
 
 			this -> player -> addPotions ( 3 );
 
-			caughtItems [ i ] = true;
+			caught_items [ i ] = true;
 
 		}
 	}
@@ -431,7 +431,7 @@ void LevelOne::render ()
 	for ( unsigned int i = 0; i < NUMBER_ITEMS; i++ )
 	{
 
-		if ( this -> image != nullptr && caughtItems [ i ] == false )
+		if ( this -> image != nullptr && caught_items [ i ] == false )
 		{
 
 			this -> image -> Sprite::render ( ( items [ 0 ] [ i ] + 60 ) - cameraX,

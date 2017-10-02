@@ -12,7 +12,7 @@
 #include "Configuration.h"
 #include <iostream>
 
-SDL_Renderer* Window::sdlRenderer = nullptr;
+SDL_Renderer* Window::sdl_renderer = nullptr;
  
 /*
  * The constructor of window class, creates a window..
@@ -24,7 +24,7 @@ SDL_Renderer* Window::sdlRenderer = nullptr;
  * @see Window::initialize
  */
 Window::Window( const unsigned int width_, const unsigned int height_, const std::string& title_) :
-  windowTitle(title_), sdlWindow(nullptr)
+  window_title(title_), sdl_window(nullptr)
 {
   create( width_, height_);
 }
@@ -46,12 +46,12 @@ Window::~Window()
 void Window::destroy()
 {
   // Destroys the Window renderer.
-  SDL_DestroyRenderer( Window::sdlRenderer );
-  Window::sdlRenderer = nullptr;
+  SDL_DestroyRenderer( Window::sdl_renderer );
+  Window::sdl_renderer = nullptr;
 
   // Destroys the Window window.
-  SDL_DestroyWindow( this -> sdlWindow );
-  this -> sdlWindow = nullptr;
+  SDL_DestroyWindow( this -> sdl_window );
+  this -> sdl_window = nullptr;
 }
 
 /*
@@ -60,7 +60,7 @@ void Window::destroy()
  */
 void Window::minimize()
 {
-  SDL_MinimizeWindow( this -> sdlWindow );
+  SDL_MinimizeWindow( this -> sdl_window );
 }
 
 /*
@@ -69,7 +69,7 @@ void Window::minimize()
  */
 void Window::maximize()
 {
-  SDL_MaximizeWindow( this -> sdlWindow );
+  SDL_MaximizeWindow( this -> sdl_window );
 }
 
 /*
@@ -78,8 +78,8 @@ void Window::maximize()
  */
 void Window::clear()
 {
-  SDL_SetRenderDrawColor(Window::sdlRenderer, 0x00, 0x00, 0x00, 0xFF);
-  SDL_RenderClear(Window::sdlRenderer);
+  SDL_SetRenderDrawColor(Window::sdl_renderer, 0x00, 0x00, 0x00, 0xFF);
+  SDL_RenderClear(Window::sdl_renderer);
 }
 
 /*
@@ -88,7 +88,7 @@ void Window::clear()
  */
 void Window::render()
 {
-  SDL_RenderPresent(Window::sdlRenderer);
+  SDL_RenderPresent(Window::sdl_renderer);
 }
 
 /*
@@ -101,14 +101,14 @@ void Window::create(const unsigned int width_, const unsigned int height_)
 {
   /// @todo Toggle VSync.
   const Uint32 windowFlags = SDL_WINDOW_SHOWN;
-  this -> sdlWindow = SDL_CreateWindow( this -> windowTitle.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+  this -> sdl_window = SDL_CreateWindow( this -> window_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
   width_, height_, windowFlags);
 	
-  if ( this -> sdlWindow != nullptr )
+  if ( this -> sdl_window != nullptr )
   {
     // Creates the SDL renderer.
-	Window::sdlRenderer = SDL_CreateRenderer( this -> sdlWindow, -1, SDL_RENDERER_ACCELERATED);
-	if ( Window::sdlRenderer != nullptr )
+	Window::sdl_renderer = SDL_CreateRenderer( this -> sdl_window, -1, SDL_RENDERER_ACCELERATED);
+	if ( Window::sdl_renderer != nullptr )
 	{
 	  // Set texture filtering to linear.
 	  SDL_bool linearFilter = SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
@@ -140,7 +140,7 @@ void Window::create(const unsigned int width_, const unsigned int height_)
  */
 void Window::resize( const unsigned int width_, const unsigned int height_)
 {
-  SDL_SetWindowSize( this -> sdlWindow, width_, height_);
+  SDL_SetWindowSize( this -> sdl_window, width_, height_);
 }
 
 /*
@@ -161,7 +161,7 @@ void Window::rescale( unsigned int size_)
 	Log(WARN) << "Trying to rescale for a value too big.";
   }
 
-  SDL_RenderSetLogicalSize( Window::sdlRenderer, Configuration::getResolutionWidth() * size_,
+  SDL_RenderSetLogicalSize( Window::sdl_renderer, Configuration::getResolutionWidth() * size_,
   Configuration::getResolutionHeight() * size_);
 }
 
@@ -170,7 +170,7 @@ void Window::rescale( unsigned int size_)
  */
 SDL_Renderer* Window::getRenderer()
 {
-  return Window::sdlRenderer;
+  return Window::sdl_renderer;
 }
 
 /*

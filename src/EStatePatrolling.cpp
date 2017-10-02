@@ -4,7 +4,7 @@
 
 void EStatePatrolling::enter(){
 	this->enemy->isGrounded = true;
-	this->enemy->x = this->enemy->originalX;
+	this->enemy->x = this->enemy->original_X;
 	this->direction = 1.0;
 
 	if(enemy->life <= 0){
@@ -22,9 +22,9 @@ void EStatePatrolling::update(const double dt_){
 	((void)dt_); // Unused.
 	
 	// Patrol.
-	if(abs(this->enemy->x - this->enemy->originalX) > this->enemy->patrolLength){
+	if(abs(this->enemy->x - this->enemy->original_X) > this->enemy->patrol_length){
 		// right
-		if(this->enemy->x - this->enemy->originalX < 0.0){
+		if(this->enemy->x - this->enemy->original_X < 0.0){
 			this->direction = 1.0;
 		}
 		// left
@@ -40,11 +40,11 @@ void EStatePatrolling::update(const double dt_){
 	this->enemy->vx += this->enemy->speed * this->direction;
 
 	/// @todo Make the range be only in the direciton the enemy is facing.
-	if(abs(this->enemy->x - Enemy::px) < Enemy::alertRange && abs(this->enemy->y - Enemy::py) < Enemy::alertRange){
+	if(abs(this->enemy->x - Enemy::px) < Enemy::alert_range && abs(this->enemy->y - Enemy::py) < Enemy::alert_range){
 		this->enemy->changeState(Enemy::EStates::ALERT);
 		return;
 	}
-	else if(abs(this->enemy->x - Enemy::px) < Enemy::curiousRange && abs(this->enemy->y - Enemy::py) < Enemy::curiousRange){
+	else if(abs(this->enemy->x - Enemy::px) < Enemy::curious_range && abs(this->enemy->y - Enemy::py) < Enemy::curious_range){
 		this->enemy->changeState(Enemy::EStates::CURIOUS);
 		return;
 	}

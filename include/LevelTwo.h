@@ -52,7 +52,7 @@ class LevelTwo : public Level
 
 		int items [ 2 ] [ NUMBER_ITEMS ];
 		Sprite *image;
-		bool caughtItems [ NUMBER_ITEMS ];
+		bool caught_items [ NUMBER_ITEMS ];
 
 };
 

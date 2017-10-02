@@ -2,7 +2,7 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @Window.h
- * File responsible for represents actual window that game runs on. 
+ * File responsible for represents actual window that game runs on.
  * License: Copyright (C) 2014 Alke Games.
  */
 
@@ -102,11 +102,11 @@ class Window
 		*/
 		void rescale( unsigned int size_ );
 
-		const std::string windowTitle; /**< The game Window title. */
-		SDL_Window *sdlWindow; /**< The SDL window, that will be the actual game window. */
-		static SDL_Renderer *sdlRenderer; /**< The SDL renderer to render onto. */
+		const std::string window_title; // The game Window title.
+		SDL_Window *sdl_window; // The SDL window, that will be the actual game window.
+		static SDL_Renderer *sdl_renderer; // The SDL renderer to render onto.
 
-		
+
 };
 
 #endif //INCLUDE_WINDOW_H

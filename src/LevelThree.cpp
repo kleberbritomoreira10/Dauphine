@@ -11,7 +11,7 @@
 LevelThree::LevelThree() :
 	Level(),
 	items{{20*64, 136*64, 124*64, 0}, {73*64, 88*64, 33*64, 0}},
-	caughtItems{false,false,false,true}
+	caught_items{false,false,false,true}
 {
 	this->changeCheckpoints(3, {23*64, 139*64, 127*64}, {73*64, 88*64, 33*64});
 }
@@ -102,7 +102,7 @@ void LevelThree::unload(){
 	clearDocuments();
 
 	for (int i = 0; i < NUMBER_ITEMS; ++i){
-		caughtItems[i] = false;
+		caught_items[i] = false;
 	}
 
 	//this->checkpointVisited = false;	
@@ -149,9 +149,9 @@ void LevelThree::update(const double dt_){
 	Enemy::pVulnerable = this->player->isVulnerable;
 	
 	for (int i = 0; i < NUMBER_ITEMS; ++i){	
-		if(Collision::rectsCollided(this->player->getBoundingBox(), {items[0][i], items[1][i], 192, 192}) && caughtItems[i] == false){
+		if(Collision::rectsCollided(this->player->getBoundingBox(), {items[0][i], items[1][i], 192, 192}) && caught_items[i] == false){
 			this->player->addPotions(3);
-			caughtItems[i]=true;
+			caught_items[i]=true;
 		}
 	}
 
@@ -264,7 +264,7 @@ void LevelThree::render(){
 	}
 
 	for (unsigned int i = 0; i < NUMBER_ITEMS; i++){
-		if(this->image != nullptr && caughtItems[i] == false){
+		if(this->image != nullptr && caught_items[i] == false){
 			
 			this->image->Sprite::render((items[0][i]+60) - cameraX, ((items[1][i]) - cameraY));
 		

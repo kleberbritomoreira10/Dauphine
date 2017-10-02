@@ -54,7 +54,7 @@ void BStateIdle::update( const double dt_ )
 		this -> boss -> move( true, false );
 	}
 
-	if( this -> boss -> sawPlayer )
+	if( this -> boss -> saw_player )
 	{
 		this -> boss -> changeState( Boss::BStates::ATTACK );
 	}

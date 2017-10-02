@@ -15,15 +15,15 @@
  * @see StateEnemy::exit
  */
 FadeHandler::FadeHandler(Sprite* const sprite_) :
-	shouldFadeIn(false),
-	shouldFadeOut(false),
-	percentageOfStop(0.0),
+	should_fade_in(false),
+	should_fade_out(false),
+	stop_percentage(0.0),
 	sprite(sprite_),
 	time(0.0),
-	currentPercentage(0.0),
+	current_percentage(0.0),
 	rate(0.0)
 {
-	this -> currentPercentage = ( this -> sprite->getAlpha()/255.0 );
+	this -> current_percentage = ( this -> sprite->getAlpha()/255.0 );
 }
 
 /* 
@@ -41,11 +41,11 @@ FadeHandler::~FadeHandler()
  */
 void FadeHandler::fadeIn( const double percentage_, const double time_)
 {
-	this -> shouldFadeIn = true;
-	this -> shouldFadeOut = false;
-	this -> percentageOfStop = percentage_;
-	this -> currentPercentage = ( this -> sprite->getAlpha()/255.0);
-	this -> rate = ( this -> percentageOfStop - this -> currentPercentage)/time_;
+	this -> should_fade_in = true;
+	this -> should_fade_out = false;
+	this -> stop_percentage = percentage_;
+	this -> current_percentage = ( this -> sprite->getAlpha()/255.0);
+	this -> rate = ( this -> stop_percentage - this -> current_percentage)/time_;
 }
 
 /* 
@@ -55,11 +55,11 @@ void FadeHandler::fadeIn( const double percentage_, const double time_)
  */
 void FadeHandler::fadeOut( const double percentage_, const double time_)
 {
-	this -> shouldFadeOut = true;
-	this -> shouldFadeIn = false;
-	this -> percentageOfStop = percentage_;
-	this -> currentPercentage = ( this -> sprite->getAlpha()/255.0);
-	this -> rate = ( this -> currentPercentage - this -> percentageOfStop)/time_;
+	this -> should_fade_out = true;
+	this -> should_fade_in = false;
+	this -> stop_percentage = percentage_;
+	this -> current_percentage = ( this -> sprite->getAlpha()/255.0);
+	this -> rate = ( this -> current_percentage - this -> stop_percentage)/time_;
 }
 
 /* 
@@ -75,29 +75,29 @@ void FadeHandler::update( const double dt_)
 	}
   
   //Check the rate that should fade at the input
-	if ( shouldFadeIn )
+	if ( should_fade_in )
 	{
-		if ( this -> currentPercentage < this -> percentageOfStop )
+		if ( this -> current_percentage < this -> stop_percentage )
 		{
-			this -> currentPercentage += this -> rate * dt_/1000.0;
-			this -> sprite->setAlpha( 255.0 * this -> currentPercentage );
+			this -> current_percentage += this -> rate * dt_/1000.0;
+			this -> sprite->setAlpha( 255.0 * this -> current_percentage );
 		} else {
-			  shouldFadeIn = false;
-			  this -> currentPercentage = this -> percentageOfStop;
-			  this -> sprite -> setAlpha( 255.0 * this -> currentPercentage );
+			  should_fade_in = false;
+			  this -> current_percentage = this -> stop_percentage;
+			  this -> sprite -> setAlpha( 255.0 * this -> current_percentage );
 		  }
 	}
 	//check the rate that should fade at the output
-	else if ( shouldFadeOut )
+	else if ( should_fade_out )
 	{
-		if ( this -> currentPercentage > this -> percentageOfStop )
+		if ( this -> current_percentage > this -> stop_percentage )
 		{
-			this -> currentPercentage -= this -> rate * dt_/1000.0;
-			this -> sprite -> setAlpha( 255.0 * this -> currentPercentage );
+			this -> current_percentage -= this -> rate * dt_/1000.0;
+			this -> sprite -> setAlpha( 255.0 * this -> current_percentage );
 		} else {
-			  shouldFadeOut = false;
-			  this -> currentPercentage = this -> percentageOfStop;
-			  this -> sprite -> setAlpha(255.0 * this -> currentPercentage);
+			  should_fade_out = false;
+			  this -> current_percentage = this -> stop_percentage;
+			  this -> sprite -> setAlpha(255.0 * this -> current_percentage);
 		  }
 	}
 }
@@ -107,5 +107,5 @@ void FadeHandler::update( const double dt_)
  */
 double FadeHandler::getCurrentPercentage()
 {
-	return this -> currentPercentage;
+	return this -> current_percentage;
 }

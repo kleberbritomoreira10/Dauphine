@@ -10,7 +10,7 @@ config = {
 	maxFramerate = 60,
 
 	-- the title of the window
-	windowTitle = "Dauphine",
+	window_title = "Dauphine",
 
 	-- the logical rendering size, practically looks like the distance of the camera
 	cameraDistance = 8,

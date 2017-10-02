@@ -30,8 +30,8 @@ void BStateTeleport::enter ()
 	this -> boss -> power = Game::instance (). getResources (). get(
 		"res/images/laser_sheet.png" );
 
-	this -> boss -> powerAnimation -> changeWidthHeight ( 700, 340 );
-	this -> boss -> powerAnimation -> changeAnimation ( 0, 0, 3, false, 0.5 );
+	this -> boss -> power_animation -> changeWidthHeight ( 700, 340 );
+	this -> boss -> power_animation -> changeAnimation ( 0, 0, 3, false, 0.5 );
 	this -> boss -> player -> isVulnerable = true;
 
 }
@@ -42,9 +42,9 @@ void BStateTeleport::enter ()
 */
 void BStateTeleport::exit ()
 {
-	this -> boss -> powerIsActivated = false;
+	this -> boss -> power_is_activated = false;
 	this -> boss -> player -> isVulnerable = true;
-	this -> boss -> powerAnimation -> changeAnimation( 0, 0, 1, false, 0 );
+	this -> boss -> power_animation -> changeAnimation( 0, 0, 1, false, 0 );
 	powerCollisionWidth = 0;
 	powerCollisionHeight = 0;
 	tptime = 0.0;
@@ -90,13 +90,13 @@ void BStateTeleport::update ( const double dt_ )
 		if ( !this -> boss -> isRight )
 		{
 
-			this -> boss -> powerFlip = SDL_FLIP_HORIZONTAL;
+			this -> boss -> power_flip = SDL_FLIP_HORIZONTAL;
 			right = false;
 
 		}else
 		{
 
-			this -> boss -> powerFlip = SDL_FLIP_NONE;
+			this -> boss -> power_flip = SDL_FLIP_NONE;
 			right = false;
 
 		}
@@ -121,13 +121,13 @@ void BStateTeleport::update ( const double dt_ )
 	if ( tptime >= 4 && tptime <= 5 )
 	{
 
-		if ( this -> boss -> powerAnimation -> getCurrentFrame () == 1 )
+		if ( this -> boss -> power_animation -> getCurrentFrame () == 1 )
 		{
 
 			powerCollisionWidth = 101;
 			powerCollisionHeight = 30;
 
-		}else if ( this -> boss -> powerAnimation -> getCurrentFrame () == 2 )
+		}else if ( this -> boss -> power_animation -> getCurrentFrame () == 2 )
 		{
 
 			powerCollisionWidth = 539;
@@ -144,28 +144,28 @@ void BStateTeleport::update ( const double dt_ )
 		if ( this -> boss -> player -> isRight )
 		{
 
-			this -> boss -> powerX = pX;
-			this -> boss -> powerY = pY;
+			this -> boss -> power_X = pX;
+			this -> boss -> power_Y = pY;
 
 		}else
 		{
 
-			this -> boss -> powerX = pX;
-			this -> boss -> powerY = pY;
+			this -> boss -> power_X = pX;
+			this -> boss -> power_Y = pY;
 
 		}if ( tptime >= 4.5 )
 		{
 
-			this -> boss -> powerAnimation -> changeAnimation ( 2, 0, 1, false, 0 );
+			this -> boss -> power_animation -> changeAnimation ( 2, 0, 1, false, 0 );
 			powerCollisionWidth = 665;
 			powerCollisionHeight = 262;
 
 		}
 
-		this -> boss -> powerIsActivated = true;
+		this -> boss -> power_is_activated = true;
 
 		if ( Collision::rectsCollided ( this -> boss -> player -> getBoundingBox (),
-			{ ( int ) this -> boss -> powerX - direction * 665, ( int ) this -> boss -> powerY
+			{ ( int ) this -> boss -> power_X - direction * 665, ( int ) this -> boss -> power_Y
 				+ offset, direction * 665, 262 }) )
 		{
 

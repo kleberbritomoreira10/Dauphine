@@ -2,9 +2,9 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @LevelFour.h
- * File responsible for implementing the level 4 features of the game. Using for this the virtual is 
+ * File responsible for implementing the level 4 features of the game. Using for this the virtual is
  * a function or method whose behavior can be overwritten in an inheriting class by a function with the
- * same signature. 
+ * same signature.
  * License: Copyright (C) 2014 Alke Games.
  */
 
@@ -20,9 +20,9 @@
  * The first level of the game.
  * Derived from Level class.
  */
-class LevelFour : public Level 
+class LevelFour : public Level
 {
-	
+
 	public:
 		/**
 		* The constructor.
@@ -40,7 +40,7 @@ class LevelFour : public Level
 		* From the Level1.lua script, loads all the necessary objects.
 		*/
 		virtual void load ();
-		
+
 		/**
 		* Updates the objects within the Level.
 		* @param dt_ : Delta time. Time elapsed between one frame and the other.
@@ -60,9 +60,9 @@ class LevelFour : public Level
 		*/
 		virtual void render ();
 
-		int items [ 2 ] [ NUMBER_ITEMS ];
-		Sprite *image;
-		bool caughtItems [ NUMBER_ITEMS ];
+		int items [ 2 ] [ NUMBER_ITEMS ]; // Upper index of items that appear in the game.
+		Sprite *image;  // The image attributed to the Sprite.
+		bool caught_items [ NUMBER_ITEMS ]; // Boolean condition for the number of items that were caught or not.
 
 };
 

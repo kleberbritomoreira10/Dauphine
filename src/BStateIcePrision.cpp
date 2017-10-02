@@ -22,14 +22,14 @@ void BStateIcePrision::enter()
 {
   // Log(DEBUG) << "STATE ICE PRISION BOSS";
   this -> boss -> power = Game::instance().getResources().get("res/images/ice_prision.png");
-  this -> boss -> powerAnimation -> changeWidthHeight( 340,1020 );
-  this -> boss -> powerAnimation -> changeAnimation( 0, 0, 2, false, 0.5 );
+  this -> boss -> power_animation -> changeWidthHeight( 340,1020 );
+  this -> boss -> power_animation -> changeAnimation( 0, 0, 2, false, 0.5 );
   this -> boss -> vx = 0;
   this -> boss -> vy = 0;
-  this -> boss -> powerIsActivated = true;
-  this -> boss -> powerX = this -> boss -> player -> x - 30; 
-  this -> boss -> powerY = this -> boss -> player -> y - 750;
-  this -> boss -> powerFlip = SDL_FLIP_NONE;
+  this -> boss -> power_is_activated = true;
+  this -> boss -> power_X = this -> boss -> player -> x - 30; 
+  this -> boss -> power_Y = this -> boss -> player -> y - 750;
+  this -> boss -> power_flip = SDL_FLIP_NONE;
 }
 
 /**
@@ -37,9 +37,9 @@ void BStateIcePrision::enter()
 */
 void BStateIcePrision::exit()
 {
-  this -> boss -> powerIsActivated = false;
+  this -> boss -> power_is_activated = false;
   this -> boss -> player -> isVulnerable = true;
-  this -> boss -> powerAnimation -> changeAnimation( 0, 0, 1, false, 0 );
+  this -> boss -> power_animation -> changeAnimation( 0, 0, 1, false, 0 );
   prisionTime = 0.0;
   this -> boss -> player -> canMove = true;
 }
@@ -54,9 +54,9 @@ void BStateIcePrision::update( const double dt_ )
   prisionTime += dt_;
   if( prisionTime > 1 )
   {
-    this -> boss -> powerAnimation -> changeAnimation( 2, 0, 1, false, 0 );
-    if( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(),  {( int )this -> boss -> powerX, 
-    ( int ) this -> boss -> powerY, 340,1020 }))
+    this -> boss -> power_animation -> changeAnimation( 2, 0, 1, false, 0 );
+    if( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(),  {( int )this -> boss -> power_X, 
+    ( int ) this -> boss -> power_Y, 340,1020 }))
     {
       if( this -> boss -> player -> isVulnerable)
       {

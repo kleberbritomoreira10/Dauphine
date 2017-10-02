@@ -22,7 +22,7 @@ void BStateAttack::enter()
 {
 	Log( DEBUG ) << "STATE ATTACK BOSS";
 	this -> boss -> getAnimation() -> changeAnimation( 0, 0, 7, false, 1 );
-	this -> boss -> sawPlayer = false;
+	this -> boss -> saw_player = false;
 	attackIndex = rand()%4;
 }
 
@@ -32,7 +32,7 @@ void BStateAttack::enter()
 */
 void BStateAttack::exit()
 {
-	this -> boss -> canWalk = false;
+	this -> boss -> can_walk = false;
 }
 
 /**

@@ -59,9 +59,9 @@ bool FadeScreen::isFaded ()
 
 	bool faded = false;
 
-	const int currentPercentage = this -> fadeHandler -> getCurrentPercentage ();
+	const int current_percentage = this -> fadeHandler -> getCurrentPercentage ();
 
-	if ( currentPercentage == 1.0 )
+	if ( current_percentage == 1.0 )
 	{
 		faded = true;
 	}

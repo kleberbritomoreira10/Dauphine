@@ -24,7 +24,7 @@
 LevelFour::LevelFour() :
   Level(),
   items{ { 207, 11261, 6800, 10000 },{ 5600, 2050, 5850, 2712 } },
-  caughtItems{ false, false, false, true }
+  caught_items{ false, false, false, true }
 {
   this -> changeCheckpoints( 2, { 58*64,71*64 }, { 113*64,20*64 } );
 }
@@ -141,7 +141,7 @@ void LevelFour::unload()
 
   for ( int i = 0; i < NUMBER_ITEMS; ++i )
   {
-    caughtItems[i] = false;
+    caught_items[i] = false;
   }
   //this->checkpointVisited = false; 
 }
@@ -199,10 +199,10 @@ void LevelFour::update( const double dt_ )
   for ( int i = 0; i < NUMBER_ITEMS; ++i )
   { 
     if ( Collision::rectsCollided( this -> player->getBoundingBox(), {items[0][i], items[1][i], 192, 192}) && 
-      caughtItems[i] == false )
+      caught_items[i] == false )
     {
       this -> player -> addPotions(3);
-      caughtItems[i] = true;
+      caught_items[i] = true;
     }
   }
   
@@ -340,7 +340,7 @@ void LevelFour::render()
   // Potion refill
   for ( unsigned int i = 0; i < NUMBER_ITEMS; i++ )
   {
-    if ( this -> image != nullptr && caughtItems[i] == false )
+    if ( this -> image != nullptr && caught_items[i] == false )
     {           
       this -> image -> Sprite::render( ( items[0][i]+60) - cameraX, ((items[1][i]) - cameraY) );    
     }

@@ -44,7 +44,7 @@ void EStateCurious::exit()
 void EStateCurious::update( const double dt_)
 {
 
-	this -> timeElapsed += dt_;
+	this -> time_elapsed += dt_;
 
 	// Aerial
 	if ( !this -> enemy -> isGrounded )
@@ -60,14 +60,14 @@ void EStateCurious::update( const double dt_)
 		  this -> enemy -> vx -= this -> enemy -> speed;
 	  }
  
-	if ( abs( this -> enemy->x - Enemy::px) < Enemy::alertRange && abs( this -> enemy->y-Enemy::py ) < Enemy::alertRange)
+	if ( abs( this -> enemy->x - Enemy::px) < Enemy::alert_range && abs( this -> enemy->y-Enemy::py ) < Enemy::alert_range)
 	{
 		this -> enemy -> changeState(Enemy::EStates::ALERT);
 		return;
 	}
   
   //if the time elapsed is greater than the time observing the enemy returns to patrol.
-	if ( timeElapsed >= MAX_CURIOUS_TIME )
+	if ( time_elapsed >= MAX_CURIOUS_TIME )
 	{
 		this -> enemy -> changeState(Enemy::EStates::PATROLLING);
 		return;
@@ -78,7 +78,7 @@ void EStateCurious::update( const double dt_)
  * The constructor.
  * @param enemy_ : Reference to the Enemy.
  */
-EStateCurious::EStateCurious( Enemy* const enemy_) : StateEnemy(enemy_), timeElapsed(0.0)
+EStateCurious::EStateCurious( Enemy* const enemy_) : StateEnemy(enemy_), time_elapsed(0.0)
 {
 
 }

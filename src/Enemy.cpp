@@ -2,7 +2,7 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @Enemy.cpp
- * File responsible for implementing the enemies of the game (except the boss). 
+ * File responsible for implementing the enemies of the game (except the boss).
  * They define the basic image and characteristics of the enemy, upgrade, destruction, collision among others.
  * License: Copyright (C) 2014 Alke Games.
  */
@@ -23,8 +23,8 @@
 #define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> statesMap.emplace(stateEnum, new stateClass( this ))
 #define ADD_STATE_INSERT(stateEnum, stateClass) this -> statesMap.insert(std::make_pair<EStates, StateEnemy*>(stateEnum, new stateClass( this )));
 
-//Declaring and initialing position enemy in the origin of the x axis 
-double Enemy::px = 0.0;                            
+//Declaring and initialing position enemy in the origin of the x axis
+double Enemy::px = 0.0;
 //Declaring and initialing position enemy in the origin of the y axis
 double Enemy::py = 0.0;
 //Declaring the enemy with 3 life quantity
@@ -32,9 +32,9 @@ unsigned int Enemy::pLife = 3;
 //Check if enemy is position vulnerable
 bool Enemy::pVulnerable = false;
 //Declaring the value for range dangerous of proximity for a enemy
-double Enemy::alertRange = 300.0;
-//Double value existing at pvulnerable 
-double Enemy::curiousRange = 600.0;
+double Enemy::alert_range = 300.0;
+//Double value existing at pvulnerable
+double Enemy::curious_range = 600.0;
 
 /*
  * Method used to create all characteristics Enemy
@@ -45,14 +45,14 @@ double Enemy::curiousRange = 600.0;
  * @param patrolLength_ : Defines the space traveled by the patrolman
  */
 Enemy::Enemy( const double x_, const double y_, const std::string& path_, const bool patrol_,
-	const double patrolLength_ ) : DynamicEntity(x_, y_, path_), originalX(x_), patrol(patrol_),
-  patrolLength(patrolLength_), life(100), currentState(nullptr), animation(nullptr), statesMap(), dead(false)
+	const double patrolLength_ ) : DynamicEntity(x_, y_, path_), original_X(x_), patrol(patrol_),
+  patrol_length(patrolLength_), life(100), current_state(nullptr), animation(nullptr), statesMap(), dead(false)
 {
 	// Initialize all the states in Enemy.
 	initializeStates();
 
 	this -> speed = 3.0;
-  
+
   //Getting information from lua script.
 	LuaScript luaEnemy("lua/Enemy.lua");
 	// Setting the level width/height.
@@ -63,12 +63,12 @@ Enemy::Enemy( const double x_, const double y_, const std::string& path_, const 
   //Condition to attribute the states map to current state.
 	if ( this -> patrol )
 	{
-		this -> currentState = this -> statesMap.at(PATROLLING);
+		this -> current_state = this -> statesMap.at(PATROLLING);
 	} else {
-		  this -> currentState = this -> statesMap.at(IDLE);
+		  this -> current_state = this -> statesMap.at(IDLE);
 	  }
-	
-	this -> currentState -> enter();
+
+	this -> current_state -> enter();
 }
 
 /*
@@ -77,12 +77,12 @@ Enemy::Enemy( const double x_, const double y_, const std::string& path_, const 
 Enemy::~Enemy()
 {
 	//Attribute null to current state
-	if ( this -> currentState != nullptr )
+	if ( this -> current_state != nullptr )
 	{
-		this -> currentState -> exit();
-		this -> currentState = nullptr;
+		this -> current_state -> exit();
+		this -> current_state = nullptr;
 	}
-  
+
   //Attribute null to animation
 	if ( this -> animation != nullptr )
 	{
@@ -98,9 +98,9 @@ Enemy::~Enemy()
  * @param dt : delta time (time elapsed)
  */
 void Enemy::update( const double dt_)
-{	
+{
 	//const double dt is passed as a parameter to know the time elapsed.
-	this -> currentState -> update( dt_);
+	this -> current_state -> update( dt_);
 	forceMaxSpeed();
 
 	scoutPosition( dt_);
@@ -108,7 +108,7 @@ void Enemy::update( const double dt_)
 	this -> animation -> update( this -> animationClip, dt_);
 
 	updateBoundingBox();
-  
+
   //Array to detect collision with enemy
 	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
 	handleCollision(detections);
@@ -122,8 +122,8 @@ void Enemy::update( const double dt_)
  * @param cameraY_ : Define the locate for the camera on the y-axis
  */
 void Enemy::render( const double cameraX_, const double cameraY_)
-{ 
-	const double dx = this -> x - cameraX_; 
+{
+	const double dx = this -> x - cameraX_;
 	const double dy = this -> y - cameraY_;
 
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -179,13 +179,13 @@ void Enemy::destroyStates()
 
 /*
  * Method used to exchange enemy of position
- * @param state_ : Define state enemy 
+ * @param state_ : Define state enemy
  */
 void Enemy::changeState( const EStates state_)
-{  
-	this -> currentState -> exit();
-	this -> currentState = this -> statesMap.at(state_);
-	this -> currentState -> enter();
+{
+	this -> current_state -> exit();
+	this -> current_state = this -> statesMap.at(state_);
+	this -> current_state -> enter();
 }
 
 /*
@@ -193,16 +193,16 @@ void Enemy::changeState( const EStates state_)
  * @param detections : Pass an array of array containing the type of collision.
  */
 void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_)
-{ 
+{
 	//Collision on top
 	if ( detections_.at(CollisionSide::SOLID_TOP) )
-	{ 
+	{
 		this -> vy = 0.0;
 	}
 	//Collision on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM) )
 	{
-		if ( this -> currentState == this -> statesMap.at(EStates::AERIAL) || this -> currentState == this -> statesMap.at
+		if ( this -> current_state == this -> statesMap.at(EStates::AERIAL) || this -> current_state == this -> statesMap.at
 			(EStates::DEAD))
 		{
 			this -> nextY -= fmod( this -> nextY, 64.0 ) - 16.0;
@@ -220,12 +220,12 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 			  }
 		}
 	} else {
-		  if ( this -> currentState != this -> statesMap.at(EStates::AERIAL) )
+		  if ( this -> current_state != this -> statesMap.at(EStates::AERIAL) )
 		  {
 			  changeState(EStates::AERIAL);
 		  }
 	  }
-	//Collision on left  
+	//Collision on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT) )
 	{
 		this -> nextX = this -> x;
@@ -277,13 +277,13 @@ bool Enemy::isDead()
  * Method to delimit enemy dimensions update
  */
 void Enemy::updateBoundingBox()
-{ 
-	//Bounding box at x position 
+{
+	//Bounding box at x position
 	this -> boundingBox.x = (int) this -> nextX + 40;
-	//Bounding box at y position 
+	//Bounding box at y position
 	this -> boundingBox.y = (int) this -> nextY + 40;
-	//Bounding box at width  
+	//Bounding box at width
 	this -> boundingBox.w = 150;
-	//Bounding box at height  
+	//Bounding box at height
 	this -> boundingBox.h = 200;
 }

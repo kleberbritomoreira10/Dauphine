@@ -41,7 +41,7 @@ class Configuration
 		static uint32_t getMaxFramerate ();
 
 		/**
-		* @return windowTitle
+		* @return window_title
 		*/
 		static std::string getWindowTitle ();
 
@@ -77,7 +77,7 @@ class Configuration
 		static const unsigned int resolutionHeight; // The game's height resolution. (10)
 
 		static uint32_t maxFramerate; // The game's max framerate.
-		static std::string windowTitle; // The game window's title.
+		static std::string window_title; // The game window's title.
 
 		static unsigned int logicalRenderSize; // The size of the logical rendering.
 

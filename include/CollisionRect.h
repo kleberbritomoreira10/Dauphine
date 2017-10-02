@@ -3,7 +3,7 @@
 
 #include "SDLWrapper.h"
 
-enum TypeCollision : uint8_t 
+enum TypeCollision : uint8_t
 {
 
 	COLLISION = 0,
@@ -20,21 +20,22 @@ enum TypeCollision : uint8_t
 /**
 * Simple collision detection.
 */
-class CollisionRect 
+class CollisionRect
 {
 
 	public:
 		CollisionRect ( const int x_, const int y_, const int w_, const int h_,
 			const TypeCollision type_ );
-		
+
 		CollisionRect ( const SDL_Rect rect_, const TypeCollision type_ );
-		
+
 		virtual ~CollisionRect ();
 
 		static TypeCollision stringToType ( const std::string& strType_ );
 
 		TypeCollision type;
-		SDL_Rect rect;
+		SDL_Rect rect; // A structure that contains the definition of a rectangle, with the origin at the upper left.
+
 
 };
 

@@ -3,7 +3,7 @@
 
 #include "StateEnemy.h"
 
-class EStateCurious : public StateEnemy 
+class EStateCurious : public StateEnemy
 {
 
 	public:
@@ -12,7 +12,7 @@ class EStateCurious : public StateEnemy
 		* @param enemy_ : Reference to the Enemy.
 		*/
 		EStateCurious ( Enemy *const enemy_ );
-		
+
 		/**
 		* The destructor.
 		*/
@@ -34,7 +34,7 @@ class EStateCurious : public StateEnemy
 		virtual void update ( const double dt_ );
 
 	private:
-		double timeElapsed;
+		double time_elapsed; // The elapsed time of the enemy watching the player to return to patrol.
 
 };
 

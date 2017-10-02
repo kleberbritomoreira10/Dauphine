@@ -3,7 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @Enemy.h
  * File responsible for implementing the characteristics of common enemies (except the boss).
- * License: Copyright (C) 2014 Alke Games. 
+ * License: Copyright (C) 2014 Alke Games.
  */
 
 #ifndef INCLUDE_ENEMY_H
@@ -16,14 +16,14 @@
 
 class StateEnemy;
 
-/* 
+/*
  * Enemies characteristics.
  */
-class Enemy : public DynamicEntity 
+class Enemy : public DynamicEntity
 {
 
 	public:
-		enum EStates : uint8_t 
+		enum EStates : uint8_t
 		{
 
 			IDLE = 0,
@@ -63,7 +63,7 @@ class Enemy : public DynamicEntity
 		* @param cameraY_ : The y position of the camera.
 		*/
 		virtual void render ( const double cameraX_, const double cameraY_ );
-		
+
 		void initializeStates ();
 		void destroyStates ();
 		void changeState ( const EStates state_ );
@@ -71,18 +71,18 @@ class Enemy : public DynamicEntity
 		bool isDead ();
 		void setDead ( bool isDead_ );
 
-		static double px;
-		static double py;
-		static unsigned int pLife;
-		static bool pVulnerable;
-		static double alertRange;
-		static double curiousRange;
+		static double px; // Position of the enemy in the origin of the x axis.
+		static double py; // Position of the enemy in the origin of the y axis.
+		static unsigned int pLife; // Reference to the enemy's life number.
+		static bool pVulnerable; // Boolean condition to check if enemy is position vulnerable.
+		static double alert_range; // The value of the range for the enemy to be in alert mode when the player approaches.
+		static double curious_range; // The value of the range for the enemy to be in curious mode when the player approaches.
 
-		double originalX;
+		double original_X; // Original position on the x axis of the enemy;
 		bool patrol;
-		double patrolLength;
+		double patrol_length; // The space traveled by the patrolman.
 		unsigned int life;
-	
+
 	private:
 
 		virtual void updateBoundingBox ();
@@ -90,7 +90,7 @@ class Enemy : public DynamicEntity
 
 		void forceMaxSpeed ();
 
-		StateEnemy *currentState;
+		StateEnemy *current_state;
 		Animation *animation;
 
 		std::map < EStates, StateEnemy *> statesMap;

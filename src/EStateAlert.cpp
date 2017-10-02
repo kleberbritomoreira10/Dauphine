@@ -38,7 +38,7 @@ void EStateAlert::update(const double dt_){
 		}
 	}
 
-	if(!(abs(this->enemy->x - Enemy::px) < Enemy::alertRange*2 && abs(this->enemy->y - Enemy::py) < Enemy::alertRange)){
+	if(!(abs(this->enemy->x - Enemy::px) < Enemy::alert_range*2 && abs(this->enemy->y - Enemy::py) < Enemy::alert_range)){
 		this->enemy->changeState(Enemy::EStates::PATROLLING);
 		return;
 	}	

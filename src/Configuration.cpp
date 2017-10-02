@@ -15,7 +15,7 @@ const unsigned int Configuration::resolutionWidth = 192;
 const unsigned int Configuration::resolutionHeight = 108;
 
 uint32_t Configuration::maxFramerate = 0;
-std::string Configuration::windowTitle = "";
+std::string Configuration::window_title = "";
 unsigned int Configuration::logicalRenderSize = 0;
 unsigned int Configuration::screenWidth = 0;
 unsigned int Configuration::screenHeight = 0;
@@ -31,8 +31,8 @@ void Configuration::initialize ()
 	Configuration::maxFramerate =
 		(uint32_t) luaConfig.unlua_get < int > ( "config.maxFramerate" );
 
-	Configuration::windowTitle =
-		luaConfig.unlua_get < std::string >( "config.windowTitle" );
+	Configuration::window_title =
+		luaConfig.unlua_get < std::string >( "config.window_title" );
 
 	Configuration::logicalRenderSize =
 		(unsigned int) luaConfig.unlua_get < int > ( "config.cameraDistance" );
@@ -72,7 +72,7 @@ uint32_t Configuration::getMaxFramerate ()
 // @return The game window's title.
 std::string Configuration::getWindowTitle ()
 {
-	return Configuration::windowTitle;
+	return Configuration::window_title;
 }
 
 // @return The size of the logical rendering.

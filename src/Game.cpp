@@ -50,7 +50,7 @@ Game::Game () :
 	resourceManager( new ResourceManager() ),
 	gameSave( new GameSave() ),
 	fadeScreen( nullptr ),
-	currentState( nullptr ),
+	current_state( nullptr ),
 	statesMap(),
 	passedTime( 0.0 ),
 	currentSelection( PSelection::RESUME ),
@@ -90,9 +90,9 @@ Game::Game () :
 
 Game::~Game()
 {
-	if( this -> currentState != nullptr )
+	if( this -> current_state != nullptr )
 	{
-		this -> currentState -> unload();
+		this -> current_state -> unload();
 	}
 
 	destroyStates();
@@ -125,8 +125,8 @@ void Game::runGame()
 {
 	this -> fadeScreen = new FadeScreen();
 
-	this -> currentState = this -> statesMap.at(GStates::SPLASH);
-	this -> currentState -> load();
+	this -> current_state = this -> statesMap.at(GStates::SPLASH);
+	this -> current_state -> load();
 
 	// Get the first game time.
 	double totalGameTime = 0.0;
@@ -162,7 +162,7 @@ void Game::runGame()
 
 			if( !this -> isPaused )
 			{
-				this -> currentState -> update( deltaTime );
+				this -> current_state -> update( deltaTime );
 			}
 			else if( !this -> isCutscene)
 			{
@@ -184,7 +184,7 @@ void Game::runGame()
 		// Render of window.
 		window -> clear();
 		
-		this -> currentState -> render();				    
+		this -> current_state -> render();				    
 		if( this -> isPaused )
 		{
 			renderPause();
@@ -211,9 +211,9 @@ void Game::runGame()
 void Game::setState( const GStates state_ )
 {
 	/// @todo Implement the transition between states.
-	this -> currentState -> unload();
-	this -> currentState = this -> statesMap.at( state_ );
-	this -> currentState -> load();
+	this -> current_state -> unload();
+	this -> current_state = this -> statesMap.at( state_ );
+	this -> current_state -> load();
 }
 
 void Game::initializeStates()
@@ -397,27 +397,27 @@ void Game::resizeWindow( const unsigned int width_, const unsigned int height_ )
 bool Game::isPauseAble()
 {
 
-	if( this -> currentState == this -> statesMap.at( Game::GStates::LEVEL_ONE ) )
+	if( this -> current_state == this -> statesMap.at( Game::GStates::LEVEL_ONE ) )
 	{
 		return true;
 	}
-	if( this -> currentState == this -> statesMap.at( Game::GStates::LEVEL_TWO ) )
+	if( this -> current_state == this -> statesMap.at( Game::GStates::LEVEL_TWO ) )
 	{
 		return true;
 	}
-	if( this -> currentState == this -> statesMap.at( Game::GStates::LEVEL_THREE ) )
+	if( this -> current_state == this -> statesMap.at( Game::GStates::LEVEL_THREE ) )
 	{
 		return true;
 	}
-	if( this -> currentState == this -> statesMap.at( Game::GStates::LEVEL_FOUR ) )
+	if( this -> current_state == this -> statesMap.at( Game::GStates::LEVEL_FOUR ) )
 	{
 		return true;
 	}
-	if(this -> currentState == this -> statesMap.at( Game::GStates::LEVEL_FIVE ) )
+	if(this -> current_state == this -> statesMap.at( Game::GStates::LEVEL_FIVE ) )
 	{
 		return true;
 	}
-	if(this -> currentState == this -> statesMap.at( Game::GStates::LEVEL_BOSS ) )
+	if(this -> current_state == this -> statesMap.at( Game::GStates::LEVEL_BOSS ) )
 	{
 		return true;
 	}

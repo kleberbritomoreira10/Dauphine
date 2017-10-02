@@ -101,7 +101,7 @@ void LevelBoss::update(const double dt_){
 	}
 
 	if(this->boss->x < this->player->x + 10 && this->boss->x > this->player->x - 10){
-		this->boss->sawPlayer = true;
+		this->boss->saw_player = true;
 	}
 
 	// Updating the HUD.
@@ -137,8 +137,8 @@ void LevelBoss::update(const double dt_){
 	if(Collision::rectsCollided(this->player->getBoundingBox(), this->boss->getBoundingBox())){
 		if(this->player->isCurrentState(Player::PStates::ATTACK) || this->player->isCurrentState(Player::PStates::ATTACKMOVING)
 			|| this->player->isCurrentState(Player::PStates::ATTACKJUMPING)){
-			if(this->boss->hasShield && this->player->canAttack){
-				this->boss->hasShield = false;
+			if(this->boss->has_shield && this->player->canAttack){
+				this->boss->has_shield = false;
 				this->player->canAttack = false;
 			}
 			else if(this->player->canAttack){

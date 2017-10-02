@@ -54,7 +54,7 @@ Player::Player( const double x_, const double y_, const std::string &path_ ) :
     invulnerableTime( 0 ),
     canMove( true ),
     animation( nullptr ),
-    currentState( nullptr )
+    current_state( nullptr )
 {
     initializeStates();
 
@@ -69,8 +69,8 @@ Player::Player( const double x_, const double y_, const std::string &path_ ) :
     // Verifying if the sprite is available.
     if ( this -> sprite != nullptr )
     {
-        this -> currentState = this -> statesMap.at( IDLE );
-        this -> currentState -> enter();
+        this -> current_state = this -> statesMap.at( IDLE );
+        this -> current_state -> enter();
     } else
     {
         Log( WARN ) << "No sprite set for the player! Null sprite.";
@@ -86,10 +86,10 @@ Player::~Player()
 {
 
     // Exiting the current state.
-    if ( this -> currentState != nullptr )
+    if ( this -> current_state != nullptr )
     {
-        this -> currentState -> exit();
-        this -> currentState = nullptr;
+        this -> current_state -> exit();
+        this -> current_state = nullptr;
     }
 
     // Deleting animation.
@@ -117,7 +117,7 @@ void Player::update( const double dt_ )
     // Vrifying if the player can move.
     if ( this -> canMove )
     {
-        this -> currentState -> handleInput( keyStates );
+        this -> current_state -> handleInput( keyStates );
     }
 
     // Updating the actions.
@@ -347,9 +347,9 @@ void Player::destroyStates()
 */
 void Player::changeState( const PStates state_ )
 {
-    this -> currentState -> exit();
-    this -> currentState = this -> statesMap.at( state_ );
-    this -> currentState -> enter();
+    this -> current_state -> exit();
+    this -> current_state = this -> statesMap.at( state_ );
+    this -> current_state -> enter();
 }
 
 /**
@@ -367,7 +367,7 @@ Animation *Player::getAnimation()
 */
 bool Player::isCurrentState(const PStates state_)
 {
-    return ( this -> currentState == this -> statesMap.at(state_) );
+    return ( this -> current_state == this -> statesMap.at(state_) );
 }
 
 /**
@@ -375,10 +375,10 @@ bool Player::isCurrentState(const PStates state_)
 */
 void Player::updateBoundingBox()
 {
-    this -> boundingBox.x = (int) this -> nextX + this -> currentState -> box.x;
-    this -> boundingBox.y = (int) this -> nextY + this -> currentState -> box.y;
-    this -> boundingBox.w = this -> currentState -> box.w;
-    this -> boundingBox.h = this -> currentState -> box.h;
+    this -> boundingBox.x = (int) this -> nextX + this -> current_state -> box.x;
+    this -> boundingBox.y = (int) this -> nextY + this -> current_state -> box.y;
+    this -> boundingBox.w = this -> current_state -> box.w;
+    this -> boundingBox.h = this -> current_state -> box.h;
 }
 
 /**

@@ -2,7 +2,7 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @Boss.h
- * File responsible for implementing the characteristics of the boss. 
+ * File responsible for implementing the characteristics of the boss.
  * License: Copyright (C) 2014 Alke Games.
  */
 
@@ -22,10 +22,10 @@ class StateBoss;
 /*
  * Boss characteristics.
  */
-class Boss : public DynamicEntity 
+class Boss : public DynamicEntity
 {
   public:
-    enum BStates : uint8_t 
+    enum BStates : uint8_t
     {
       IDLE = 0,
       ATTACK,
@@ -45,7 +45,7 @@ class Boss : public DynamicEntity
      * The destructor.
      */
     virtual ~Boss ();
-       
+
     /**
      * Updates the player.
      * @see Player::updateInput, Player::updatePosition
@@ -68,12 +68,12 @@ class Boss : public DynamicEntity
     virtual void render ( const double cameraX_, const double cameraY_ );
 
     void usePotion ( const int strength_, const int distance_ );
-        
+
     Animation *getAnimation ();
     bool isDead ();
     void setDead ( bool isDead_ );
 
-    enum BossSkills : uint8_t 
+    enum BossSkills : uint8_t
     {
       BS_MAGIC_SHIELD = 0,
       BS_TELEPORT,
@@ -92,32 +92,32 @@ class Boss : public DynamicEntity
 
     unsigned int potionsLeft;
 
-    bool sawPlayer;
+    bool saw_player; // Boleean condition to know if the boss saw the player.
     std::vector < Potion *> potions;
 
-    unsigned int life;
-    bool hasShield;
-    bool canWalk;
-    Player *player;
-    Animation *powerAnimation;
-    double powerX;
-    double powerY;
-    bool powerIsActivated;
-    Sprite *power;
-    SDL_Rect powerClip;
-    SDL_RendererFlip powerFlip;
-    Animation *shieldAnimation;
-    Sprite *shield;
-    SDL_Rect shieldClip;
+    unsigned int life; // Reference to Boss's life.
+    bool has_shield; // Condition to the shield of the boss
+    bool can_walk; // Condition for the boss to be able to walk.
+    Player *player; // Reference to the Player.
+    Animation *power_animation; // Reference to animation of Boss's power.
+    double power_X; // Power in the x-axis.
+    double power_Y; // Power in the y-axis.
+    bool power_is_activated; // Boleean condition to activated the power.
+    Sprite *power; // Referece to visual represetation of Boss power.
+    SDL_Rect power_clip; // A structure that contains the definition of a rectangle, with the origin at the upper left.
+    SDL_RendererFlip power_flip; // An enumeration of flags that can be used in the flip parameter.
+    Animation *shield_animation;// Reference to animation shield.
+    Sprite *shield; // Referece to visual represetation of Boss shield.
+    SDL_Rect shield_clip; // A structure that contains the definition of a rectangle, with the origin at the upper left.
 
   private:
     virtual void updateBoundingBox ();
     virtual void handleCollision ( std::array < bool, CollisionSide::SOLID_TOTAL > detections_ );
-        
-    StateBoss *currentState;
-    Animation *animation;
+
+    StateBoss *current_state; // Get the current state of the boss.
+    Animation *animation; // Copy to the animation of the boss.
     std::map < BStates, StateBoss * > statesMap;
-    bool dead;
+    bool dead; // Boleean condition to death os the boss.
 };
 
 #endif // INCLUDE_BOSS_H

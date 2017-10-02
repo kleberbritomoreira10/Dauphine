@@ -153,7 +153,7 @@ class Game
 		GameSave *gameSave;
 		FadeScreen *fadeScreen;
 
-		StateGame *currentState; /**< The current state, which the game is in. */
+		StateGame *current_state; /**< The current state, which the game is in. */
 
 		std::map < GStates, StateGame *> statesMap; /**< Map containing all possible states. */
 

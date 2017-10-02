@@ -33,9 +33,9 @@ double timePasssed = 0;
  * @param SDL_FLIP_NONE : Renderer flip
  */
 Boss::Boss( const double x_, const double y_, const std::string& path_, Player* const player_ ) :
-	DynamicEntity(x_, y_, path_), potionsLeft(3), sawPlayer(false), potions(), life(8), hasShield(false), canWalk(true), player(player_), powerAnimation(nullptr), powerX(0.0), powerY(0.0), powerIsActivated(false), power(nullptr),
-	  powerClip{0,0,0,0}, powerFlip(SDL_FLIP_NONE), shieldAnimation(nullptr), shield(nullptr), shieldClip{0,0,0,0},
-	  currentState(nullptr), animation(nullptr), statesMap(), dead(false)
+	DynamicEntity(x_, y_, path_), potionsLeft(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X(0.0), power_Y(0.0), power_is_activated(false), power(nullptr),
+	  power_clip{0,0,0,0}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{0,0,0,0},
+	  current_state(nullptr), animation(nullptr), statesMap(), dead(false)
 {
 	initializeStates();
 
@@ -45,12 +45,12 @@ Boss::Boss( const double x_, const double y_, const std::string& path_, Player* 
 	this -> width = 360;
 	this -> height = 360;
 	this -> animation = new Animation(0, 0, this -> width, this -> height, 7, false);
-	this -> powerAnimation = new Animation(0, 0, 0, 0, 0, false);
-	this -> shieldAnimation = new Animation(0, 0, 340, 340, 6, false);
+	this -> power_animation = new Animation(0, 0, 0, 0, 0, false);
+	this -> shield_animation = new Animation(0, 0, 340, 340, 6, false);
 	this -> shield = Game::instance().getResources().get("res/images/shield.png");
-	this -> shieldAnimation->changeAnimation(0,0,3,false,1);
-	this -> currentState = this -> statesMap.at(IDLE);
-	this -> currentState->enter();
+	this -> shield_animation->changeAnimation(0,0,3,false,1);
+	this -> current_state = this -> statesMap.at(IDLE);
+	this -> current_state->enter();
 
 	//Check if player is playing
 	if ( this -> player == nullptr )
@@ -71,24 +71,24 @@ Boss::~Boss()
 		this -> animation = nullptr;
 	}
 	
-	//Delete powerAnimation if null
-	if ( this -> powerAnimation != nullptr )
+	//Delete power_animation if null
+	if ( this -> power_animation != nullptr )
 	{
-		delete this -> powerAnimation;
-		this -> powerAnimation = nullptr;
+		delete this -> power_animation;
+		this -> power_animation = nullptr;
 	}
   
-  //Delete shieldAnimation if null
-	if ( this -> shieldAnimation != nullptr )
+  //Delete shield_animation if null
+	if ( this -> shield_animation != nullptr )
 	{
-		delete this -> shieldAnimation;
-		this -> shieldAnimation = nullptr;
+		delete this -> shield_animation;
+		this -> shield_animation = nullptr;
 	}
 
-	//Exit Boss if currentState is different of the null
-	if ( this -> currentState != nullptr )
+	//Exit Boss if current_state is different of the null
+	if ( this -> current_state != nullptr )
 	{
-		this -> currentState -> exit();
+		this -> current_state -> exit();
 	}
 
 	this -> player = nullptr;
@@ -109,8 +109,8 @@ void Boss::update( const double dt_)
   
   //Characteristics boss to update
 	this -> animation -> update( this -> animationClip, dt_);
-	this -> powerAnimation -> update( this -> powerClip, dt_);
-	this -> shieldAnimation -> update( this -> shieldClip, dt_);
+	this -> power_animation -> update( this -> power_clip, dt_);
+	this -> shield_animation -> update( this -> shield_clip, dt_);
 
 	updateBoundingBox();
   
@@ -120,8 +120,8 @@ void Boss::update( const double dt_)
 
 	updatePosition( dt_);
 
-	//Update currentState Boss
-	this -> currentState -> update( dt_);
+	//Update current_state Boss
+	this -> current_state -> update( dt_);
 
   for( auto potion : this -> potions )
   {
@@ -156,29 +156,29 @@ void Boss::render( const double cameraX_, const double cameraY_)
 		  }
 	}
 	// Shield render.	
-	if ( this -> hasShield )
+	if ( this -> has_shield )
 	{
 		SDL_RendererFlip flip = getFlip();
 		if ( flip == SDL_FLIP_HORIZONTAL )
 		{
-			this -> shield->render( dx, dy, &this -> shieldClip );
+			this -> shield->render( dx, dy, &this -> shield_clip );
 		} else {
-			  this -> shield->render(dx -120, dy, &this -> shieldClip);
+			  this -> shield->render(dx -120, dy, &this -> shield_clip);
 		  }
 	}
 
 	//Constants for define position x e y to camera
-	const double pdx = this -> powerX - cameraX_;
-	const double pdy = this -> powerY - cameraY_;
+	const double pdx = this -> power_X - cameraX_;
+	const double pdy = this -> power_Y - cameraY_;
 
 	//Power render
-	if ( this -> power != nullptr && this -> powerIsActivated )
+	if ( this -> power != nullptr && this -> power_is_activated )
 	{	
-		if ( this -> powerFlip == SDL_FLIP_HORIZONTAL )
+		if ( this -> power_flip == SDL_FLIP_HORIZONTAL )
 		{
-			this -> power->render(pdx - this -> powerClip.w, pdy, &this ->powerClip, false, 0.0, nullptr, this -> powerFlip);
+			this -> power->render(pdx - this -> power_clip.w, pdy, &this ->power_clip, false, 0.0, nullptr, this -> power_flip);
 		} else {
-			  this->power->render(pdx, pdy, &this->powerClip, false, 0.0, nullptr, this->powerFlip);
+			  this->power->render(pdx, pdy, &this->power_clip, false, 0.0, nullptr, this->power_flip);
 		  }
 	}
  
@@ -219,9 +219,9 @@ void Boss::destroyStates()
  */
 void Boss::changeState( const BStates state_)
 { 
-	this -> currentState -> exit();
-	this -> currentState = this -> statesMap.at(state_);
-	this -> currentState -> enter();
+	this -> current_state -> exit();
+	this -> current_state = this -> statesMap.at(state_);
+	this -> current_state -> enter();
 }
 
 /*

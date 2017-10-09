@@ -39,8 +39,8 @@ class TileMap
 		unsigned int getMapHeight();
 		std::vector <CollisionRect> &getCollisionRects();
 
-		double getInitialX();
-		double getInitialY();
+		double get_initial_x();
+		double get_initial_y();
 
 		std::vector<int> &getEnemiesX();
 		std::vector<int> &getEnemiesY();

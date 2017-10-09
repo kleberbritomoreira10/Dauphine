@@ -109,7 +109,7 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
  * Getting the number of the current level.
  * @continueSelection_: The number of the slot where is saved the game.
 */
-int GameSave::getSavedLevel ( int continueSelection_ )
+int GameSave::get_saved_level ( int continueSelection_ )
 {
 	this -> saveSelection = continueSelection_;
 	
@@ -141,7 +141,7 @@ int GameSave::getSavedLevel ( int continueSelection_ )
  * The analyzer if the game is saved.
  * @saveSlot_: The slot where is saved the game.
 */
-bool GameSave::isSaved( const int saveSlot_ )
+bool GameSave::is_saved( const int saveSlot_ )
 {
 
 	this -> setSlot( saveSlot_ );	
@@ -176,7 +176,7 @@ bool GameSave::isSaved( const int saveSlot_ )
  * @playerY: The vertical position of the player in the game.
  * @slot_: The slot where the game will be saved.
 */
-void GameSave::getPlayerPosition ( double& playerX_, double& playerY_, const int slot_ )
+void GameSave::get_player_position ( double& playerX_, double& playerY_, const int slot_ )
 {	
 	setSlot( slot_ );
 

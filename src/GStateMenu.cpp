@@ -62,7 +62,7 @@ void GStateMenu::load()
 	// Changing the music.
 	Game::instance().clearKeyFromInput(GameKeys::ESCAPE);
 
-	Game::instance().getAudioHandler().changeMusic("res/audio/menu.mid");
+	Game::instance().get_audio_handler().change_music("res/audio/menu.mid");
 
 	LuaScript luaMenu("lua/Menu.lua");
 	const std::string pathTitleScreen = luaMenu.unlua_get<std::string>("menu.images.titleScreen");

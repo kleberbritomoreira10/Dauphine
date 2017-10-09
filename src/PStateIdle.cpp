@@ -49,7 +49,7 @@ void PStateIdle::handleInput(const std::array<bool, GameKeys::MAX> keyStates_){
 	}
 
     if(keyStates_[GameKeys::ACTION]){
-    	// Game::instance().getAudioHandler().addSoundEffect("res/audio/FX_NADINE/FX_AAAAAHH.wav");
+    	// Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/FX_AAAAAHH.wav");
         this->player->usePotion(THROW_STRENGTH, THROW_DISTANCE);
         return;
     }

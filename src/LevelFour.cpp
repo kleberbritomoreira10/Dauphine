@@ -40,14 +40,14 @@ LevelFour::~LevelFour()
 void LevelFour::load()
 {
   // Changing the music.
-  Game::instance().getAudioHandler().changeMusic("res/audio/lv4.wav");
+  Game::instance().get_audio_handler().change_music("res/audio/lv4.wav");
 
   // Loading the tile/tilemap.
-  this -> tileMap = new TileMap("res/maps/level4.tmx");
+  this -> tile_map = new TileMap("res/maps/level4.tmx");
 
   // Setting the level width/height.
-  this -> width = this -> tileMap -> getMapWidth();
-  this -> height = this -> tileMap -> getMapHeight();
+  this -> width = this -> tile_map -> getMapWidth();
+  this -> height = this -> tile_map -> getMapHeight();
   SDL_Rect bounds = { 0, 0, ( int ) this -> width, ( int ) this -> height };
   this -> quadTree = new QuadTree( 0, bounds );
 
@@ -63,44 +63,44 @@ void LevelFour::load()
   /* 
    * Getting information from lua script.
    * Changing the music. 
-   * Game::instance().getAudioHandler().changeMusic(pathBackgroundAudio);
+   * Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
    */
   LuaScript luaLevel1("lua/Level1.lua");
-  const std::string pathPlayerSpriteSheet = luaLevel1.unlua_get<std::string>("level.player.spriteSheet");
-  const std::string pathBackgroundAudio = luaLevel1.unlua_get<std::string>("level.audio.background");
-  const std::string pathEnemy = luaLevel1.unlua_get<std::string>("level.enemy");
+  const std::string PATH_PLAYER_SPRITE_SHEET = luaLevel1.unlua_get<std::string>("level.player.spriteSheet");
+  const std::string PATH_BACKGROUND_AUDIO = luaLevel1.unlua_get<std::string>("level.audio.background");
+  const std::string PATH_ENEMY = luaLevel1.unlua_get<std::string>("level.enemy");
 
   // Loading the player and the camera.
-  Player* lPlayer = nullptr;
+  Player* level_player = nullptr;
   
   //check to see if the player is in stage 4, and if so, determine the position on the x-axis and y  
-  if ( Game::instance().getSaves().isSaved(Game::instance().currentSlot) && Game::instance().getSaves().getSavedLevel(Game::instance().currentSlot) == 4 )
+  if ( Game::instance().get_saves().is_saved(Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 4 )
   {
-    double savedPX = 0.0;
-    double savedPY = 0.0;
+    double saved_x_position = 0.0;
+    double saved_y_position = 0.0;
 
-    Game::instance().getSaves().getPlayerPosition(savedPX, savedPY, Game::instance().currentSlot);
+    Game::instance().get_saves().get_player_position(saved_x_position, saved_y_position, Game::instance().current_slot);
 
-    lPlayer = new Player( savedPX, savedPY, pathPlayerSpriteSheet );
+    level_player = new Player( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
   } else {
-      lPlayer = new Player( this -> tileMap -> getInitialX(), this -> tileMap -> getInitialY(), pathPlayerSpriteSheet);
+      level_player = new Player( this -> tile_map -> get_initial_x(), this -> tile_map -> get_initial_y(), PATH_PLAYER_SPRITE_SHEET);
     }
     
-  Camera* lCamera = new Camera( lPlayer ); 
+  Camera* level_camera = new Camera( level_player ); 
   
   //Instantiating elements of the game.  
-  this -> playerHud = new PlayerHUD( lPlayer );
+  this -> player_Hud = new PlayerHUD( level_player );
     
-  // Load all the enemies from the tileMap.
-  for ( unsigned  int i = 0; i < this -> tileMap -> getEnemiesX().size(); i++ )
+  // Load all the enemies from the tile_map.
+  for ( unsigned  int i = 0; i < this -> tile_map -> getEnemiesX().size(); i++ )
   {
-    Enemy* enemy = new Enemy( this -> tileMap -> getEnemiesX().at(i),
-    this -> tileMap -> getEnemiesY().at(i), pathEnemy,
-    this -> tileMap -> getEnemiesPatrol().at(i), 0.0);
+    Enemy* enemy = new Enemy( this -> tile_map -> getEnemiesX().at(i),
+    this -> tile_map -> getEnemiesY().at(i), PATH_ENEMY,
+    this -> tile_map -> getEnemiesPatrol().at(i), 0.0);
 
-    if ( Game::instance().getSaves().isSaved(Game::instance().currentSlot) )
+    if ( Game::instance().get_saves().is_saved(Game::instance().current_slot) )
     {
-      if ( Game::instance().getSaves().isEnemyDead(i, Game::instance().currentSlot) && Game::instance().getSaves().getSavedLevel(Game::instance().currentSlot) == 4 )
+      if ( Game::instance().get_saves().isEnemyDead(i, Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 4 )
       {
         enemy->setDead(true);
       }
@@ -120,10 +120,10 @@ void LevelFour::load()
   this -> documents.push_back( document3 );
 
   // Setting the player and the camera.
-  setPlayer( lPlayer );
+  setPlayer( level_player );
   Enemy::pLife = this -> player -> life;
 
-  setCamera( lCamera );
+  setCamera( level_camera );
 
   Game::instance().getFade().fadeOut( 0, 0.002 );
 }
@@ -153,7 +153,7 @@ void LevelFour::unload()
 void LevelFour::update( const double dt_ )
 {
   // Populating the QuadTree.
-  this -> quadTree -> setObjects( this -> tileMap -> getCollisionRects() );
+  this -> quadTree -> setObjects( this -> tile_map -> getCollisionRects() );
 
   // Updating the entities, using the QuadTree.
   std::vector<CollisionRect> returnObjects;
@@ -221,7 +221,7 @@ void LevelFour::update( const double dt_ )
   }
 
   // Updating the HUD.
-  this -> playerHud -> update();
+  this -> player_Hud -> update();
 
   // Updating the camera.
   this -> camera -> update();
@@ -289,7 +289,7 @@ void LevelFour::update( const double dt_ )
         && this -> player -> getBoundingBox().x <= checkpointsX[j] + 100 && this -> player -> getBoundingBox().y >= checkpointsY[j] && this -> player -> getBoundingBox().y <= checkpointsY[j] + 200 )
     {
       this -> checkpoints[j] = Game::instance().getResources().get("res/images/checkpoint_visited.png");
-      Game::instance().getSaves().saveLevel(4, this -> player, this -> enemies, Game::instance().currentSlot );
+      Game::instance().get_saves().saveLevel(4, this -> player, this -> enemies, Game::instance().current_slot );
       this -> checkpointsVisited[j] = true;
     }   
   }
@@ -322,9 +322,9 @@ void LevelFour::render()
   }
 
   // Render the tiles in the TileMap.
-  this -> tileMap -> render( cameraX, cameraY );
+  this -> tile_map -> render( cameraX, cameraY );
 
-  this -> playerHud -> render();
+  this -> player_Hud -> render();
 
   for ( auto enemy : this -> enemies )
   {

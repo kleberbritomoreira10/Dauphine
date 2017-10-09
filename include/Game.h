@@ -74,7 +74,7 @@ class Game
 		/**
 		* @return The Game audioHandler.
 		*/
-		AudioHandler &getAudioHandler ();
+		AudioHandler &get_audio_handler ();
 
 		/**
 		* @return The boolean array recieved from the InputHandler.
@@ -88,7 +88,7 @@ class Game
 
 		FadeScreen& getFade ();
 
-		GameSave& getSaves ();
+		GameSave& get_saves ();
 
 		/**
 		* Stops execution and closes the game.
@@ -101,7 +101,7 @@ class Game
 		bool isCutscene;
 		bool isPaused;
 
-		unsigned int currentSlot;
+		unsigned int current_slot;
 
 		static const int numLines = 14; 
 		unsigned int currentLine;

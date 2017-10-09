@@ -60,10 +60,10 @@ void GStateContinue::load ()
 {
 	Log(DEBUG) << "Loading Continue Screen...";
 	
-	if ( Game::instance().getSaves().isSaved( SLOT_1 ) )
+	if ( Game::instance().get_saves().is_saved( SLOT_1 ) )
   {
 		
-		const int levelFromSave = Game::instance().getSaves().getSavedLevel( SLOT_1 );
+		const int levelFromSave = Game::instance().get_saves().get_saved_level( SLOT_1 );
 
 		const std::string currentLevel = "Level " + Util::toString( levelFromSave );
 		
@@ -84,10 +84,10 @@ void GStateContinue::load ()
 	}
 
 
-	if ( Game::instance().getSaves().isSaved( SLOT_2 ) )
+	if ( Game::instance().get_saves().is_saved( SLOT_2 ) )
   {
 		
-		const int levelFromSave = Game::instance().getSaves().getSavedLevel( SLOT_2 );
+		const int levelFromSave = Game::instance().get_saves().get_saved_level( SLOT_2 );
 
 		const std::string currentLevel = "Level " + Util::toString( levelFromSave );
 		
@@ -108,10 +108,10 @@ void GStateContinue::load ()
 	}
 
 
-	if ( Game::instance().getSaves().isSaved( SLOT_3 ) )
+	if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
   {
 		
-		const int levelFromSave = Game::instance().getSaves().getSavedLevel( SLOT_3 );
+		const int levelFromSave = Game::instance().get_saves().get_saved_level( SLOT_3 );
 
 		const std::string currentLevel = "Level " + Util::toString( levelFromSave );
 			
@@ -252,11 +252,11 @@ void GStateContinue::handleSelectorMenu ()
 
 	else if ( currentSelection == Selection::SLOT_1 && keyStates [ GameKeys::SPACE ] == true )
   {
-		Game::instance().currentSlot = SLOT_1;
+		Game::instance().current_slot = SLOT_1;
 
-		switch ( Game::instance().getSaves().getSavedLevel(Selection::SLOT_1) )
+		switch ( Game::instance().get_saves().get_saved_level(Selection::SLOT_1) )
     {
-			Game::instance().currentSlot = Selection::SLOT_1;
+			Game::instance().current_slot = Selection::SLOT_1;
 			case 1:
 				Game::instance().transitionTo = Game::GStates::LEVEL_ONE;
 				Game::instance().setState( Game::instance().transitionTo );
@@ -295,10 +295,10 @@ void GStateContinue::handleSelectorMenu ()
 
 	else if ( currentSelection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ] == true )
   {
-		Game::instance().currentSlot = SLOT_2;
+		Game::instance().current_slot = SLOT_2;
 
-		switch( Game::instance().getSaves().getSavedLevel( Selection::SLOT_2 ) ){
-			Game::instance().currentSlot = Selection::SLOT_2;
+		switch( Game::instance().get_saves().get_saved_level( Selection::SLOT_2 ) ){
+			Game::instance().current_slot = Selection::SLOT_2;
 			case 1:
 				Game::instance().transitionTo = Game::GStates::LEVEL_ONE;
 				Game::instance().setState( Game::instance().transitionTo );
@@ -338,11 +338,11 @@ void GStateContinue::handleSelectorMenu ()
 
 	else if( currentSelection == Selection::SLOT_3 && keyStates [ GameKeys::SPACE ] == true )
   {
-		Game::instance().currentSlot = SLOT_3;
+		Game::instance().current_slot = SLOT_3;
 
-		switch( Game::instance().getSaves().getSavedLevel(Selection::SLOT_3) )
+		switch( Game::instance().get_saves().get_saved_level(Selection::SLOT_3) )
     {
-			Game::instance().currentSlot = Selection::SLOT_3;
+			Game::instance().current_slot = Selection::SLOT_3;
 			case 1:
 				Game::instance().transitionTo = Game::GStates::LEVEL_ONE;
 				Game::instance().setState( Game::instance().transitionTo );

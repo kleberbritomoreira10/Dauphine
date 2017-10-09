@@ -294,8 +294,8 @@ void GStateOptions::applyOptions()
 	}
 
 	// Apply volume music
-	Game::instance().getAudioHandler().setMusicVolume( this -> musicVolume );
+	Game::instance().get_audio_handler().setMusicVolume( this -> musicVolume );
 
 	// Apply volume sfx
-	Game::instance().getAudioHandler().setEffectVolume( this -> sfxVolume );
+	Game::instance().get_audio_handler().setEffectVolume( this -> sfxVolume );
 }

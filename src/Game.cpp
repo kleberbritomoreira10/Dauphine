@@ -354,7 +354,7 @@ void Game::destroyStates()
     }
 }
 
-AudioHandler& Game::getAudioHandler()
+AudioHandler& Game::get_audio_handler()
 {
 	return ( *( this->audioHandler ));
 }
@@ -369,7 +369,7 @@ ResourceManager& Game::getResources()
 	return ( *( this -> resourceManager ) );
 }
 
-GameSave& Game::getSaves()
+GameSave& Game::get_saves()
 {
 	return ( *( this -> gameSave ) );
 }

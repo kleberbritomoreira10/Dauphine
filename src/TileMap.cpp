@@ -244,11 +244,11 @@ unsigned int TileMap::getMapHeight(){
 	return this->mapHeight * TILE_SIZE;
 }
 
-double TileMap::getInitialX(){
+double TileMap::get_initial_x(){
 	return (double)this->initialX;
 }
 
-double TileMap::getInitialY(){
+double TileMap::get_initial_y(){
 	return (double)this->initialY;
 }
 

@@ -154,7 +154,7 @@ void AudioHandler::setEffectVolume( const unsigned int percent_ )
 * Stops the music, sets it, and plays it with infinite looping.
 * @param path_ : The path to the desired music.
 */
-void AudioHandler::changeMusic( const std::string& path_ )
+void AudioHandler::change_music( const std::string& path_ )
 {
 	stopMusic();
 	setCurrentMusic( path_ );
@@ -192,5 +192,5 @@ void AudioHandler::channelDone( int channel_ )
 {
 	// Log( DEBUG ) << "Channel [" << channel_ << "] done. ( CALLBACK )";
 
-	Game::instance().getAudioHandler().clearChannel( channel_ );
+	Game::instance().get_audio_handler().clearChannel( channel_ );
 }

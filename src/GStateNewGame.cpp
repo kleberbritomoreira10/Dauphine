@@ -78,10 +78,10 @@ void GStateNewGame::load ()
 	Log ( DEBUG ) << "Loading Choose Slot Screen...";
 
 	// Start a new game on slot 1.
-	if ( Game::instance (). getSaves (). isSaved ( SLOT_1 ) )
+	if ( Game::instance (). get_saves (). is_saved ( SLOT_1 ) )
 	{
 
-		const int levelFromSave = Game::instance (). getSaves (). getSavedLevel( SLOT_1 );
+		const int levelFromSave = Game::instance (). get_saves (). get_saved_level( SLOT_1 );
 
 		const std::string currentLevel = "Level " +
 			Util::toString ( levelFromSave );
@@ -101,10 +101,10 @@ void GStateNewGame::load ()
 	}
 
 	// Start a new game on slot 2.
-	if ( Game::instance (). getSaves (). isSaved ( SLOT_2 ) )
+	if ( Game::instance (). get_saves (). is_saved ( SLOT_2 ) )
 	{
 
-		const int levelFromSave = Game::instance (). getSaves (). getSavedLevel ( SLOT_2 );
+		const int levelFromSave = Game::instance (). get_saves (). get_saved_level ( SLOT_2 );
 
 		const std::string currentLevel = "Level " + Util::toString ( levelFromSave );
 
@@ -124,10 +124,10 @@ void GStateNewGame::load ()
 	}
 
 	// Start a new game on slot 3.
-	if ( Game::instance (). getSaves (). isSaved ( SLOT_3 ) )
+	if ( Game::instance (). get_saves (). is_saved ( SLOT_3 ) )
 	{
 
-		const int levelFromSave = Game::instance (). getSaves (). getSavedLevel ( SLOT_3 );
+		const int levelFromSave = Game::instance (). get_saves (). get_saved_level ( SLOT_3 );
 
 		const std::string currentLevel = "Level " + Util::toString ( levelFromSave );
 
@@ -278,9 +278,9 @@ void GStateNewGame::handleSelectorMenu ()
 			 	== true)
 			{
 
-		Game::instance (). currentSlot = Selection::SLOT_1;
-		Game::instance (). getSaves (). setSlot ( Selection::SLOT_1 );
-		Game::instance (). getSaves (). createSave ();
+		Game::instance (). current_slot = Selection::SLOT_1;
+		Game::instance (). get_saves (). setSlot ( Selection::SLOT_1 );
+		Game::instance (). get_saves (). createSave ();
 		Game::instance (). transitionTo = Game::GStates::LEVEL_ONE;
 		Game::instance (). setState( Game::GStates::TRANSITION );
 
@@ -289,9 +289,9 @@ void GStateNewGame::handleSelectorMenu ()
 				== true)
 			{
 
-		Game::instance (). currentSlot = Selection::SLOT_2;
-		Game::instance (). getSaves (). setSlot ( Selection::SLOT_2 );
-		Game::instance (). getSaves (). createSave ();
+		Game::instance (). current_slot = Selection::SLOT_2;
+		Game::instance (). get_saves (). setSlot ( Selection::SLOT_2 );
+		Game::instance (). get_saves (). createSave ();
 		Game::instance (). transitionTo = Game::GStates::LEVEL_ONE; //should be level one, two is here for testing purposes
 		Game::instance (). setState ( Game::GStates::TRANSITION );
 
@@ -300,9 +300,9 @@ void GStateNewGame::handleSelectorMenu ()
 				== true)
 			{
 
-		Game::instance (). currentSlot = Selection::SLOT_3;
-		Game::instance (). getSaves (). setSlot ( Selection::SLOT_3 );
-		Game::instance (). getSaves (). createSave ();
+		Game::instance (). current_slot = Selection::SLOT_3;
+		Game::instance (). get_saves (). setSlot ( Selection::SLOT_3 );
+		Game::instance (). get_saves (). createSave ();
 		Game::instance (). transitionTo = Game::GStates::LEVEL_BOSS; //should be level one, boss is here for testing purposes
 		Game::instance (). setState ( Game::GStates::TRANSITION );
 	}

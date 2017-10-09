@@ -70,11 +70,11 @@ class Level : public StateGame
 
 		Player *player; /**< The direct reference to player, even though its in the list. */
 		Camera *camera; /**< The current camera for that level. */
-		PlayerHUD *playerHud;
+		PlayerHUD *player_Hud;
 
 		Boss *boss;
 
-		TileMap *tileMap;
+		TileMap *tile_map;
 		QuadTree *quadTree;
 
 		Sprite *background;

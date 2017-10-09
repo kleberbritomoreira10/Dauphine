@@ -41,7 +41,7 @@ void GStateVictory::load ()
 	this -> lifeTime = 5.0;
 
 	// Changing the music.
-	Game::instance (). getAudioHandler (). changeMusic( "res/audio/Tema_Victory_01.wav" );
+	Game::instance (). get_audio_handler (). change_music( "res/audio/Tema_Victory_01.wav" );
 }
 
 /**

@@ -20,14 +20,14 @@ LevelBoss::~LevelBoss(){
 void LevelBoss::load(){
 	Log(DEBUG) << "Loading level boss...";
 
-	Game::instance().getAudioHandler().changeMusic("res/audio/Tema_Boss_02.wav");
+	Game::instance().get_audio_handler().change_music("res/audio/Tema_Boss_02.wav");
 
 	// Loading the tile/tilemap.
-	this->tileMap = new TileMap("res/maps/levelBoss.tmx");
+	this->tile_map = new TileMap("res/maps/levelBoss.tmx");
 
 	// Setting the level width/height.
-	this->width = this->tileMap->getMapWidth();
-	this->height = this->tileMap->getMapHeight();
+	this->width = this->tile_map->getMapWidth();
+	this->height = this->tile_map->getMapHeight();
 	SDL_Rect bounds = {0, 0, (int)this->width, (int)this->height};
 	this->quadTree = new QuadTree(0, bounds);
 
@@ -35,22 +35,22 @@ void LevelBoss::load(){
 
 	// Getting information from lua script.
 	LuaScript luaLevel1("lua/Level1.lua");
-	const std::string pathPlayerSpriteSheet = luaLevel1.unlua_get<std::string>(
+	const std::string PATH_PLAYER_SPRITE_SHEET = luaLevel1.unlua_get<std::string>(
 		"level.player.spriteSheet");
-	const std::string pathBackgroundAudio = luaLevel1.unlua_get<std::string>(
+	const std::string PATH_BACKGROUND_AUDIO = luaLevel1.unlua_get<std::string>(
 		"level.audio.background");
-	const std::string pathEnemy = luaLevel1.unlua_get<std::string>("level.enemy");
+	const std::string PATH_ENEMY = luaLevel1.unlua_get<std::string>("level.enemy");
 
 	// Changing the music.
-	Game::instance().getAudioHandler().changeMusic(pathBackgroundAudio);
+	Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
 
 	// Loading the player and the camera.
-	Player* lPlayer = new Player(this->tileMap->getInitialX(), this->tileMap->getInitialY(), pathPlayerSpriteSheet);
-	Camera* lCamera = new Camera(lPlayer); 
+	Player* level_player = new Player(this->tile_map->get_initial_x(), this->tile_map->get_initial_y(), PATH_PLAYER_SPRITE_SHEET);
+	Camera* level_camera = new Camera(level_player); 
 
-	this->playerHud = new PlayerHUD(lPlayer);
+	this->player_Hud = new PlayerHUD(level_player);
 
-	Boss* lBoss = new Boss(1200, 684.0, "res/images/boss_sheet.png", lPlayer);
+	Boss* lBoss = new Boss(1200, 684.0, "res/images/boss_sheet.png", level_player);
 	lBoss->getAnimation()->changeAnimation(0,0,1,false,0.0);
 	
 	// Test text.
@@ -58,9 +58,9 @@ void LevelBoss::load(){
 	// addEntity(text);
 
 	// Finally, setting the player, the boss and the camera.
-	setPlayer(lPlayer);
+	setPlayer(level_player);
 	setBoss(lBoss);
-	setCamera(lCamera);
+	setCamera(level_camera);
 
 	Game::instance().getFade().fadeOut(0, 0.002);
 }
@@ -76,7 +76,7 @@ void LevelBoss::unload(){
 void LevelBoss::update(const double dt_){
 
 	// Populating the QuadTree.
-	this->quadTree->setObjects(this->tileMap->getCollisionRects());
+	this->quadTree->setObjects(this->tile_map->getCollisionRects());
 
 	// Updating the entities, using the QuadTree.
 	std::vector<CollisionRect> returnObjects;
@@ -105,7 +105,7 @@ void LevelBoss::update(const double dt_){
 	}
 
 	// Updating the HUD.
-	this->playerHud->update();
+	this->player_Hud->update();
 
 	// Updating the boss.
 	this->boss->update(dt_);
@@ -168,9 +168,9 @@ void LevelBoss::render(){
 	this->background->render(0, 0);
 
 	// Render the tiles in the TileMap.
-	this->tileMap->render(cameraX, cameraY);
+	this->tile_map->render(cameraX, cameraY);
 
-	this->playerHud->render();
+	this->player_Hud->render();
 
 	this->boss->render(cameraX, cameraY);
 

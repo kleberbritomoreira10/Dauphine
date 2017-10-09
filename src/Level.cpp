@@ -20,8 +20,8 @@ Level::Level() :
 	height( 0 ),
 	player( nullptr ),
 	camera( nullptr ),
-	playerHud( nullptr ),
-	tileMap( nullptr ),
+	player_Hud( nullptr ),
+	tile_map( nullptr ),
 	quadTree( nullptr ),
 	background( nullptr ),
 	backgroundTop( nullptr ),
@@ -46,16 +46,16 @@ Level::~Level()
 		this -> camera = nullptr;
 	}
 
-	if( this -> playerHud != nullptr )
+	if( this -> player_Hud != nullptr )
 	{
-		delete this -> playerHud;
-		this -> playerHud = nullptr;
+		delete this -> player_Hud;
+		this -> player_Hud = nullptr;
 	}
 
-	if( this -> tileMap != nullptr )
+	if( this -> tile_map != nullptr )
 	{
-		delete this -> tileMap;
-		this -> tileMap = nullptr;
+		delete this -> tile_map;
+		this -> tile_map = nullptr;
 	}
 
 	if( this -> quadTree != nullptr )

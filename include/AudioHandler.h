@@ -76,7 +76,7 @@ class AudioHandler
 		* Stops the music, sets it, and plays it with infinite looping.
 		* @param path_ : The path to the desired music.
 		*/
-		void changeMusic ( const std::string &path_ );
+		void change_music ( const std::string &path_ );
 
 		/**
 		* Sets the current music.

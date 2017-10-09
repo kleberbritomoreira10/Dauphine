@@ -24,7 +24,7 @@ void PStateMoving::enter()
   this -> box.h = 160;
   this -> player -> getAnimation()->changeAnimation(4,2,9,false,0.7);
 
-  Game::instance().getAudioHandler().addSoundEffect("res/audio/FX_NADINE/RUNNING_NADINE_01.wav");
+  Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/RUNNING_NADINE_01.wav");
 }
 
 /*
@@ -60,7 +60,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   //Use potion
   if ( keyStates_[GameKeys::ACTION] )
   {
-    // Game::instance().getAudioHandler().addSoundEffect("res/audio/FX_NADINE/WOOSH_NADINE_03.wav");
+    // Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/WOOSH_NADINE_03.wav");
     this -> player->usePotion(THROW_STRENGTH, THROW_DISTANCE);
     return;
   }

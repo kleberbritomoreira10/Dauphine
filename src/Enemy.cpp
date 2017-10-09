@@ -28,9 +28,9 @@ double Enemy::px = 0.0;
 //Declaring and initialing position enemy in the origin of the y axis
 double Enemy::py = 0.0;
 //Declaring the enemy with 3 life quantity
-unsigned int Enemy::pLife = 3;
+unsigned int Enemy::points_life = 3;
 //Check if enemy is position vulnerable
-bool Enemy::pVulnerable = false;
+bool Enemy::position_vulnerable = false;
 //Declaring the value for range dangerous of proximity for a enemy
 double Enemy::alert_range = 300.0;
 //Double value existing at pvulnerable
@@ -97,15 +97,15 @@ Enemy::~Enemy()
  * Method to update characteristics of the enemy
  * @param dt : delta time (time elapsed)
  */
-void Enemy::update( const double dt_)
+void Enemy::update( const double DELTA_TIME)
 {
 	//const double dt is passed as a parameter to know the time elapsed.
-	this -> current_state -> update( dt_);
+	this -> current_state -> update( DELTA_TIME);
 	forceMaxSpeed();
 
-	scoutPosition( dt_);
+	scoutPosition( DELTA_TIME);
 
-	this -> animation -> update( this -> animationClip, dt_);
+	this -> animation -> update( this -> animationClip, DELTA_TIME);
 
 	updateBoundingBox();
 
@@ -113,7 +113,7 @@ void Enemy::update( const double dt_)
 	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
 	handleCollision(detections);
 
-	updatePosition( dt_);
+	updatePosition( DELTA_TIME);
 }
 
 /*
@@ -260,7 +260,7 @@ Animation *Enemy::getAnimation()
  * Setting enemy is dead
  * @param isDead_ : It says if it is alive or dead
  */
-void Enemy::setDead( bool isDead_)
+void Enemy::set_dead( bool isDead_)
 {
 	this -> dead = isDead_;
 }

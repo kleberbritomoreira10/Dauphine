@@ -40,7 +40,7 @@ Boss::Boss( const double x_, const double y_, const std::string& path_, Player* 
 	initializeStates();
 
 	// Initialize all the states for the Boss.
-	this -> isRight = true;
+	this -> is_right = true;
 	this -> speed = 400.0;
 	this -> width = 360;
 	this -> height = 360;
@@ -98,19 +98,19 @@ Boss::~Boss()
 
 /*
  * Update the characteristics Boss
- * @param dt_ : Delta time (catch variation time).
+ * @param DELTA_TIME : Delta time (catch variation time).
  */
-void Boss::update( const double dt_)
+void Boss::update( const double DELTA_TIME)
 {
 	
-	timePasssed += dt_;
+	timePasssed += DELTA_TIME;
 
-	scoutPosition(dt_);
+	scoutPosition(DELTA_TIME);
   
   //Characteristics boss to update
-	this -> animation -> update( this -> animationClip, dt_);
-	this -> power_animation -> update( this -> power_clip, dt_);
-	this -> shield_animation -> update( this -> shield_clip, dt_);
+	this -> animation -> update( this -> animationClip, DELTA_TIME);
+	this -> power_animation -> update( this -> power_clip, DELTA_TIME);
+	this -> shield_animation -> update( this -> shield_clip, DELTA_TIME);
 
 	updateBoundingBox();
   
@@ -118,10 +118,10 @@ void Boss::update( const double dt_)
 	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
 	handleCollision( detections );
 
-	updatePosition( dt_);
+	updatePosition( DELTA_TIME);
 
 	//Update current_state Boss
-	this -> current_state -> update( dt_);
+	this -> current_state -> update( DELTA_TIME);
 
   for( auto potion : this -> potions )
   {
@@ -129,7 +129,7 @@ void Boss::update( const double dt_)
     {
       // Delete potion.
     }
-     potion -> update( dt_);
+     potion -> update( DELTA_TIME);
   }
 }
 
@@ -265,8 +265,8 @@ void Boss::usePotion( const int strength_, const int distance_)
   if ( this -> potionsLeft > 0)
   {
     this -> potionsLeft--;
-    const double potionX = (( this -> isRight ) ? this -> boundingBox.x + this -> boundingBox.w : this->boundingBox.x);
-    Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> vx, distance_, this ->isRight);
+    const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this->boundingBox.x);
+    Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> vx, distance_, this ->is_right);
     this -> potions.push_back( potion );
   }
 }
@@ -283,7 +283,7 @@ Animation *Boss::getAnimation()
  * Verify condition to Boss (dead or alive)
  * @param isDead_ : boolean variable to check the boss's condition. 
  */
-void Boss::setDead(bool isDead_)
+void Boss::set_dead(bool isDead_)
 {
 	this -> dead = isDead_;
 }

@@ -51,7 +51,7 @@ void PStateMovingCrouch::handleInput ( const std::array < bool, GameKeys::MAX > 
   // Check whether the character is crouched or not, if not, goes to idle
 	if ( !keyStates_ [ GameKeys::CROUCH ] )
 	{
-		this -> player -> changeState ( Player::PStates::IDLE );
+		this -> player -> changeState ( Player::player_states::IDLE );
 		return;
 	}
 
@@ -60,7 +60,7 @@ void PStateMovingCrouch::handleInput ( const std::array < bool, GameKeys::MAX > 
 	// Check if the character has stopped moving, if he is, he will crouch.
     if ( !keyStates_ [ GameKeys::LEFT ] && !keyStates_ [ GameKeys::RIGHT ] )
     {
-        this -> player -> changeState ( Player::PStates::CROUCHING );
+        this -> player -> changeState ( Player::player_states::CROUCHING );
         return;
     }
 
@@ -76,7 +76,7 @@ void PStateMovingCrouch::handleInput ( const std::array < bool, GameKeys::MAX > 
 
 	if ( keyStates_ [ GameKeys::ROLL ] )
 	{
-		this -> player -> changeState ( Player::PStates::ROLLING );
+		this -> player -> changeState ( Player::player_states::ROLLING );
 		return;
 	}
 }

@@ -33,10 +33,10 @@ Potion::Potion( const double x_, const double y_, const std::string &path_, cons
 {
 
   this -> width = 192;
-	this -> isRight = isRight_;
+	this -> is_right = isRight_;
 
   // Loading potion width.
-	if ( this -> isRight )
+	if ( this -> is_right )
 	{
 		this -> x -= this -> width;
 	} else
@@ -62,10 +62,10 @@ Potion::~Potion()
 
 /**
 * Update the potions.
-* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* @param DELTA_TIME: Delta time. Time elapsed between one frame and the other, independent
 *   of processing speed.
 */
-void Potion::update( const double dt_ )
+void Potion::update( const double DELTA_TIME )
 {
 
 	const int angle = 360 - 45; // Potion animation angle.
@@ -73,7 +73,7 @@ void Potion::update( const double dt_ )
 
   // Updating Bounding box and animation.
   updateBoundingBox();
-  this -> animation -> update( this -> animationClip, dt_ );
+  this -> animation -> update( this -> animationClip, DELTA_TIME );
 
   // Detecting collisions and handling.
 	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
@@ -85,14 +85,14 @@ void Potion::update( const double dt_ )
 
     this -> getAnimation() -> changeAnimation( 0, 0, 1, false, 0 );
 
-		this -> flightTime +=dt_;
+		this -> flightTime +=DELTA_TIME;
 
     // Calculating potion's speed in Y axis and in X axis.
 		const double speedXIdk = ( this -> distance/300.0 )*( this -> vx + this -> strength * cos( angle/57.29 ) * flightTime );
 		const double speedYIdk = ( this -> vy + this -> strength * sin( angle/57.29 ) *
 															flightTime - 0.5*gravity*flightTime*flightTime );
 
-		if ( this -> isRight )
+		if ( this -> is_right )
 		{
 			this -> x += speedXIdk;
 		}

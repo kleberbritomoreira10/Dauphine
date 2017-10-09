@@ -31,7 +31,7 @@ void PStateAttackJumping::enter()
 void PStateAttackJumping::exit()
 {
 	Log( DEBUG ) << "EXIT STATE ATTACK JUMPING";
-	this -> player -> canAttack = true;
+	this -> player -> can_attack = true;
 }
 
 /**
@@ -47,7 +47,7 @@ void PStateAttackJumping::handleInput( const std::array<bool, GameKeys::MAX> key
 	// Changing the state.
 	if ( this -> player -> getAnimation() -> getCurrentFrame() == 7 )
   	{
-		this -> player -> changeState( Player::PStates::AERIAL );
+		this -> player -> changeState( Player::player_states::AERIAL );
 	}
 	// Applying gravity.
 	this -> player -> applyGravity();

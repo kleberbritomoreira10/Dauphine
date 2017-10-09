@@ -142,26 +142,26 @@ void GStateContinue::load ()
 
 	this -> currentSelection = Selection::SLOT_1;
 
-	Game::instance().getFade().fadeOut ( 0, 0.002);
+	Game::instance().get_fade().fade_out ( 0, 0.002);
 }
 
 /**
 * Updates the objects within the StateGame.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
 void GStateContinue::unload ()
 {
 	Log(DEBUG) << "\tUnloading menu...";
-	cleanEntities();
+	clean_entities();
 }
 
 /**
 * Unloads everything that was loaded.
 * @see GStateContinue::load
 */
-void GStateContinue::update ( const double dt_ )
+void GStateContinue::update ( const double DELTA_TIME )
 {
-	this -> passedTime += dt_;
+	this -> passedTime += DELTA_TIME;
 
 	handleSelectorMenu ();
 

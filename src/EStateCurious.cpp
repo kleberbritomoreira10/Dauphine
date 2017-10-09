@@ -41,10 +41,10 @@ void EStateCurious::exit()
  * @param dt : delta time (time elapsed)
  * @see StateEnemy::update
  */
-void EStateCurious::update( const double dt_)
+void EStateCurious::update( const double DELTA_TIME)
 {
 
-	this -> time_elapsed += dt_;
+	this -> time_elapsed += DELTA_TIME;
 
 	// Aerial
 	if ( !this -> enemy -> isGrounded )

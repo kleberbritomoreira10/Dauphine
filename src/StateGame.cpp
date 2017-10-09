@@ -12,7 +12,7 @@
 */
 StateGame::~StateGame()
 {
-	cleanEntities();
+	clean_entities();
 }
 
 /**
@@ -27,7 +27,7 @@ void StateGame::addEntity( Entity *const entity )
 /**
 * Deletes all the entities inside the vector.
 */
-void StateGame::cleanEntities()
+void StateGame::clean_entities()
 {
 	for ( auto entity : this -> entities )
 	{

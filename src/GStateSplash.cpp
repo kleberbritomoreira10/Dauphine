@@ -73,18 +73,18 @@ void GStateSplash::unload()
 {
 	Log( DEBUG ) << "\tUnloading splash screens...";
 	this -> currentSplash = 0;
-	cleanEntities();
+	clean_entities();
 }
 
 /**
 * Updates the objects within the StateGame.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void GStateSplash::update( const double dt_ )
+void GStateSplash::update( const double DELTA_TIME )
 {
-	this -> passedTime += dt_;
+	this -> passedTime += DELTA_TIME;
 
-	Game::instance().getFade().fadeOut( 0, 0.002 );
+	Game::instance().get_fade().fade_out( 0, 0.002 );
 
 	// Increment current image x position.
 	if ( this -> ix < 0.0 )
@@ -100,7 +100,7 @@ void GStateSplash::update( const double dt_ )
 			Game::instance().setState( Game::GStates::MENU );
 		} else
 		{
-			Game::instance().getFade().fadeIn( 100, 0.002 );
+			Game::instance().get_fade().fadeIn( 100, 0.002 );
 			this -> passedTime = 0.0;
 			this -> ix = -300;
 			this -> currentSplash++;

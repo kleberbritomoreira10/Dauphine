@@ -36,12 +36,12 @@ void EStateIdle::exit()
 
 /*
  * Update the datas for estate idle
- * @param dt_ : delta time (time elapsed)	
+ * @param DELTA_TIME : delta time (time elapsed)	
  * @see StateEnemy::update
  */
-void EStateIdle::update( const double dt_)
+void EStateIdle::update( const double DELTA_TIME)
 {
-	((void)dt_); // Unused.
+	((void)DELTA_TIME); // Unused.
 	
 	// Aerial
 	if ( !this -> enemy -> isGrounded )

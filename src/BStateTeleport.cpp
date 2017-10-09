@@ -32,7 +32,7 @@ void BStateTeleport::enter ()
 
 	this -> boss -> power_animation -> changeWidthHeight ( 700, 340 );
 	this -> boss -> power_animation -> changeAnimation ( 0, 0, 3, false, 0.5 );
-	this -> boss -> player -> isVulnerable = true;
+	this -> boss -> player -> is_vulnerable = true;
 
 }
 
@@ -43,7 +43,7 @@ void BStateTeleport::enter ()
 void BStateTeleport::exit ()
 {
 	this -> boss -> power_is_activated = false;
-	this -> boss -> player -> isVulnerable = true;
+	this -> boss -> player -> is_vulnerable = true;
 	this -> boss -> power_animation -> changeAnimation( 0, 0, 1, false, 0 );
 	powerCollisionWidth = 0;
 	powerCollisionHeight = 0;
@@ -53,11 +53,11 @@ void BStateTeleport::exit ()
 /**
 * Update method for the state.
 * While the Boss is on the state, this method runs every update.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void BStateTeleport::update ( const double dt_ )
+void BStateTeleport::update ( const double DELTA_TIME )
 {
-	tptime += dt_;
+	tptime += DELTA_TIME;
 
 	if ( tptime < 3 )
 	{
@@ -70,7 +70,7 @@ void BStateTeleport::update ( const double dt_ )
 		this -> boss -> getAnimation() -> changeAnimation ( 0, 0, 1, false, 0 );
 		this -> boss -> vx = 0;
 
-		if ( this -> boss -> player -> isRight )
+		if ( this -> boss -> player -> is_right )
 		{
 
 			this -> boss -> x = this -> boss -> player -> x - 150 - 50;
@@ -82,12 +82,12 @@ void BStateTeleport::update ( const double dt_ )
 			this -> boss -> y = this -> boss -> player -> y;
 		}
 
-		this -> boss -> isRight = this -> boss -> player -> isRight;
+		this -> boss -> is_right = this -> boss -> player -> is_right;
 
 		pX = this -> boss -> x;
 		pY = this -> boss -> y;
 
-		if ( !this -> boss -> isRight )
+		if ( !this -> boss -> is_right )
 		{
 
 			this -> boss -> power_flip = SDL_FLIP_HORIZONTAL;
@@ -108,12 +108,12 @@ void BStateTeleport::update ( const double dt_ )
 		if ( right )
 		{
 
-			this -> boss -> isRight = false;
+			this -> boss -> is_right = false;
 			direction = 0;
 
 		}else
 		{
-			this -> boss -> isRight = true;
+			this -> boss -> is_right = true;
 			direction = 1;
 		}
 	}
@@ -141,7 +141,7 @@ void BStateTeleport::update ( const double dt_ )
 
 		}
 
-		if ( this -> boss -> player -> isRight )
+		if ( this -> boss -> player -> is_right )
 		{
 
 			this -> boss -> power_X = pX;
@@ -164,15 +164,15 @@ void BStateTeleport::update ( const double dt_ )
 
 		this -> boss -> power_is_activated = true;
 
-		if ( Collision::rectsCollided ( this -> boss -> player -> getBoundingBox (),
+		if ( Collision::rects_collided ( this -> boss -> player -> get_bounding_box (),
 			{ ( int ) this -> boss -> power_X - direction * 665, ( int ) this -> boss -> power_Y
 				+ offset, direction * 665, 262 }) )
 		{
 
-			if ( this -> boss -> player -> isVulnerable )
+			if ( this -> boss -> player -> is_vulnerable )
 			{
 				this -> boss -> player -> life--;
-				this -> boss -> player -> isVulnerable = false;
+				this -> boss -> player -> is_vulnerable = false;
 			}
 		}
 

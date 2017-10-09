@@ -26,10 +26,10 @@ class Document : public Entity
 		virtual ~Document ();
 
 		/*
-		Update the text sprite according to dt_ .
-		@param dt_ : Delta time. Time elapsed between one frame and the other.
+		Update the text sprite according to DELTA_TIME .
+		@param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 		*/
-		virtual void update ( const double dt_ );
+		virtual void update ( const double DELTA_TIME );
 
 		/*
 		Render the text sprite according to position x and y of the camera
@@ -40,7 +40,7 @@ class Document : public Entity
 
 		void renderDocumentText ();
 
-		bool shouldRender; // Bool variable to set when the Render of document should set
+		bool should_render; // Bool variable to set when the Render of document should set
 
 	private:
 		Sprite *documentText; // A text sprite from a Document

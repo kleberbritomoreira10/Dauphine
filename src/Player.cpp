@@ -31,7 +31,7 @@
 #include "Window.h"
 
 #define ADD_STATE_EMPLACE( stateEnum, stateClass ) this  -> statesMap.emplace( stateEnum, new stateClass( this ) )
-#define ADD_STATE_INSERT( stateEnum, stateClass ) this -> statesMap.insert( std::make_pair<PStates, StatePlayer*>( stateEnum, new stateClass( this ) ) );
+#define ADD_STATE_INSERT( stateEnum, stateClass ) this -> statesMap.insert( std::make_pair<player_states, StatePlayer*>( stateEnum, new stateClass( this ) ) );
 
 /**
 * The constructor.
@@ -47,10 +47,10 @@ Player::Player( const double x_, const double y_, const std::string &path_ ) :
     crosshair( new Crosshair(0.0, 0.0, "res/images/alvo.png" )),
     life( 3 ),
     attackStrength( 50 ),
-    canAttack( true ),
+    can_attack( true ),
     currentItem(PItems::POTION),
     closestEnemyIsRight( true ),
-    isVulnerable( true ),
+    is_vulnerable( true ),
     invulnerableTime( 0 ),
     canMove( true ),
     animation( nullptr ),
@@ -105,10 +105,10 @@ Player::~Player()
 /**
 * Updates the player.
 * @see Player::updateInput, Player::updatePosition
-* @param dt_ : Delta time. Time elapsed between one frame and the other, independent
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 *   of processing speed.
 */
-void Player::update( const double dt_ )
+void Player::update( const double DELTA_TIME )
 {
 
     // Getting inputs to update the player.
@@ -122,16 +122,16 @@ void Player::update( const double dt_ )
 
     // Updating the actions.
     Game::instance().clearKeyFromInput( GameKeys::ACTION );
-    scoutPosition( dt_ );
+    scoutPosition( DELTA_TIME );
     updateBoundingBox();
 
     // Loading collision.
     const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
     handleCollision( detections );
-    updatePosition( dt_ );
+    updatePosition( DELTA_TIME );
 
     // Updating animation.
-    this -> animation -> update( this -> animationClip, dt_ );
+    this -> animation -> update( this -> animationClip, DELTA_TIME );
 
     // Updating potions if activated.
     for ( auto potion : this -> potions )
@@ -140,25 +140,25 @@ void Player::update( const double dt_ )
         {
             // Delete potion.
         }
-        potion -> update(dt_);
+        potion -> update(DELTA_TIME);
     }
 
     // Verifying if the player is vulnerable, if not, the player can attack.
-    if ( !this -> isVulnerable )
+    if ( !this -> is_vulnerable )
     {
-        this -> invulnerableTime += dt_;
+        this -> invulnerableTime += DELTA_TIME;
         if ( this -> invulnerableTime >= 1 )
         {
             this -> invulnerableTime = 0;
-            this -> isVulnerable = true;
-            this -> canAttack = true;
+            this -> is_vulnerable = true;
+            this -> can_attack = true;
         }
     }
 
     // Verifying if player is climbing.
-    if ( this -> isClimbing && !isCurrentState(PStates::CLIMBING) )
+    if ( this -> isClimbing && !is_current_state(player_states::CLIMBING) )
     {
-        changeState( PStates::CLIMBING );
+        changeState( player_states::CLIMBING );
     }
 
 }
@@ -179,27 +179,27 @@ void Player::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
     // Verifying if the collision is SOLID_BOTTOM.
     if ( detections_.at(CollisionSide::SOLID_BOTTOM) )
     {
-        if ( isCurrentState( PStates::AERIAL ) || isCurrentState( PStates::ATTACKJUMPING )
-            || isCurrentState( PStates::HITED )  || isCurrentState( PStates::CLIMBING ) ||
-            isCurrentState( PStates::DEAD ) )
+        if ( is_current_state( player_states::AERIAL ) || is_current_state( player_states::ATTACKJUMPING )
+            || is_current_state( player_states::HITED )  || is_current_state( player_states::CLIMBING ) ||
+            is_current_state( player_states::DEAD ) )
             {
             const double magic = 32.0;
             const double aerialToIdleCorrection = 8.0;
 
             this -> nextY -= fmod( this -> nextY, 64.0 ) - magic + aerialToIdleCorrection;
             this -> vy = 0.0;
-            if ( !isCurrentState( PStates::DEAD ) )
+            if ( !is_current_state( player_states::DEAD ) )
             {
-                changeState( PStates::IDLE );
+                changeState( player_states::IDLE );
             }
         }
     } else
     {
         // Changing the player's state.
-        if ( !isCurrentState( PStates::AERIAL ) && !isCurrentState( PStates::ATTACKJUMPING )
-            && !isCurrentState( PStates::CLIMBING ) && !isCurrentState( PStates::DEAD ))
+        if ( !is_current_state( player_states::AERIAL ) && !is_current_state( player_states::ATTACKJUMPING )
+            && !is_current_state( player_states::CLIMBING ) && !is_current_state( player_states::DEAD ))
         {
-            changeState( PStates::AERIAL );
+            changeState( player_states::AERIAL );
         }
     }
 
@@ -281,9 +281,9 @@ void Player::usePotion( const int strength_, const int distance_ )
     if ( this -> potionsLeft > 0 )
     {
         this -> potionsLeft--;
-        const double potionX = (( this -> isRight ) ? this -> boundingBox.x + this -> boundingBox.w : this -> boundingBox.x );
+        const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this -> boundingBox.x );
         Potion *potion = new Potion( potionX , this -> y, "res/images/explosion_with_potion.png",
-        strength_, this -> vx, distance_, this -> isRight );
+        strength_, this -> vx, distance_, this -> is_right );
         this -> potions.push_back( potion );
     }
 }
@@ -333,7 +333,7 @@ void Player::initializeStates()
 void Player::destroyStates()
 {
     // Delete all the states in Player here.
-    std::map<PStates, StatePlayer*>::const_iterator it;
+    std::map<player_states, StatePlayer*>::const_iterator it;
     for ( it = this -> statesMap.begin(); it != this -> statesMap.end(); it++ )
     {
         delete it -> second;
@@ -345,7 +345,7 @@ void Player::destroyStates()
 * Every new state implemented should be deleted here.
   @param state_: The state to be changed.
 */
-void Player::changeState( const PStates state_ )
+void Player::changeState( const player_states state_ )
 {
     this -> current_state -> exit();
     this -> current_state = this -> statesMap.at( state_ );
@@ -363,9 +363,9 @@ Animation *Player::getAnimation()
 
 /**
   @param state_: The state of the player.
-* @return Whether the player is currently in PStates::state_ or not.
+* @return Whether the player is currently in player_states::state_ or not.
 */
-bool Player::isCurrentState(const PStates state_)
+bool Player::is_current_state(const player_states state_)
 {
     return ( this -> current_state == this -> statesMap.at(state_) );
 }

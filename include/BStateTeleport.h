@@ -41,9 +41,9 @@ class BStateTeleport : public StateBoss
 
 		/**
 		* @see StateBoss::
-		* @param dt_ : Delta time. Time elapsed between one frame and the other
+		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other
 		*/
-		virtual void update ( const double dt_ );
+		virtual void update ( const double DELTA_TIME );
 
 };
 

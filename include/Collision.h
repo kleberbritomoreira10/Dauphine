@@ -29,7 +29,7 @@ class Collision
 		* @return Whether two SDL_Rects collided.
 		* @param a_ , b_ : The rectangles to check.
 		*/
-		static bool rectsCollided ( const SDL_Rect &a_, const SDL_Rect &b_ );
+		static bool rects_collided ( const SDL_Rect &a_, const SDL_Rect &b_ );
 
 		/**
 		* @return The side (RectangleSide) which two SDL_Rects collided on.

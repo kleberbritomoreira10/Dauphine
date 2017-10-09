@@ -35,11 +35,11 @@ FadeScreen::~FadeScreen ()
 
 /*
 Update the position of fade and when show up or not
-@param dt_ : Delta time. Time elapsed between one frame and the other
+@param DELTA_TIME : Delta time. Time elapsed between one frame and the other
 */
-void FadeScreen::update ( const double dt_ )
+void FadeScreen::update ( const double DELTA_TIME )
 {
-	fadeHandler -> update ( dt_ );
+	fadeHandler -> update ( DELTA_TIME );
 }
 
 // Verify condition to Render the image
@@ -74,9 +74,9 @@ Fade out the image on screen according to the percentage and the time
 @param percentage_: Percentage of image appearance on screen
 @param time_: Time the image will appear on screen
 */
-void FadeScreen::fadeOut ( const double percentage_, const double time_ )
+void FadeScreen::fade_out ( const double percentage_, const double time_ )
 {
-	this -> fadeHandler -> fadeOut ( percentage_, time_ );
+	this -> fadeHandler -> fade_out ( percentage_, time_ );
 }
 
 // Fade in the image on screen according to the percentage and the time

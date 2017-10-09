@@ -53,7 +53,7 @@ void FadeHandler::fadeIn( const double percentage_, const double time_)
  * @param percentage : percentage fade out
  * @param time: time fade out
  */
-void FadeHandler::fadeOut( const double percentage_, const double time_)
+void FadeHandler::fade_out( const double percentage_, const double time_)
 {
 	this -> should_fade_out = true;
 	this -> should_fade_in = false;
@@ -64,9 +64,9 @@ void FadeHandler::fadeOut( const double percentage_, const double time_)
 
 /* 
  * Manipulate update characters on screen
- * @param dt_ : delta time (time elapsed)
+ * @param DELTA_TIME : delta time (time elapsed)
  */
-void FadeHandler::update( const double dt_)
+void FadeHandler::update( const double DELTA_TIME)
 {
 	if ( this -> sprite == nullptr )
 	{
@@ -79,7 +79,7 @@ void FadeHandler::update( const double dt_)
 	{
 		if ( this -> current_percentage < this -> stop_percentage )
 		{
-			this -> current_percentage += this -> rate * dt_/1000.0;
+			this -> current_percentage += this -> rate * DELTA_TIME/1000.0;
 			this -> sprite->setAlpha( 255.0 * this -> current_percentage );
 		} else {
 			  should_fade_in = false;
@@ -92,7 +92,7 @@ void FadeHandler::update( const double dt_)
 	{
 		if ( this -> current_percentage > this -> stop_percentage )
 		{
-			this -> current_percentage -= this -> rate * dt_/1000.0;
+			this -> current_percentage -= this -> rate * DELTA_TIME/1000.0;
 			this -> sprite -> setAlpha( 255.0 * this -> current_percentage );
 		} else {
 			  should_fade_out = false;

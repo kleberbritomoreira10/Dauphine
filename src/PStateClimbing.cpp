@@ -29,7 +29,7 @@ void PStateClimbing::enter()
     this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
 
     this -> player -> vy = 0;
-    if( !this -> player -> isRight )
+    if( !this -> player -> is_right )
     {
 		this -> player -> vx = -0.001;
     }
@@ -75,7 +75,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 		Log( DEBUG ) << "entrou";		
 		this -> player -> vy = -700;
 
-		if( this -> player -> isRight)
+		if( this -> player -> is_right)
 		{
 			this -> player -> vx = -500;
 		}
@@ -84,14 +84,14 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 			this -> player -> vx = 500;
 		}
 
-		this -> player -> changeState( Player::PStates::AERIAL );
+		this -> player -> changeState( Player::player_states::AERIAL );
 		return;
 	}
 
 	if( !this -> player -> isClimbing)
 	{
 		this -> player -> vy = -1000;
-		this -> player -> changeState( Player::PStates::AERIAL );
+		this -> player -> changeState( Player::player_states::AERIAL );
 		return;
 	}
 }

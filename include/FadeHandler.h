@@ -11,8 +11,8 @@ class FadeHandler
 		virtual ~FadeHandler ();
 
 		void fadeIn ( const double percentage_, const double time_ );
-		void fadeOut ( const double percentage_, const double time_ );
-		void update ( const double dt_ );
+		void fade_out ( const double percentage_, const double time_ );
+		void update ( const double DELTA_TIME );
 		double getCurrentPercentage ();
 
 	private:

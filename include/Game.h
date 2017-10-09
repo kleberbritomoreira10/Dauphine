@@ -86,7 +86,7 @@ class Game
 		*/
 		ResourceManager &getResources ();
 
-		FadeScreen& getFade ();
+		FadeScreen& get_fade ();
 
 		GameSave& get_saves ();
 

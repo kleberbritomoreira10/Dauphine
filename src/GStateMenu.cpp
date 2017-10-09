@@ -77,7 +77,7 @@ void GStateMenu::load()
     this -> shwing = Game::instance().getResources().get("res/images/shwing_sheet.png");
     this -> shwingAnimation -> ANIMATION_LIMIT = 2;
 
-    Game::instance().getFade().fadeOut( 0, 0.002 );
+    Game::instance().get_fade().fade_out( 0, 0.002 );
 }
 
 /**
@@ -87,21 +87,21 @@ void GStateMenu::unload()
 {
 	Log( DEBUG ) << "\tUnloading menu...";
 	this -> attractClip.y = 0;
-	cleanEntities();
+	clean_entities();
 }
 
 /**
 * Changing the state menu of the game.
-* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* @param DELTA_TIME: Delta time. Time elapsed between one frame and the other, independent
 * 	of processing speed.
 */
-void GStateMenu::update( const double dt_ )
+void GStateMenu::update( const double DELTA_TIME )
 {
-	this -> passedTime += dt_;
+	this -> passedTime += DELTA_TIME;
 
 	handleSelectorMenu();
 
-	this -> shwingAnimation -> update( this -> shwingClip, dt_ );	
+	this -> shwingAnimation -> update( this -> shwingClip, DELTA_TIME );	
 
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 	if( keyStates[ GameKeys::ESCAPE ] == true )

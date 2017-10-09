@@ -31,8 +31,8 @@ void BStateMagicProjectile::enter ()
   this -> boss -> power_X = this -> boss -> x + 50;
   this -> boss -> power_Y = this -> boss -> y + 150;
 
-  mpX = this -> boss -> player -> getBoundingBox().x + 50 - this -> boss -> getBoundingBox().x;
-  mpY = this -> boss -> player -> getBoundingBox().y + 50 - this -> boss -> getBoundingBox().y;
+  mpX = this -> boss -> player -> get_bounding_box().x + 50 - this -> boss -> get_bounding_box().x;
+  mpY = this -> boss -> player -> get_bounding_box().y + 50 - this -> boss -> get_bounding_box().y;
   hypotenuse = sqrt( ( mpX * mpX ) + ( mpY * mpY ) );
   hypotenuse = ( hypotenuse == 0 ) ? 1 : hypotenuse;
   mpX /= hypotenuse;
@@ -55,14 +55,14 @@ void BStateMagicProjectile::exit ()
 /**
 * @see StateBoss::update 
 */
-void BStateMagicProjectile::update ( const double dt_ ) 
+void BStateMagicProjectile::update ( const double DELTA_TIME ) 
 {
-  projectileTime += dt_;
+  projectileTime += DELTA_TIME;
   this -> boss -> power_X += mpX * 15;
   this -> boss -> power_Y += mpY * 15;
   this -> boss -> power_is_activated = true;
 
-  if ( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(), { ( int )this -> boss -> power_X, 
+  if ( Collision::rects_collided( this -> boss -> player -> get_bounding_box(), { ( int )this -> boss -> power_X, 
     (int)this -> boss -> power_Y, 50, 50 } ) )
   {
     this -> boss -> player -> life--;

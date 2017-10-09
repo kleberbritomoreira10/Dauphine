@@ -71,12 +71,12 @@ GStateOptions::~GStateOptions()
 
 /**
 * Changing the state for options of the game.
-* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* @param DELTA_TIME: Delta time. Time elapsed between one frame and the other, independent
 * 	of processing speed.
 */
-void GStateOptions::update( const double dt_ )
+void GStateOptions::update( const double DELTA_TIME )
 {
-	this -> elapsedTime += dt_;
+	this -> elapsedTime += DELTA_TIME;
 
 	this -> resolution -> changeText( possibleResolutions[ currentResolution ].c_str() );
 	this -> volumeMusic -> changeText( Util::toString( this -> musicVolume).c_str() );
@@ -271,7 +271,7 @@ void GStateOptions::load()
 void GStateOptions::unload()
 {
 	Log( DEBUG ) << "\tUnloading options...";
-	cleanEntities();
+	clean_entities();
 }
 
 /**

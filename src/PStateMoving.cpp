@@ -45,7 +45,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   // Aerial
   if ( !this -> player -> isGrounded)
   {
-    this -> player->changeState(Player::PStates::AERIAL);
+    this -> player->changeState(Player::player_states::AERIAL);
     return;     
   }
 
@@ -68,7 +68,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   //Change state player
   if ( keyStates_[GameKeys::LATTACK])
   {
-    this -> player -> changeState(Player::PStates::ATTACKMOVING);
+    this -> player -> changeState(Player::player_states::ATTACKMOVING);
     return;
   }
 
@@ -77,21 +77,21 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   //Verify if roll player
   if ( keyStates_[GameKeys::ROLL])
   {
-    this -> player->changeState(Player::PStates::ROLLING);
+    this -> player->changeState(Player::player_states::ROLLING);
     return;
   }
 
   // Idle
   if ( this -> player -> vx < 1.0 && this -> player -> vx > (-1.0))
   {
-    this -> player->changeState(Player::PStates::IDLE);
+    this -> player->changeState(Player::player_states::IDLE);
     return;
   }
 
   // Attack
   if ( keyStates_[GameKeys::LATTACK])
   {
-    this -> player->changeState(Player::PStates::ATTACK);
+    this -> player->changeState(Player::player_states::ATTACK);
     return;
   }
 }

@@ -42,9 +42,9 @@ class TileMap
 		double get_initial_x();
 		double get_initial_y();
 
-		std::vector<int> &getEnemiesX();
-		std::vector<int> &getEnemiesY();
-		std::vector<bool> &getEnemiesPatrol();		
+		std::vector<int> &get_enemies_x();
+		std::vector<int> &get_enemies_y();
+		std::vector<bool> &get_enemies_patrol();		
 
 	private:
 		/**

@@ -102,18 +102,18 @@ void LevelFive::load()
 	this -> player_Hud = new PlayerHUD( level_player );
 
 	// Load all the enemies from the tile_map.
-	for ( unsigned int i = 0; i < this -> tile_map -> getEnemiesX().size(); i++ )
+	for ( unsigned int i = 0; i < this -> tile_map -> get_enemies_x().size(); i++ )
 	{
-		Enemy* enemy = new Enemy( this -> tile_map -> getEnemiesX().at(i),
-			this -> tile_map -> getEnemiesY().at(i), PATH_ENEMY,
-			this -> tile_map -> getEnemiesPatrol().at(i), 0.0 );
+		Enemy* enemy = new Enemy( this -> tile_map -> get_enemies_x().at(i),
+			this -> tile_map -> get_enemies_y().at(i), PATH_ENEMY,
+			this -> tile_map -> get_enemies_patrol().at(i), 0.0 );
 
 		if ( Game::instance().get_saves().is_saved(Game::instance().current_slot)
     && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 5 )
 		{
-			if ( Game::instance().get_saves().isEnemyDead(i, Game::instance().current_slot ))
+			if ( Game::instance().get_saves().is_enemy_dead(i, Game::instance().current_slot ))
 			{
-				enemy -> setDead(true);
+				enemy -> set_dead(true);
 			}
 		}
 		enemy -> setLevelWH( this -> width, this -> height );
@@ -130,12 +130,12 @@ void LevelFive::load()
 	this -> documents.push_back( document6 );
 
 	// Setting the player and the camera.
-	setPlayer( level_player );
-	Enemy::pLife = this -> player -> life;
+	set_player( level_player );
+	Enemy::points_life = this -> player -> life;
 
-	setCamera( level_camera );
+	set_camera( level_camera );
 
-	Game::instance().getFade().fadeOut( 0, 0.002 );
+	Game::instance().get_fade().fade_out( 0, 0.002 );
 }
 
 /**
@@ -146,9 +146,9 @@ void LevelFive::unload()
 {
 	Log(DEBUG) << "\tUnloading level 5...";
 
-	cleanEntities();
-	clearEnemies();
-	clearDocuments();
+	clean_entities();
+	clear_enemies();
+	clear_documents();
 
 	// Clearing caught items.
 	for (int i = 0; i < NUMBER_ITEMS; ++i)
@@ -161,30 +161,30 @@ void LevelFive::unload()
 
 /**
 * Updates the objects within the Level.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void LevelFive::update( const double dt_ ) 
+void LevelFive::update( const double DELTA_TIME ) 
 {
 	// Populating the QuadTree.
 	this -> quadTree -> setObjects(this -> tile_map -> getCollisionRects());
 
 	// Updating the entities, using the QuadTree.
-	std::vector<CollisionRect> returnObjects;
+	std::vector<CollisionRect> return_objects;
 	for ( auto entity : this -> entities )
 	{
-		returnObjects.clear();
-		this -> quadTree -> retrieve( returnObjects, entity -> getBoundingBox() );
-		entity -> setCollisionRects( returnObjects );
-		entity -> update( dt_ );
+		return_objects.clear();
+		this -> quadTree -> retrieve( return_objects, entity -> get_bounding_box() );
+		entity -> setCollisionRects( return_objects );
+		entity -> update( DELTA_TIME );
 	}
 
 	// Updating the enemies.
 	for ( auto enemy : this -> enemies )
 	{
-		returnObjects.clear();
-		this -> quadTree -> retrieve( returnObjects, enemy -> getBoundingBox() );
-		enemy -> setCollisionRects( returnObjects );
-		enemy -> update( dt_ );
+		return_objects.clear();
+		this -> quadTree -> retrieve( return_objects, enemy -> get_bounding_box() );
+		enemy -> setCollisionRects( return_objects );
+		enemy -> update( DELTA_TIME );
 	}
 
 	// Set to GameOver if the player is dead.
@@ -197,21 +197,21 @@ void LevelFive::update( const double dt_ )
 	// Updating the potions.
 	for ( auto potion : this -> player -> potions )
 	{
-		returnObjects.clear();
-		this -> quadTree -> retrieve( returnObjects, potion -> getBoundingBox() );
-		potion -> setCollisionRects( returnObjects );
+		return_objects.clear();
+		this -> quadTree -> retrieve( return_objects, potion -> get_bounding_box() );
+		potion -> setCollisionRects( return_objects );
 	}
 
 	/*@todo Maybe refactor this static Enemy::px, Enemy::py.
 	Updating player info for the enemies.*/
 	Enemy::px = this -> player -> x;
 	Enemy::py = this -> player -> y;
-	Enemy::pVulnerable = this -> player -> isVulnerable;
+	Enemy::position_vulnerable = this -> player -> is_vulnerable;
 
 	// Updating number os potions left.
 	for ( int i = 0; i < NUMBER_ITEMS; ++i )
 	{
-		if ( Collision::rectsCollided(this -> player -> getBoundingBox(),
+		if ( Collision::rects_collided(this -> player -> get_bounding_box(),
     {items[0][i], items[1][i], 192, 192}) && caught_items[i] == false )
 		{
 			this -> player -> addPotions(3);
@@ -220,14 +220,14 @@ void LevelFive::update( const double dt_ )
 	}
 
 	// Updating player's life.
-	if ( this -> player -> life != Enemy::pLife )
+	if ( this -> player -> life != Enemy::points_life )
 	{
-		if ( this -> player -> isVulnerable )
+		if ( this -> player -> is_vulnerable )
 		{
 			this -> player -> life--;
-			Enemy::pLife = this -> player -> life;
-			this -> player -> changeState( Player::PStates::HITED );
-			this -> player -> isVulnerable = false;
+			Enemy::points_life = this -> player -> life;
+			this -> player -> changeState( Player::player_states::HITED );
+			this -> player -> is_vulnerable = false;
 		} else
 		{
 
@@ -241,7 +241,7 @@ void LevelFive::update( const double dt_ )
 	this -> camera -> update();
 
 	// Set next level if end is reached.
-	if ( this -> player -> reachedLevelEnd )
+	if ( this -> player -> reached_level_end )
 	{
 		Game::instance().transitionTo = Game::GStates::LEVEL_BOSS;
 		Game::instance().setState( Game::GStates::TRANSITION );
@@ -253,11 +253,11 @@ void LevelFive::update( const double dt_ )
 	{
 		for( auto enemy : this -> enemies )
 		{
-			if ( Collision::rectsCollided(potion -> getBoundingBox(), enemy -> getBoundingBox()))
+			if ( Collision::rects_collided(potion -> get_bounding_box(), enemy -> get_bounding_box()))
 			{
 				if ( potion -> activated )
 				{
-				  if( enemy -> life > 0 && this -> player -> canAttack )
+				  if( enemy -> life > 0 && this -> player -> can_attack )
 					{
 						enemy -> life -= 100;
 					  potion -> activated = false;
@@ -276,15 +276,15 @@ void LevelFive::update( const double dt_ )
 	// Updating the player attack/enemy collision.
 	for ( auto enemy : this -> enemies )
 	{
-		if ( Collision::rectsCollided( this -> player -> getBoundingBox(), enemy -> getBoundingBox()) ){
-			if ( this -> player -> isRight != enemy -> isRight )
-				if ( this -> player -> isCurrentState(Player::PStates::ATTACK ) ||
-        this -> player -> isCurrentState( Player::PStates::ATTACKMOVING) )
+		if ( Collision::rects_collided( this -> player -> get_bounding_box(), enemy -> get_bounding_box()) ){
+			if ( this -> player -> is_right != enemy -> is_right )
+				if ( this -> player -> is_current_state(Player::player_states::ATTACK ) ||
+        this -> player -> is_current_state( Player::player_states::ATTACKMOVING) )
         {
-					if ( enemy -> life > 0 && this -> player -> canAttack )
+					if ( enemy -> life > 0 && this -> player -> can_attack )
 					{
 						enemy -> life -= this -> player -> attackStrength;
-						this -> player -> canAttack = false;
+						this -> player -> can_attack = false;
 					}
 					// Log(DEBUG) << "Enemy Life = " << enemy -> life;
 
@@ -297,10 +297,10 @@ void LevelFive::update( const double dt_ )
 	// Saving the game state.
 	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
 	{
-		if ( !this -> checkpointsVisited[j] && this -> player -> getBoundingBox().x >= checkpointsX[j]
-				&& this -> player -> getBoundingBox().x <= checkpointsX[j] + 100
-        && this -> player -> getBoundingBox().y >= checkpointsY[j]
-				&& this -> player -> getBoundingBox().y <= checkpointsY[j] + 200 )
+		if ( !this -> checkpointsVisited[j] && this -> player -> get_bounding_box().x >= checkpointsX[j]
+				&& this -> player -> get_bounding_box().x <= checkpointsX[j] + 100
+        && this -> player -> get_bounding_box().y >= checkpointsY[j]
+				&& this -> player -> get_bounding_box().y <= checkpointsY[j] + 200 )
 		{
 			this -> checkpoints[j] = Game::instance().getResources().get("res/images/checkpoint_visited.png");
 			Game::instance().get_saves().saveLevel(5, this -> player, this -> enemies, Game::instance().current_slot);
@@ -311,11 +311,11 @@ void LevelFive::update( const double dt_ )
 	// Documents check.
 	for ( auto document : this -> documents )
 	{
-		if ( Collision::rectsCollided(this -> player -> getBoundingBox(), document -> getBoundingBox()) ){
-			document -> shouldRender = true;
+		if ( Collision::rects_collided(this -> player -> get_bounding_box(), document -> get_bounding_box()) ){
+			document -> should_render = true;
 		} else
 		{
-			document -> shouldRender = false;
+			document -> should_render = false;
 		}
 	}
 }
@@ -328,32 +328,32 @@ void LevelFive::update( const double dt_ )
 void LevelFive::render()
 {
 	// Getting camera.
-	const int cameraX = this -> camera -> getClip().x;
-	const int cameraY = this -> camera -> getClip().y;
+	const int CAMERA_X = this -> camera -> getClip().x;
+	const int CAMERA_Y = this -> camera -> getClip().y;
 
 	this -> background -> render( 0, 0 );
 
 	// Rendering checkpoint's camera.
 	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
 	{
-		this -> checkpoints[j] -> render( this -> checkpointsX[j] - cameraX, this -> checkpointsY[j] - cameraY );
+		this -> checkpoints[j] -> render( this -> checkpointsX[j] - CAMERA_X, this -> checkpointsY[j] - CAMERA_Y );
 	}
 
 	// Rendering the tiles in the TileMap.
-	this -> tile_map -> render( cameraX, cameraY );
+	this -> tile_map -> render( CAMERA_X, CAMERA_Y );
 
 	this -> player_Hud -> render();
 
 	// Rendering all the enemies in the list.
 	for ( auto enemy : this -> enemies )
 	{
-		enemy -> render( cameraX, cameraY );
+		enemy -> render( CAMERA_X, CAMERA_Y );
 	}
 
 	// Rendering all the entities in the list.
 	for ( auto entity : this -> entities )
 	{
-        entity -> render( cameraX, cameraY );
+        entity -> render( CAMERA_X, CAMERA_Y );
 	}
 
 	// Rendering images.
@@ -361,15 +361,15 @@ void LevelFive::render()
 	{
 		if ( this -> image != nullptr && caught_items[i] == false )
 		{
-			this -> image -> Sprite::render( (items[0][i]+60) - cameraX, ( (items[1][i]) - cameraY) );
+			this -> image -> Sprite::render( (items[0][i]+60) - CAMERA_X, ( (items[1][i]) - CAMERA_Y) );
 		}
 	}
 
 	// Document text image.
 	for ( auto document : this -> documents )
 	{
-		document -> render( cameraX, cameraY );
-		if ( document -> shouldRender )
+		document -> render( CAMERA_X, CAMERA_Y );
+		if ( document -> should_render )
 		{
 			document -> renderDocumentText();
 		}

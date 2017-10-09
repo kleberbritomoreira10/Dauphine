@@ -26,7 +26,7 @@ DynamicEntity::DynamicEntity ( const double x_, const double y_, const std::stri
 	isGrounded ( false ),
 	nextX ( x_ ),
 	nextY ( y_ ),
-	reachedLevelEnd ( false ),
+	reached_level_end ( false ),
     activated ( false ),
     strength ( 0 ),
     distance ( 0 ),
@@ -56,30 +56,30 @@ void DynamicEntity::setLevelWH ( const unsigned int width_, const unsigned int h
 
 
 /* Updates the position of the dynamic entity
-* @param dt_ : Delta time. Time elapsed between one frame and the other, independent
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 * of processing speed.
 */
-void DynamicEntity::updatePosition ( const double dt_ )
+void DynamicEntity::updatePosition ( const double DELTA_TIME )
 {
 
-	( ( void ) dt_ ); // Unused?
+	( ( void ) DELTA_TIME ); // Unused?
 
 	this -> x = this -> nextX;
 	this -> y = this -> nextY;
 
-	this -> isRight = ( this -> vx >= 0.0 );
+	this -> is_right = ( this -> vx >= 0.0 );
 }
 
 /*
 Update is based on what input was recieved, and the players velocity.
-@param dt_ : Delta time. Time elapsed between one frame and the other, independent
+@param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 of processing speed.
 */
-void DynamicEntity::scoutPosition ( const double dt_ )
+void DynamicEntity::scoutPosition ( const double DELTA_TIME )
 {
 	//
-	this -> nextX += this -> vx * dt_;
-	this -> nextY += this -> vy * dt_;
+	this -> nextX += this -> vx * DELTA_TIME;
+	this -> nextY += this -> vy * DELTA_TIME;
 
 }
 
@@ -100,7 +100,7 @@ std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detectCollision (
 
 			if ( tileBox.type == LEVEL_END )
 			{
-				this -> reachedLevelEnd = true;
+				this -> reached_level_end = true;
 			}
 
 			switch ( side )
@@ -362,7 +362,7 @@ void DynamicEntity::roll ()
 	const double rollStrength = 120.0;
 
 	// Apply the roll on a dynamic entity speed on the x axis.
-	if ( this -> isRight )
+	if ( this -> is_right )
 	{
 		this -> vx = rollStrength * this -> speed;
 	}else
@@ -384,7 +384,7 @@ SDL_RendererFlip DynamicEntity::getFlip ()
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
-	if ( !this->isRight )
+	if ( !this->is_right )
 	{
 		flip = SDL_FLIP_HORIZONTAL;
 	}else{

@@ -384,7 +384,7 @@ void Game::clearKeyFromInput( const GameKeys key_ )
 	this -> inputHandler -> clearKey( key_ );
 }
 
-FadeScreen& Game::getFade()
+FadeScreen& Game::get_fade()
 {
 	return ( *( this -> fadeScreen ));
 }

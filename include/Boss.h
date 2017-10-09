@@ -49,10 +49,10 @@ class Boss : public DynamicEntity
     /**
      * Updates the player.
      * @see Player::updateInput, Player::updatePosition
-     * @param dt_ : Delta time. Time elapsed between one frame and the other, independent
+     * @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
      *   of processing speed.
      */
-    virtual void update ( const double dt_ );
+    virtual void update ( const double DELTA_TIME );
 
     void initializeStates ();
     void destroyStates ();
@@ -71,7 +71,7 @@ class Boss : public DynamicEntity
 
     Animation *getAnimation ();
     bool isDead ();
-    void setDead ( bool isDead_ );
+    void set_dead ( bool isDead_ );
 
     enum BossSkills : uint8_t
     {

@@ -158,11 +158,11 @@ void Text::changeText ( const char *text_ )
 
 /**
 * Updates the text.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void Text::update ( const double dt_ )
+void Text::update ( const double DELTA_TIME )
 {
-	( void ( dt_ ) ); // Unused.
+	( void ( DELTA_TIME ) ); // Unused.
 }
 
 /**

@@ -23,7 +23,7 @@ class Potion : public DynamicEntity
 		/**
 		*
 		*/
-		virtual void update( const double dt_ );
+		virtual void update( const double DELTA_TIME );
 
 		/**
 		*

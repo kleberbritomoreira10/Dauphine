@@ -69,7 +69,7 @@ class DynamicEntity : public Entity
 		bool isGrounded; // Check for if the dynamic entity is on the ground.
 		double nextX; // Used to update next position on x-axis.
 		double nextY; // Used to update next position on y-axis.
-		bool reachedLevelEnd; // Boolean value to evaluate the level end.
+		bool reached_level_end; // Boolean value to evaluate the level end.
 
 	    bool activated;
 	    int strength;
@@ -82,12 +82,12 @@ class DynamicEntity : public Entity
 		/**
 		* Updates the position of the dynamic entity
 		* Update is based on what input was recieved, and the players velocity.
-		* @param dt_ : Delta time. Time elapsed between one frame and the other, independent
+		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 		* 	of processing speed.
 		*/
-		virtual void updatePosition ( const double dt_ );
+		virtual void updatePosition ( const double DELTA_TIME );
 
-		virtual void scoutPosition ( const double dt_ );
+		virtual void scoutPosition ( const double DELTA_TIME );
 
 		/**
 		* @return A bool array with the sides the DynamicEntity collided.

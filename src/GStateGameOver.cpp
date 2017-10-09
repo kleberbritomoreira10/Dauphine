@@ -62,7 +62,7 @@ void GStateGameOver::load()
 void GStateGameOver::unload()
 {
 	Log( DEBUG ) << "\tUnloading Game Over...";
-	cleanEntities();
+	clean_entities();
 
 	this -> passedTime = 0.0;
 	this -> lifeTime = 0.0;
@@ -72,11 +72,11 @@ void GStateGameOver::unload()
 
 /**
 * Updates the objects within the StateGame.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void GStateGameOver::update( const double dt_ )
+void GStateGameOver::update( const double DELTA_TIME )
 {
-	this -> passedTime += dt_;
+	this -> passedTime += DELTA_TIME;
 
 	std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 

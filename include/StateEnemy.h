@@ -40,7 +40,7 @@ class StateEnemy
 		* Update method for the state.
 		* While the Enemy is on the state, this method runs every update.
 		*/
-		virtual void update ( const double dt_ ) = 0;
+		virtual void update ( const double DELTA_TIME ) = 0;
 
 		Enemy *enemy; /**< Reference to the enemy. */
 

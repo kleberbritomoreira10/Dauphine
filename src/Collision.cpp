@@ -1,7 +1,7 @@
 #include "Collision.h"
 #include <cmath>
 
-bool Collision::rectsCollided(const SDL_Rect& a_, const SDL_Rect& b_){
+bool Collision::rects_collided(const SDL_Rect& a_, const SDL_Rect& b_){
     // Calculate the sides of rect A.
     const int leftA = a_.x;
     const int rightA = a_.x + a_.w;

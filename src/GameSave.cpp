@@ -195,7 +195,7 @@ void GameSave::get_player_position ( double& playerX_, double& playerY_, const i
  * @numEnemy: The quantity of enemies near of the character.
  * @slot_: The slot where the game will be saved.
 */
-bool GameSave::isEnemyDead ( const int numEnemy_, const int slot_ )
+bool GameSave::is_enemy_dead ( const int numEnemy_, const int slot_ )
 {
 
 	double skip = 0;

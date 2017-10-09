@@ -23,9 +23,9 @@ class Entity
 		* Updates the entity.
 		* Pure virtual function. Purpose is to update whatever is necessary, relative to the
 		* 	entity.
-		* @param dt_ : Delta time. Time elapsed between one frame and the other.
+		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 		*/
-		virtual void update ( const double dt_ ) = 0;
+		virtual void update ( const double DELTA_TIME ) = 0;
 
 		/**
 		* Renders the entity.
@@ -51,13 +51,13 @@ class Entity
 		*/
 		SDL_Rect& getAnimationClip ();
  
-		SDL_Rect& getBoundingBox ();
+		SDL_Rect& get_bounding_box ();
 
 		virtual void setCollisionRects ( const std::vector < CollisionRect > &collisionRects_ );
 
 		double x; /**< The position in the x axis. */
 		double y; /**< The position in the y axis. */
-		bool isRight; /**< The direction in the x axis. */ 
+		bool is_right; /**< The direction in the x axis. */ 
 
 	protected:
 		/**

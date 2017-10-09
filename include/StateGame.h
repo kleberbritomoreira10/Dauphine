@@ -25,9 +25,9 @@ class StateGame
 		/**
 		* Update all entities.
 		* Pure virtual function. Purpose is to update all the entities in the vector.
-		* @param dt_ : Delta time. Time elapsed between one frame and the other.
+		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 		*/
-		virtual void update( const double dt_ ) = 0;
+		virtual void update( const double DELTA_TIME ) = 0;
 
 		/**
 		* Unloads necessary objects.
@@ -50,7 +50,7 @@ class StateGame
 		/**
 		* Deletes all the entities inside the vector.
 		*/
-		void cleanEntities();
+		void clean_entities();
 
 	protected:
 		std::vector < Entity * > entities; /**< List of all the entities in the state. */

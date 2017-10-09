@@ -12,7 +12,7 @@ class Crosshair : public Entity
 
 		Crosshair ( const double x_, const double y_, const std::string &path_ );
 		virtual ~Crosshair();
-		virtual void update ( const double dt_ );
+		virtual void update ( const double DELTA_TIME );
 		virtual void render ( const double cameraX_, const double cameraY_ );
 		unsigned int getWidth ();
 		unsigned int getHeight ();

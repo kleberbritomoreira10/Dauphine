@@ -162,7 +162,7 @@ void GStateNewGame::load ()
 
     this -> currentSelection = Selection::SLOT_1;
 
-    Game::instance (). getFade (). fadeOut ( 0, 0.002 );
+    Game::instance (). get_fade (). fade_out ( 0, 0.002 );
 }
 
 // Unloads everything that was loaded.
@@ -170,15 +170,15 @@ void GStateNewGame::unload ()
 {
 
 	Log ( DEBUG ) << "\tUnloading menu...";
-	cleanEntities ();
+	clean_entities ();
 
 }
 
 // Updates the objects within the StateGame.
-void GStateNewGame::update ( const double dt_ )
+void GStateNewGame::update ( const double DELTA_TIME )
 {
 
-	this -> passedTime += dt_;
+	this -> passedTime += DELTA_TIME;
 
 	handleSelectorMenu ();
 

@@ -50,10 +50,10 @@ class Enemy : public DynamicEntity
 		/**
 		* Updates the player.
 		* @see Player::updateInput, Player::updatePosition
-		* @param dt_ : Delta time. Time elapsed between one frame and the other, independent
+		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 		* 	of processing speed.
 		*/
-		virtual void update ( const double dt_ );
+		virtual void update ( const double DELTA_TIME );
 
 		/**
 		* Renders the player.
@@ -69,12 +69,12 @@ class Enemy : public DynamicEntity
 		void changeState ( const EStates state_ );
 		Animation* getAnimation ();
 		bool isDead ();
-		void setDead ( bool isDead_ );
+		void set_dead ( bool isDead_ );
 
 		static double px; // Position of the enemy in the origin of the x axis.
 		static double py; // Position of the enemy in the origin of the y axis.
-		static unsigned int pLife; // Reference to the enemy's life number.
-		static bool pVulnerable; // Boolean condition to check if enemy is position vulnerable.
+		static unsigned int points_life; // Reference to the enemy's life number.
+		static bool position_vulnerable; // Boolean condition to check if enemy is position vulnerable.
 		static double alert_range; // The value of the range for the enemy to be in alert mode when the player approaches.
 		static double curious_range; // The value of the range for the enemy to be in curious mode when the player approaches.
 

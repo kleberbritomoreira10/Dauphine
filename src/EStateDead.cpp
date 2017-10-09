@@ -18,7 +18,7 @@ double deadTime;
 void EStateDead::enter()
 {
 	this -> enemy -> life = 0;
-	this -> enemy -> setDead(true);
+	this -> enemy -> set_dead(true);
 	this -> enemy -> getAnimation() -> changeAnimation(1, 1, 1, false, 0);
 }
 
@@ -32,15 +32,15 @@ void EStateDead::exit()
 
 /*
  * Update the status of the dead state
- * @param dt_ : delta time (time elapsed)
+ * @param DELTA_TIME : delta time (time elapsed)
  * @see StateEnemy::update
  */
-void EStateDead::update( const double dt_)
+void EStateDead::update( const double DELTA_TIME)
 {
-	deadTime += dt_;
+	deadTime += DELTA_TIME;
 	if ( deadTime >= 2 )
 	{
-		this -> enemy -> setDead(true);
+		this -> enemy -> set_dead(true);
 	}
 	this -> enemy -> vx = 0;
 }

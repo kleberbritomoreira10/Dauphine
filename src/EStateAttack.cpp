@@ -18,9 +18,9 @@ void EStateAttack::exit(){
 
 }
 
-void EStateAttack::update(const double dt_){
+void EStateAttack::update(const double DELTA_TIME){
 
-	attackTime += dt_;
+	attackTime += DELTA_TIME;
 	const double attackTotalTime = 0.6;
 
 	/// @todo Refactor the way the enemy hurts the player.
@@ -33,8 +33,8 @@ void EStateAttack::update(const double dt_){
 	}
 
 	if(attackTime > attackTotalTime){
-		if(Enemy::pVulnerable){
-			Enemy::pLife--;
+		if(Enemy::position_vulnerable){
+			Enemy::points_life--;
 		}
 		this->enemy->changeState(Enemy::EStates::ALERT);
 	}

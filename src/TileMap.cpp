@@ -171,7 +171,7 @@ void TileMap::renderLayer(const double cameraX_, const double cameraY_, const un
 		for (int y = 0; y < tilesInY; y++){
 
 			SDL_Rect tileRect = {(x * TILE_SIZE), (y * TILE_SIZE), TILE_SIZE, TILE_SIZE};
-			const bool tileIsOnScreen = Collision::rectsCollided(camera, tileRect);
+			const bool tileIsOnScreen = Collision::rects_collided(camera, tileRect);
 
 			if(tileIsOnScreen){
 				// Getting the tile position inside its tileset.
@@ -252,14 +252,14 @@ double TileMap::get_initial_y(){
 	return (double)this->initialY;
 }
 
-std::vector<int>& TileMap::getEnemiesX(){
+std::vector<int>& TileMap::get_enemies_x(){
 	return this->enemiesX;
 }
 
-std::vector<int>& TileMap::getEnemiesY(){
+std::vector<int>& TileMap::get_enemies_y(){
 	return this->enemiesY;
 }
 
-std::vector<bool>& TileMap::getEnemiesPatrol(){
+std::vector<bool>& TileMap::get_enemies_patrol(){
 	return this->enemiesPatrol;
 }

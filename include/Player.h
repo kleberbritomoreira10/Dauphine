@@ -25,7 +25,7 @@ class Player : public DynamicEntity
 		/**
 		* All possible player states.
 		*/
-		enum PStates : uint8_t
+		enum player_states : uint8_t
 		{
 			IDLE = 0,
 			MOVING,
@@ -65,10 +65,10 @@ class Player : public DynamicEntity
 		/**
 		* Updates the player.
 		* @see Player::updateInput, Player::updatePosition
-		* @param dt_ : Delta time. Time elapsed between one frame and the other, independent
+		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 		* 	of processing speed.
 		*/
-		virtual void update( const double dt_ );
+		virtual void update( const double DELTA_TIME );
 
 		/**
 		* Renders the player.
@@ -97,12 +97,12 @@ class Player : public DynamicEntity
 		* @see StatePlayer::unload
 		* @param state_ : The state you want to be changed into. All states are inside Player.
 		*/
-		void changeState( const PStates state_ );
+		void changeState( const player_states state_ );
 
 		/**
-		* @return Whether the player is currently in PStates::state_ or not.
+		* @return Whether the player is currently in player_states::state_ or not.
 		*/
-		bool isCurrentState( const PStates state_ );
+		bool is_current_state( const player_states state_ );
 
 		/**
 		* @return The players current animation setting.
@@ -122,13 +122,13 @@ class Player : public DynamicEntity
 		unsigned int attackStrength;
 		//unsigned int maxLife;
 
-		bool canAttack;
+		bool can_attack;
 		unsigned int currentItem;
 
 		bool isDead();
 		bool closestEnemyIsRight;
 
-		bool isVulnerable;
+		bool is_vulnerable;
 		double invulnerableTime;
 		bool canMove;
 
@@ -138,7 +138,7 @@ class Player : public DynamicEntity
 
 		Animation *animation; /**< Current player animation. */
 		StatePlayer *current_state; /**< The current state, which the player is in. */
-		std::map<PStates, StatePlayer*> statesMap; /**< Map containing all possible states. */
+		std::map<player_states, StatePlayer*> statesMap; /**< Map containing all possible states. */
 
 };
 

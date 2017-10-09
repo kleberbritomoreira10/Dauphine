@@ -18,11 +18,11 @@ void PStateAiming::enter(){
 
 	this->player->crosshair->activated = true;
 
-	if(this->player->isRight){
-		this->player->crosshair->x = this->player->getBoundingBox().x + this->player->getBoundingBox().w;
+	if(this->player->is_right){
+		this->player->crosshair->x = this->player->get_bounding_box().x + this->player->get_bounding_box().w;
 	}
 	else{
-		this->player->crosshair->x = this->player->getBoundingBox().x - this->player->crosshair->getWidth();
+		this->player->crosshair->x = this->player->get_bounding_box().x - this->player->crosshair->getWidth();
 	}
 
 	this->player->crosshair->y = this->player->y + this->player->getHeight() - this->player->crosshair->getHeight();
@@ -38,7 +38,7 @@ void PStateAiming::handleInput(const std::array<bool, GameKeys::MAX> keyStates_)
 	this->player->crosshair->render(0.0, 0.0);
 
 	if(!keyStates_[GameKeys::AIM]){
-		this->player->changeState(Player::PStates::IDLE);
+		this->player->changeState(Player::player_states::IDLE);
 		return;
 	}
 
@@ -51,8 +51,8 @@ void PStateAiming::handleInput(const std::array<bool, GameKeys::MAX> keyStates_)
 	
 	if(keyStates_[GameKeys::LEFT]){
 		
-		if(this->player->isRight){
-			if((this->player->crosshair->x > (this->player->getBoundingBox().x + this->player->getBoundingBox().w))){
+		if(this->player->is_right){
+			if((this->player->crosshair->x > (this->player->get_bounding_box().x + this->player->get_bounding_box().w))){
 				this->player->aim(this->player->crosshair, LEFTD);
 			}
 				
@@ -66,8 +66,8 @@ void PStateAiming::handleInput(const std::array<bool, GameKeys::MAX> keyStates_)
 	}
 
 	else if(keyStates_[GameKeys::RIGHT]){
-		if(!this->player->isRight){
-			if((this->player->crosshair->x < (this->player->getBoundingBox().x - this->player->crosshair->getWidth()))){
+		if(!this->player->is_right){
+			if((this->player->crosshair->x < (this->player->get_bounding_box().x - this->player->crosshair->getWidth()))){
 				this->player->aim(this->player->crosshair, RIGHTD);
 			}	
 		}
@@ -94,11 +94,11 @@ PStateAiming::PStateAiming(Player* const player_) :
 int PStateAiming::absoluteCrosshairPlayerDistance(){
 	int distance = 0;
 
-	if(this->player->isRight){
-		distance = (int) this->player->crosshair->x - this->player->getBoundingBox().x - this->player->getBoundingBox().w;
+	if(this->player->is_right){
+		distance = (int) this->player->crosshair->x - this->player->get_bounding_box().x - this->player->get_bounding_box().w;
 	}
 	else{
-		distance = (int) this->player->getBoundingBox().x - this->player->crosshair->x - this->player->crosshair->getWidth();
+		distance = (int) this->player->get_bounding_box().x - this->player->crosshair->x - this->player->crosshair->getWidth();
 	}
 
 	if(distance < MIN_DISTANCE){

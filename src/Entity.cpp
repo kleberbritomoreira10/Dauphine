@@ -21,7 +21,7 @@
 Entity::Entity ( const double x_, const double y_, const std::string& path_ ) :
     x( x_ ),
     y( y_ ),
-    isRight( true ),
+    is_right( true ),
     sprite(Game::instance().getResources().get(path_)),
     width( 0 ),
     height( 0 ),
@@ -54,7 +54,7 @@ Entity::Entity ( const double x_, const double y_, const std::string& path_ ) :
 Entity::Entity ( const double x_, const double y_ ) :
   x( x_ ),
   y( y_ ),
-  isRight( true ),
+  is_right( true ),
   sprite( nullptr ),
   width( 0 ),
   height( 0 ),
@@ -99,7 +99,7 @@ SDL_Rect& Entity::getAnimationClip ()
 /**
 * @return The Entity::boundingBox.
 */
-SDL_Rect& Entity::getBoundingBox ()
+SDL_Rect& Entity::get_bounding_box ()
 {
   return this -> boundingBox;
 }

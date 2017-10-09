@@ -31,7 +31,7 @@ class EStateCurious : public StateEnemy
 		/**
 		* @see StateEnemy::update
 		*/
-		virtual void update ( const double dt_ );
+		virtual void update ( const double DELTA_TIME );
 
 	private:
 		double time_elapsed; // The elapsed time of the enemy watching the player to return to patrol.

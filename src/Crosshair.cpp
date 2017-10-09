@@ -11,8 +11,8 @@ Crosshair::~Crosshair(){
 
 }
 
-void Crosshair::update(const double dt_){
-	((void)dt_); // Unused.
+void Crosshair::update(const double DELTA_TIME){
+	((void)DELTA_TIME); // Unused.
 }
 		
 void Crosshair::render(const double cameraX_, const double cameraY_){

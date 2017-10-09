@@ -36,11 +36,11 @@ GStateCredits::~GStateCredits(){
 
 /**
 * Updates the objects within the StateGame.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void GStateCredits::update( const double dt_ )
+void GStateCredits::update( const double DELTA_TIME )
 {
-	( void( dt_ ) ); //unused
+	( void( DELTA_TIME ) ); //unused
 
 	std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 
@@ -76,7 +76,7 @@ void GStateCredits::unload()
 {
 	Log( DEBUG ) << "\tUnloading credits...";
 	this ->  creditsClip.y = 0;
-	cleanEntities();
+	clean_entities();
 }
 
 /**

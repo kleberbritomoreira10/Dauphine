@@ -25,14 +25,14 @@ class FadeScreen
 		/*
 		Update the position of fade and when show up or not
 		Update is based on what input was recieved and where the character is in the game
-		@param dt_ : Delta time. Time elapsed between one frame and the other
+		@param DELTA_TIME : Delta time. Time elapsed between one frame and the other
 		@param percentage_: Percentage of image appearance on screen
 		@param time_: Time the image will appear on screen
 		*/
-		void update ( const double dt_ );
+		void update ( const double DELTA_TIME );
 		void render ();
 		bool isFaded ();
-		void fadeOut ( const double percentage_, const double time_ );
+		void fade_out ( const double percentage_, const double time_ );
 		void fadeIn ( const double percentage_, const double time_ );
 
 	private:

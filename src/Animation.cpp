@@ -47,10 +47,10 @@ Animation::~Animation()
 /**
 * Updates the animation clip.
 * @param clip_ : Reference to the clip of whatever object the animation is a part of.
-* @param dt_ : Delta time. Time elapsed between one frame and the other, independent of processing speed.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent of processing speed.
 * @param totalTime_ : How much time each frame should have. Affects the speed on which the animation changes.
 */
-void Animation::update ( SDL_Rect& clip, const double dt_ )
+void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
 {
 	// Compare the position on the sprite with the number of positions to know if is the
 	// end of the animation.
@@ -59,7 +59,7 @@ void Animation::update ( SDL_Rect& clip, const double dt_ )
 	const double deltaT = ( this -> totalTime / this -> numberOfImages );
 
 	// Check if the frame has changed.
-    this -> totalElapsedTime += dt_;
+    this -> totalElapsedTime += DELTA_TIME;
 
     if ( this -> totalElapsedTime >= deltaT )
     {    

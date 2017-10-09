@@ -38,7 +38,7 @@ void BStateIcePrision::enter()
 void BStateIcePrision::exit()
 {
   this -> boss -> power_is_activated = false;
-  this -> boss -> player -> isVulnerable = true;
+  this -> boss -> player -> is_vulnerable = true;
   this -> boss -> power_animation -> changeAnimation( 0, 0, 1, false, 0 );
   prisionTime = 0.0;
   this -> boss -> player -> canMove = true;
@@ -46,22 +46,22 @@ void BStateIcePrision::exit()
 
 /**
 * Changing the position of the boss in ice prision.
-* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* @param DELTA_TIME: Delta time. Time elapsed between one frame and the other, independent
 *   of processing speed.
 */
-void BStateIcePrision::update( const double dt_ )
+void BStateIcePrision::update( const double DELTA_TIME )
 {
-  prisionTime += dt_;
+  prisionTime += DELTA_TIME;
   if( prisionTime > 1 )
   {
     this -> boss -> power_animation -> changeAnimation( 2, 0, 1, false, 0 );
-    if( Collision::rectsCollided( this -> boss -> player -> getBoundingBox(),  {( int )this -> boss -> power_X, 
+    if( Collision::rects_collided( this -> boss -> player -> get_bounding_box(),  {( int )this -> boss -> power_X, 
     ( int ) this -> boss -> power_Y, 340,1020 }))
     {
-      if( this -> boss -> player -> isVulnerable)
+      if( this -> boss -> player -> is_vulnerable)
       {
           this -> boss -> player -> canMove = false;
-          this -> boss -> player -> isVulnerable = false;
+          this -> boss -> player -> is_vulnerable = false;
           this -> boss -> player -> vx = 0;
           this -> boss -> player -> vy = 0;
           this -> boss -> player -> getAnimation() -> changeAnimation( 4, 8, 1, false, 0 );

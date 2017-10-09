@@ -16,7 +16,7 @@
 @param y_ : position in y axis.
 */
 Document::Document( const double x_, const double y_, const std::string& path_, const std::string& pathDocumentText_) :
-	Entity(x_, y_, path_ ), shouldRender(false), documentText(Game::instance().getResources().get(pathDocumentText_ ))
+	Entity(x_, y_, path_ ), should_render(false), documentText(Game::instance().getResources().get(pathDocumentText_ ))
 {
 	if ( documentText == nullptr )
 	{
@@ -30,12 +30,12 @@ Document::~Document ()
 }
 
 /*
-Update the text sprite according to dt_ .
-@param dt_ : Delta time. Time elapsed between one frame and the other.
+Update the text sprite according to DELTA_TIME .
+@param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void Document::update ( const double dt_ )
+void Document::update ( const double DELTA_TIME )
 {
-	( ( void ) dt_ ); // Unused;
+	( ( void ) DELTA_TIME ); // Unused;
 }
 
 /*

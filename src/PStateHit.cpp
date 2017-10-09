@@ -25,7 +25,7 @@ void PStateHit::enter()
   this -> player -> getAnimation() -> changeAnimation(4, 8, 1, false, 0);
 
   int direction = 1;
-  if ( this -> player -> isRight )
+  if ( this -> player -> is_right )
   {
     direction = -1;
   }
@@ -39,7 +39,7 @@ void PStateHit::enter()
  */
 void PStateHit::exit()
 {
-  if ( this -> player -> isRight )
+  if ( this -> player -> is_right )
   {
     this -> player -> vx = 0.0;
   } else 

@@ -52,7 +52,7 @@ void GStateVictory::unload ()
 {
 
 	Log ( DEBUG ) << "\tUnloading victory...";
-	cleanEntities ();
+	clean_entities ();
 
 	this -> passedTime = 0.0;
 	this -> lifeTime = 0.0;
@@ -61,12 +61,12 @@ void GStateVictory::unload ()
 
 /**
 * Updates the objects within the StateGame.
-* @param dt_ : Delta time. Time elapsed between one frame and the other.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
-void GStateVictory::update ( const double dt_ )
+void GStateVictory::update ( const double DELTA_TIME )
 {
 
-	this -> passedTime += dt_;
+	this -> passedTime += DELTA_TIME;
 
 	if ( this -> passedTime >= this -> lifeTime )
 	{

@@ -93,7 +93,7 @@ unsigned int Level::getHeight()
 * Sets the proprieties for the players of the game.
 * @param player_: the current object player will be configured.
 */
-void Level::setPlayer( Player* const player_ )
+void Level::set_player( Player* const player_ )
 {
 	this -> player = player_;
 
@@ -113,7 +113,7 @@ void Level::setPlayer( Player* const player_ )
 * Sets the proprieties for the cameras of the game.
 * @param camera_: the current object camera will be configured.
 */
-void Level::setCamera(Camera *const camera_)
+void Level::set_camera(Camera *const camera_)
 {
 	this -> camera = camera_;
 
@@ -163,7 +163,7 @@ void Level::setBoss( Boss *const boss_ ){
 /**
 * Ends with enemies in the screen.
 */
-void Level::clearEnemies()
+void Level::clear_enemies()
 {
 	for( auto enemy : this -> enemies )
 	{
@@ -177,7 +177,7 @@ void Level::clearEnemies()
 /**
 * Ends with documents useds in the game..
 */
-void Level::clearDocuments()
+void Level::clear_documents()
 {
 	for( auto document : this -> documents )
 	{

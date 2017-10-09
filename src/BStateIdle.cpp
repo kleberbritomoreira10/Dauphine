@@ -29,23 +29,23 @@ void BStateIdle::exit()
 
 /**
 * Changing the static position of the boss in idle.
-* @param dt_: Delta time. Time elapsed between one frame and the other, independent
+* @param DELTA_TIME: Delta time. Time elapsed between one frame and the other, independent
 *   of processing speed.
 */
-void BStateIdle::update( const double dt_ )
+void BStateIdle::update( const double DELTA_TIME )
 {
-	( ( void )dt_ ); // Unused.
+	( ( void )DELTA_TIME ); // Unused.
 
-	if( this -> boss -> isRight && this -> boss -> x > 1960 )
+	if( this -> boss -> is_right && this -> boss -> x > 1960 )
 	{
-		this -> boss -> isRight = false;
+		this -> boss -> is_right = false;
 	}
-	else if( !this -> boss -> isRight && this -> boss -> x < 300 )
+	else if( !this -> boss -> is_right && this -> boss -> x < 300 )
 	{
-		this -> boss -> isRight = true;
+		this -> boss -> is_right = true;
 	}
 	
-	if( this -> boss -> isRight )
+	if( this -> boss -> is_right )
 	{
 		this -> boss -> move( false, true );
 	}

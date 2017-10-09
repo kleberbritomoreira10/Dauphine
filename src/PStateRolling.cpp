@@ -24,7 +24,7 @@ void PStateRolling::handleInput ( const std::array<bool, GameKeys::MAX> keyState
   // Aerial
   if ( !this -> player -> isGrounded )
   {
-    this -> player -> changeState( Player::PStates::AERIAL );
+    this -> player -> changeState( Player::player_states::AERIAL );
     return;
   }
 
@@ -34,14 +34,14 @@ void PStateRolling::handleInput ( const std::array<bool, GameKeys::MAX> keyState
   if ( keyStates_[ GameKeys::SPACE ] && this -> player -> isGrounded )
   {
     this -> player -> jump();
-    this -> player -> changeState( Player::PStates::AERIAL );
+    this -> player -> changeState( Player::player_states::AERIAL );
     return;
   }
 
 // Idle
   if ( this -> player -> vx < 1.0 && this -> player -> vx > ( -1.0 ) )
   {
-    this -> player -> changeState( Player::PStates::IDLE );
+    this -> player -> changeState( Player::player_states::IDLE );
     return;
   }
 }

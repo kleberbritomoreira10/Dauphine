@@ -28,7 +28,7 @@ void PStateAttack::enter ()
 */
 void PStateAttack::exit()
 {
-  this -> player -> canAttack = true;
+  this -> player -> can_attack = true;
 }
 
 /**
@@ -40,7 +40,7 @@ void PStateAttack::handleInput ( const std::array<bool, GameKeys::MAX> keyStates
   
   if ( this -> player -> getAnimation() -> getCurrentFrame() == 14 )
   {
-    this -> player -> changeState( Player::PStates::IDLE );
+    this -> player -> changeState( Player::player_states::IDLE );
   }
 }
 

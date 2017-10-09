@@ -18,7 +18,7 @@ class GameSave {
 		int get_saved_level ( int continueSelection_ );
 		void get_player_position ( double &playerX_, double &playerY_, const int slot_ );
 
-		bool isEnemyDead ( const int numEnemy_, const int slot_ );
+		bool is_enemy_dead ( const int numEnemy_, const int slot_ );
 
 		bool is_saved ( const int saveSlot_ );
 

@@ -48,19 +48,19 @@ class Level : public StateGame
 		/**
 		* @param player_ : Sets the player for the level.
 		*/
-		virtual void setPlayer ( Player *const player_ );
+		virtual void set_player ( Player *const player_ );
 
 		/**
 		* @param camera_ : Sets the camera for the level.
 		* @note You should only set the camera after setting the player. Will warn if you
 		* 	didn't.
 		*/
-		virtual void setCamera ( Camera *const camera_ );
+		virtual void set_camera ( Camera *const camera_ );
 
 		virtual void setBoss ( Boss *const boss );
 
-		virtual void clearEnemies();
-		virtual void clearDocuments();
+		virtual void clear_enemies();
+		virtual void clear_documents();
 
 		void changeCheckpoints ( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpointsX_,
 		std::vector <double> checkpointsY_ );

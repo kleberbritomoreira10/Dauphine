@@ -31,7 +31,7 @@ class EStateAerial : public StateEnemy
 		/**
 		* @see StateEnemy::update
 		*/
-		virtual void update ( const double dt_ );
+		virtual void update ( const double DELTA_TIME );
 
 };
 

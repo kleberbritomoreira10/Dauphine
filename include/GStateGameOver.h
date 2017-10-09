@@ -31,9 +31,9 @@ class GStateGameOver : public StateGame
 
 		/**
 		* Updates the objects within the StateGame.
-		* @param dt_ : Delta time. Time elapsed between one frame and the other.
+		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 		*/
-		virtual void update( const double dt_ );
+		virtual void update( const double DELTA_TIME );
 
 		/**
 		* Unloads everything that was loaded.

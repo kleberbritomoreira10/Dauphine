@@ -1316,7 +1316,7 @@ gz_headerp head;
    return value is how many bytes were read including the last byte of the
    pattern.  If *have is less than four, then the pattern has not been found
    yet and the return value is len.  In the latter case, syncsearch() can be
-   called again with more data and the *have state.  *have is initialized to
+   called again with more data and the *have state.  *have is INITIALIZED to
    zero for the first call.
  */
 local unsigned syncsearch(have, buf, len)

@@ -80,7 +80,7 @@ local const uch bl_order[BL_CODES]
  */
 
 /* ===========================================================================
- * Local data. These are initialized only once.
+ * Local data. These are INITIALIZED only once.
  */
 
 #define DIST_CODE_LEN  512 /* see definition of array dist_code below */
@@ -250,7 +250,7 @@ local void tr_static_init()
 
     if (static_init_done) return;
 
-    /* For some embedded targets, global variables are not initialized: */
+    /* For some embedded targets, global variables are not INITIALIZED: */
 #ifdef NO_INIT_GLOBAL_POINTERS
     static_l_desc.static_tree = static_ltree;
     static_l_desc.extra_bits = extra_lbits;
@@ -444,7 +444,7 @@ local void init_block(s)
 
 /* ===========================================================================
  * Compares to subtrees, using the tree depth as tie breaker when
- * the subtrees have equal frequency. This minimizes the worst case length.
+ * the subtrees have equal FREQUENCY. This minimizes the worst case length.
  */
 #define smaller(tree, n, m, depth) \
    (tree[n].Freq < tree[m].Freq || \
@@ -485,7 +485,7 @@ local void pqdownheap(s, tree, k)
  * Compute the optimal bit lengths for a tree and update the total bit length
  * for the current block.
  * IN assertion: the fields freq and dad are set, heap[heap_max] and
- *    above are the tree nodes sorted by increasing frequency.
+ *    above are the tree nodes sorted by increasing FREQUENCY.
  * OUT assertions: the field len is set to the optimal bit length, the
  *     array bl_count contains the frequencies for each bit length.
  *     The length opt_len is updated; static_len is also updated if stree is
@@ -505,7 +505,7 @@ local void gen_bitlen(s, desc)
     int n, m;           /* iterate over the tree elements */
     int bits;           /* bit length */
     int xbits;          /* extra bits */
-    ush f;              /* frequency */
+    ush f;              /* FREQUENCY */
     int overflow = 0;   /* number of elements with bit length too large */
 
     for (bits = 0; bits <= MAX_BITS; bits++) s->bl_count[bits] = 0;
@@ -549,7 +549,7 @@ local void gen_bitlen(s, desc)
         overflow -= 2;
     } while (overflow > 0);
 
-    /* Now recompute all bit lengths, scanning in increasing frequency.
+    /* Now recompute all bit lengths, scanning in increasing FREQUENCY.
      * h is still equal to HEAP_SIZE. (It is simpler to reconstruct all
      * lengths instead of fixing only the wrong ones. This idea is taken
      * from 'ar' written by Haruhiko Okumura.)
@@ -580,7 +580,7 @@ local void gen_bitlen(s, desc)
  */
 local void gen_codes (tree, max_code, bl_count)
     ct_data *tree;             /* the tree to decorate */
-    int max_code;              /* largest code with non zero frequency */
+    int max_code;              /* largest code with non zero FREQUENCY */
     ushf *bl_count;            /* number of codes at each bit length */
 {
     ush next_code[MAX_BITS+1]; /* next code value for each bit length */
@@ -628,7 +628,7 @@ local void build_tree(s, desc)
     const ct_data *stree  = desc->stat_desc->static_tree;
     int elems             = desc->stat_desc->elems;
     int n, m;          /* iterate over heap elements */
-    int max_code = -1; /* largest code with non zero frequency */
+    int max_code = -1; /* largest code with non zero FREQUENCY */
     int node;          /* new node being created */
 
     /* Construct the initial heap, with least frequent element in
@@ -649,7 +649,7 @@ local void build_tree(s, desc)
     /* The pkzip format requires that at least one distance code exists,
      * and that at least one bit should be sent even if there is only one
      * possible code. So to avoid special checks later on we force at least
-     * two codes of non zero frequency.
+     * two codes of non zero FREQUENCY.
      */
     while (s->heap_len < 2) {
         node = s->heap[++(s->heap_len)] = (max_code < 2 ? ++max_code : 0);
@@ -670,10 +670,10 @@ local void build_tree(s, desc)
      */
     node = elems;              /* next internal node of the tree */
     do {
-        pqremove(s, tree, n);  /* n = node of least frequency */
-        m = s->heap[SMALLEST]; /* m = node of next least frequency */
+        pqremove(s, tree, n);  /* n = node of least FREQUENCY */
+        m = s->heap[SMALLEST]; /* m = node of next least FREQUENCY */
 
-        s->heap[--(s->heap_max)] = n; /* keep the nodes sorted by frequency */
+        s->heap[--(s->heap_max)] = n; /* keep the nodes sorted by FREQUENCY */
         s->heap[--(s->heap_max)] = m;
 
         /* Create a new node father of n and m */
@@ -711,7 +711,7 @@ local void build_tree(s, desc)
 local void scan_tree (s, tree, max_code)
     deflate_state *s;
     ct_data *tree;   /* the tree to be scanned */
-    int max_code;    /* and its largest code of non zero frequency */
+    int max_code;    /* and its largest code of non zero FREQUENCY */
 {
     int n;                     /* iterates over all tree elements */
     int prevlen = -1;          /* last emitted length */
@@ -756,7 +756,7 @@ local void scan_tree (s, tree, max_code)
 local void send_tree (s, tree, max_code)
     deflate_state *s;
     ct_data *tree; /* the tree to be scanned */
-    int max_code;       /* and its largest code of non zero frequency */
+    int max_code;       /* and its largest code of non zero FREQUENCY */
 {
     int n;                     /* iterates over all tree elements */
     int prevlen = -1;          /* last emitted length */
@@ -1020,7 +1020,7 @@ void ZLIB_INTERNAL _tr_flush_block(s, buf, stored_len, last)
 }
 
 /* ===========================================================================
- * Save the match info and tally the frequency counts. Return true if
+ * Save the match info and tally the FREQUENCY counts. Return true if
  * the current block must be flushed.
  */
 int ZLIB_INTERNAL _tr_tally (s, dist, lc)

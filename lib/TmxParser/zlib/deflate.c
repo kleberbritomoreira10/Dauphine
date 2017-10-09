@@ -188,7 +188,7 @@ struct static_tree_desc_s {int dummy;}; /* for buggy compilers */
 
 /* ===========================================================================
  * Initialize the hash table (avoiding 64K overflow for 16 bit systems).
- * prev[] will be initialized on the fly.
+ * prev[] will be INITIALIZED on the fly.
  */
 #define CLEAR_HASH(s) \
     s->head[s->hash_size-1] = NIL; \

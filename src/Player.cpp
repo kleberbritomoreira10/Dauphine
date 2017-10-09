@@ -306,7 +306,7 @@ void Player::addPotions( const unsigned int quantity_ )
 
 /**
 * Loads all the states.
-* Every new state implemented should be initialized here.
+* Every new state implemented should be INITIALIZED here.
 */
 void Player::initializeStates()
 {

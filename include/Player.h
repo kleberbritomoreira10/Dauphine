@@ -81,7 +81,7 @@ class Player : public DynamicEntity
 
 		/**
 		* Loads all the states.
-		* Every new state implemented should be initialized here.
+		* Every new state implemented should be INITIALIZED here.
 		*/
 		void initializeStates();
 

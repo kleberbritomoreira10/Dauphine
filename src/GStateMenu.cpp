@@ -172,7 +172,7 @@ void GStateMenu::handleSelectorMenu()
 {
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 
-	const double selectorDelayTime = 0.2;
+	const double SELECTOR_DELAY_TIME = 0.2;
 
 	if( keyStates[ GameKeys::DOWN ] == true || keyStates[ GameKeys::RIGHT ] == true )
 	{
@@ -185,7 +185,7 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}
 
-		if( this -> passedTime >= selectorDelayTime )
+		if( this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 			if( currentSelection < ( Selection::TOTAL - 1 ) )
 			{
@@ -210,7 +210,7 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}
 
-		if( this -> passedTime >= selectorDelayTime )
+		if( this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 			if( currentSelection > Selection::NEWGAME )
 			{

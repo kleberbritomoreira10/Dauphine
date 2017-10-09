@@ -68,7 +68,7 @@ extern "C" {
     This library can optionally read and write gzip streams in memory as well.
 
     The zlib format was designed to be compact and fast for use in memory
-  and on communications channels.  The gzip format was designed for single-
+  and on communications CHANNELS.  The gzip format was designed for single-
   file compression on file systems, has a larger header than zlib to maintain
   directory information, and uses a different, slower check method than zlib.
 
@@ -224,7 +224,7 @@ ZEXTERN const char * ZEXPORT zlibVersion OF((void));
 ZEXTERN int ZEXPORT deflateInit OF((z_streamp strm, int level));
 
      Initializes the internal stream state for compression.  The fields
-   zalloc, zfree and opaque must be initialized before by the caller.  If
+   zalloc, zfree and opaque must be INITIALIZED before by the caller.  If
    zalloc and zfree are set to Z_NULL, deflateInit updates them to use default
    allocation functions.
 
@@ -367,7 +367,7 @@ ZEXTERN int ZEXPORT deflateEnd OF((z_streamp strm));
 ZEXTERN int ZEXPORT inflateInit OF((z_streamp strm));
 
      Initializes the internal stream state for decompression.  The fields
-   next_in, avail_in, zalloc, zfree and opaque must be initialized before by
+   next_in, avail_in, zalloc, zfree and opaque must be INITIALIZED before by
    the caller.  If next_in is not Z_NULL and avail_in is large enough (the
    exact value depends on the compression method), inflateInit determines the
    compression method from the zlib header and allocates all data structures
@@ -523,7 +523,7 @@ ZEXTERN int ZEXPORT deflateInit2 OF((z_streamp strm,
                                      int  strategy));
 
      This is another version of deflateInit with more compression options.  The
-   fields next_in, zalloc, zfree and opaque must be initialized before by the
+   fields next_in, zalloc, zfree and opaque must be INITIALIZED before by the
    caller.
 
      The method parameter is the compression method.  It must be Z_DEFLATED in
@@ -736,7 +736,7 @@ ZEXTERN int ZEXPORT inflateInit2 OF((z_streamp strm,
                                      int  windowBits));
 
      This is another version of inflateInit with an extra parameter.  The
-   fields next_in, avail_in, zalloc, zfree and opaque must be initialized
+   fields next_in, avail_in, zalloc, zfree and opaque must be INITIALIZED
    before by the caller.
 
      The windowBits parameter is the base two logarithm of the maximum window
@@ -950,7 +950,7 @@ ZEXTERN int ZEXPORT inflateBackInit OF((z_streamp strm, int windowBits,
                                         unsigned char FAR *window));
 
      Initialize the internal stream state for decompression using inflateBack()
-   calls.  The fields zalloc, zfree and opaque in strm must be initialized
+   calls.  The fields zalloc, zfree and opaque in strm must be INITIALIZED
    before the call.  If zalloc and zfree are Z_NULL, then the default library-
    derived memory allocation routines are used.  windowBits is the base two
    logarithm of the window size, in the range 8..15.  window is a caller
@@ -1014,10 +1014,10 @@ ZEXTERN int ZEXPORT inflateBack OF((z_streamp strm,
 
      For convenience, inflateBack() can be provided input on the first call by
    setting strm->next_in and strm->avail_in.  If that input is exhausted, then
-   in() will be called.  Therefore strm->next_in must be initialized before
+   in() will be called.  Therefore strm->next_in must be INITIALIZED before
    calling inflateBack().  If strm->next_in is Z_NULL, then in() will be called
    immediately for input.  If strm->next_in is not Z_NULL, then strm->avail_in
-   must also be initialized, and then if strm->avail_in is not zero, input will
+   must also be INITIALIZED, and then if strm->avail_in is not zero, input will
    initially be taken from strm->next_in[0 ..  strm->avail_in - 1].
 
      The in_desc and out_desc parameters of inflateBack() is passed as the
@@ -1030,7 +1030,7 @@ ZEXTERN int ZEXPORT inflateBack OF((z_streamp strm,
    return values of inflateBack() can be Z_STREAM_END on success, Z_BUF_ERROR
    if in() or out() returned an error, Z_DATA_ERROR if there was a format error
    in the deflate stream (in which case strm->msg is set to indicate the nature
-   of the error), or Z_STREAM_ERROR if the stream was not properly initialized.
+   of the error), or Z_STREAM_ERROR if the stream was not properly INITIALIZED.
    In the case of Z_BUF_ERROR, an input or output error can be distinguished
    using strm->next_in which will be Z_NULL only if in() returned an error.  If
    strm->next_in is not Z_NULL, then the Z_BUF_ERROR was due to out() returning

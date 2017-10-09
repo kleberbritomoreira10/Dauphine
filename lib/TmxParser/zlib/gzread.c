@@ -98,7 +98,7 @@ local int gz_next4(state, ret)
    copying, then leftover input data from the input buffer will be copied to
    the output buffer.  In that case, all further file reads will be directly to
    either the output buffer or a user buffer.  If decompressing, the inflate
-   state and the check value will be initialized.  gz_head() will return 0 on
+   state and the check value will be INITIALIZED.  gz_head() will return 0 on
    success or -1 on failure.  Failures may include read errors or gzip header
    errors.  */
 local int gz_head(state)

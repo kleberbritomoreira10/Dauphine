@@ -43,7 +43,7 @@ class InputHandler
 		*/
 		bool isQuitFlag ();
 
-		void clearKey ( const GameKeys key_ );
+		void clearKey ( const GameKeys KEY );
 
 	private:
 		/**

@@ -236,7 +236,7 @@ struct inflate_state FAR *state;
    returns Z_STREAM_END on success, Z_DATA_ERROR for an deflate format
    error, or Z_MEM_ERROR if it could not allocate memory for the state.
    inflateBack() can also return Z_STREAM_ERROR if the input parameters
-   are not correct, i.e. strm is Z_NULL or the state was not initialized.
+   are not correct, i.e. strm is Z_NULL or the state was not INITIALIZED.
  */
 int ZEXPORT inflateBack(strm, in, in_desc, out, out_desc)
 z_streamp strm;
@@ -260,7 +260,7 @@ void FAR *out_desc;
     static const unsigned short order[19] = /* permutation of code lengths */
         {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
 
-    /* Check that the strm exists and that the state was initialized */
+    /* Check that the strm exists and that the state was INITIALIZED */
     if (strm == Z_NULL || strm->state == Z_NULL)
         return Z_STREAM_ERROR;
     state = (struct inflate_state FAR *)strm->state;

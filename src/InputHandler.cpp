@@ -231,7 +231,7 @@ void InputHandler::signalExit ()
 /**
 * Sets InputHandler::keyStates to false.
 */
-void InputHandler::clearKey ( const GameKeys key_ )
+void InputHandler::clearKey ( const GameKeys KEY )
 {
-	this -> keyStates.at( key_ ) = false;
+	this -> keyStates.at( KEY ) = false;
 }

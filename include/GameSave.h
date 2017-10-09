@@ -13,18 +13,18 @@ class GameSave {
 		void setSlot ( int saveSelection );
 		void createSave ();
 		void saveLevel ( unsigned int level_, Player* player, std::vector < Enemy * > enemies, 
-			unsigned int slot_);
+			unsigned int SLOT);
 
 		int get_saved_level ( int continueSelection_ );
-		void get_player_position ( double &playerX_, double &playerY_, const int slot_ );
+		void get_player_position ( double &player_x, double &player_y, const int SLOT );
 
-		bool is_enemy_dead ( const int numEnemy_, const int slot_ );
+		bool is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT );
 
-		bool is_saved ( const int saveSlot_ );
+		bool is_saved ( const int SAVE_SLOT );
 
 		std::string filePath;
 		int saveSelection;
-		unsigned int currentLevel;
+		unsigned int CURRENT_LEVEL;
 
 		std::ofstream saveFile;
 		std::ifstream continueFile;

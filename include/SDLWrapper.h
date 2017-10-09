@@ -22,7 +22,7 @@ class SDLWrapper
 		/**
 		* The system initializer.
 		* Initializes all the SDL systems and/or subsystems.
-		* @return True if every system was initialized successfully, else it returns false.
+		* @return True if every system was INITIALIZED successfully, else it returns false.
 		* @todo Initialize SDL_TTF. And not do INIT_EVERYTHING.
 		*/
 		static bool initialize ();

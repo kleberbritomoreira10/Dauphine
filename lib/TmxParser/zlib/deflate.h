@@ -61,7 +61,7 @@
 /* Data structure describing a single value and its code string. */
 typedef struct ct_data_s {
     union {
-        ush  freq;       /* frequency count */
+        ush  freq;       /* FREQUENCY count */
         ush  code;       /* bit string */
     } fc;
     union {
@@ -79,7 +79,7 @@ typedef struct static_tree_desc_s  static_tree_desc;
 
 typedef struct tree_desc_s {
     ct_data *dyn_tree;           /* the dynamic tree */
-    int     max_code;            /* largest code with non zero frequency */
+    int     max_code;            /* largest code with non zero FREQUENCY */
     static_tree_desc *stat_desc; /* the corresponding static tree */
 } FAR tree_desc;
 
@@ -202,13 +202,13 @@ typedef struct internal_state {
 
     int heap[2*L_CODES+1];      /* heap used to build the Huffman trees */
     int heap_len;               /* number of elements in the heap */
-    int heap_max;               /* element of largest frequency */
+    int heap_max;               /* element of largest FREQUENCY */
     /* The sons of heap[n] are heap[2*n] and heap[2*n+1]. heap[0] is not used.
      * The same heap array is used to build all trees.
      */
 
     uch depth[2*L_CODES+1];
-    /* Depth of each subtree used as tie breaker for trees of equal frequency
+    /* Depth of each subtree used as tie breaker for trees of equal FREQUENCY
      */
 
     uchf *l_buf;          /* buffer for literals or lengths */
@@ -261,7 +261,7 @@ typedef struct internal_state {
      */
 
     ulg high_water;
-    /* High water mark offset in window for initialized bytes -- bytes above
+    /* High water mark offset in window for INITIALIZED bytes -- bytes above
      * this are set to zero in order to avoid memory check warnings when
      * longest match routines access bytes past the input.  This is then
      * updated to the new high water mark.

@@ -11,12 +11,12 @@
 /**
 * The system initializer.
 * Initializes all the SDL systems and/or subsystems.
-* @return True if every system was initialized successfully, else it returns false.
+* @return True if every system was INITIALIZED successfully, else it returns false.
 */
 bool SDLWrapper::initialize()
 {
 	bool successSDL = false;
-	bool successIMG = false;
+	bool success_image = false;
 	bool successMixer = false;
 	bool successTTF = false;
 
@@ -59,11 +59,11 @@ bool SDLWrapper::initialize()
 		Log(ERROR) << "Could not initialize SDL." << SDL_GetError();
 	}
 
-	// Initializing SDL_image with imgFlags.
-	const Uint32 imgFlags = IMG_INIT_PNG;
-	if ( (IMG_Init( imgFlags) & imgFlags ) )
+	// Initializing SDL_image with image_flags.
+	const Uint32 image_flags = IMG_INIT_PNG;
+	if ( (IMG_Init( image_flags) & image_flags ) )
   {
-		successIMG = true;
+		success_image = true;
 
 		SDL_IMAGE_VERSION( &compiled );
 		SDLWrapper::logSDLVersion( "SDL_image", compiled );
@@ -75,12 +75,12 @@ bool SDLWrapper::initialize()
 	}
 
 	// Initializing SDL_mixer.
-	const int frequency = 44100;
-	const int channels = 2;
-	const int chunksize = 4096;
-	const int initialized = Mix_OpenAudio( frequency, MIX_DEFAULT_FORMAT, channels, chunksize );
+	const int FREQUENCY = 44100;
+	const int CHANNELS = 2;
+	const int CHUNKSIZE = 4096;
+	const int INITIALIZED = Mix_OpenAudio( FREQUENCY, MIX_DEFAULT_FORMAT, CHANNELS, CHUNKSIZE );
 	
-  if ( initialized == 0 )
+  if ( INITIALIZED == 0 )
   {
 		successMixer = true;
 
@@ -94,7 +94,7 @@ bool SDLWrapper::initialize()
 	}
 
 	// If even one system fails to initialize, returns false.
-	return ( successSDL && successIMG && successMixer && successTTF );
+	return ( successSDL && success_image && successMixer && successTTF );
 }
 
 /**

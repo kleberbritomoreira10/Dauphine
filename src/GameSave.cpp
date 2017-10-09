@@ -23,11 +23,11 @@ GameSave::GameSave()
 
 /**
  * Sets the slot for save game.
- * @param saveSelection_: The slot that will be allocated the save.
+ * @param SAVE_SELECTION: The slot that will be allocated the save.
 */
-void GameSave::setSlot ( int saveSelection_ )
+void GameSave::setSlot ( int SAVE_SELECTION )
 {	
-	switch ( saveSelection_ )
+	switch ( SAVE_SELECTION )
   {
 		case this -> Selection::SLOT_1:
 			this -> filePath = "saveSlot1.dauphine";
@@ -71,12 +71,12 @@ void GameSave::createSave()
  * @param level_: The number of the current level of the game.
  * @param player: The character of the game, in this method gets your position.
  * @param enemies: The enemies of the game.
- * @param slot_: The slot where are saving the game.
+ * @param SLOT: The slot where are saving the game.
 */
-void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Enemy*> enemies, unsigned slot_ )
+void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Enemy*> enemies, unsigned SLOT )
 {
 
-	this -> setSlot(slot_);	
+	this -> setSlot(SLOT);	
 
 	this -> saveFile.open( this -> filePath.c_str() );
 
@@ -85,8 +85,8 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 
 	if(!this -> saveFile.fail())
   {
-		this -> currentLevel = level_;
-		this -> saveFile << this -> currentLevel << std::endl;
+		this -> CURRENT_LEVEL = level_;
+		this -> saveFile << this -> CURRENT_LEVEL << std::endl;
 		this -> saveFile << player -> x << std::endl;
 		this -> saveFile << player -> y << std::endl;
 		this -> saveFile << enemies.size() << std::endl;
@@ -139,12 +139,12 @@ int GameSave::get_saved_level ( int continueSelection_ )
 
 /**
  * The analyzer if the game is saved.
- * @saveSlot_: The slot where is saved the game.
+ * @SAVE_SLOT: The slot where is saved the game.
 */
-bool GameSave::is_saved( const int saveSlot_ )
+bool GameSave::is_saved( const int SAVE_SLOT )
 {
 
-	this -> setSlot( saveSlot_ );	
+	this -> setSlot( SAVE_SLOT );	
 
 	this -> continueFile.open( this -> filePath.c_str() );
 
@@ -158,13 +158,13 @@ bool GameSave::is_saved( const int saveSlot_ )
 
 	if ( testSave == "-1" )
   {
-		// Log(WARN) << "There is NO save at slot " << 1 + saveSlot_; 
+		// Log(WARN) << "There is NO save at slot " << 1 + SAVE_SLOT; 
 		return false;
 	}
 
 	else
   {
-		// Log(WARN) << "There is a save at slot " << 1 + saveSlot_;
+		// Log(WARN) << "There is a save at slot " << 1 + SAVE_SLOT;
 		this -> continueFile.close();
 		return true;
 	}
@@ -174,18 +174,18 @@ bool GameSave::is_saved( const int saveSlot_ )
  * Getting a position of a player in a game.
  * @playerX: The horizontal position of the player in the game.
  * @playerY: The vertical position of the player in the game.
- * @slot_: The slot where the game will be saved.
+ * @SLOT: The slot where the game will be saved.
 */
-void GameSave::get_player_position ( double& playerX_, double& playerY_, const int slot_ )
+void GameSave::get_player_position ( double& player_x, double& player_y, const int SLOT )
 {	
-	setSlot( slot_ );
+	setSlot( SLOT );
 
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
 
-	this -> continueFile >> currentLevel; 
+	this -> continueFile >> CURRENT_LEVEL; 
 
-	this -> continueFile >> playerX_;
-	this -> continueFile >> playerY_;
+	this -> continueFile >> player_x;
+	this -> continueFile >> player_y;
 
 	this -> continueFile.close();	
 }
@@ -193,9 +193,9 @@ void GameSave::get_player_position ( double& playerX_, double& playerY_, const i
 /**
  * The analyzer if the enemy is dead.
  * @numEnemy: The quantity of enemies near of the character.
- * @slot_: The slot where the game will be saved.
+ * @SLOT: The slot where the game will be saved.
 */
-bool GameSave::is_enemy_dead ( const int numEnemy_, const int slot_ )
+bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 {
 
 	double skip = 0;
@@ -205,7 +205,7 @@ bool GameSave::is_enemy_dead ( const int numEnemy_, const int slot_ )
 
 	bool rc = false;
 
-	setSlot( slot_ );
+	setSlot( SLOT );
 
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
 
@@ -226,7 +226,7 @@ bool GameSave::is_enemy_dead ( const int numEnemy_, const int slot_ )
 
 		// Log(DEBUG) << "Enemy under test dead status: " << currentEnemy;		
 
-		if ( i == numEnemy_ )
+		if ( i == NUMBER_ENEMY )
     {
 			if ( currentEnemy == 1 )
       {

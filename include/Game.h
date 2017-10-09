@@ -95,7 +95,7 @@ class Game
 		*/
 		void stop ();
 
-		void clearKeyFromInput ( const GameKeys key_ );
+		void clearKeyFromInput ( const GameKeys KEY );
 		void resizeWindow ( const unsigned int width_, const unsigned int height_ );
 
 		bool isCutscene;
@@ -121,7 +121,7 @@ class Game
 
 		/**
 		* Loads all the states.
-		* Every new state implemented should be initialized here.
+		* Every new state implemented should be INITIALIZED here.
 		*/
 		void initializeStates ();
 

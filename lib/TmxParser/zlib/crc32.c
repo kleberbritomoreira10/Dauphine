@@ -92,7 +92,7 @@ local void make_crc_table OF((void));
   where a mod b means the remainder after dividing a by b.
 
   This calculation is done using the shift-register method of multiplying and
-  taking the remainder.  The register is initialized to zero, and for each
+  taking the remainder.  The register is INITIALIZED to zero, and for each
   incoming bit, x^32 is added mod p to the register if the bit is a one (where
   x^32 mod p is p+x^32 = x^26+...+1), and the register is multiplied mod p by
   x (which is shifting right by one and adding x^32 mod p if the bit shifted

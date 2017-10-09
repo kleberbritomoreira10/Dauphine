@@ -256,11 +256,11 @@ void Game::handleDialog()
 {
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 
-	const double selectorDelayTime = 0.2;
+	const double SELECTOR_DELAY_TIME = 0.2;
 
 	if( keyStates[ GameKeys::SPACE ] == true )
 	{
-		if( this -> passedTime >= selectorDelayTime )
+		if( this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 			currentLine++;
 		}
@@ -302,11 +302,11 @@ void Game::handleSelectorMenu()
 {
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 
-	const double selectorDelayTime = 0.2;
+	const double SELECTOR_DELAY_TIME = 0.2;
 
 	if( keyStates[ GameKeys::DOWN ] == true || keyStates[ GameKeys::RIGHT ] == true )
 	{
-		if( this -> passedTime >= selectorDelayTime )
+		if( this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 			if( currentSelection < ( PSelection::TOTAL - 1 )){
 				currentSelection++;
@@ -320,7 +320,7 @@ void Game::handleSelectorMenu()
 	}
 	else if( keyStates[ GameKeys::UP ] == true || keyStates[ GameKeys::LEFT ] == true )
 	{
-		if(this -> passedTime >= selectorDelayTime )
+		if(this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 			if( currentSelection > PSelection::RESUME )
 			{
@@ -379,9 +379,9 @@ void Game::stop()
 	this -> isRunning = false;
 }
 
-void Game::clearKeyFromInput( const GameKeys key_ )
+void Game::clearKeyFromInput( const GameKeys KEY )
 {
-	this -> inputHandler -> clearKey( key_ );
+	this -> inputHandler -> clearKey( KEY );
 }
 
 FadeScreen& Game::get_fade()

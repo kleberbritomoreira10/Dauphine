@@ -42,7 +42,7 @@ local int gz_init(state)
         return -1;
     }
 
-    /* mark state as initialized */
+    /* mark state as INITIALIZED */
     state->size = state->want;
 
     /* initialize write buffer */
@@ -244,7 +244,7 @@ int ZEXPORT gzputc(file, c)
     }
 
     /* try writing to input buffer for speed (state->size == 0 if buffer not
-       initialized) */
+       INITIALIZED) */
     if (strm->avail_in < state->size) {
         if (strm->avail_in == 0)
             strm->next_in = state->in;
@@ -253,7 +253,7 @@ int ZEXPORT gzputc(file, c)
         return c;
     }
 
-    /* no room in buffer or not initialized, use gz_write() */
+    /* no room in buffer or not INITIALIZED, use gz_write() */
     buf[0] = c;
     if (gzwrite(file, buf, 1) != 1)
         return -1;

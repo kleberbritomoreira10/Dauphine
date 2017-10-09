@@ -81,19 +81,19 @@ void GStateNewGame::load ()
 	if ( Game::instance (). get_saves (). is_saved ( SLOT_1 ) )
 	{
 
-		const int levelFromSave = Game::instance (). get_saves (). get_saved_level( SLOT_1 );
+		const int LEVEL_FROM_SAVE = Game::instance (). get_saves (). get_saved_level( SLOT_1 );
 
-		const std::string currentLevel = "Level " +
-			Util::toString ( levelFromSave );
+		const std::string CURRENT_LEVEL = "Level " +
+			Util::toString ( LEVEL_FROM_SAVE );
 
-		if ( levelFromSave == -1 )
+		if ( LEVEL_FROM_SAVE == -1 )
 		{
 
 			this -> slot1 -> changeText( "Empty Slot" );
 
 		}else
 		{
-			this -> slot1 -> changeText ( currentLevel. c_str () );
+			this -> slot1 -> changeText ( CURRENT_LEVEL. c_str () );
 		}
 	}else
 	{
@@ -104,18 +104,18 @@ void GStateNewGame::load ()
 	if ( Game::instance (). get_saves (). is_saved ( SLOT_2 ) )
 	{
 
-		const int levelFromSave = Game::instance (). get_saves (). get_saved_level ( SLOT_2 );
+		const int LEVEL_FROM_SAVE = Game::instance (). get_saves (). get_saved_level ( SLOT_2 );
 
-		const std::string currentLevel = "Level " + Util::toString ( levelFromSave );
+		const std::string CURRENT_LEVEL = "Level " + Util::toString ( LEVEL_FROM_SAVE );
 
-		if ( levelFromSave == -1 )
+		if ( LEVEL_FROM_SAVE == -1 )
 		{
 
 			this -> slot2 -> changeText ( "Empty Slot" );
 
 		}else
 		{
-			this -> slot2 -> changeText ( currentLevel.c_str () );
+			this -> slot2 -> changeText ( CURRENT_LEVEL.c_str () );
 		}
 
 	}else
@@ -127,17 +127,17 @@ void GStateNewGame::load ()
 	if ( Game::instance (). get_saves (). is_saved ( SLOT_3 ) )
 	{
 
-		const int levelFromSave = Game::instance (). get_saves (). get_saved_level ( SLOT_3 );
+		const int LEVEL_FROM_SAVE = Game::instance (). get_saves (). get_saved_level ( SLOT_3 );
 
-		const std::string currentLevel = "Level " + Util::toString ( levelFromSave );
+		const std::string CURRENT_LEVEL = "Level " + Util::toString ( LEVEL_FROM_SAVE );
 
-		if ( levelFromSave == -1 )
+		if ( LEVEL_FROM_SAVE == -1 )
 		{
 			this -> slot3 -> changeText ( "Empty Slot" );
 		}else
 		{
 
-			this -> slot3 -> changeText ( currentLevel. c_str () );
+			this -> slot3 -> changeText ( CURRENT_LEVEL. c_str () );
 		}
 
 	}else
@@ -148,14 +148,14 @@ void GStateNewGame::load ()
 	//As is uses the same resources as the Continue screen...
 	LuaScript luaMenu ( "lua/Continue.lua");
 
-	const std::string pathBackground = luaMenu.unlua_get < std::string > (
+	const std::string PATH_BACKGROUND = luaMenu.unlua_get < std::string > (
 		"continue.images.background" );
 
-	const std::string pathSelector = luaMenu.unlua_get < std::string > (
+	const std::string PATH_SELECTOR = luaMenu.unlua_get < std::string > (
 		"continue.images.selector" );
 
-	this -> background = Game::instance (). getResources (). get ( pathBackground );
-    this -> selector = Game::instance (). getResources (). get ( pathSelector );
+	this -> background = Game::instance (). getResources (). get ( PATH_BACKGROUND );
+    this -> selector = Game::instance (). getResources (). get ( PATH_SELECTOR );
 
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
@@ -221,13 +221,13 @@ void GStateNewGame::handleSelectorMenu ()
 
 	std::array < bool, GameKeys::MAX > keyStates = Game::instance ().getInput ();
 
-	const double selectorDelayTime = 0.2;
+	const double SELECTOR_DELAY_TIME = 0.2;
 
 	// When an attack key is pressed the game returns to the start menu.
 	if ( keyStates [ GameKeys::LATTACK ] == true )
 	{
 
-		if ( this -> passedTime >= selectorDelayTime )
+		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 			Game::instance (). setState ( Game::GStates::MENU );
 		}
@@ -238,7 +238,7 @@ void GStateNewGame::handleSelectorMenu ()
 		 == true )
 	{
 
-		if ( this -> passedTime >= selectorDelayTime )
+		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 
 			if ( currentSelection < ( Selection::TOTAL - 1 ) )
@@ -257,7 +257,7 @@ void GStateNewGame::handleSelectorMenu ()
 				 == true)
 			{
 
-		if ( this -> passedTime >= selectorDelayTime )
+		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
 		{
 
 			if ( currentSelection > Selection::SLOT_1 )

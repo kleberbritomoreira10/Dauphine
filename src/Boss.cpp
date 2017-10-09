@@ -3,7 +3,7 @@
  * Técnicas de Programação, 2/2017
  * @Boss.cpp
  * File responsible for implementing the boss, the most powerful enemy of the game. 
- * In this file the boss's characteristics are created and initialized, updated and destroyed when requested.
+ * In this file the boss's characteristics are created and INITIALIZED, updated and destroyed when requested.
  * License: Copyright (C) 2014 Alke Games.
  */
 

@@ -89,11 +89,11 @@ void GStateOptions::update( const double DELTA_TIME )
 		Game::instance().setState( Game::GStates::MENU );
 	}
 
-	const double selectorDelayTime = 0.2;
+	const double SELECTOR_DELAY_TIME = 0.2;
 
 	if( keyStates[ GameKeys::DOWN ] == true )
 	{
-		if( this -> elapsedTime >= selectorDelayTime )
+		if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
 		{
 			if( this -> currentOption == (O_TOTAL - 1 ) )
 			{
@@ -109,7 +109,7 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	if( keyStates[ GameKeys::UP ] == true )
 	{
-		if( this -> elapsedTime >= selectorDelayTime)
+		if( this -> elapsedTime >= SELECTOR_DELAY_TIME)
 		{
 			if( this -> currentOption == O_RESOLUTION )
 			{
@@ -125,7 +125,7 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	if( keyStates[ GameKeys::LEFT ] == true)
 	{
-		if( this->elapsedTime >= selectorDelayTime )
+		if( this->elapsedTime >= SELECTOR_DELAY_TIME )
 		{
 			// Option == Resolution
 			if( this -> currentOption == O_RESOLUTION )
@@ -162,7 +162,7 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	if( keyStates[ GameKeys::RIGHT ] == true )
 	{
-		if( this -> elapsedTime >= selectorDelayTime )
+		if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
 		{
 			// Option == Resolution
 			if( this -> currentOption == O_RESOLUTION )

@@ -26,7 +26,7 @@ int main ( int argc, char** argv )
 
   else
   {
-    Log(ERROR) << "System were not initialized.";
+    Log(ERROR) << "System were not INITIALIZED.";
   }
 
   // Closes SDL used libraries.

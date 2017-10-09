@@ -16,11 +16,11 @@
 * @param x_ : position in x axis.
 * @param y_ : position in y axis.
 */
-DynamicEntity::DynamicEntity ( const double x_, const double y_, const std::string &path_ ) :
+DynamicEntity::DynamicEntity ( const double x_, const double y_, const std::string &PATH ) :
 
-	Entity ( x_, y_, path_ ),
-	vx ( 0.0 ),
-	vy ( 0.0 ),
+	Entity ( x_, y_, PATH ),
+	velocity_x_axis ( 0.0 ),
+	velocity_y_axis ( 0.0 ),
 	speed ( 20.0 ),
 	maxSpeed ( 550.0 ),
 	isGrounded ( false ),
@@ -67,7 +67,7 @@ void DynamicEntity::updatePosition ( const double DELTA_TIME )
 	this -> x = this -> nextX;
 	this -> y = this -> nextY;
 
-	this -> is_right = ( this -> vx >= 0.0 );
+	this -> is_right = ( this -> velocity_x_axis >= 0.0 );
 }
 
 /*
@@ -78,8 +78,8 @@ of processing speed.
 void DynamicEntity::scoutPosition ( const double DELTA_TIME )
 {
 	//
-	this -> nextX += this -> vx * DELTA_TIME;
-	this -> nextY += this -> vy * DELTA_TIME;
+	this -> nextX += this -> velocity_x_axis * DELTA_TIME;
+	this -> nextY += this -> velocity_y_axis * DELTA_TIME;
 
 }
 
@@ -121,7 +121,7 @@ std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detectCollision (
 					{
 
 						// Going up, not colliding
-						if ( this -> vy < 0 )
+						if ( this -> velocity_y_axis < 0 )
 						{
 
 							detections.at ( SOLID_BOTTOM ) = false;
@@ -133,7 +133,7 @@ std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detectCollision (
 						}
 
 						// Going down and goes through tile top
-						if ( this -> vy >= 0.0 && ( this -> boundingBox.y
+						if ( this -> velocity_y_axis >= 0.0 && ( this -> boundingBox.y
 							+ this -> boundingBox.h ) > tileBox.rect.y + tileBox.rect.h )
 						{
 
@@ -214,15 +214,15 @@ std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detectCollision (
 // Apply the jump on a dynamic entity speed on the y axis.
 void DynamicEntity::jump ()
 {
-	this -> vy = ( -1 ) * 1210.0;
+	this -> velocity_y_axis = ( -1 ) * 1210.0;
 }
 
 void DynamicEntity::applyGravity ()
 {
 	// Apply the gravity on a dynamic entity speed on the y axis.
-	if ( this->vy + 50 < this->maxSpeed * 2 )
+	if ( this->velocity_y_axis + 50 < this->maxSpeed * 2 )
 	{
-		this -> vy += 50;
+		this -> velocity_y_axis += 50;
 	}else{
 		// Do nothing.
 	}
@@ -239,36 +239,36 @@ void DynamicEntity::move ( const bool movingLeft_, const bool movingRight_ )
 		if ( movingLeft_ )
 		{
 
-			if ( this -> vx > 0.0)
+			if ( this -> velocity_x_axis > 0.0)
 			{
 
-				this -> vx -= this -> speed * turnHandle;
+				this -> velocity_x_axis -= this -> speed * turnHandle;
 
 			}else{
 
-				this -> vx -= this -> speed;
+				this -> velocity_x_axis -= this -> speed;
 
 			} // if -- left moving
 
-			this -> vx = ( this -> vx < -this -> maxSpeed ) ? -this -> maxSpeed : this -> vx;
+			this -> velocity_x_axis = ( this -> velocity_x_axis < -this -> maxSpeed ) ? -this -> maxSpeed : this -> velocity_x_axis;
 
 		}
 
 		if ( movingRight_ )
 		{
 
-			if ( this -> vx < 0.0 )
+			if ( this -> velocity_x_axis < 0.0 )
 			{
 
-				this -> vx += this -> speed * turnHandle;
+				this -> velocity_x_axis += this -> speed * turnHandle;
 
 			}else
 			{
 
-				this -> vx += this -> speed;
+				this -> velocity_x_axis += this -> speed;
 
 			}
-			this -> vx = ( this -> vx > this -> maxSpeed ) ? this -> maxSpeed : this -> vx;
+			this -> velocity_x_axis = ( this -> velocity_x_axis > this -> maxSpeed ) ? this -> maxSpeed : this -> velocity_x_axis;
 		} // if -- right moving
 	}else
 	{
@@ -288,38 +288,38 @@ void DynamicEntity::moveVertical ( const bool movingUp_, const bool movingDown_ 
 		if ( movingUp_ )
 		{
 
-			if ( this -> vy > 0.0 )
+			if ( this -> velocity_y_axis > 0.0 )
 			{
 
-				this -> vy -= this -> speed * turnHandle;
+				this -> velocity_y_axis -= this -> speed * turnHandle;
 
 			}else
 			{
 
-				this -> vy -= this -> speed;
+				this -> velocity_y_axis -= this -> speed;
 
 			}
 
-			this -> vy = ( this -> vy < -this -> maxSpeed ) ? -this -> maxSpeed : this -> vy;
+			this -> velocity_y_axis = ( this -> velocity_y_axis < -this -> maxSpeed ) ? -this -> maxSpeed : this -> velocity_y_axis;
 
 		} // if -- moving up
 
 		if ( movingDown_ )
 		{
 
-			if ( this -> vy < 0.0 )
+			if ( this -> velocity_y_axis < 0.0 )
 			{
 
-				this -> vy += this -> speed * turnHandle;
+				this -> velocity_y_axis += this -> speed * turnHandle;
 
 			}else
 			{
 
-				this -> vy += this -> speed;
+				this -> velocity_y_axis += this -> speed;
 
 			}
 
-			this -> vy = ( this -> vy > this -> maxSpeed ) ? this -> maxSpeed : this -> vy;
+			this -> velocity_y_axis = ( this -> velocity_y_axis > this -> maxSpeed ) ? this -> maxSpeed : this -> velocity_y_axis;
 		} // // if -- moving down
 	}else
 	{
@@ -331,27 +331,27 @@ void DynamicEntity::moveVertical ( const bool movingUp_, const bool movingDown_ 
 void DynamicEntity::slowVx ()
 {
 	// Decreases the dynamic entity speed on the x axis.
-	const int vsign = Math::sign ( this -> vx );
+	const int vsign = Math::sign ( this -> velocity_x_axis );
 
-	this -> vx -= 100 * vsign;
+	this -> velocity_x_axis -= 100 * vsign;
 
-	if ( Math::sign ( this -> vx ) != vsign )
+	if ( Math::sign ( this -> velocity_x_axis ) != vsign )
 	{
-        this -> vx = 0.0001 * vsign;
+        this -> velocity_x_axis = 0.0001 * vsign;
 	}
 }
 
 void DynamicEntity::slowVy ()
 {
 	// Decreases the dynamic entity speed on the y axis.
-	const int vsign = Math::sign ( this -> vy );
+	const int vsign = Math::sign ( this -> velocity_y_axis );
 
-	this -> vy -= 1000 * vsign;
+	this -> velocity_y_axis -= 1000 * vsign;
 
-	if ( Math::sign ( this -> vy ) != vsign )
+	if ( Math::sign ( this -> velocity_y_axis ) != vsign )
 	{
 
-        this -> vy = 0.0001 * vsign;
+        this -> velocity_y_axis = 0.0001 * vsign;
 
 	}
 }
@@ -364,10 +364,10 @@ void DynamicEntity::roll ()
 	// Apply the roll on a dynamic entity speed on the x axis.
 	if ( this -> is_right )
 	{
-		this -> vx = rollStrength * this -> speed;
+		this -> velocity_x_axis = rollStrength * this -> speed;
 	}else
 	{
-		this -> vx = -rollStrength * this -> speed;
+		this -> velocity_x_axis = -rollStrength * this -> speed;
 	}
 }
 

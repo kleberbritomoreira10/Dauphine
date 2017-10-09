@@ -13,7 +13,7 @@
 * @param x_ : position in x axis.
 * @param y_ : position in y axis.
 */
-Text::Text ( const double x_, const double y_, const char *path_, const int size_,
+Text::Text ( const double x_, const double y_, const char *PATH, const int size_,
 	const char *text_, const SDL_Color color_ ) :
 
 	Entity ( x_, y_ ),
@@ -21,7 +21,7 @@ Text::Text ( const double x_, const double y_, const char *path_, const int size
 	font  ( nullptr )
 {
 
-	this -> font = TTF_OpenFont ( path_, size_ );
+	this -> font = TTF_OpenFont ( PATH, size_ );
 
 	if ( this -> font == nullptr )
 	{
@@ -48,14 +48,14 @@ Text::Text ( const double x_, const double y_, const char *path_, const int size
 	}
 }
 
-Text::Text ( const double x_, const double y_, const char *path_, const int size_,
+Text::Text ( const double x_, const double y_, const char *PATH, const int size_,
 	const char *text_ ) :
 
 	Entity ( x_, y_ ),
 	font ( nullptr )
 
 {
-	this -> font = TTF_OpenFont ( path_, size_ );
+	this -> font = TTF_OpenFont ( PATH, size_ );
 
 	if( this -> font == nullptr )
 	{

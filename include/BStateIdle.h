@@ -9,9 +9,9 @@ class BStateIdle : public StateBoss
 	public:
 		/**
 		* The constructor.
-		* @param boss_ : Reference to the Boss.
+		* @param BOSS : Reference to the Boss.
 		*/
-		BStateIdle( Boss *const boss_ );
+		BStateIdle( Boss *const BOSS );
 		
 		/**
 		* The destructor.

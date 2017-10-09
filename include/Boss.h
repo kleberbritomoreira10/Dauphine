@@ -39,7 +39,7 @@ class Boss : public DynamicEntity
     /**
      * The constructor.
      */
-    Boss ( const double x_, const double y_, const std::string &path_, Player *const player_ );
+    Boss ( const double x_, const double y_, const std::string &PATH, Player *const player_ );
 
     /**
      * The destructor.

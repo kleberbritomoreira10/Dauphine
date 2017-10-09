@@ -139,8 +139,8 @@ void Level::set_camera(Camera *const camera_)
 * Sets the proprieties for the boss of the game.
 * @param bos_: the object bos will be configured.
 */
-void Level::setBoss( Boss *const boss_ ){
-	this -> boss = boss_;
+void Level::setBoss( Boss *const BOSS ){
+	this -> boss = BOSS;
 
 	if( this -> boss != nullptr )
 	{

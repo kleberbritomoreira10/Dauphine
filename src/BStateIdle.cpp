@@ -65,8 +65,8 @@ void BStateIdle::update( const double DELTA_TIME )
 * The constructor.
 * Initializes the attributes.
 */
-BStateIdle::BStateIdle( Boss* const boss_ ) :
-	StateBoss( boss_ )
+BStateIdle::BStateIdle( Boss* const BOSS ) :
+	StateBoss( BOSS )
 {
 
 }

@@ -28,12 +28,12 @@ double timePasssed = 0;
  * Method used to create all characteristics Boss
  * @param x_ : Position on the x axis of the boss
  * @param y_ : Position on the y axis of the boss
- * @param path_ : The path to the desired sprite
+ * @param PATH : The path to the desired sprite
  * @param player_ : Pointer that points to the type player.
  * @param SDL_FLIP_NONE : Renderer flip
  */
-Boss::Boss( const double x_, const double y_, const std::string& path_, Player* const player_ ) :
-	DynamicEntity(x_, y_, path_), potionsLeft(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X(0.0), power_Y(0.0), power_is_activated(false), power(nullptr),
+Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* const player_ ) :
+	DynamicEntity(x_, y_, PATH), potionsLeft(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X(0.0), power_Y(0.0), power_is_activated(false), power(nullptr),
 	  power_clip{0,0,0,0}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{0,0,0,0},
 	  current_state(nullptr), animation(nullptr), statesMap(), dead(false)
 {
@@ -233,25 +233,25 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 	//Check collision occurrence on top
 	if ( detections_.at( CollisionSide::SOLID_TOP ) )
 	{ 
-		this -> vy = 0.0;
+		this -> velocity_y_axis = 0.0;
 	}
 	//Check collision occurrence on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM ) )
 	{		
 		this -> nextY -= fmod( this -> nextY, 64.0) - 16.0;
-		this -> vy = 0.0;
+		this -> velocity_y_axis = 0.0;
 	}
 	//Check collision occurrence on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT ))
 	{
 		this -> nextX = this -> x;
-		this -> vx = 0.0;
+		this -> velocity_x_axis = 0.0;
 	}
 	//Check collision occurrence on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
 	{
 		this -> nextX = this -> x;
-		this -> vx = -0.001;
+		this -> velocity_x_axis = -0.001;
 	}
 }
 
@@ -266,7 +266,7 @@ void Boss::usePotion( const int strength_, const int distance_)
   {
     this -> potionsLeft--;
     const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this->boundingBox.x);
-    Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> vx, distance_, this ->is_right);
+    Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> velocity_x_axis, distance_, this ->is_right);
     this -> potions.push_back( potion );
   }
 }

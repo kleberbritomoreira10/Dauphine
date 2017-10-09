@@ -19,10 +19,10 @@
 * @param distance_: The distance of the potion.
 * @param isRight_: Boolean param to indicate if the potion is right.
 */
-Potion::Potion( const double x_, const double y_, const std::string &path_, const int strength_, const int inertia_,
+Potion::Potion( const double x_, const double y_, const std::string &PATH, const int strength_, const int inertia_,
 	const int distance_, const bool isRight_ ) :
 
-	DynamicEntity( x_, y_, path_ ),
+	DynamicEntity( x_, y_, PATH ),
 	activated( true ),
   canExplode( true ),
   isExploding( true ),
@@ -47,8 +47,8 @@ Potion::Potion( const double x_, const double y_, const std::string &path_, cons
     // Loading animation and potion characteristics.
     this -> animation = new Animation( 0, 0, 192, 192, 13, false );
     this -> y = this -> y + 100;
-    this -> vx = 5 + abs( inertia_/80 );
-    this -> vy = 5;
+    this -> velocity_x_axis = 5 + abs( inertia_/80 );
+    this -> velocity_y_axis = 5;
 }
 
 
@@ -88,8 +88,8 @@ void Potion::update( const double DELTA_TIME )
 		this -> flightTime +=DELTA_TIME;
 
     // Calculating potion's speed in Y axis and in X axis.
-		const double speedXIdk = ( this -> distance/300.0 )*( this -> vx + this -> strength * cos( angle/57.29 ) * flightTime );
-		const double speedYIdk = ( this -> vy + this -> strength * sin( angle/57.29 ) *
+		const double speedXIdk = ( this -> distance/300.0 )*( this -> velocity_x_axis + this -> strength * cos( angle/57.29 ) * flightTime );
+		const double speedYIdk = ( this -> velocity_y_axis + this -> strength * sin( angle/57.29 ) *
 															flightTime - 0.5*gravity*flightTime*flightTime );
 
 		if ( this -> is_right )
@@ -156,7 +156,7 @@ void Potion::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detec
     if ( ( int )this -> x%64 > 0 )
 		{
      	this -> x += ( 64 - ( int )this -> x%64 ) + 1;
-     	this -> vx = 0.0;
+     	this -> velocity_x_axis = 0.0;
     }
     this -> activated = false;
   }
@@ -188,7 +188,7 @@ void Potion::render( const double cameraX_, const double cameraY_ )
   // Rendering sprite if it is not null and if it is exploding.
   if ( this -> sprite != nullptr && this -> isExploding )
 	{
-		this -> sprite -> render( dx, dy, &this -> animationClip, false, this -> vx * 3/2, nullptr, SDL_FLIP_HORIZONTAL );
+		this -> sprite -> render( dx, dy, &this -> animationClip, false, this -> velocity_x_axis * 3/2, nullptr, SDL_FLIP_HORIZONTAL );
   }
 }
 

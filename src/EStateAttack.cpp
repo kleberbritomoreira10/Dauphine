@@ -9,7 +9,7 @@ void EStateAttack::enter(){
 	attackTime = 0;
 
 	if(enemy->life <= 0){
-		enemy->vy = 0;
+		enemy->velocity_y_axis = 0;
 		enemy->changeState(Enemy::EStates::DEAD);
 	}
 }
@@ -25,11 +25,11 @@ void EStateAttack::update(const double DELTA_TIME){
 
 	/// @todo Refactor the way the enemy hurts the player.
 	
-	if(this->enemy->vx >= 0){
-		this->enemy->vx = 0;
+	if(this->enemy->velocity_x_axis >= 0){
+		this->enemy->velocity_x_axis = 0;
 	}
 	else{
-		this->enemy->vx = -0.001; //Set this value so that the Enemy won't Flip when attacking
+		this->enemy->velocity_x_axis = -0.001; //Set this value so that the Enemy won't Flip when attacking
 	}
 
 	if(attackTime > attackTotalTime){

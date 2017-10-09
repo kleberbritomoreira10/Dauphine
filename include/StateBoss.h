@@ -15,9 +15,9 @@ class StateBoss
 	public:
 		/**
 		* The constructor.
-		* @param boss_ : Reference to the Boss.
+		* @param BOSS : Reference to the Boss.
 		*/
-		StateBoss ( Boss *const boss_ );
+		StateBoss ( Boss *const BOSS );
 
 		/**
 		* The destructor.

@@ -9,9 +9,9 @@ class BStateShield : public StateBoss
 	public:
 		/**
 		* The constructor.
-		* @param boss_ : Reference to the Boss.
+		* @param BOSS : Reference to the Boss.
 		*/
-		BStateShield ( Boss *const boss_ );
+		BStateShield ( Boss *const BOSS );
 		
 		/**
 		* The destructor.

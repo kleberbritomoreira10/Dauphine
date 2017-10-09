@@ -39,7 +39,7 @@ class Enemy : public DynamicEntity
 		/**
 		* The constructor.
 		*/
-		Enemy ( const double x_, const double y_, const std::string& path_, const bool patrol_,
+		Enemy ( const double x_, const double y_, const std::string& PATH, const bool patrol_,
 			const double patrolLength_ );
 
 		/**

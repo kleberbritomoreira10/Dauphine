@@ -42,7 +42,7 @@ void EStateDead::update( const double DELTA_TIME)
 	{
 		this -> enemy -> set_dead(true);
 	}
-	this -> enemy -> vx = 0;
+	this -> enemy -> velocity_x_axis = 0;
 }
 
 /*

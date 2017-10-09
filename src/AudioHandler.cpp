@@ -49,9 +49,9 @@ AudioHandler::~AudioHandler()
 /**
 * Sets the current music.
 * If one already exists, frees it first.
-* @param path_ : The path to the desired music.
+* @param PATH : The path to the desired music.
 */
-void AudioHandler::setCurrentMusic( const std::string &path_ )
+void AudioHandler::setCurrentMusic( const std::string &PATH )
 {
 	if ( this -> currentMusic != nullptr )
 	{
@@ -59,7 +59,7 @@ void AudioHandler::setCurrentMusic( const std::string &path_ )
 		this -> currentMusic = nullptr;
 	}
 
-	this -> currentMusic = Mix_LoadMUS( path_.c_str() );
+	this -> currentMusic = Mix_LoadMUS( PATH.c_str() );
 }
 
 /**
@@ -100,16 +100,16 @@ void AudioHandler::setMusicVolume( const unsigned int percent_ )
 /**
 * Sets the current effect.
 * If one already exists, frees it first.
-* @param path_ : The path to the desired effect.
+* @param PATH : The path to the desired effect.
 */
-void AudioHandler::addSoundEffect( const std::string& path_ )
+void AudioHandler::addSoundEffect( const std::string& PATH )
 {
-	Mix_Chunk *effect = Mix_LoadWAV( path_.c_str() ); // Sound effect.
+	Mix_Chunk *effect = Mix_LoadWAV( PATH.c_str() ); // Sound effect.
 	SoundEffect sfx = {effect, -1};
 
 	if ( effect == nullptr )
 	{
-		Log( DEBUG ) << "Loaded null chunk " << path_ << " " << Mix_GetError();
+		Log( DEBUG ) << "Loaded null chunk " << PATH << " " << Mix_GetError();
 	}
 
 	/// @todo Resource manager for audio.
@@ -152,12 +152,12 @@ void AudioHandler::setEffectVolume( const unsigned int percent_ )
 /**
 * Changes current music.
 * Stops the music, sets it, and plays it with infinite looping.
-* @param path_ : The path to the desired music.
+* @param PATH : The path to the desired music.
 */
-void AudioHandler::change_music( const std::string& path_ )
+void AudioHandler::change_music( const std::string& PATH )
 {
 	stopMusic();
-	setCurrentMusic( path_ );
+	setCurrentMusic( PATH );
 	playMusic( MIX_LOOP );
 }
 

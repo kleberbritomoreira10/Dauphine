@@ -29,8 +29,8 @@ void PStateHit::enter()
   {
     direction = -1;
   }
-  this -> player -> vy = -130;
-  this -> player -> vx = 5000 * direction;
+  this -> player -> velocity_y_axis = -130;
+  this -> player -> velocity_x_axis = 5000 * direction;
 }
 
 /*
@@ -41,10 +41,10 @@ void PStateHit::exit()
 {
   if ( this -> player -> is_right )
   {
-    this -> player -> vx = 0.0;
+    this -> player -> velocity_x_axis = 0.0;
   } else 
 	{
-	  this -> player -> vx = -0.001;
+	  this -> player -> velocity_x_axis = -0.001;
   	}
 }
 

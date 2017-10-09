@@ -40,12 +40,12 @@ double Enemy::curious_range = 600.0;
  * Method used to create all characteristics Enemy
  * @param x_ : Position on the x axis of the enemy
  * @param y_ : Position on the y axis of the enemy
- * @param path_ : The path to the desired sprite
+ * @param PATH : The path to the desired sprite
  * @param patrol_ : Defines if the enemy patrols.
  * @param patrolLength_ : Defines the space traveled by the patrolman
  */
-Enemy::Enemy( const double x_, const double y_, const std::string& path_, const bool patrol_,
-	const double patrolLength_ ) : DynamicEntity(x_, y_, path_), original_X(x_), patrol(patrol_),
+Enemy::Enemy( const double x_, const double y_, const std::string& PATH, const bool patrol_,
+	const double patrolLength_ ) : DynamicEntity(x_, y_, PATH), original_X(x_), patrol(patrol_),
   patrol_length(patrolLength_), life(100), current_state(nullptr), animation(nullptr), statesMap(), dead(false)
 {
 	// Initialize all the states in Enemy.
@@ -197,7 +197,7 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	//Collision on top
 	if ( detections_.at(CollisionSide::SOLID_TOP) )
 	{
-		this -> vy = 0.0;
+		this -> velocity_y_axis = 0.0;
 	}
 	//Collision on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM) )
@@ -206,7 +206,7 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 			(EStates::DEAD))
 		{
 			this -> nextY -= fmod( this -> nextY, 64.0 ) - 16.0;
-			this -> vy = 0.0;
+			this -> velocity_y_axis = 0.0;
 			if ( this -> isDead() )
 			{
 				this -> changeState(EStates::DEAD);
@@ -229,13 +229,13 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	if ( detections_.at(CollisionSide::SOLID_LEFT) )
 	{
 		this -> nextX = this -> x;
-		this -> vx = 0.0;
+		this -> velocity_x_axis = 0.0;
 	}
 	//Collision on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
 	{
 		this -> nextX = this -> x;
-		this -> vx = -0.001;
+		this -> velocity_x_axis = -0.001;
 	}
 }
 
@@ -244,8 +244,8 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
  */
 void Enemy::forceMaxSpeed()
 {
-	this -> vx = ( this -> vx >= this -> maxSpeed) ? this -> maxSpeed : this -> vx ;
-	this -> vy = ( this -> vy >= this -> maxSpeed) ? this -> maxSpeed : this -> vy ;
+	this -> velocity_x_axis = ( this -> velocity_x_axis >= this -> maxSpeed) ? this -> maxSpeed : this -> velocity_x_axis ;
+	this -> velocity_y_axis = ( this -> velocity_y_axis >= this -> maxSpeed) ? this -> maxSpeed : this -> velocity_y_axis ;
 }
 
 /*

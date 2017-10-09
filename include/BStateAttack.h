@@ -9,9 +9,9 @@ class BStateAttack : public StateBoss
 	public:
 		/**
 		* The constructor.
-		* @param boss_ : Reference to the Boss.
+		* @param BOSS : Reference to the Boss.
 		*/
-		BStateAttack ( Boss *const boss_ );
+		BStateAttack ( Boss *const BOSS );
 		
 		/**
 		* The destructor.

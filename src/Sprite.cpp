@@ -3,11 +3,11 @@
 #include "Logger.h"
 #include <cassert>
 
-Sprite::Sprite(const std::string& path_) :
+Sprite::Sprite(const std::string& PATH) :
 	sdlTexture(nullptr),
 	width(0),
 	height(0),
-	path(path_),
+	path(PATH),
 	flipHorizontal(false)
 {
 	loadFrom(this->path);
@@ -36,18 +36,18 @@ Sprite::~Sprite(){
 	}
 }
 
-void Sprite::loadFrom(const std::string& path_){
+void Sprite::loadFrom(const std::string& PATH){
 	assert(Window::getRenderer() != nullptr && "Window renderer should not be null!");
 
 
-	SDL_Surface* loadedSurface = IMG_Load(path_.c_str());
+	SDL_Surface* loadedSurface = IMG_Load(PATH.c_str());
 
 	// Returns whether the Sprites texture is null or not.
 	this->sdlTexture = surfaceToTexture(loadedSurface);
 
 	// Display error log if image wasn't loaded.
 	if(this->sdlTexture == nullptr){
-		Log(ERROR) << "Sprite load failed: " << path_;
+		Log(ERROR) << "Sprite load failed: " << PATH;
 	}
 }
 

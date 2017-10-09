@@ -20,10 +20,10 @@ class Sprite
 		* The constructor.
 		* Initializes all the data, and sets the desired renderer. Loads image with the desired
 		* 	path.
-		* @param path_ : the image path.
+		* @param PATH : the image path.
 		* @see Sprite::loadFrom
 		*/
-		Sprite ( const std::string &path_ );
+		Sprite ( const std::string &PATH );
 		Sprite (SDL_Surface *const surface_ );
 
 		/**
@@ -77,11 +77,11 @@ class Sprite
 		/**
 		* Loads image from a path.
 		* Given an existing path for an image, loads the SDL_Texture from it.
-		* @param path_ : the image path.
+		* @param PATH : the image path.
 		* @note Error message is logged if the sprite's SDL_Texture (sdlTexture) is null after
 			method.
 		*/
-		void loadFrom ( const std::string &path_ );
+		void loadFrom ( const std::string &PATH );
 
 		SDL_Texture* surfaceToTexture ( SDL_Surface *const surface_ );
 

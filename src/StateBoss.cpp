@@ -1,7 +1,7 @@
 #include "StateBoss.h"
 
-StateBoss::StateBoss( Boss* const boss_ ) :
-  boss(boss_)
+StateBoss::StateBoss( Boss* const BOSS ) :
+  boss(BOSS)
 {
 
 }

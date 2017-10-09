@@ -68,10 +68,10 @@ void BStateAttack::update( const double DELTA_TIME )
 
 /**
 * The constructor.
-* @param boss_ : Reference to the Boss.
+* @param BOSS : Reference to the Boss.
 */
-BStateAttack::BStateAttack( Boss *const boss_ ) :
-	StateBoss( boss_ )
+BStateAttack::BStateAttack( Boss *const BOSS ) :
+	StateBoss( BOSS )
 {
 	srand( time( nullptr ) );
 }

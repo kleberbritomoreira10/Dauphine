@@ -44,8 +44,8 @@ void BStateShield::update( const double DELTA_TIME )
 * The constructor.
 * Initializes the attributes.
 */
-BStateShield::BStateShield( Boss* const boss_ ) :
-	StateBoss( boss_ )
+BStateShield::BStateShield( Boss* const BOSS ) :
+	StateBoss( BOSS )
 {
 
 }

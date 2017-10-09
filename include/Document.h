@@ -20,7 +20,7 @@ class Document : public Entity
 		@param x_ : position in x axis.
 		@param y_ : position in y axis.
 		*/
-		Document ( const double x_, const double y_, const std::string &path_,
+		Document ( const double x_, const double y_, const std::string &PATH,
 				 const std::string &pathDocumentText_ );
 
 		virtual ~Document ();

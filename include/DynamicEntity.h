@@ -40,7 +40,7 @@ class DynamicEntity : public Entity
 		* @param y_ : position in y axis.
 		* @param sprite_ : which sprite to use.
 		*/
-		DynamicEntity ( const double x_, const double y_, const std::string &path_ );
+		DynamicEntity ( const double x_, const double y_, const std::string &PATH );
 
 		/**
 		* The destructor.
@@ -62,8 +62,8 @@ class DynamicEntity : public Entity
 		*/
 		virtual void setLevelWH ( const unsigned int width_, const unsigned int height_ );
 
-		double vx; // The dynamic entity's speed on the x axis.
-		double vy; // The dynamic entity's speed on the y axis.
+		double velocity_x_axis; // The dynamic entity's speed on the x axis.
+		double velocity_y_axis; // The dynamic entity's speed on the y axis.
 		double speed; // Speed that moves dynamic entity on input.
 		double maxSpeed; // Dynamic entity max speed.
 		bool isGrounded; // Check for if the dynamic entity is on the ground.

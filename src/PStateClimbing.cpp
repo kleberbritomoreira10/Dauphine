@@ -28,14 +28,14 @@ void PStateClimbing::enter()
 
     this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
 
-    this -> player -> vy = 0;
+    this -> player -> velocity_y_axis = 0;
     if( !this -> player -> is_right )
     {
-		this -> player -> vx = -0.001;
+		this -> player -> velocity_x_axis = -0.001;
     }
 	else
 	{
-		this -> player -> vx = 0.0;
+		this -> player -> velocity_x_axis = 0.0;
 	}
 
 }
@@ -54,7 +54,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 
 	this -> player -> moveVertical( keyStates_[GameKeys::UP], keyStates_[ GameKeys::DOWN ]);
 
-	if( abs( this -> player -> vy ) < 1 )
+	if( abs( this -> player -> velocity_y_axis ) < 1 )
 	{
 		this -> player -> getAnimation() -> changeAnimation( this -> player -> getAnimation() -> getCurrentFrame() - 1,
 			6, 1, false, 0 );
@@ -73,15 +73,15 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 	if( keyStates_[ GameKeys::SPACE ] )
 	{
 		Log( DEBUG ) << "entrou";		
-		this -> player -> vy = -700;
+		this -> player -> velocity_y_axis = -700;
 
 		if( this -> player -> is_right)
 		{
-			this -> player -> vx = -500;
+			this -> player -> velocity_x_axis = -500;
 		}
 		else
 		{
-			this -> player -> vx = 500;
+			this -> player -> velocity_x_axis = 500;
 		}
 
 		this -> player -> changeState( Player::player_states::AERIAL );
@@ -90,7 +90,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 
 	if( !this -> player -> isClimbing)
 	{
-		this -> player -> vy = -1000;
+		this -> player -> velocity_y_axis = -1000;
 		this -> player -> changeState( Player::player_states::AERIAL );
 		return;
 	}

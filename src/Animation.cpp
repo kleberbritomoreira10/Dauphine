@@ -25,10 +25,10 @@ Animation::Animation ( const int x_, const int y_, const int spriteWidth_,
 	ANIMATION_LIMIT( 10 ),
 	x( x_ ),
 	y( y_ ),
-	initialX( 0 ),
-	initialY( 0 ),
-	spriteWidth( spriteWidth_ ),
-	spriteHeight( spriteHeight_ ),
+	initial_x( 0 ),
+	initial_y( 0 ),
+	sprite_width( spriteWidth_ ),
+	sprite_height( spriteHeight_ ),
 	loop( loop_ ),
 	totalElapsedTime( 0.0 ),
 	totalTime( 0.0 )
@@ -56,12 +56,12 @@ void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
 	// end of the animation.
 	bool endOfAnimation = ( ( animationCount + 1 ) >= this -> numberOfImages );
 
-	const double deltaT = ( this -> totalTime / this -> numberOfImages );
+	const double DELTA_TOTAL = ( this -> totalTime / this -> numberOfImages );
 
 	// Check if the frame has changed.
     this -> totalElapsedTime += DELTA_TIME;
 
-    if ( this -> totalElapsedTime >= deltaT )
+    if ( this -> totalElapsedTime >= DELTA_TOTAL )
     {    
       this -> totalElapsedTime = 0;
       animationCount += 1;
@@ -81,15 +81,15 @@ void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
 
     	if ( endOfAnimation )
       {
-    		this -> x= this -> initialX;
-    		this -> y= this -> initialY;
+    		this -> x= this -> initial_x;
+    		this -> y= this -> initial_y;
     		Animation::animationCount = 0;
     	}
     }
 
-   	const int positionX_ = this -> x * this -> spriteWidth;
-  	const int positionY_ = this -> y * this -> spriteHeight;
-  	updateClip( clip, positionX_, positionY_ );
+   	const int POSITION_X = this -> x * this -> sprite_width;
+  	const int POSITION_Y = this -> y * this -> sprite_height;
+  	updateClip( clip, POSITION_X, POSITION_Y );
 }
 
 /**
@@ -102,8 +102,8 @@ void Animation::changeAnimation ( const int x_, const int y_, const unsigned int
 
 	this -> x = x_;
 	this -> y = y_;
-	this -> initialX = x_;
-	this -> initialY = y_;
+	this -> initial_x = x_;
+	this -> initial_y = y_;
 	this -> numberOfImages = ( numberOfImages_ == 0 ) ? 1 : numberOfImages_;
 	this -> loop = loop_;
 	this -> totalTime = totalTime_;
@@ -120,8 +120,8 @@ void Animation::updateClip ( SDL_Rect& clip, const int x_, const int y_ )
 {
 	clip.x = x_;
 	clip.y = y_;
-	clip.w = this -> spriteWidth;
-	clip.h = this -> spriteHeight;
+	clip.w = this -> sprite_width;
+	clip.h = this -> sprite_height;
 }
 
 /*
@@ -140,6 +140,6 @@ int Animation::getCurrentFrame ()
 */
 void Animation::changeWidthHeight ( int width_, int height_ )
 {
-	this -> spriteWidth = width_;
-	this -> spriteHeight = height_;
+	this -> sprite_width = width_;
+	this -> sprite_height = height_;
 }

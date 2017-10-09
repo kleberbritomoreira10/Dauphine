@@ -82,7 +82,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   }
 
   // Idle
-  if ( this -> player -> vx < 1.0 && this -> player -> vx > (-1.0))
+  if ( this -> player -> velocity_x_axis < 1.0 && this -> player -> velocity_x_axis > (-1.0))
   {
     this -> player->changeState(Player::player_states::IDLE);
     return;

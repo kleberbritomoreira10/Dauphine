@@ -13,8 +13,8 @@
 #include <cmath>
 
 double projectileTime = 0.0;
-double mpX = 0;
-double mpY = 0;
+double leg_x_axis = 0;
+double leg_y_axis = 0;
 double hypotenuse = 0;
 
 /**
@@ -26,17 +26,17 @@ void BStateMagicProjectile::enter ()
   this -> boss -> power = Game::instance().getResources().get( "res/images/projectile.png" );
   this -> boss -> power_animation -> changeWidthHeight( 50, 50 );
   this -> boss -> power_animation -> changeAnimation( 0, 0, 4, false, 0.5 );
-  this -> boss -> vx = 0;
-  this -> boss -> vy = 0;
+  this -> boss -> velocity_x_axis = 0;
+  this -> boss -> velocity_y_axis = 0;
   this -> boss -> power_X = this -> boss -> x + 50;
   this -> boss -> power_Y = this -> boss -> y + 150;
 
-  mpX = this -> boss -> player -> get_bounding_box().x + 50 - this -> boss -> get_bounding_box().x;
-  mpY = this -> boss -> player -> get_bounding_box().y + 50 - this -> boss -> get_bounding_box().y;
-  hypotenuse = sqrt( ( mpX * mpX ) + ( mpY * mpY ) );
+  leg_x_axis = this -> boss -> player -> get_bounding_box().x + 50 - this -> boss -> get_bounding_box().x;
+  leg_y_axis = this -> boss -> player -> get_bounding_box().y + 50 - this -> boss -> get_bounding_box().y;
+  hypotenuse = sqrt( ( leg_x_axis * leg_x_axis ) + ( leg_y_axis * leg_y_axis ) );
   hypotenuse = ( hypotenuse == 0 ) ? 1 : hypotenuse;
-  mpX /= hypotenuse;
-  mpY /= hypotenuse;
+  leg_x_axis /= hypotenuse;
+  leg_y_axis /= hypotenuse;
 }
 
 /**
@@ -46,8 +46,8 @@ void BStateMagicProjectile::exit ()
 {
   this -> boss -> power_is_activated = false;
   projectileTime = 0.0;
-  mpX = 0;
-  mpY = 0;
+  leg_x_axis = 0;
+  leg_y_axis = 0;
   hypotenuse = 0;
   this -> boss -> power_animation -> changeWidthHeight( 50, 50 );
 }
@@ -58,8 +58,8 @@ void BStateMagicProjectile::exit ()
 void BStateMagicProjectile::update ( const double DELTA_TIME ) 
 {
   projectileTime += DELTA_TIME;
-  this -> boss -> power_X += mpX * 15;
-  this -> boss -> power_Y += mpY * 15;
+  this -> boss -> power_X += leg_x_axis * 15;
+  this -> boss -> power_Y += leg_y_axis * 15;
   this -> boss -> power_is_activated = true;
 
   if ( Collision::rects_collided( this -> boss -> player -> get_bounding_box(), { ( int )this -> boss -> power_X, 
@@ -77,10 +77,10 @@ void BStateMagicProjectile::update ( const double DELTA_TIME )
 
 /**
 * The constructor.
-* @param boss_ : Reference to the Boss.
+* @param BOSS : Reference to the Boss.
 */
-BStateMagicProjectile::BStateMagicProjectile( Boss* const boss_ ) :
-  StateBoss( boss_ )
+BStateMagicProjectile::BStateMagicProjectile( Boss* const BOSS ) :
+  StateBoss( BOSS )
 {
 
 }

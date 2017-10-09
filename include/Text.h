@@ -16,10 +16,10 @@ class Text : public Entity
 {
 
 	public:
-		Text( const double x_, const double y_, const char *path_, const int size_,
+		Text( const double x_, const double y_, const char *PATH, const int size_,
 			const char *text_, const SDL_Color color_ );
 
-		Text( const double x_, const double y_, const char *path_, const int size_,
+		Text( const double x_, const double y_, const char *PATH, const int size_,
 			const char *text_ );
 
 		virtual ~Text();

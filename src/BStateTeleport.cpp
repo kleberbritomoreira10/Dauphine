@@ -61,14 +61,14 @@ void BStateTeleport::update ( const double DELTA_TIME )
 
 	if ( tptime < 3 )
 	{
-		this -> boss -> vx = 0;
-		this -> boss -> vy = 0;
+		this -> boss -> velocity_x_axis = 0;
+		this -> boss -> velocity_y_axis = 0;
 
 	} else if ( tptime >= 3 && tptime <= 3.05 )
 	{
 
 		this -> boss -> getAnimation() -> changeAnimation ( 0, 0, 1, false, 0 );
-		this -> boss -> vx = 0;
+		this -> boss -> velocity_x_axis = 0;
 
 		if ( this -> boss -> player -> is_right )
 		{
@@ -182,9 +182,9 @@ void BStateTeleport::update ( const double DELTA_TIME )
 	}
 }
 
-// @param boss_ : Reference to the Boss.
-BStateTeleport::BStateTeleport ( Boss *const boss_ ) :
-	StateBoss( boss_ )
+// @param BOSS : Reference to the Boss.
+BStateTeleport::BStateTeleport ( Boss *const BOSS ) :
+	StateBoss( BOSS )
 {
 
 }

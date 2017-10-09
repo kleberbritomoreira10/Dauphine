@@ -54,7 +54,7 @@ class Player : public DynamicEntity
 		* @param y_ : position in y axis.
 		* @param sprite_ : which sprite to use.
 		*/
-		Player( const double x_, const double y_, const std::string& path_ );
+		Player( const double x_, const double y_, const std::string& PATH );
 
 		/**
 		* The destructor.

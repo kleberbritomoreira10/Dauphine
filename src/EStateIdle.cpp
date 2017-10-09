@@ -21,7 +21,7 @@ void EStateIdle::enter()
 
 	if ( enemy -> life <= 0 )
 	{
-		enemy -> vy = 0;
+		enemy -> velocity_y_axis = 0;
 		enemy -> changeState( Enemy::EStates::DEAD );
 	}
 }

@@ -6,7 +6,7 @@ void EStateAlert::enter(){
 	this->enemy->speed = 6.5;
 
 	if(enemy->life <= 0){
-		enemy->vy = 0;
+		enemy->velocity_y_axis = 0;
 		enemy->changeState(Enemy::EStates::DEAD);
 	}
 }
@@ -25,11 +25,11 @@ void EStateAlert::update(const double DELTA_TIME){
 	}
 
 	if(this->enemy->x - Enemy::px < 0.0){
-		this->enemy->vx += this->enemy->speed;
+		this->enemy->velocity_x_axis += this->enemy->speed;
 
 	}
 	else{
-		this->enemy->vx -= this->enemy->speed;
+		this->enemy->velocity_x_axis -= this->enemy->speed;
 	}
 
 	if(abs(this->enemy->x - Enemy::px) < 100){

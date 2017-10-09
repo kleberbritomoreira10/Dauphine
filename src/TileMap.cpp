@@ -10,8 +10,8 @@ TileMap::TileMap(const std::string& mapPath_) :
 	layers(0),
 	mapWidth(0),
 	mapHeight(0),
-	initialX(0),
-	initialY(0)
+	initial_x(0),
+	initial_y(0)
 {
 	load(mapPath_);
 }
@@ -103,8 +103,8 @@ void TileMap::load(const std::string& mapPath_){
 							SDL_Rect tileRect = {(int)(j * TILE_SIZE), (int)(k * TILE_SIZE), TILE_SIZE, TILE_SIZE};
 
 							if(property == "level_begin"){
-								this->initialX = tileRect.x;
-								this->initialY = tileRect.y;
+								this->initial_x = tileRect.x;
+								this->initial_y = tileRect.y;
 								continue;
 							}
 							else if(property == "enemy_patrol" || property == "enemy_no_patrol"){
@@ -227,8 +227,8 @@ void TileMap::renderLayer(const double cameraX_, const double cameraY_, const un
 	}
 }
 
-void TileMap::addTileSet(const std::string& path_){
-	Sprite* newTileSet = Game::instance().getResources().get(path_);
+void TileMap::addTileSet(const std::string& PATH){
+	Sprite* newTileSet = Game::instance().getResources().get(PATH);
 	this->tilesetSprites.push_back(newTileSet);
 }
 
@@ -245,11 +245,11 @@ unsigned int TileMap::getMapHeight(){
 }
 
 double TileMap::get_initial_x(){
-	return (double)this->initialX;
+	return (double)this->initial_x;
 }
 
 double TileMap::get_initial_y(){
-	return (double)this->initialY;
+	return (double)this->initial_y;
 }
 
 std::vector<int>& TileMap::get_enemies_x(){

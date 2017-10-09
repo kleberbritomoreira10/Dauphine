@@ -62,10 +62,10 @@ class Animation
 
 		int x; /**< The position on x axis on the sprite. */
 		int y; /**< The position on x axis on the sprite. */
-		int initialX; /**< Where to start/restart the animation on x. */
-		int initialY; /**< Where to start/restart the animation on y. */
-		int spriteWidth; /**< The sprite width. */
-		int spriteHeight; /**< The sprite height. */
+		int initial_x; /**< Where to start/restart the animation on x. */
+		int initial_y; /**< Where to start/restart the animation on y. */
+		int sprite_width; /**< The sprite width. */
+		int sprite_height; /**< The sprite height. */
 		int numberOfImages; /**< The number of images to animate inside the spritesheet. */
 		bool loop; /**< Whether to loop or not. */
 		double totalElapsedTime; /**< Total time elapsed on the animation, to check if the

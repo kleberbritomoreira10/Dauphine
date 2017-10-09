@@ -9,9 +9,9 @@ class BStateMagicProjectile : public StateBoss
 	public:
 		/**
 		* The constructor.
-		* @param boss_ : Reference to the Boss.
+		* @param BOSS : Reference to the Boss.
 		*/
-		BStateMagicProjectile (Boss *const boss_ );
+		BStateMagicProjectile (Boss *const BOSS );
 		
 		/**
 		* The destructor.

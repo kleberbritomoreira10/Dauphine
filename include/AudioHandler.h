@@ -74,23 +74,23 @@ class AudioHandler
 		/**
 		* Changes current music.
 		* Stops the music, sets it, and plays it with infinite looping.
-		* @param path_ : The path to the desired music.
+		* @param PATH : The path to the desired music.
 		*/
-		void change_music ( const std::string &path_ );
+		void change_music ( const std::string &PATH );
 
 		/**
 		* Sets the current music.
 		* If one already exists, frees it first.
-		* @param path_ : The path to the desired music.
+		* @param PATH : The path to the desired music.
 		*/
-		void setCurrentMusic ( const std::string &path_ );
+		void setCurrentMusic ( const std::string &PATH );
 
 		/**
 		* Sets the current effect.
 		* If one already exists, frees it first.
-		* @param path_ : The path to the desired effect.
+		* @param PATH : The path to the desired effect.
 		*/
-		void addSoundEffect ( const std::string &path_ );
+		void addSoundEffect ( const std::string &PATH );
 
 		void clearChannel ( const int channel_ );
 

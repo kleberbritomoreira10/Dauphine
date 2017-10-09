@@ -67,7 +67,7 @@ class Entity
 		* @param y_ : position in y axis.
 		* @param sprite_ : which sprite to use.
 		*/
-		Entity ( const double x_, const double y_, const std::string &path_ );
+		Entity ( const double x_, const double y_, const std::string &PATH );
 
 		/**
 		* The constructor.

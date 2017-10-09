@@ -18,11 +18,11 @@
 * @param y_ : position in y axis.
 * @param sprite_ : which sprite to use.
 */
-Entity::Entity ( const double x_, const double y_, const std::string& path_ ) :
+Entity::Entity ( const double x_, const double y_, const std::string& PATH ) :
     x( x_ ),
     y( y_ ),
     is_right( true ),
-    sprite(Game::instance().getResources().get(path_)),
+    sprite(Game::instance().getResources().get(PATH)),
     width( 0 ),
     height( 0 ),
     animationClip{ 0, 0, 0, 0 },

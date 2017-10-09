@@ -55,7 +55,7 @@ class TileMap
 		/**
 		*
 		*/
-		void addTileSet( const std::string& path_ );
+		void addTileSet( const std::string& PATH );
 
 		/**
 		* Renders a certain layer from the TileMap.
@@ -70,8 +70,8 @@ class TileMap
 		unsigned int layers;
 		unsigned int mapWidth;
 		unsigned int mapHeight;
-		unsigned int initialX;
-		unsigned int initialY;
+		unsigned int initial_x;
+		unsigned int initial_y;
 
 		std::vector <std::vector <std::vector <unsigned int>>> tileMatrix; /**< Three-dimensional
 			matrix, that contains x = width, y = height, z = layers */

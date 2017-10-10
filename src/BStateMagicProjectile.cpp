@@ -12,10 +12,10 @@
 #include "Collision.h"
 #include <cmath>
 
-double projectileTime = 0.0;
-double leg_x_axis = 0;
-double leg_y_axis = 0;
-double hypotenuse = 0;
+double projectileTime = 0.0;  //Declaring variable that stores the launch time of the projectile executed by the boss.
+double leg_x_axis = 0;  //Declaration variable for side x of the cateto.
+double leg_y_axis = 0;  //Declaration variable for side y of the cateto.
+double hypotenuse = 0;  //Declaration variable for hypotenuse calculation.
 
 /**
 * @see StateBoss::enter
@@ -44,10 +44,10 @@ void BStateMagicProjectile::enter ()
 */
 void BStateMagicProjectile::exit ()
 {
-  this -> boss -> power_is_activated = false;
-  projectileTime = 0.0;
-  leg_x_axis = 0;
-  leg_y_axis = 0;
+  this -> boss -> power_is_activated = false; 
+  projectileTime = 0.0; 
+  leg_x_axis = 0; 
+  leg_y_axis = 0; 
   hypotenuse = 0;
   this -> boss -> power_animation -> changeWidthHeight( 50, 50 );
 }

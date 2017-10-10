@@ -18,18 +18,10 @@
 * @param y_ : position in y axis.
 * @param sprite_ : which sprite to use.
 */
-Entity::Entity ( const double x_, const double y_, const std::string& PATH ) :
-    x( x_ ),
-    y( y_ ),
-    is_right( true ),
-    sprite(Game::instance().getResources().get(PATH)),
-    width( 0 ),
-    height( 0 ),
-    animationClip{ 0, 0, 0, 0 },
-    boundingBox{ (int)x_, (int)y_, 0, 0 }
+Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x( x_ ), y( y_ ), is_right( true ), sprite(Game::instance().getResources().get(PATH)), width( 0 ), height( 0 ), animationClip{ 0, 0, 0, 0 }, 
+  boundingBox{ (int)x_, (int)y_, 0, 0 }
 {
-    // Only serves as the initializer for the derived classes.
-
+  // Only serves as the initializer for the derived classes.
   if ( this -> sprite != nullptr )
   {
     this -> width = this -> sprite -> getWidth();
@@ -51,15 +43,8 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) :
 * @param x_ : position in x axis.
 * @param y_ : position in y axis.
 */
-Entity::Entity ( const double x_, const double y_ ) :
-  x( x_ ),
-  y( y_ ),
-  is_right( true ),
-  sprite( nullptr ),
-  width( 0 ),
-  height( 0 ),
-  animationClip{ 0, 0, 0, 0 },
-  boundingBox{ ( int )x_, ( int )y_, 0, 0 }
+Entity::Entity ( const double x_, const double y_ ) : x( x_ ), y( y_ ), is_right( true ), sprite( nullptr ), 
+  width( 0 ), height( 0 ), animationClip{ 0, 0, 0, 0 }, boundingBox{ ( int )x_, ( int )y_, 0, 0 }
 {
     // Only serves as the initializer for the derived classes.
 }

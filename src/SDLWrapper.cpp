@@ -15,10 +15,10 @@
 */
 bool SDLWrapper::initialize()
 {
-	bool successSDL = false;
-	bool success_image = false;
-	bool successMixer = false;
-	bool successTTF = false;
+	bool successSDL = false;     //Declaring boolean variable that checks if sdlInit = 0    
+	bool success_image = false;  //Declaring boolean variable that checks if image init
+	bool successMixer = false;  //Declaring boolean variable that checks if INITIALIZED = 0
+	bool successTTF = false;  //Declaring boolean variable that checks if ttfInit = 0
 
 	SDL_version compiled;
 
@@ -35,7 +35,7 @@ bool SDLWrapper::initialize()
 	}
 
 	else
-  {
+    {
 		Log(ERROR) << "Could not initialize TTF." << TTF_GetError();
 	}
 
@@ -44,7 +44,7 @@ bool SDLWrapper::initialize()
 	const int sdlInit = SDL_Init( initFlags );
 
 	if ( sdlInit == 0 )
-  {
+    {
 		successSDL = true;
 
 		SDL_version linked;
@@ -55,14 +55,14 @@ bool SDLWrapper::initialize()
 	}
 
 	else
-  {
+    {
 		Log(ERROR) << "Could not initialize SDL." << SDL_GetError();
 	}
 
 	// Initializing SDL_image with image_flags.
 	const Uint32 image_flags = IMG_INIT_PNG;
 	if ( (IMG_Init( image_flags) & image_flags ) )
-  {
+    {
 		success_image = true;
 
 		SDL_IMAGE_VERSION( &compiled );
@@ -70,7 +70,7 @@ bool SDLWrapper::initialize()
 	}
 
 	else
-  {
+    {
 		Log(ERROR) << "Could not initialize SDL_Image." << IMG_GetError();
 	}
 
@@ -86,7 +86,7 @@ bool SDLWrapper::initialize()
 
 		SDL_MIXER_VERSION( &compiled );
 		SDLWrapper::logSDLVersion( "SDL_mixer", compiled );
-	}
+  }
 
 	else
   {

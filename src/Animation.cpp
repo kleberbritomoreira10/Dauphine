@@ -1,24 +1,24 @@
 /* Dauphine
-* Universidade de Brasília - FGA
-* Técnicas de Programação, 2/2017
-* @Animation.cpp
-* Class in control of animating a sprite.
-*/
+ * Universidade de Brasília - FGA
+ * Técnicas de Programação, 2/2017
+ * @Animation.cpp
+ * Class in control of animating a sprite.
+ */
 
 #include "Animation.h"
 
-int animationCount = 0;
+int animationCount = 0;  //Declaring auxiliary variable for the repeat structure.
 
 /**
-* The constructor.
-* Initializes all attributes.
-* @param x_ : The x position on the spritesheet.
-* @param y_ : The y position on the spritesheet.
-* @param spriteWidth_ : The width of the sprite to animate.
-* @param spriteHeight_ : The height of the sprite to animate.
-* @param numberOfImages_ : The number of images to animate inside the spritesheet.
-* @param loop_ : Whether to loop or not.
-*/
+ * The constructor.
+ * Initializes all attributes.
+ * @param x_ : The x position on the spritesheet.
+ * @param y_ : The y position on the spritesheet.
+ * @param spriteWidth_ : The width of the sprite to animate.
+ * @param spriteHeight_ : The height of the sprite to animate.
+ * @param numberOfImages_ : The number of images to animate inside the spritesheet.
+ * @param loop_ : Whether to loop or not.
+ */
 Animation::Animation ( const int x_, const int y_, const int spriteWidth_,
 	const int spriteHeight_, const unsigned int numberOfImages_, const bool loop_ ) :
 	
@@ -52,11 +52,11 @@ Animation::~Animation()
 */
 void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
 {
-	// Compare the position on the sprite with the number of positions to know if is the
-	// end of the animation.
+	// Compare the position on the sprite with the number of positions to know if is the end of the animation.
 	bool endOfAnimation = ( ( animationCount + 1 ) >= this -> numberOfImages );
 
-	const double DELTA_TOTAL = ( this -> totalTime / this -> numberOfImages );
+	// Time total between one frame and the other
+	const double DELTA_TOTAL = ( this -> totalTime / this -> numberOfImages );  
 
 	// Check if the frame has changed.
     this -> totalElapsedTime += DELTA_TIME;
@@ -87,8 +87,8 @@ void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
     	}
     }
 
-   	const int POSITION_X = this -> x * this -> sprite_width;
-  	const int POSITION_Y = this -> y * this -> sprite_height;
+   	const int POSITION_X = this -> x * this -> sprite_width;  //Defining width animation
+  	const int POSITION_Y = this -> y * this -> sprite_height; //Defining height animation
   	updateClip( clip, POSITION_X, POSITION_Y );
 }
 
@@ -135,7 +135,7 @@ int Animation::getCurrentFrame ()
 
 /*
 * change sprite position
-* @param width_  : width position
+* @param width_ : width position
 * @param height_ : height position
 */
 void Animation::changeWidthHeight ( int width_, int height_ )

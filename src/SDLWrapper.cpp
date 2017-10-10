@@ -27,7 +27,7 @@ bool SDLWrapper::initialize()
 	// Initializing SDL_TTF.
 	const int ttfInit = TTF_Init();
 	if ( ttfInit == 0 )
-  {
+    {
 		successTTF = true;
 
 		SDL_TTF_VERSION(&compiled);

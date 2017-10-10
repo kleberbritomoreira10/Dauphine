@@ -44,29 +44,28 @@ void InputHandler::handleInput ()
 	this -> keyStates[ GameKeys::NLATTACK ] = false;
 	this -> keyStates[ GameKeys::ACTION ] = false;
 
-
-	int pendingEvent = 0;
+	int pendingEvent = 0;  //Declaring variable to receive the number of pending events
 
 	do
 	{
 
 		pendingEvent = SDL_PollEvent ( &this -> sdlEvent ); 
 
-		if (this -> sdlEvent.type == SDL_CONTROLLERBUTTONDOWN 
+		if ( this -> sdlEvent.type == SDL_CONTROLLERBUTTONDOWN 
 			|| this -> sdlEvent.type == SDL_CONTROLLERBUTTONUP 
 			|| this -> sdlEvent.type == SDL_CONTROLLERAXISMOTION )
 		{
 			
 			this -> controllerHandler -> handleInput (this -> sdlEvent );
 
-			for( unsigned int i = 0; i < this -> keyStates.size(); i++ )
+			for ( unsigned int i = 0; i < this -> keyStates.size(); i++ )
 			{
 				this -> keyStates[ i ] = this -> controllerHandler -> keyStates[ i ];
 			}
 			
 		}
+
 		// On keydown.
-		
 		if ( this -> sdlEvent.type == SDL_KEYDOWN )
 		{
 			switch ( this -> sdlEvent.key.keysym.sym )
@@ -202,7 +201,7 @@ void InputHandler::handleInput ()
 			signalExit();
 		}
 
-	} while(pendingEvent != 0);
+	} while ( pendingEvent != 0 );
 }
 
 /**

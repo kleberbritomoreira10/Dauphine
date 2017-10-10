@@ -72,14 +72,13 @@ void LevelTwo::load ()
   // Changing the music.
   // Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
 
-  // Loading the player and the camera.
-  Player *level_player = nullptr;
+  Player *level_player = nullptr;  // Loading the player.
   
   if ( Game::instance ().get_saves ().is_saved ( Game::instance ().current_slot ) 
       && Game::instance ().get_saves ().get_saved_level ( Game::instance ().current_slot ) == 2 )
   {
-    double saved_x_position = 0.0;
-    double saved_y_position = 0.0;
+    double saved_x_position = 0.0;  //Position of the player that was saved on the x axis  
+    double saved_y_position = 0.0;  //Position of the player that was saved on the y axis
 
     Game::instance ().get_saves ().get_player_position ( saved_x_position, saved_y_position, Game::instance ().current_slot );
 
@@ -91,7 +90,7 @@ void LevelTwo::load ()
                           this -> tile_map -> get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
   }
   
-  Camera *level_camera = new Camera ( level_player ); 
+  Camera *level_camera = new Camera ( level_player ); // Loading the camera.
   
   this -> player_Hud = new PlayerHUD ( level_player );
 
@@ -318,8 +317,8 @@ void LevelTwo::update ( const double DELTA_TIME )
 */
 void LevelTwo::render ()
 {
-  const int CAMERA_X = this -> camera -> getClip ().x;
-  const int CAMERA_Y = this -> camera -> getClip ().y;
+  const int CAMERA_X = this -> camera -> getClip ().x;  //Declaring the x position of the camera at level 2.
+  const int CAMERA_Y = this -> camera -> getClip ().y;  //Declaring the y position of the camera at level 2.
 
   this -> background -> render ( 0, 0 );
 

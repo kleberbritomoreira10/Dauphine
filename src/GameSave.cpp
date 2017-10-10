@@ -77,13 +77,12 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 {
 
 	this -> setSlot(SLOT);	
-
 	this -> saveFile.open( this -> filePath.c_str() );
 
 	Log(DEBUG) << "Saved from level " << level_;
 	Log(DEBUG) << "Saved on file " << this -> filePath;	
 
-	if(!this -> saveFile.fail())
+	if ( !this -> saveFile.fail() )
   {
 		this -> CURRENT_LEVEL = level_;
 		this -> saveFile << this -> CURRENT_LEVEL << std::endl;
@@ -145,7 +144,6 @@ bool GameSave::is_saved( const int SAVE_SLOT )
 {
 
 	this -> setSlot( SAVE_SLOT );	
-
 	this -> continueFile.open( this -> filePath.c_str() );
 
 	std::string testSave = ""; 
@@ -181,12 +179,9 @@ void GameSave::get_player_position ( double& player_x, double& player_y, const i
 	setSlot( SLOT );
 
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
-
 	this -> continueFile >> CURRENT_LEVEL; 
-
 	this -> continueFile >> player_x;
 	this -> continueFile >> player_y;
-
 	this -> continueFile.close();	
 }
 
@@ -198,41 +193,32 @@ void GameSave::get_player_position ( double& player_x, double& player_y, const i
 bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 {
 
-	double skip = 0;
-
-	int totalEnemies = 0;
-	int currentEnemy = 0;
-
-	bool rc = false;
+	double skip = 0; //Shifts right and adds either 0s, if value is an unsigned type, or extends the top bit (to preserve the sign) if its a signed type.
+	int totalEnemies = 0; //Declaring variable to count quantity enemies
+	int currentEnemy = 0; //Declaring variable to know current enemy
+	bool rc = false;    //Declaring boolean variable to identify if enemy is dead   
 
 	setSlot( SLOT );
 
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
-
 	this -> continueFile >> skip;
 	this -> continueFile >> skip;
 	this -> continueFile >> skip;
-
 	this -> continueFile >> totalEnemies;
 
 	// Log(DEBUG) << "Total Enemies on Level " << totalEnemies;
-
 	for ( int i = 0; i < totalEnemies; i++ )
   {
-
 		// Log(DEBUG) << "Is Enemy " << i << " dead?";		
-		
 		this -> continueFile >> currentEnemy;
 
 		// Log(DEBUG) << "Enemy under test dead status: " << currentEnemy;		
-
 		if ( i == NUMBER_ENEMY )
     {
 			if ( currentEnemy == 1 )
       {
 				rc = true;
       }
-
 			break;			
 		}
 	}
@@ -243,7 +229,6 @@ bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 	// 	Log(DEBUG) << "YES";		
 	// else
 	// 	Log(DEBUG) << "NO";		
-			
 
 	return rc;
 }

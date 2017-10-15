@@ -9,7 +9,7 @@
 * The HUD entity class.
 * Contains all the relevant implementation relative to the HUD.
 */
-class PlayerHUD 
+class PlayerHUD
 {
 
 	public:
@@ -47,7 +47,7 @@ class PlayerHUD
 		void render ();
 
 	private:
-		enum HUD_Elements : uint8_t 
+		enum HUD_Elements : uint8_t
 		{
 			HEALTH_0 = 0,
 			HEALTH_33,
@@ -59,10 +59,10 @@ class PlayerHUD
 
 		void initializeSprites ();
 
-		Sprite *playerHudSprites [ TOTAL_HUD ];
-		bool canRenderHud [ TOTAL_HUD ];
-		Player *player;
-		Text *potionsLeft;
+		Sprite *player_hud_sprites [ TOTAL_HUD ]; // Sprites player.
+		bool is_can_render_hud [ TOTAL_HUD ]; // Boolean array to verify if the hud can be rendered.
+		Player *player; // Instante of a player.
+		Text *potions_left; // Reference to the potions left.
 };
 
 #endif //INCLUDE_PLAYERHUD_H

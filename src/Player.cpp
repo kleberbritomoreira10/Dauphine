@@ -42,7 +42,7 @@
 */
 Player::Player( const double x_, const double y_, const std::string &PATH ) :
     DynamicEntity( x_, y_, PATH ),
-    potionsLeft( 3 ),
+    potions_left( 3 ),
     maxPotions( 3 ),
     crosshair( new Crosshair(0.0, 0.0, "res/images/alvo.png" )),
     life( 3 ),
@@ -278,9 +278,9 @@ void Player::usePotion( const int strength_, const int distance_ )
 {
 
     // Using potions if the potions' quantity is > 0.
-    if ( this -> potionsLeft > 0 )
+    if ( this -> potions_left > 0 )
     {
-        this -> potionsLeft--;
+        this -> potions_left--;
         const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this -> boundingBox.x );
         Potion *potion = new Potion( potionX , this -> y, "res/images/explosion_with_potion.png",
         strength_, this -> velocity_x_axis, distance_, this -> is_right );
@@ -295,12 +295,12 @@ void Player::usePotion( const int strength_, const int distance_ )
 void Player::addPotions( const unsigned int quantity_ )
 {
     // Adding potions if the total of potions is < maximum number of potions.
-    if ( this -> potionsLeft + quantity_ > this -> maxPotions )
+    if ( this -> potions_left + quantity_ > this -> maxPotions )
     {
-        this -> potionsLeft = this -> maxPotions;
+        this -> potions_left = this -> maxPotions;
     } else
     {
-        this -> potionsLeft += quantity_;
+        this -> potions_left += quantity_;
     }
 }
 

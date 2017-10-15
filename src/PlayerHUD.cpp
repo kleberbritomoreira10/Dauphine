@@ -5,28 +5,28 @@
 
 PlayerHUD::PlayerHUD( Player *const player_ ):
 	player( player_ ),
-	potionsLeft( new Text( 200.0, 25.0, "res/fonts/maturasc.ttf", 50, "Potions: x" ) )
+	potions_left( new Text( 200.0, 25.0, "res/fonts/maturasc.ttf", 50, "Potions: x" ) )
 {
 	for( unsigned int i = 0; i < TOTAL_HUD; i++ )
 	{
-		this -> playerHudSprites[ i ] = nullptr;
+		this -> player_hud_sprites[ i ] = nullptr;
 	}
 
 	initializeSprites();
 
 	for( int i = 0; i < TOTAL_HUD; i++ )
 	{
-		this -> canRenderHud[ i ] = true;
+		this -> is_can_render_hud[ i ] = true;
 	}
 
 }
 
 PlayerHUD::~PlayerHUD()
 {
-	if( this -> potionsLeft != nullptr)
+	if( this -> potions_left != nullptr)
 	{
-		delete this -> potionsLeft;
-		this -> potionsLeft = nullptr;
+		delete this -> potions_left;
+		this -> potions_left = nullptr;
 	}
 }
 
@@ -37,19 +37,19 @@ void PlayerHUD::update()
 		switch( this -> player -> life)
 		{
 			case 2:
-				this -> canRenderHud[ 3 ] = false;
+				this -> is_can_render_hud[ 3 ] = false;
 				break;
 			case 1:
-				this -> canRenderHud[ 2 ] = false;
+				this -> is_can_render_hud[ 2 ] = false;
 				break;
 			case 0:
-				this -> canRenderHud[ 1 ] = false;
+				this -> is_can_render_hud[ 1 ] = false;
 				break;
 			default :
 				break;
 		}
 
-		this -> potionsLeft -> changeText( ("Potions: "+ Util::toString( this -> player -> potionsLeft )).c_str() );
+		this -> potions_left -> changeText( ("Potions: "+ Util::toString( this -> player -> potions_left )).c_str() );
 	}
 }
 
@@ -57,15 +57,15 @@ void PlayerHUD::render()
 {
 	for( int i = 0; i < TOTAL_HUD; i++)
 	{
-		if( this -> canRenderHud[ i ])
+		if( this -> is_can_render_hud[ i ])
 		{
-			this -> playerHudSprites[ i ] -> render( 0, 0 );
+			this -> player_hud_sprites[ i ] -> render( 0, 0 );
 		}
 	}
 
-	if( this -> potionsLeft != nullptr)
+	if( this -> potions_left != nullptr)
 	{
-		this -> potionsLeft -> render( 0, 0 );
+		this -> potions_left -> render( 0, 0 );
 	}
 	else 
 	{
@@ -75,9 +75,9 @@ void PlayerHUD::render()
 
 void PlayerHUD::initializeSprites()
 {
-	this -> playerHudSprites[ 0 ] = Game::instance().getResources().get("res/images/hud/health_0.png");
-	this -> playerHudSprites[ 1 ] = Game::instance().getResources().get("res/images/hud/health_33.png");
-	this -> playerHudSprites[ 2 ] = Game::instance().getResources().get("res/images/hud/health_66.png");
-	this -> playerHudSprites[ 3 ] = Game::instance().getResources().get("res/images/hud/health_99.png");
-	this -> playerHudSprites[ 4 ] = Game::instance().getResources().get("res/images/hud/hud_no_health.png");	
+	this -> player_hud_sprites[ 0 ] = Game::instance().getResources().get("res/images/hud/health_0.png");
+	this -> player_hud_sprites[ 1 ] = Game::instance().getResources().get("res/images/hud/health_33.png");
+	this -> player_hud_sprites[ 2 ] = Game::instance().getResources().get("res/images/hud/health_66.png");
+	this -> player_hud_sprites[ 3 ] = Game::instance().getResources().get("res/images/hud/health_99.png");
+	this -> player_hud_sprites[ 4 ] = Game::instance().getResources().get("res/images/hud/hud_no_health.png");	
 }

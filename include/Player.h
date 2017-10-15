@@ -112,7 +112,7 @@ class Player : public DynamicEntity
 		void usePotion( const int strength_, const int distance_ );
 		void addPotions( const unsigned int quantity_ );
 
-		unsigned int potionsLeft;
+		unsigned int potions_left;
 		unsigned int maxPotions;
 		std::vector<Potion*> potions;
 

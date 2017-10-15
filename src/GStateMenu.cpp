@@ -19,23 +19,23 @@
 */
 GStateMenu::GStateMenu() :
 	shouldIgnore( false ),
-	menuImage( nullptr ),
-	menuSelector( nullptr ),
-	attractModeBg( nullptr ),
-	attractMode( nullptr ),
+	menu_image( nullptr ),
+	menu_selector( nullptr ),
+	attrack_mode_background( nullptr ),
+	attract_mode( nullptr ),
 	passed_time( 0.0 ),
 	current_selection( Selection::NEWGAME ),
 	selector_X_position_left { 610, 635, 635, 645 },
 	selector_Y_position_left { 560, 625, 690, 755 },
 	selector_X_position_right { 880, 855, 855, 845 },
 	selector_Y_position_right { 560, 625, 690, 755 },
-	attractHeightSize( 600 ),
-	attractChangeSpeed( 1 ),
-	attractClip{ 0, 0, 0, this -> attractHeightSize },
-	shwingAnimation( nullptr ),
-	shwingIsActivated( true ),
+	attract_height_size( 600 ),
+	attract_change_speed( 1 ),
+	attractClip{ 0, 0, 0, this -> attract_height_size },
+	shwing_animation( nullptr ),
+	is_shwing_activated( true ),
 	shwing( nullptr ),
-	shwingClip { 0,0,0,0 }
+	shwing_clip { 0,0,0,0 }
 {
 
 }
@@ -45,10 +45,10 @@ GStateMenu::GStateMenu() :
 */
 GStateMenu::~GStateMenu()
 {
-	if( this -> shwingAnimation != nullptr )
+	if( this -> shwing_animation != nullptr )
 	{
-		delete this -> shwingAnimation;
-		this -> shwingAnimation = nullptr;
+		delete this -> shwing_animation;
+		this -> shwing_animation = nullptr;
 	}
 }
 
@@ -68,14 +68,14 @@ void GStateMenu::load()
 	const std::string pathTitleScreen = luaMenu.unlua_get<std::string>("menu.images.titleScreen");
 	const std::string pathCursor = luaMenu.unlua_get<std::string>("menu.images.cursor");
 
-    this -> menuImage = Game::instance().getResources().get( pathTitleScreen );
-    this -> menuSelector = Game::instance().getResources().get( pathCursor );
-    this -> attractModeBg = Game::instance().getResources().get("res/images/title_background.png");
-    this -> attractMode = Game::instance().getResources().get("res/images/attract.png");
-    this -> attractClip.w = this -> attractMode -> getWidth();
-    this -> shwingAnimation = new Animation( 0, 0, 795, 360, 3, false );
+    this -> menu_image = Game::instance().getResources().get( pathTitleScreen );
+    this -> menu_selector = Game::instance().getResources().get( pathCursor );
+    this -> attrack_mode_background = Game::instance().getResources().get("res/images/title_background.png");
+    this -> attract_mode = Game::instance().getResources().get("res/images/attract.png");
+    this -> attractClip.w = this -> attract_mode -> getWidth();
+    this -> shwing_animation = new Animation( 0, 0, 795, 360, 3, false );
     this -> shwing = Game::instance().getResources().get("res/images/shwing_sheet.png");
-    this -> shwingAnimation -> ANIMATION_LIMIT = 2;
+    this -> shwing_animation -> ANIMATION_LIMIT = 2;
 
     Game::instance().get_fade().fade_out( 0, 0.002 );
 }
@@ -101,7 +101,7 @@ void GStateMenu::update( const double DELTA_TIME )
 
 	handleSelectorMenu();
 
-	this -> shwingAnimation -> update( this -> shwingClip, DELTA_TIME );	
+	this -> shwing_animation -> update( this -> shwing_clip, DELTA_TIME );
 
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 	if( keyStates[ GameKeys::ESCAPE ] == true )
@@ -109,10 +109,10 @@ void GStateMenu::update( const double DELTA_TIME )
 		Game::instance().stop();
 	}
 
-	if( this -> shwingIsActivated )
+	if( this -> is_shwing_activated )
 	{
-		 this -> shwingAnimation -> changeAnimation( 0, 0, 12, false, 2 );
-		 this -> shwingIsActivated = false;
+		 this -> shwing_animation -> changeAnimation( 0, 0, 12, false, 2 );
+		 this -> is_shwing_activated = false;
 	}
 
 }
@@ -125,16 +125,16 @@ void GStateMenu::render()
 
 	if( this -> passed_time > 10 )
 	{
-		this -> attractModeBg -> render( 0, 0, nullptr, true );
-		this -> attractMode -> render( 0, 0, &this -> attractClip, true );
+		this -> attrack_mode_background -> render( 0, 0, nullptr, true );
+		this -> attract_mode -> render( 0, 0, &this -> attractClip, true );
 		shouldIgnore = true;
-		if( this -> attractClip.y < ( int ) this -> attractMode -> getHeight() - this -> attractHeightSize )
+		if( this -> attractClip.y < ( int ) this -> attract_mode -> getHeight() - this -> attract_height_size )
 		{
-			this -> attractClip.y  += this -> attractChangeSpeed;
+			this -> attractClip.y  += this -> attract_change_speed;
 		}
 		else
 		{
-			//shwing->render(340,50,&this->shwingClip);
+			//shwing->render(340,50,&this->shwing_clip);
 		}
 		if( this -> passed_time > 75 )
 		{
@@ -144,16 +144,16 @@ void GStateMenu::render()
 	}
 	else
 	{
-		if( this -> menuImage != nullptr )
+		if( this -> menu_image != nullptr )
 		{
-			this -> menuImage -> render( 0, 0, nullptr, true );
+			this -> menu_image -> render( 0, 0, nullptr, true );
 
-			this -> menuSelector -> setWidth( 50 );
+			this -> menu_selector -> setWidth( 50 );
 
-			this -> menuSelector -> render( selector_X_position_left[ current_selection ],
+			this -> menu_selector -> render( selector_X_position_left[ current_selection ],
 				selector_Y_position_left[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 
-			this -> menuSelector -> render( selector_X_position_right[ current_selection ],
+			this -> menu_selector -> render( selector_X_position_right[ current_selection ],
 				selector_Y_position_right[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
 
 		}
@@ -195,7 +195,7 @@ void GStateMenu::handleSelectorMenu()
 			{
 				current_selection = Selection::NEWGAME;
 			}
-			
+
 			this->passed_time = 0.0;
 			this->attractClip.y = 0;
 		}

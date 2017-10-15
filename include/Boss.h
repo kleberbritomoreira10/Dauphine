@@ -90,7 +90,7 @@ class Boss : public DynamicEntity
     bool icePrision ();
     bool finalSplendor ();
 
-    unsigned int potionsLeft;
+    unsigned int potions_left;
 
     bool saw_player; // Boleean condition to know if the boss saw the player.
     std::vector < Potion *> potions;

@@ -33,7 +33,7 @@ double timePasssed = 0;
  * @param SDL_FLIP_NONE : Renderer flip
  */
 Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* const player_ ) :
-	DynamicEntity(x_, y_, PATH), potionsLeft(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X(0.0), power_Y(0.0), power_is_activated(false), power(nullptr),
+	DynamicEntity(x_, y_, PATH), potions_left(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X(0.0), power_Y(0.0), power_is_activated(false), power(nullptr),
 	  power_clip{0,0,0,0}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{0,0,0,0},
 	  current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
@@ -262,9 +262,9 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
  */
 void Boss::usePotion( const int strength_, const int distance_)
 {
-  if ( this -> potionsLeft > 0)
+  if ( this -> potions_left > 0)
   {
-    this -> potionsLeft--;
+    this -> potions_left--;
     const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this->boundingBox.x);
     Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> velocity_x_axis, distance_, this ->is_right);
     this -> potions.push_back( potion );

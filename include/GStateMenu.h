@@ -9,7 +9,7 @@
 * The state for the initial menu screen.
 * Game state that will contain the main menu.
 */
-class GStateMenu : public StateGame 
+class GStateMenu : public StateGame
 {
 
 	public:
@@ -54,7 +54,7 @@ class GStateMenu : public StateGame
 		bool shouldIgnore;
 
 	private:
-		enum Selection : uint8_t 
+		enum Selection : uint8_t
 		{
 
 			NEWGAME = 0,
@@ -65,10 +65,10 @@ class GStateMenu : public StateGame
 
 		};
 
-		Sprite *menuImage; /**< The image shown on the menu. */
-		Sprite *menuSelector; /**< The selector shown on the menu. */
-		Sprite *attractModeBg; /**< The image shown on the menu. */
-		Sprite *attractMode; /**< The selector shown on the menu. */
+		Sprite *menu_image; /**< The image shown on the menu. */
+		Sprite *menu_selector; /**< The selector shown on the menu. */
+		Sprite *attrack_mode_background; /**< The image shown on the menu. */
+		Sprite *attract_mode; /**< The selector shown on the menu. */
 		double passed_time; /**< The time already elapsed since the beggining of the menu. */
 
 		int current_selection;
@@ -77,15 +77,15 @@ class GStateMenu : public StateGame
 		int selector_X_position_right [ Selection::TOTAL ]; /**< The X position of the left selector.. */
 		int selector_Y_position_right [ Selection::TOTAL ]; /**< The Y position of the left selector.. */
 
-		const int attractHeightSize;
-		const int attractChangeSpeed;
-		
+		const int attract_height_size; // The height size of the attract.
+		const int attract_change_speed; // The value to change attract speed.
+
 		SDL_Rect attractClip; /**< The clip shown on the credits. */
 
-		Animation *shwingAnimation;
-		bool shwingIsActivated;
-		Sprite *shwing;
-		SDL_Rect shwingClip;
+		Animation *shwing_animation; // The shwing animation.
+		bool is_shwing_activated; // Boolean variable to verify if the swing is activated.
+		Sprite *shwing; // The shwing sprite.
+		SDL_Rect shwing_clip; // Instante of shwing clip.
 };
 
 #endif // INCLUDE_GSTATEMENU_H

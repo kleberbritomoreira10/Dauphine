@@ -18,10 +18,10 @@
 * Abstract class for levels.
 * Contains a background, player and a camera.
 */
-class Level : public StateGame 
+class Level : public StateGame
 {
-	
-	public:	
+
+	public:
 		/**
 		* The destructor.
 		* Deletes all the allocated attributes, even though the specific levels should.
@@ -62,31 +62,31 @@ class Level : public StateGame
 		virtual void clear_enemies();
 		virtual void clear_documents();
 
-		void changeCheckpoints ( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpointsX_,
-		std::vector <double> checkpointsY_ );
+		void changeCheckpoints ( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
+		std::vector <double> checkpoints_Y_ );
 
 		unsigned int width; /**< Width that defines the horizontal limits. */
 		unsigned int height; /**< Height that defines the vertical limits. */
 
 		Player *player; /**< The direct reference to player, even though its in the list. */
 		Camera *camera; /**< The current camera for that level. */
-		PlayerHUD *player_Hud;
+		PlayerHUD *player_Hud; // The direct reference to player hud.
 
-		Boss *boss;
+		Boss *boss; // The direct reference to the boss.
 
-		TileMap *tile_map;
-		QuadTree *quadTree;
+		TileMap *tile_map; // The direct reference to tile map.
+		QuadTree *quadTree; // The direct reference to quadtree.
 
-		Sprite *background;
-		Sprite *backgroundTop;
-		std::vector <Sprite*> checkpoints;
-		std::vector <double> checkpointsX;
-		std::vector <double> checkpointsY;
-		std::vector <bool> checkpointsVisited;
-		int NUMBER_OF_CHECKPOINTS;
+		Sprite *background; // Sprite of the background.
+		Sprite *backgroud_top; // Sprite of backgroud top.
+		std::vector <Sprite*> checkpoints; // Array of checkpoints sprites.
+		std::vector <double> checkpoints_X; // Array of checkpoint in X axis.
+		std::vector <double> checkpoints_Y; // Array of checkpoint in Y axis.
+		std::vector <bool> checkpoints_visited; // Array of all checkpoints visited.
+		int NUMBER_OF_CHECKPOINTS; // Total number of checkpoints.
 
-		std::vector <Enemy*> enemies;
-		std::vector <Document*> documents;
+		std::vector <Enemy*> enemies; // Array of direct reference to the enemies.
+		std::vector <Document*> documents; //Array of direct reference to documents.
 
 };
 

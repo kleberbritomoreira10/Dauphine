@@ -297,14 +297,14 @@ void LevelFive::update( const double DELTA_TIME )
 	// Saving the game state.
 	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
 	{
-		if ( !this -> checkpointsVisited[j] && this -> player -> get_bounding_box().x >= checkpointsX[j]
-				&& this -> player -> get_bounding_box().x <= checkpointsX[j] + 100
-        && this -> player -> get_bounding_box().y >= checkpointsY[j]
-				&& this -> player -> get_bounding_box().y <= checkpointsY[j] + 200 )
+		if ( !this -> checkpoints_visited[j] && this -> player -> get_bounding_box().x >= checkpoints_X[j]
+				&& this -> player -> get_bounding_box().x <= checkpoints_X[j] + 100
+        && this -> player -> get_bounding_box().y >= checkpoints_Y[j]
+				&& this -> player -> get_bounding_box().y <= checkpoints_Y[j] + 200 )
 		{
 			this -> checkpoints[j] = Game::instance().getResources().get("res/images/checkpoint_visited.png");
 			Game::instance().get_saves().saveLevel(5, this -> player, this -> enemies, Game::instance().current_slot);
-			this -> checkpointsVisited[j] = true;
+			this -> checkpoints_visited[j] = true;
 		}
 	}
 
@@ -336,7 +336,7 @@ void LevelFive::render()
 	// Rendering checkpoint's camera.
 	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
 	{
-		this -> checkpoints[j] -> render( this -> checkpointsX[j] - CAMERA_X, this -> checkpointsY[j] - CAMERA_Y );
+		this -> checkpoints[j] -> render( this -> checkpoints_X[j] - CAMERA_X, this -> checkpoints_Y[j] - CAMERA_Y );
 	}
 
 	// Rendering the tiles in the TileMap.

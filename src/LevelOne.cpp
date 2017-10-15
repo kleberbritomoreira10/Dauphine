@@ -57,7 +57,7 @@ void LevelOne::load ()
 	this -> background = Game::instance (). getResources (). get (
 	 "res/images/lv1_background_parallax.png" );
 
-	this -> backgroundTop = Game::instance (). getResources (). get (
+	this -> backgroud_top = Game::instance (). getResources (). get (
 	 "res/images/lv1_parallax_top.png" );
 
 	 // Load the number of checkpoints achieved
@@ -361,10 +361,10 @@ void LevelOne::update ( const double DELTA_TIME )
 	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
 	{
 
-		if ( !this -> checkpointsVisited [ j ] && this -> player -> get_bounding_box (). x
-			>= checkpointsX [ j ] && this -> player -> get_bounding_box (). x <= checkpointsX[j]
-		    + 100 && this -> player -> get_bounding_box (). y >= checkpointsY [ j ]
-		    && this -> player -> get_bounding_box (). y <= checkpointsY [ j ] + 200 )
+		if ( !this -> checkpoints_visited [ j ] && this -> player -> get_bounding_box (). x
+			>= checkpoints_X [ j ] && this -> player -> get_bounding_box (). x <= checkpoints_X[j]
+		    + 100 && this -> player -> get_bounding_box (). y >= checkpoints_Y [ j ]
+		    && this -> player -> get_bounding_box (). y <= checkpoints_Y [ j ] + 200 )
 		{
 
 			this -> checkpoints [ j ] = Game::instance (). getResources (). get (
@@ -373,7 +373,7 @@ void LevelOne::update ( const double DELTA_TIME )
 			Game::instance (). get_saves ().saveLevel ( 1, this -> player, this -> enemies,
 				Game::instance (). current_slot );
 
-			this -> checkpointsVisited [ j ] = true;
+			this -> checkpoints_visited [ j ] = true;
 
 		}
 	}
@@ -404,15 +404,15 @@ void LevelOne::render ()
 	const int CAMERA_Y = this -> camera -> getClip (). y;
 
 	this -> background -> render ( 0, 480 - CAMERA_Y );
-	this -> backgroundTop -> render( -CAMERA_X / 10, 1165 - CAMERA_Y );
+	this -> backgroud_top -> render( -CAMERA_X / 10, 1165 - CAMERA_Y );
 
 	// Render the tiles in the TileMap.
 	this -> tile_map -> render ( CAMERA_X, CAMERA_Y );
 
 	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
 	{
-		this -> checkpoints [ j ] -> render ( this -> checkpointsX [ j ] - CAMERA_X,
-			this -> checkpointsY [ j ] - CAMERA_Y );
+		this -> checkpoints [ j ] -> render ( this -> checkpoints_X [ j ] - CAMERA_X,
+			this -> checkpoints_Y [ j ] - CAMERA_Y );
 	}
 
 	this -> player_Hud -> render ();

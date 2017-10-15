@@ -24,10 +24,10 @@ Level::Level() :
 	tile_map( nullptr ),
 	quadTree( nullptr ),
 	background( nullptr ),
-	backgroundTop( nullptr ),
-	checkpointsX{ 0, 0, 0, 0, 0 },
-	checkpointsY{ 0, 0, 0, 0, 0 },
-	checkpointsVisited{ false, false, false, false, false},
+	backgroud_top( nullptr ),
+	checkpoints_X{ 0, 0, 0, 0, 0 },
+	checkpoints_Y{ 0, 0, 0, 0, 0 },
+	checkpoints_visited{ false, false, false, false, false},
 	NUMBER_OF_CHECKPOINTS( 5 )
 {
 	// Only serves as the initializer for the derived classes.
@@ -68,14 +68,14 @@ Level::~Level()
 /**
 * Change the current checkpoint, updating for the last reached checkpoint.
 * @param NUMBER_OF_CHECKPOINTS_: the number maximun of checkpoints.
-* @param checkpointsX_: vector for checkpoint position in axis x of the.
-* @param checkpointsY_: vector for checkpoint position in axis y of the.
+* @param checkpoints_X_: vector for checkpoint position in axis x of the.
+* @param checkpoints_Y_: vector for checkpoint position in axis y of the.
 */
-void Level::changeCheckpoints( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpointsX_,
-		std::vector <double> checkpointsY_ )
+void Level::changeCheckpoints( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
+		std::vector <double> checkpoints_Y_ )
 {
-	this -> checkpointsX = checkpointsX_;
-	this -> checkpointsY = checkpointsY_;
+	this -> checkpoints_X = checkpoints_X_;
+	this -> checkpoints_Y = checkpoints_Y_;
 	this -> NUMBER_OF_CHECKPOINTS = NUMBER_OF_CHECKPOINTS_;
 }
 

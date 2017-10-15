@@ -15,7 +15,7 @@
 GStateVictory::GStateVictory () :
 
 	victoryImage ( nullptr ),
-	passedTime( 0.0 ),
+	passed_time( 0.0 ),
 	lifeTime( 0.0 )
 {
 
@@ -54,7 +54,7 @@ void GStateVictory::unload ()
 	Log ( DEBUG ) << "\tUnloading victory...";
 	clean_entities ();
 
-	this -> passedTime = 0.0;
+	this -> passed_time = 0.0;
 	this -> lifeTime = 0.0;
 
 }
@@ -66,9 +66,9 @@ void GStateVictory::unload ()
 void GStateVictory::update ( const double DELTA_TIME )
 {
 
-	this -> passedTime += DELTA_TIME;
+	this -> passed_time += DELTA_TIME;
 
-	if ( this -> passedTime >= this -> lifeTime )
+	if ( this -> passed_time >= this -> lifeTime )
 	{
 		Game::instance (). setState ( Game::GStates::CREDITS );
 		return;

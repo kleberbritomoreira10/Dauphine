@@ -61,7 +61,7 @@ class GStateVictory : public StateGame
 
 		Sprite *victoryImage; /**< The image shown on the menu. */
 
-		double passedTime; /**< The time already elapsed since the beggining of the menu. */
+		double passed_time; /**< The time already elapsed since the beggining of the menu. */
 		double lifeTime; /**< The amount of time the menu will be shown. */
 
 };

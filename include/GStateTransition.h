@@ -55,7 +55,7 @@ class GStateTransition : public StateGame
 
 	private:
 
-		double passedTime; /**< The time already elapsed since the beggining of the splash. */
+		double passed_time; /**< The time already elapsed since the beggining of the splash. */
 		double lifeTime; /**< The amount of time the splash will be shown. */
 
 		Sprite *loading;

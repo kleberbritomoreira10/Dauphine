@@ -20,7 +20,7 @@
 */
 GStateGameOver::GStateGameOver() :
 	gameOverImage( nullptr ),
-	passedTime( 0.0 ),
+	passed_time( 0.0 ),
 	lifeTime( 0.0 )
 {
 
@@ -64,7 +64,7 @@ void GStateGameOver::unload()
 	Log( DEBUG ) << "\tUnloading Game Over...";
 	clean_entities();
 
-	this -> passedTime = 0.0;
+	this -> passed_time = 0.0;
 	this -> lifeTime = 0.0;
 
 	Game::instance().get_audio_handler().stopMusic();
@@ -76,7 +76,7 @@ void GStateGameOver::unload()
 */
 void GStateGameOver::update( const double DELTA_TIME )
 {
-	this -> passedTime += DELTA_TIME;
+	this -> passed_time += DELTA_TIME;
 
 	std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 
@@ -88,7 +88,7 @@ void GStateGameOver::update( const double DELTA_TIME )
 	}
 
 	// Setting menu state when player is dead.
-	if ( this -> passedTime >= this -> lifeTime )
+	if ( this -> passed_time >= this -> lifeTime )
 	{
 		Game::instance().setState( Game::GStates::MENU );
 		return;

@@ -23,12 +23,12 @@ GStateMenu::GStateMenu() :
 	menuSelector( nullptr ),
 	attractModeBg( nullptr ),
 	attractMode( nullptr ),
-	passedTime( 0.0 ),
-	currentSelection( Selection::NEWGAME ),
-	selectorXPositionLeft { 610, 635, 635, 645 },
-	selectorYPositionLeft { 560, 625, 690, 755 },
-	selectorXPositionRight { 880, 855, 855, 845 },
-	selectorYPositionRight { 560, 625, 690, 755 },
+	passed_time( 0.0 ),
+	current_selection( Selection::NEWGAME ),
+	selector_X_position_left { 610, 635, 635, 645 },
+	selector_Y_position_left { 560, 625, 690, 755 },
+	selector_X_position_right { 880, 855, 855, 845 },
+	selector_Y_position_right { 560, 625, 690, 755 },
 	attractHeightSize( 600 ),
 	attractChangeSpeed( 1 ),
 	attractClip{ 0, 0, 0, this -> attractHeightSize },
@@ -97,7 +97,7 @@ void GStateMenu::unload()
 */
 void GStateMenu::update( const double DELTA_TIME )
 {
-	this -> passedTime += DELTA_TIME;
+	this -> passed_time += DELTA_TIME;
 
 	handleSelectorMenu();
 
@@ -123,7 +123,7 @@ void GStateMenu::update( const double DELTA_TIME )
 void GStateMenu::render()
 {
 
-	if( this -> passedTime > 10 )
+	if( this -> passed_time > 10 )
 	{
 		this -> attractModeBg -> render( 0, 0, nullptr, true );
 		this -> attractMode -> render( 0, 0, &this -> attractClip, true );
@@ -136,9 +136,9 @@ void GStateMenu::render()
 		{
 			//shwing->render(340,50,&this->shwingClip);
 		}
-		if( this -> passedTime > 75 )
+		if( this -> passed_time > 75 )
 		{
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 		}
 	}
@@ -150,11 +150,11 @@ void GStateMenu::render()
 
 			this -> menuSelector -> setWidth( 50 );
 
-			this -> menuSelector -> render( selectorXPositionLeft[ currentSelection ],
-				selectorYPositionLeft[ currentSelection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
+			this -> menuSelector -> render( selector_X_position_left[ current_selection ],
+				selector_Y_position_left[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 
-			this -> menuSelector -> render( selectorXPositionRight[ currentSelection ],
-				selectorYPositionRight[ currentSelection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
+			this -> menuSelector -> render( selector_X_position_right[ current_selection ],
+				selector_Y_position_right[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
 
 		}
 		else
@@ -179,24 +179,24 @@ void GStateMenu::handleSelectorMenu()
 
 		if( shouldIgnore )
 		{
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
-		if( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
-			if( currentSelection < ( Selection::TOTAL - 1 ) )
+			if( current_selection < ( Selection::TOTAL - 1 ) )
 			{
-				currentSelection++;
+				current_selection++;
 			}
 			else
 			{
-				currentSelection = Selection::NEWGAME;
+				current_selection = Selection::NEWGAME;
 			}
 			
-			this->passedTime = 0.0;
+			this->passed_time = 0.0;
 			this->attractClip.y = 0;
 		}
 	}
@@ -204,83 +204,83 @@ void GStateMenu::handleSelectorMenu()
 	{
 		if( shouldIgnore )
 		{
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
-		if( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
-			if( currentSelection > Selection::NEWGAME )
+			if( current_selection > Selection::NEWGAME )
 			{
-				currentSelection--;
+				current_selection--;
 			}
 			else
 			{
-				currentSelection = ( Selection::TOTAL - 1 );
+				current_selection = ( Selection::TOTAL - 1 );
 			}
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 		}
 	}
-	else if( currentSelection == Selection::NEWGAME && keyStates[ GameKeys::SPACE ] == true )
+	else if( current_selection == Selection::NEWGAME && keyStates[ GameKeys::SPACE ] == true )
 	{
 		if( shouldIgnore )
 		{
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
 		Game::instance().setState(Game::GStates::NEW_GAME);
-		this -> passedTime = 0.0;
+		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}
 
-	else if( currentSelection == Selection::CONTINUE && keyStates[ GameKeys::SPACE ] == true)
+	else if( current_selection == Selection::CONTINUE && keyStates[ GameKeys::SPACE ] == true)
 	{
 		if( shouldIgnore )
 		{
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
 		Game::instance().setState( Game::GStates::CONTINUE );
-		this -> passedTime = 0.0;
+		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}
 
-	else if( currentSelection == Selection::OPTIONS && keyStates[ GameKeys::SPACE ] == true)
+	else if( current_selection == Selection::OPTIONS && keyStates[ GameKeys::SPACE ] == true)
 	{
 		if( shouldIgnore )
 		{
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
 		Game::instance().setState( Game::GStates::OPTIONS );
-		this -> passedTime = 0.0;
+		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}
 
-	else if( currentSelection == Selection::CREDITS && keyStates[ GameKeys::SPACE ] == true )
+	else if( current_selection == Selection::CREDITS && keyStates[ GameKeys::SPACE ] == true )
 	{
 		if( shouldIgnore )
 		{
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> attractClip.y = 0;
 			shouldIgnore = false;
 			return;
 		}
 
 		Game::instance().setState( Game::GStates::CREDITS );
-		this -> passedTime = 0.0;
+		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
 	}
 }

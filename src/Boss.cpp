@@ -19,8 +19,8 @@
 #include "BStateMagicProjectile.h"
 #include "Window.h"
 
-#define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> statesMap.emplace(stateEnum, new stateClass( this ))
-#define ADD_STATE_INSERT(stateEnum, stateClass) this -> statesMap.insert(std::make_pair<BStates, StateBoss*>(stateEnum, new stateClass( this )));
+#define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> states_map.emplace(stateEnum, new stateClass( this ))
+#define ADD_STATE_INSERT(stateEnum, stateClass) this -> states_map.insert(std::make_pair<BStates, StateBoss*>(stateEnum, new stateClass( this )));
 
 double timePasssed = 0;
 
@@ -35,7 +35,7 @@ double timePasssed = 0;
 Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* const player_ ) :
 	DynamicEntity(x_, y_, PATH), potionsLeft(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X(0.0), power_Y(0.0), power_is_activated(false), power(nullptr),
 	  power_clip{0,0,0,0}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{0,0,0,0},
-	  current_state(nullptr), animation(nullptr), statesMap(), dead(false)
+	  current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
 	initializeStates();
 
@@ -49,7 +49,7 @@ Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* c
 	this -> shield_animation = new Animation(0, 0, 340, 340, 6, false);
 	this -> shield = Game::instance().getResources().get("res/images/shield.png");
 	this -> shield_animation->changeAnimation(0,0,3,false,1);
-	this -> current_state = this -> statesMap.at(IDLE);
+	this -> current_state = this -> states_map.at(IDLE);
 	this -> current_state->enter();
 
 	//Check if player is playing
@@ -207,7 +207,7 @@ void Boss::initializeStates()
 void Boss::destroyStates()
 {
 	std::map<BStates, StateBoss*>::const_iterator it;
-	for ( it = this -> statesMap.begin(); it != this -> statesMap.end(); it++)
+	for ( it = this -> states_map.begin(); it != this -> states_map.end(); it++)
 	{
 		delete it -> second;
 	}
@@ -220,7 +220,7 @@ void Boss::destroyStates()
 void Boss::changeState( const BStates state_)
 { 
 	this -> current_state -> exit();
-	this -> current_state = this -> statesMap.at(state_);
+	this -> current_state = this -> states_map.at(state_);
 	this -> current_state -> enter();
 }
 

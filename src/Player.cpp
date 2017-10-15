@@ -30,8 +30,8 @@
 
 #include "Window.h"
 
-#define ADD_STATE_EMPLACE( stateEnum, stateClass ) this  -> statesMap.emplace( stateEnum, new stateClass( this ) )
-#define ADD_STATE_INSERT( stateEnum, stateClass ) this -> statesMap.insert( std::make_pair<player_states, StatePlayer*>( stateEnum, new stateClass( this ) ) );
+#define ADD_STATE_EMPLACE( stateEnum, stateClass ) this  -> states_map.emplace( stateEnum, new stateClass( this ) )
+#define ADD_STATE_INSERT( stateEnum, stateClass ) this -> states_map.insert( std::make_pair<player_states, StatePlayer*>( stateEnum, new stateClass( this ) ) );
 
 /**
 * The constructor.
@@ -69,7 +69,7 @@ Player::Player( const double x_, const double y_, const std::string &PATH ) :
     // Verifying if the sprite is available.
     if ( this -> sprite != nullptr )
     {
-        this -> current_state = this -> statesMap.at( IDLE );
+        this -> current_state = this -> states_map.at( IDLE );
         this -> current_state -> enter();
     } else
     {
@@ -334,7 +334,7 @@ void Player::destroyStates()
 {
     // Delete all the states in Player here.
     std::map<player_states, StatePlayer*>::const_iterator it;
-    for ( it = this -> statesMap.begin(); it != this -> statesMap.end(); it++ )
+    for ( it = this -> states_map.begin(); it != this -> states_map.end(); it++ )
     {
         delete it -> second;
     }
@@ -348,7 +348,7 @@ void Player::destroyStates()
 void Player::changeState( const player_states state_ )
 {
     this -> current_state -> exit();
-    this -> current_state = this -> statesMap.at( state_ );
+    this -> current_state = this -> states_map.at( state_ );
     this -> current_state -> enter();
 }
 
@@ -367,7 +367,7 @@ Animation *Player::getAnimation()
 */
 bool Player::is_current_state(const player_states state_)
 {
-    return ( this -> current_state == this -> statesMap.at(state_) );
+    return ( this -> current_state == this -> states_map.at(state_) );
 }
 
 /**

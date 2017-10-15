@@ -59,7 +59,7 @@ class GStateSplash : public StateGame
 		};
 
 		int currentSplash; /**< Determines which is the current splash image. */
-		double passedTime; /**< The time already elapsed since the beggining of the splash. */
+		double passed_time; /**< The time already elapsed since the beggining of the splash. */
 		double lifeTime; /**< The amount of time the splash will be shown. */
 		Sprite *images [ SplashImages::TOTAL_SPLASH_IMAGES ]; /**< Contains all the splash images. */
 		double ix;

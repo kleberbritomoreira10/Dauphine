@@ -103,8 +103,8 @@ class DynamicEntity : public Entity
 
 		virtual void updateBoundingBox () = 0;
 
-		unsigned int levelW; // The width of the level.
-		unsigned int levelH; // The height of the level.
+		unsigned int level_width; // The width of the level.
+		unsigned int level_height; // The height of the level.
 
 };
 

@@ -79,10 +79,10 @@ class GStateOptions : public StateGame
 
 		Sprite *selector; /**< The selector shown on the menu. */
 
-		int selectorXPositionLeft [ Option::O_TOTAL ]; /**< The X position of the left selector.. */
-		int selectorYPositionLeft [ Option::O_TOTAL ]; /**< The Y position of the left selector.. */
-		int selectorXPositionRight [ Option::O_TOTAL ]; /**< The X position of the left selector.. */
-		int selectorYPositionRight [ Option::O_TOTAL ]; /**< The Y position of the left selector.. */
+		int selector_X_position_left [ Option::O_TOTAL ]; /**< The X position of the left selector.. */
+		int selector_Y_position_left [ Option::O_TOTAL ]; /**< The Y position of the left selector.. */
+		int selector_X_position_right [ Option::O_TOTAL ]; /**< The X position of the left selector.. */
+		int selector_Y_position_right [ Option::O_TOTAL ]; /**< The Y position of the left selector.. */
 
 		static const std::string possibleResolutions [ 3 ];
 

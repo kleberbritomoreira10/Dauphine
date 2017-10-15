@@ -23,18 +23,18 @@ class FPSWrapper
 		* Initializes FPS managing.
 		* Initializes the FPS manager and sets it to the desired framerate
 		* 	(Configuration::maxFramerate).
-		* @param fpsManager_ : The FPS manager to handle.
+		* @param fps_manager_ : The FPS manager to handle.
 		* @note Will warn if failed to set FPS.
 		*/
-		static void initialize ( FPSmanager& fpsManager_ );
+		static void initialize ( FPSmanager& fps_manager_ );
 
 		/**
 		* Delays execution and calculates FPS.
 		* @note Only delays the execution if needed.
-		* @param fpsManager_ : The FPS manager to handle.
+		* @param fps_manager_ : The FPS manager to handle.
 		* @return The time in seconds since the last call.
 		*/
-		static double delay ( FPSmanager& fpsManager_ );
+		static double delay ( FPSmanager& fps_manager_ );
 
 };
 

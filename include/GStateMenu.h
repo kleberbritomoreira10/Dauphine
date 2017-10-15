@@ -69,13 +69,13 @@ class GStateMenu : public StateGame
 		Sprite *menuSelector; /**< The selector shown on the menu. */
 		Sprite *attractModeBg; /**< The image shown on the menu. */
 		Sprite *attractMode; /**< The selector shown on the menu. */
-		double passedTime; /**< The time already elapsed since the beggining of the menu. */
+		double passed_time; /**< The time already elapsed since the beggining of the menu. */
 
-		int currentSelection;
-		int selectorXPositionLeft [ Selection::TOTAL ]; /**< The X position of the left selector.. */
-		int selectorYPositionLeft [ Selection::TOTAL ]; /**< The Y position of the left selector.. */
-		int selectorXPositionRight [ Selection::TOTAL ]; /**< The X position of the left selector.. */
-		int selectorYPositionRight [ Selection::TOTAL ]; /**< The Y position of the left selector.. */
+		int current_selection;
+		int selector_X_position_left [ Selection::TOTAL ]; /**< The X position of the left selector.. */
+		int selector_Y_position_left [ Selection::TOTAL ]; /**< The Y position of the left selector.. */
+		int selector_X_position_right [ Selection::TOTAL ]; /**< The X position of the left selector.. */
+		int selector_Y_position_right [ Selection::TOTAL ]; /**< The Y position of the left selector.. */
 
 		const int attractHeightSize;
 		const int attractChangeSpeed;

@@ -18,8 +18,8 @@
 GStateContinue::GStateContinue() :
 	background ( nullptr ),
 	selector ( nullptr ),
-	passedTime( 0.0 ),
-	currentSelection ( Selection::SLOT_1 ),
+	passed_time( 0.0 ),
+	current_selection ( Selection::SLOT_1 ),
 	selectorXPosition ( 562 ),
 	selectorYPosition { 500, 610, 723 }
 {
@@ -145,7 +145,7 @@ void GStateContinue::load ()
 	this -> selector = Game::instance().getResources().get( PATH_SELECTOR );
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
-	this -> currentSelection = Selection::SLOT_1;
+	this -> current_selection = Selection::SLOT_1;
 
 	Game::instance().get_fade().fade_out ( 0, 0.002);
 }
@@ -166,7 +166,7 @@ void GStateContinue::unload ()
 */
 void GStateContinue::update ( const double DELTA_TIME )
 {
-	this -> passedTime += DELTA_TIME;
+	this -> passed_time += DELTA_TIME;
 
 	handleSelectorMenu ();
 
@@ -188,7 +188,7 @@ void GStateContinue::render(){
 	if ( this -> background != nullptr )
   {
 		this -> background -> render( 0, 0, nullptr, true );
-		this -> selector -> render( selectorXPosition, selectorYPosition [ currentSelection ], 
+		this -> selector -> render( selectorXPosition, selectorYPosition [ current_selection ], 
       nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 	
 		this -> slot1 -> render( 0, 0 );
@@ -214,7 +214,7 @@ void GStateContinue::handleSelectorMenu ()
 
 	if ( keyStates [ GameKeys::LATTACK ] == true )
   {
-		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
     {
 			Game::instance().setState( Game::GStates::MENU );
 		}
@@ -222,40 +222,40 @@ void GStateContinue::handleSelectorMenu ()
 
 	if ( keyStates [ GameKeys::DOWN ] == true || keyStates [ GameKeys::RIGHT ] == true )
   {
-		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
     {
-			if ( currentSelection < (Selection::TOTAL - 1) )
+			if ( current_selection < (Selection::TOTAL - 1) )
       {
-				currentSelection++;
+				current_selection++;
 			}
 
 			else
       {
-				currentSelection = Selection::SLOT_1;
+				current_selection = Selection::SLOT_1;
 			}
 
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 		}
 	}
 
 	else if ( keyStates [ GameKeys::UP ] == true || keyStates [ GameKeys::LEFT ] == true )
   {
-		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
     {
-			if ( currentSelection > Selection::SLOT_1 )
+			if ( current_selection > Selection::SLOT_1 )
       {
-				currentSelection--;
+				current_selection--;
 			}
 
 			else
       {
-				currentSelection = ( Selection::TOTAL - 1 );
+				current_selection = ( Selection::TOTAL - 1 );
 			}
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 		}
 	}
 
-	else if ( currentSelection == Selection::SLOT_1 && keyStates [ GameKeys::SPACE ] == true )
+	else if ( current_selection == Selection::SLOT_1 && keyStates [ GameKeys::SPACE ] == true )
   {
 		Game::instance().current_slot = SLOT_1;
 
@@ -298,7 +298,7 @@ void GStateContinue::handleSelectorMenu ()
 
 	}
 
-	else if ( currentSelection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ] == true )
+	else if ( current_selection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ] == true )
   {
 		Game::instance().current_slot = SLOT_2;
 
@@ -341,7 +341,7 @@ void GStateContinue::handleSelectorMenu ()
 
 	}
 
-	else if ( currentSelection == Selection::SLOT_3 && keyStates [ GameKeys::SPACE ] == true )
+	else if ( current_selection == Selection::SLOT_3 && keyStates [ GameKeys::SPACE ] == true )
   {
 		Game::instance().current_slot = SLOT_3;
 

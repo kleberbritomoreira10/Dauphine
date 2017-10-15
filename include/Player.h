@@ -138,7 +138,7 @@ class Player : public DynamicEntity
 
 		Animation *animation; /**< Current player animation. */
 		StatePlayer *current_state; /**< The current state, which the player is in. */
-		std::map<player_states, StatePlayer*> statesMap; /**< Map containing all possible states. */
+		std::map<player_states, StatePlayer*> states_map; /**< Map containing all possible states. */
 
 };
 

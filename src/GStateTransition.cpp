@@ -13,7 +13,7 @@
 
 GStateTransition::GStateTransition() :
 
-	passedTime ( 0.0 ),
+	passed_time ( 0.0 ),
 	lifeTime( 0.0 ),
 	loading( nullptr ),
 	point( nullptr )
@@ -63,7 +63,7 @@ void GStateTransition::unload ()
 
 	Log ( DEBUG) << "\tUnloading transition...";
 
-	this -> passedTime = 0.0;
+	this -> passed_time = 0.0;
 	this -> lifeTime = 0.0;
 
 	clean_entities ();
@@ -76,9 +76,9 @@ void GStateTransition::unload ()
 */
 void GStateTransition::update ( const double DELTA_TIME )
 {
-	this -> passedTime += DELTA_TIME;
+	this -> passed_time += DELTA_TIME;
 
-	if ( this -> passedTime >= this -> lifeTime )
+	if ( this -> passed_time >= this -> lifeTime )
 	{
 		Game::instance (). setState ( Game::instance (). transitionTo );
 	}
@@ -96,17 +96,17 @@ void GStateTransition::render ()
 
 	this -> loading -> render ( 0, 0, nullptr, true );
 
-	if ( this -> passedTime > 0.83 )
+	if ( this -> passed_time > 0.83 )
 	{
 		this -> point -> render ( 670, 235 );
 	}
 
-	if ( this -> passedTime > 1.66 )
+	if ( this -> passed_time > 1.66 )
 	{
 		this -> point -> render ( 770, 235 );
 	}
 
-	if ( this -> passedTime > 2.5 )
+	if ( this -> passed_time > 2.5 )
 	{
 		this -> point -> render ( 870, 235 );
 	}

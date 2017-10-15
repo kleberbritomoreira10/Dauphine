@@ -21,8 +21,8 @@ GStateNewGame::GStateNewGame () :
 
 	background ( nullptr ),
 	selector ( nullptr ),
-	passedTime ( 0.0 ),
-	currentSelection ( Selection::SLOT_1 ),
+	passed_time ( 0.0 ),
+	current_selection ( Selection::SLOT_1 ),
 	selectorXPosition ( 562 ),
 	selectorYPosition { 500, 610, 723 }
 {
@@ -160,7 +160,7 @@ void GStateNewGame::load ()
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
 
-    this -> currentSelection = Selection::SLOT_1;
+    this -> current_selection = Selection::SLOT_1;
 
     Game::instance (). get_fade (). fade_out ( 0, 0.002 );
 }
@@ -178,7 +178,7 @@ void GStateNewGame::unload ()
 void GStateNewGame::update ( const double DELTA_TIME )
 {
 
-	this -> passedTime += DELTA_TIME;
+	this -> passed_time += DELTA_TIME;
 
 	handleSelectorMenu ();
 
@@ -202,7 +202,7 @@ void GStateNewGame::render ()
 
 		this -> background -> render ( 0, 0, nullptr, true );
 
-		this -> selector -> render ( selectorXPosition, selectorYPosition [ currentSelection ],
+		this -> selector -> render ( selectorXPosition, selectorYPosition [ current_selection ],
 		 nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 
 		this -> slot1 -> render ( 0, 0 );
@@ -227,7 +227,7 @@ void GStateNewGame::handleSelectorMenu ()
 	if ( keyStates [ GameKeys::LATTACK ] == true )
 	{
 
-		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
 			Game::instance (). setState ( Game::GStates::MENU );
 		}
@@ -238,18 +238,18 @@ void GStateNewGame::handleSelectorMenu ()
 		 == true )
 	{
 
-		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
 
-			if ( currentSelection < ( Selection::TOTAL - 1 ) )
+			if ( current_selection < ( Selection::TOTAL - 1 ) )
 			{
-				currentSelection++;
+				current_selection++;
 			}else
 			{
-				currentSelection = Selection::SLOT_1;
+				current_selection = Selection::SLOT_1;
 			}
 
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 
 		}
 	// When the up or left key is pressed the selection goes to the previous slot.
@@ -257,24 +257,24 @@ void GStateNewGame::handleSelectorMenu ()
 				 == true)
 			{
 
-		if ( this -> passedTime >= SELECTOR_DELAY_TIME )
+		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
 
-			if ( currentSelection > Selection::SLOT_1 )
+			if ( current_selection > Selection::SLOT_1 )
 			{
 
-				currentSelection--;
+				current_selection--;
 
 			}else
 			{
-				currentSelection = ( Selection::TOTAL - 1 );
+				current_selection = ( Selection::TOTAL - 1 );
 			}
 
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 		}
 
 	// When the selection is in slot 1 and the space key is pressed, a new game starts saved in slot 1.
-	}else if ( currentSelection == Selection::SLOT_1 && keyStates [ GameKeys::SPACE ]
+	}else if ( current_selection == Selection::SLOT_1 && keyStates [ GameKeys::SPACE ]
 			 	== true)
 			{
 
@@ -285,7 +285,7 @@ void GStateNewGame::handleSelectorMenu ()
 		Game::instance (). setState( Game::GStates::TRANSITION );
 
 	// When the selection is in slot 2 and the space key is pressed, a new game starts saved in slot 2.
-	}else if ( currentSelection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ]
+	}else if ( current_selection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ]
 				== true)
 			{
 
@@ -296,7 +296,7 @@ void GStateNewGame::handleSelectorMenu ()
 		Game::instance (). setState ( Game::GStates::TRANSITION );
 
 	// When the selection is in slot 3 and the space key is pressed, a new game starts saved in slot 3.
-	}else if ( currentSelection == Selection::SLOT_3 && keyStates[GameKeys::SPACE]
+	}else if ( current_selection == Selection::SLOT_3 && keyStates[GameKeys::SPACE]
 				== true)
 			{
 

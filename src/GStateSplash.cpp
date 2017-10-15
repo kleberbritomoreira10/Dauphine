@@ -20,7 +20,7 @@ before the main menu state is called.
 */
 GStateSplash::GStateSplash() :
 	currentSplash( 0 ),
-	passedTime( 0.0 ),
+	passed_time( 0.0 ),
 	lifeTime( 0.0 ),
 	ix( -300.0 )
 {
@@ -82,7 +82,7 @@ void GStateSplash::unload()
 */
 void GStateSplash::update( const double DELTA_TIME )
 {
-	this -> passedTime += DELTA_TIME;
+	this -> passed_time += DELTA_TIME;
 
 	Game::instance().get_fade().fade_out( 0, 0.002 );
 
@@ -93,7 +93,7 @@ void GStateSplash::update( const double DELTA_TIME )
 	}
 
 	// Updating splash images.
-	if ( this -> passedTime >= this -> lifeTime )
+	if ( this -> passed_time >= this -> lifeTime )
 	{
 		if ( this -> currentSplash >= SplashImages::TOTAL_SPLASH_IMAGES - 1 )
 		{
@@ -101,7 +101,7 @@ void GStateSplash::update( const double DELTA_TIME )
 		} else
 		{
 			Game::instance().get_fade().fadeIn( 100, 0.002 );
-			this -> passedTime = 0.0;
+			this -> passed_time = 0.0;
 			this -> ix = -300;
 			this -> currentSplash++;
 		}

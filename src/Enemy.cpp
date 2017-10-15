@@ -20,8 +20,8 @@
 #include "EStateDead.h"
 #include "Window.h"
 
-#define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> statesMap.emplace(stateEnum, new stateClass( this ))
-#define ADD_STATE_INSERT(stateEnum, stateClass) this -> statesMap.insert(std::make_pair<EStates, StateEnemy*>(stateEnum, new stateClass( this )));
+#define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> states_map.emplace(stateEnum, new stateClass( this ))
+#define ADD_STATE_INSERT(stateEnum, stateClass) this -> states_map.insert(std::make_pair<EStates, StateEnemy*>(stateEnum, new stateClass( this )));
 
 //Declaring and initialing position enemy in the origin of the x axis
 double Enemy::px = 0.0;
@@ -46,7 +46,7 @@ double Enemy::curious_range = 600.0;
  */
 Enemy::Enemy( const double x_, const double y_, const std::string& PATH, const bool patrol_,
 	const double patrolLength_ ) : DynamicEntity(x_, y_, PATH), original_X(x_), patrol(patrol_),
-  patrol_length(patrolLength_), life(100), current_state(nullptr), animation(nullptr), statesMap(), dead(false)
+  patrol_length(patrolLength_), life(100), current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
 	// Initialize all the states in Enemy.
 	initializeStates();
@@ -63,9 +63,9 @@ Enemy::Enemy( const double x_, const double y_, const std::string& PATH, const b
   //Condition to attribute the states map to current state.
 	if ( this -> patrol )
 	{
-		this -> current_state = this -> statesMap.at(PATROLLING);
+		this -> current_state = this -> states_map.at(PATROLLING);
 	} else {
-		  this -> current_state = this -> statesMap.at(IDLE);
+		  this -> current_state = this -> states_map.at(IDLE);
 	  }
 
 	this -> current_state -> enter();
@@ -171,7 +171,7 @@ void Enemy::initializeStates()
 void Enemy::destroyStates()
 {
 	std::map<EStates, StateEnemy*>::const_iterator it;
-	for ( it = this -> statesMap.begin(); it != this -> statesMap.end(); it++ )
+	for ( it = this -> states_map.begin(); it != this -> states_map.end(); it++ )
 	{
 		delete it->second;
 	}
@@ -184,7 +184,7 @@ void Enemy::destroyStates()
 void Enemy::changeState( const EStates state_)
 {
 	this -> current_state -> exit();
-	this -> current_state = this -> statesMap.at(state_);
+	this -> current_state = this -> states_map.at(state_);
 	this -> current_state -> enter();
 }
 
@@ -202,7 +202,7 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	//Collision on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM) )
 	{
-		if ( this -> current_state == this -> statesMap.at(EStates::AERIAL) || this -> current_state == this -> statesMap.at
+		if ( this -> current_state == this -> states_map.at(EStates::AERIAL) || this -> current_state == this -> states_map.at
 			(EStates::DEAD))
 		{
 			this -> nextY -= fmod( this -> nextY, 64.0 ) - 16.0;
@@ -220,7 +220,7 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 			  }
 		}
 	} else {
-		  if ( this -> current_state != this -> statesMap.at(EStates::AERIAL) )
+		  if ( this -> current_state != this -> states_map.at(EStates::AERIAL) )
 		  {
 			  changeState(EStates::AERIAL);
 		  }

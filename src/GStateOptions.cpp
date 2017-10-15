@@ -27,10 +27,10 @@ GStateOptions::GStateOptions() :
 	currentResolution( R_960_540 ),
 	currentOption( O_RESOLUTION ),
 	selector( nullptr ),
-	selectorXPositionLeft{ 780, 780, 780, 590, 590 },
-	selectorYPositionLeft{ 365, 468, 580, 665, 750 },
-	selectorXPositionRight{ 1010, 1010, 1010, 900, 900},
-	selectorYPositionRight{ 365, 468, 580, 665, 750 },
+	selector_X_position_left{ 780, 780, 780, 590, 590 },
+	selector_Y_position_left{ 365, 468, 580, 665, 750 },
+	selector_X_position_right{ 1010, 1010, 1010, 900, 900},
+	selector_Y_position_right{ 365, 468, 580, 665, 750 },
 	musicVolume( 100 ),
 	sfxVolume( 100 ),
 	resolution( nullptr ),
@@ -232,11 +232,11 @@ void GStateOptions::render()
 
 	if( this -> selector != nullptr )
 	{
-		this -> selector -> render( selectorXPositionLeft[ currentOption ],
-			selectorYPositionLeft[ currentOption ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
+		this -> selector -> render( selector_X_position_left[ currentOption ],
+			selector_Y_position_left[ currentOption ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 
-		this -> selector -> render( selectorXPositionRight[ currentOption ],
-			selectorYPositionRight[ currentOption ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
+		this -> selector -> render( selector_X_position_right[ currentOption ],
+			selector_Y_position_right[ currentOption ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
 	}
 	else
 	{

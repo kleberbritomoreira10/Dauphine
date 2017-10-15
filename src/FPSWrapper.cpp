@@ -14,15 +14,15 @@
 * Initializes FPS managing.
 * Initializes the FPS manager and sets it to the desired framerate
 * 	(Configuration::maxFramerate).
-* @param fpsManager_ : The FPS manager to handle.
+* @param fps_manager_ : The FPS manager to handle.
 * @note Will warn if failed to set FPS.
 */
-void FPSWrapper::initialize ( FPSmanager& fpsManager_ )
+void FPSWrapper::initialize ( FPSmanager& fps_manager_ )
 {
 
-	SDL_initFramerate ( &fpsManager_ );
+	SDL_initFramerate ( &fps_manager_ );
 
-	const int framerateIsSet = SDL_setFramerate ( &fpsManager_,
+	const int framerateIsSet = SDL_setFramerate ( &fps_manager_,
 		Configuration::getMaxFramerate () );
 
 	if ( framerateIsSet == 0 )
@@ -38,10 +38,10 @@ void FPSWrapper::initialize ( FPSmanager& fpsManager_ )
 /**
 * Delays execution and calculates FPS.
 * @note Only delays the execution if needed.
-* @param fpsManager_ : The FPS manager to handle.
+* @param fps_manager_ : The FPS manager to handle.
 * @return The time in seconds since the last call.
 */
-double FPSWrapper::delay ( FPSmanager& fpsManager_ )
+double FPSWrapper::delay ( FPSmanager& fps_manager_ )
 {
-	return ( double ) ( SDL_framerateDelay ( &fpsManager_ ) / 1000.0 );
+	return ( double ) ( SDL_framerateDelay ( &fps_manager_ ) / 1000.0 );
 }

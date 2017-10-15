@@ -93,7 +93,7 @@ class Enemy : public DynamicEntity
 		StateEnemy *current_state;
 		Animation *animation;
 
-		std::map < EStates, StateEnemy *> statesMap;
+		std::map < EStates, StateEnemy *> states_map;
 		bool dead;
 
 };

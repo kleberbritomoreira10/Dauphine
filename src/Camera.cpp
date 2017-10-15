@@ -16,8 +16,8 @@
 */
 Camera::Camera( Entity* const entity_ ):
   entity( entity_ ),
-  levelW( 0 ),
-  levelH( 0 ),
+  level_width( 0 ),
+  level_height( 0 ),
   clip{ 0, 0, ( int ) Configuration::getCameraDistanceWidth(), ( int )Configuration::getCameraDistanceHeight()}
 {
   /// @todo If the player changes the resolution, so should the clip. (?)
@@ -58,9 +58,9 @@ void Camera::updatePosition()
     this -> clip.x = 0;
   }
   // Right wall.
-  else if( this -> clip.x > ( int )this -> levelW - this -> clip.w )
+  else if( this -> clip.x > ( int )this -> level_width - this -> clip.w )
   {
-    this -> clip.x = ( int ) this -> levelW - this -> clip.w;
+    this -> clip.x = ( int ) this -> level_width - this -> clip.w;
   }
   // Top wall.
   if( this -> clip.y < 0)
@@ -68,9 +68,9 @@ void Camera::updatePosition()
     this -> clip.y = 0;
   }
   // Bottom wall.
-  else if( this -> clip.y > ( int ) this -> levelH - this -> clip.h)
+  else if( this -> clip.y > ( int ) this -> level_height - this -> clip.h)
   {
-    this -> clip.y = ( int ) this -> levelH - this -> clip.h;
+    this -> clip.y = ( int ) this -> level_height - this -> clip.h;
   }
 }
 
@@ -90,6 +90,6 @@ void Camera::centralizeOn(Entity* const entity_)
 */
 void Camera::setLevelWH( const unsigned int width_, const unsigned int height_ )
 {
-  this -> levelW = width_;
-  this -> levelH = height_;
+  this -> level_width = width_;
+  this -> level_height = height_;
 }

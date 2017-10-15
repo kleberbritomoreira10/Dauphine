@@ -116,7 +116,7 @@ class Boss : public DynamicEntity
 
     StateBoss *current_state; // Get the current state of the boss.
     Animation *animation; // Copy to the animation of the boss.
-    std::map < BStates, StateBoss * > statesMap;
+    std::map < BStates, StateBoss * > states_map;
     bool dead; // Boleean condition to death os the boss.
 };
 

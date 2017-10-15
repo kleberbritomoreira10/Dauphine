@@ -71,9 +71,9 @@ class GStateNewGame : public StateGame
 
 		Sprite *background; // Background image.
 		Sprite *selector; // Image for the slot selector.
-		double passedTime; // The time already elapsed since the beggining of the menu.
+		double passed_time; // The time already elapsed since the beggining of the menu.
 
-		int currentSelection;
+		int current_selection;
 		int selectorXPosition; // The X position of the slot selector.
 		int selectorYPosition [ Selection::TOTAL ]; // The Y position of the slot selector.
 

@@ -4,7 +4,7 @@
 #include "CollisionRect.h"
 #include <vector>
 
-class QuadTree 
+class QuadTree
 {
 
 	public:
@@ -43,11 +43,11 @@ class QuadTree
 
 	private:
 
-		const int maxObjects;
-		const int maxLevels;
+		const int max_number_of_objects; // Max number of quadtree objects.
+		const int max_number_of_levels; // Max number of quadtree levels.
 
-		int level;
-		std::vector < CollisionRect > objects;
+		int level; // The current quadtree level.
+		std::vector < CollisionRect > objects; // Array of collision objects.
 		SDL_Rect bounds;
 		QuadTree *nodes [ 4 ];
 

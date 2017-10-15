@@ -5,11 +5,13 @@
 #include "Sprite.h"
 #include "Text.h"
 
+#define MAX_NUMBER_OF_RESOLUTIONS 3
+
 /**
 * The state for the initial menu screen.
 * Game state that will contain the game over screen.
 */
-class GStateOptions : public StateGame 
+class GStateOptions : public StateGame
 {
 
 	public:
@@ -54,7 +56,7 @@ class GStateOptions : public StateGame
 
 		double elapsedTime;
 
-		enum Option : uint8_t 
+		enum Option : uint8_t
 		{
 			O_RESOLUTION = 0,
 			O_VOLUME_MUSIC,
@@ -64,7 +66,7 @@ class GStateOptions : public StateGame
 			O_TOTAL
 		};
 
-		enum Resolution : uint8_t 
+		enum Resolution : uint8_t
 		{
 			R_800_600 = 0,
 			R_768_432,
@@ -72,10 +74,10 @@ class GStateOptions : public StateGame
 			R_TOTAL
 		};
 
-		Sprite *optionsImage; /**< The image shown on the menu. */
+		Sprite *options_image; /**< The image shown on the menu. */
 
-		uint8_t currentResolution;
-		uint8_t currentOption;
+		uint8_t current_resolution;
+		uint8_t current_option;
 
 		Sprite *selector; /**< The selector shown on the menu. */
 
@@ -84,14 +86,14 @@ class GStateOptions : public StateGame
 		int selector_X_position_right [ Option::O_TOTAL ]; /**< The X position of the left selector.. */
 		int selector_Y_position_right [ Option::O_TOTAL ]; /**< The Y position of the left selector.. */
 
-		static const std::string possibleResolutions [ 3 ];
+		static const std::string possible_resolutions [ MAX_NUMBER_OF_RESOLUTIONS ]; // Array of possible resolutions >= 3
 
-		unsigned int musicVolume;
-		unsigned int sfxVolume;
+		unsigned int music_volume; // The value of the music volume.
+		unsigned int sfx_volume; // The value of the sfx volume.
 
 		Text *resolution;
-		Text *volumeMusic;
-		Text *volumeSFX;
+		Text *music_volume_text; // The text  of music volume.
+		Text *sfx_volume_text; // The text of sfx volume.
 };
 
 #endif // INCLUDE_GSTATEOPTIONS_H

@@ -104,7 +104,11 @@ void LevelFour::load()
       if ( Game::instance().get_saves().is_enemy_dead(i, Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 4 )
       {
         enemy->set_dead(true);
+      } else {
+        enemy->set_dead(false);
       }
+    } else {
+      enemy->set_dead(false);      
     }
     enemy -> setLevelWH( this -> width, this -> height );
     this -> enemies.push_back( enemy );
@@ -207,6 +211,8 @@ void LevelFour::update( const double DELTA_TIME )
     {
       this -> player -> addPotions(3);
       caught_items[i] = true;
+    } else {
+      // No Action..
     }
   }
 
@@ -222,6 +228,8 @@ void LevelFour::update( const double DELTA_TIME )
     } else {
         // No Actiion.
     }
+  } else {
+    // No Action.
   }
 
   // Updating the HUD.
@@ -236,6 +244,8 @@ void LevelFour::update( const double DELTA_TIME )
     Game::instance().transitionTo = Game::GStates::LEVEL_FIVE;
     Game::instance().setState(Game::GStates::TRANSITION);
     return;
+  } else {
+    // No Action.
   }
 
   // Updating the potion/enemy collision.
@@ -253,12 +263,17 @@ void LevelFour::update( const double DELTA_TIME )
             potion -> activated = false;
           }
           // Log(DEBUG) << "Enemy Life = " << enemy->life;
-          if ( enemy -> life <= 0 )
+          else if ( enemy -> life <= 0 )
           {
             enemy->changeState( Enemy::EStates::DEAD );
+          } else {
+            // No Action.
           }
-
+        } else {
+          // No Action.
         }
+      } else {
+        // No Action.
       }
     }
   }
@@ -268,7 +283,7 @@ void LevelFour::update( const double DELTA_TIME )
   {
     if ( Collision::rects_collided( this -> player -> get_bounding_box(), enemy -> get_bounding_box()) )
     {
-      if ( this -> player -> is_right != enemy -> is_right )
+      if ( this -> player -> is_right != enemy -> is_right ) { 
         if ( this -> player -> is_current_state( Player::player_states::ATTACK) || this->player->is_current_state(Player::player_states::ATTACKMOVING) )
         {
 
@@ -278,11 +293,18 @@ void LevelFour::update( const double DELTA_TIME )
             this -> player -> can_attack = false;
           }
           // Log(DEBUG) << "Enemy Life = " << enemy->life;
-          if ( enemy -> life <= 0 )
+          else if ( enemy -> life <= 0 )
           {
             enemy -> changeState( Enemy::EStates::DEAD );
+          } else {
+            // No Action.
           }
+        } else {
+          // No Action.
         }
+      }
+    } else {
+      // No Action.
     }
   }
 
@@ -308,7 +330,7 @@ void LevelFour::update( const double DELTA_TIME )
       document->should_render = true;
     } else {
         document->should_render = false;
-      }
+    }
   }
 }
 
@@ -349,6 +371,8 @@ void LevelFour::render()
     if ( this -> image != nullptr && caught_items[i] == false )
     {
       this -> image -> Sprite::render( ( items[0][i]+60) - CAMERA_X, ((items[1][i]) - CAMERA_Y) );
+    } else {
+      // No Action.
     }
   }
 

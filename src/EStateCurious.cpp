@@ -54,6 +54,8 @@ void EStateCurious::update( const double DELTA_TIME)
 	{
 		this -> enemy -> changeState( Enemy::EStates::AERIAL );
 		return;
+	} else {
+		// No Action.
 	}
 
 	if ( this -> enemy -> x - Enemy::px < 0.0)
@@ -61,12 +63,14 @@ void EStateCurious::update( const double DELTA_TIME)
 		this -> enemy -> velocity_x_axis += this -> enemy -> speed;
 	} else {
 		  this -> enemy -> velocity_x_axis -= this -> enemy -> speed;
-	  }
+	}
 
 	if ( abs( this -> enemy->x - Enemy::px) < Enemy::alert_range && abs( this -> enemy->y-Enemy::py ) < Enemy::alert_range)
 	{
 		this -> enemy -> changeState(Enemy::EStates::ALERT);
 		return;
+	} else {
+		// No Action.
 	}
 
   //if the time elapsed is greater than the time observing the enemy returns to patrol.
@@ -74,6 +78,8 @@ void EStateCurious::update( const double DELTA_TIME)
 	{
 		this -> enemy -> changeState(Enemy::EStates::PATROLLING);
 		return;
+	} else {
+		// No Action.
 	}
 }
 

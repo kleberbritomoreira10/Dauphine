@@ -56,6 +56,8 @@ Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* c
 	if ( this -> player == nullptr )
 	{
 		Log(WARN) << "Passing a null player to the Boss.";
+	} else {
+		// No Action.
 	}
 }
 
@@ -140,7 +142,9 @@ void Boss::update( const double DELTA_TIME)
     if ( !potion -> activated )
     {
       // Delete potion.
-    }
+	} else {
+	  // No Action.
+	}
      potion -> update( DELTA_TIME);
   }
 }
@@ -166,6 +170,8 @@ void Boss::render( const double cameraX_, const double cameraY_)
 		} else {
 			this -> sprite -> render( dx, dy, &this->animationClip, false, 0.0, nullptr, flip );
 		}
+	} else {
+	  // No Action.
 	}
 	// Shield render.
 	if ( this -> has_shield )
@@ -175,8 +181,10 @@ void Boss::render( const double cameraX_, const double cameraY_)
 		{
 			this -> shield->render( dx, dy, &this -> shield_clip );
 		} else {
-			  this -> shield->render(dx -120, dy, &this -> shield_clip);
-		  }
+		  this -> shield->render(dx -120, dy, &this -> shield_clip);
+		}
+	} else {
+		// No Action.
 	}
 
 	//Constants for define position x e y to camera
@@ -192,6 +200,8 @@ void Boss::render( const double cameraX_, const double cameraY_)
 		} else {
 			  this->power->render(pdx, pdy, &this->power_clip, false, 0.0, nullptr, this->power_flip);
 		  }
+	} else {
+		// No Action.
 	}
 
   for ( auto potion : this -> potions )
@@ -247,16 +257,15 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 	{
 		this -> velocity_y_axis = 0.0;
 	} else {
-		// No Action.
+	  // No Action.
 	}
 	//Check collision occurrence on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM ) )
 	{
 		this -> nextY -= fmod( this -> nextY, 64.0) - 16.0;
 		this -> velocity_y_axis = 0.0;
-	}
-	else {
-		// No Action.
+	} else {
+	  // No Action.
 	}
 	//Check collision occurrence on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT ))
@@ -264,16 +273,15 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = 0.0;
 	} else {
-		// No action.
+	  // No action.
 	}
 	//Check collision occurrence on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
 	{
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = -0.001;
-	}
-	else {
-		// No action.
+	} else {
+	  // No action.
 	}
 }
 
@@ -293,8 +301,8 @@ void Boss::usePotion( const int strength_, const int distance_)
     Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> velocity_x_axis, distance_, this ->is_right);
     this -> potions.push_back( potion );
   } else {
-		// No Action.
-	}
+	// No Action.
+  }
 }
 
 /*

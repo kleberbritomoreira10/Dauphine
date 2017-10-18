@@ -76,6 +76,7 @@ void EStateCurious::update( const double DELTA_TIME)
   //if the time elapsed is greater than the time observing the enemy returns to patrol.
 	if ( time_elapsed >= MAX_CURIOUS_TIME )
 	{
+		assert( MAX_CURIOUS_TIME <= 4.666 );          		
 		this -> enemy -> changeState(Enemy::EStates::PATROLLING);
 		return;
 	} else {

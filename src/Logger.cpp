@@ -6,6 +6,7 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "Logger.h"
 
 Logger::Logger()

@@ -44,12 +44,15 @@ void LevelFour::load()
   Game::instance().get_audio_handler().change_music("res/audio/lv4.wav");
 
   // Loading the tile/tilemap.
+
+  assert( this -> tile_map != nullptr );        
   this -> tile_map = new TileMap("res/maps/level4.tmx");
 
   // Setting the level width/height.
   this -> width = this -> tile_map -> getMapWidth();
   this -> height = this -> tile_map -> getMapHeight();
   SDL_Rect bounds = { 0, 0, ( int ) this -> width, ( int ) this -> height };
+  assert( this -> quadTree != nullptr );        
   this -> quadTree = new QuadTree( 0, bounds );
 
   //Setting the background image
@@ -82,14 +85,17 @@ void LevelFour::load()
 
     Game::instance().get_saves().get_player_position(saved_x_position, saved_y_position, Game::instance().current_slot);
 
+    assert( level_player != nullptr );          
     level_player = new Player( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
   } else {
+      assert( level_player != nullptr );          
       level_player = new Player( this -> tile_map -> get_initial_x(), this -> tile_map -> get_initial_y(), PATH_PLAYER_SPRITE_SHEET);
     }
 
   Camera* level_camera = new Camera( level_player );
 
   //Instantiating elements of the game.
+  assert( this -> player_Hud != nullptr );            
   this -> player_Hud = new PlayerHUD( level_player );
 
   // Load all the enemies from the tile_map.

@@ -7,6 +7,7 @@
 #include "TileMap.h"
 #include "Collision.h"
 #include "Crosshair.h"
+#include <assert.h>
 
 LevelThree::LevelThree() :
 	Level(),
@@ -26,7 +27,8 @@ void LevelThree::load(){
 
 	// Loading the tile/tilemap.
 	this->tile_map = new TileMap("res/maps/level3.tmx");
-
+	assert(this->tile_map!=nullptr);
+	
 	// Setting the level width/height.
 	this->width = this->tile_map->getMapWidth();
 	this->height = this->tile_map->getMapHeight();
@@ -47,6 +49,10 @@ void LevelThree::load(){
 		"level.audio.background");
 	const std::string PATH_ENEMY = luaLevel1.unlua_get<std::string>("level.enemy");
 
+	assert(PATH_PLAYER_SPRITE_SHEET.empty());
+	assert(PATH_BACKGROUND_AUDIO.empty());
+	assert(PATH_ENEMY.empty());
+
 	// Changing the music.
 	// Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
 
@@ -62,12 +68,15 @@ void LevelThree::load(){
 		level_player = new Player(saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET);
 	}
 	else{
+		assert(this->tile_map->get_initial_x()!=NULL);
+		assert(this->tile_map->get_initial_y()!=NULL);
 		level_player = new Player(this->tile_map->get_initial_x(), this->tile_map->get_initial_y(), PATH_PLAYER_SPRITE_SHEET);
 	}
 	
 	Camera* level_camera = new Camera(level_player); 
 	
 	this->player_Hud = new PlayerHUD(level_player);
+	assert(this->player_Hud!=nullptr);
 
 		
 	// Load all the enemies from the tile_map.

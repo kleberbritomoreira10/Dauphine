@@ -6,6 +6,7 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "EStateIdle.h"
 #include <cmath>
 #include "SDLWrapper.h"
@@ -36,13 +37,14 @@ void EStateIdle::exit()
 
 /*
  * Update the datas for estate idle
- * @param DELTA_TIME : delta time (time elapsed)	
+ * @param DELTA_TIME : delta time (time elapsed)
  * @see StateEnemy::update
  */
 void EStateIdle::update( const double DELTA_TIME)
 {
+	assert( DELTA_TIME >= 0 );
 	((void)DELTA_TIME); // Unused.
-	
+
 	// Aerial
 	if ( !this -> enemy -> isGrounded )
 	{

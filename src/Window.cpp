@@ -2,7 +2,7 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @Window.cpp
- * File responsible for implementing the window to which the image will be displayed to the user, 
+ * File responsible for implementing the window to which the image will be displayed to the user,
  * giving the viewing options.
  * License: Copyright (C) 2014 Alke Games.
  */
@@ -11,9 +11,10 @@
 #include "Logger.h"
 #include "Configuration.h"
 #include <iostream>
+#include <assert.h>
 
 SDL_Renderer* Window::sdl_renderer = nullptr;
- 
+
 /*
  * The constructor of window class, creates a window..
  * Sets all attributes, and calls the initialize method.
@@ -99,11 +100,13 @@ void Window::render()
  */
 void Window::create(const unsigned int width_, const unsigned int height_)
 {
+  assert(width_ != 0);
+  assert(height_ != 0);
   /// @todo Toggle VSync.
   const Uint32 windowFlags = SDL_WINDOW_SHOWN;
   this -> sdl_window = SDL_CreateWindow( this -> window_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
   width_, height_, windowFlags);
-	
+
   if ( this -> sdl_window != nullptr )
   {
     // Creates the SDL renderer.
@@ -112,7 +115,7 @@ void Window::create(const unsigned int width_, const unsigned int height_)
 	{
 	  // Set texture filtering to linear.
 	  SDL_bool linearFilter = SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
-			
+
 	  if ( linearFilter )
 	  {
 	    Log(INFO) << "Linear texture filtering enabled!";
@@ -122,7 +125,7 @@ void Window::create(const unsigned int width_, const unsigned int height_)
 		}
 
 	  Log(DEBUG) << "Game successfully loaded.";
-				
+
 	} else {
 	    Log(ERROR) << "Renderer could not be created. " << SDL_GetError();
 	  }
@@ -133,10 +136,10 @@ void Window::create(const unsigned int width_, const unsigned int height_)
 
 /*
  * Resizes the window.
- * @todo Instead of directly choosing width and height, choose from a 
+ * @todo Instead of directly choosing width and height, choose from a
  * pre-defined list of resolutions.
  * @param width_ : resize the window with a new width
- * @param height_ : resize the window with a new height  
+ * @param height_ : resize the window with a new height
  */
 void Window::resize( const unsigned int width_, const unsigned int height_)
 {
@@ -180,6 +183,8 @@ SDL_Renderer* Window::getRenderer()
  */
 void Window::getLogicalSize(int* w, int* h)
 {
-  //Render window based on height and width. 
+  assert(w != NULL);
+  assert(h != NULL);
+  //Render window based on height and width.
   SDL_RenderGetLogicalSize(Window::getRenderer(), w, h);
 }

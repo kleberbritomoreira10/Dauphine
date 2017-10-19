@@ -2,11 +2,12 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @LevelFour.cpp
- * File responsible for implementing the phase 4 aspects of the game. 
+ * File responsible for implementing the phase 4 aspects of the game.
  * Factors such as numbering of items that can be captured, HUD, enemies and aspects of basic settings.
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "LevelFour.h"
 #include "Game.h"
 #include "LuaScript.h"
@@ -60,9 +61,9 @@ void LevelFour::load()
   //Referencing the image of the potion
   this -> image = Game::instance().getResources().get("res/images/potion.png");
 
-  /* 
+  /*
    * Getting information from lua script.
-   * Changing the music. 
+   * Changing the music.
    * Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
    */
   LuaScript luaLevel1("lua/Level1.lua");
@@ -72,8 +73,8 @@ void LevelFour::load()
 
   // Loading the player and the camera.
   Player* level_player = nullptr;
-  
-  //check to see if the player is in stage 4, and if so, determine the position on the x-axis and y  
+
+  //check to see if the player is in stage 4, and if so, determine the position on the x-axis and y
   if ( Game::instance().get_saves().is_saved(Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 4 )
   {
     double saved_x_position = 0.0;
@@ -85,12 +86,12 @@ void LevelFour::load()
   } else {
       level_player = new Player( this -> tile_map -> get_initial_x(), this -> tile_map -> get_initial_y(), PATH_PLAYER_SPRITE_SHEET);
     }
-    
-  Camera* level_camera = new Camera( level_player ); 
-  
-  //Instantiating elements of the game.  
+
+  Camera* level_camera = new Camera( level_player );
+
+  //Instantiating elements of the game.
   this -> player_Hud = new PlayerHUD( level_player );
-    
+
   // Load all the enemies from the tile_map.
   for ( unsigned  int i = 0; i < this -> tile_map -> get_enemies_x().size(); i++ )
   {
@@ -143,7 +144,7 @@ void LevelFour::unload()
   {
     caught_items[i] = false;
   }
-  //this->checkpointVisited = false; 
+  //this->checkpointVisited = false;
 }
 
 /*
@@ -152,12 +153,13 @@ void LevelFour::unload()
  */
 void LevelFour::update( const double DELTA_TIME )
 {
+  assert( DELTA_TIME >= 0 );
   // Populating the QuadTree.
   this -> quadTree -> setObjects( this -> tile_map -> getCollisionRects() );
 
   // Updating the entities, using the QuadTree.
   std::vector<CollisionRect> return_objects;
-  for ( auto entity : this -> entities ) 
+  for ( auto entity : this -> entities )
   {
     return_objects.clear();
     this -> quadTree -> retrieve( return_objects, entity -> get_bounding_box() );
@@ -197,15 +199,15 @@ void LevelFour::update( const double DELTA_TIME )
 
   //If collect item, update the amount of potions to 3
   for ( int i = 0; i < NUMBER_ITEMS; ++i )
-  { 
-    if ( Collision::rects_collided( this -> player->get_bounding_box(), {items[0][i], items[1][i], 192, 192}) && 
+  {
+    if ( Collision::rects_collided( this -> player->get_bounding_box(), {items[0][i], items[1][i], 192, 192}) &&
       caught_items[i] == false )
     {
       this -> player -> addPotions(3);
       caught_items[i] = true;
     }
   }
-  
+
   //Verify if life player is vulnerable
   if ( this -> player -> life != Enemy::points_life )
   {
@@ -253,7 +255,7 @@ void LevelFour::update( const double DELTA_TIME )
           {
             enemy->changeState( Enemy::EStates::DEAD );
           }
-            
+
         }
       }
     }
@@ -267,7 +269,7 @@ void LevelFour::update( const double DELTA_TIME )
       if ( this -> player -> is_right != enemy -> is_right )
         if ( this -> player -> is_current_state( Player::player_states::ATTACK) || this->player->is_current_state(Player::player_states::ATTACKMOVING) )
         {
-                    
+
           if ( enemy -> life > 0 && this -> player -> can_attack )
           {
             enemy -> life -= this -> player -> attackStrength;
@@ -285,13 +287,13 @@ void LevelFour::update( const double DELTA_TIME )
   //Saving the game state
   for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
   {
-    if ( !this -> checkpoints_visited[j] && this -> player -> get_bounding_box().x >= checkpoints_X[j] 
+    if ( !this -> checkpoints_visited[j] && this -> player -> get_bounding_box().x >= checkpoints_X[j]
         && this -> player -> get_bounding_box().x <= checkpoints_X[j] + 100 && this -> player -> get_bounding_box().y >= checkpoints_Y[j] && this -> player -> get_bounding_box().y <= checkpoints_Y[j] + 200 )
     {
       this -> checkpoints[j] = Game::instance().getResources().get("res/images/checkpoint_visited.png");
       Game::instance().get_saves().saveLevel(4, this -> player, this -> enemies, Game::instance().current_slot );
       this -> checkpoints_visited[j] = true;
-    }   
+    }
   }
 
   // Documents check
@@ -341,8 +343,8 @@ void LevelFour::render()
   for ( unsigned int i = 0; i < NUMBER_ITEMS; i++ )
   {
     if ( this -> image != nullptr && caught_items[i] == false )
-    {           
-      this -> image -> Sprite::render( ( items[0][i]+60) - CAMERA_X, ((items[1][i]) - CAMERA_Y) );    
+    {
+      this -> image -> Sprite::render( ( items[0][i]+60) - CAMERA_X, ((items[1][i]) - CAMERA_Y) );
     }
   }
 
@@ -356,4 +358,3 @@ void LevelFour::render()
     }
   }
 }
-

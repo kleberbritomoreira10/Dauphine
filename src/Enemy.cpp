@@ -82,6 +82,8 @@ Enemy::~Enemy()
 	{
 		this -> current_state -> exit();
 		this -> current_state = nullptr;
+	} else {
+		// No action.
 	}
 
   //Attribute null to animation
@@ -89,7 +91,9 @@ Enemy::~Enemy()
 	{
     delete this -> animation;
     this -> animation = nullptr;
-  }
+  } else {
+		// No action.
+	}
 
 	destroyStates();
 }
@@ -200,6 +204,8 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	if ( detections_.at(CollisionSide::SOLID_TOP) )
 	{
 		this -> velocity_y_axis = 0.0;
+	} else {
+		// No actiion.
 	}
 	//Collision on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM) )
@@ -232,12 +238,16 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	{
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = 0.0;
+	} else {
+		// No action.
 	}
 	//Collision on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
 	{
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = -0.001;
+	} else {
+		// No action.
 	}
 }
 

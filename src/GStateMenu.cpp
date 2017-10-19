@@ -259,10 +259,12 @@ void GStateMenu::handleSelectorMenu()
 		}else
 		{
 		should_ignore = true;
+		}
+
 		Game::instance().setState( Game::GStates::NEW_GAME );
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
-		}
+
 	}
 
 	else if( current_selection == Selection::CONTINUE && keyStates[ GameKeys::SPACE ] == true)
@@ -275,10 +277,13 @@ void GStateMenu::handleSelectorMenu()
 			return;
 		}else
 		{
+			should_ignore = true;
+		}
+
 		Game::instance().setState( Game::GStates::CONTINUE );
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
-		}
+
 	}
 
 	else if( current_selection == Selection::OPTIONS && keyStates[ GameKeys::SPACE ] == true)
@@ -292,10 +297,13 @@ void GStateMenu::handleSelectorMenu()
 
 		}else
 		{
+			should_ignore = true;
+		}
+
 		Game::instance().setState( Game::GStates::OPTIONS );
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
-		}
+
 	}
 
 	else if( current_selection == Selection::CREDITS && keyStates[ GameKeys::SPACE ] == true )
@@ -309,9 +317,12 @@ void GStateMenu::handleSelectorMenu()
 
 		}else
 		{
+			should_ignore = true;
+		}
+		
 		Game::instance().setState( Game::GStates::CREDITS );
 		this -> passed_time = 0.0;
 		this -> attractClip.y = 0;
-		}
+
 	}
 }

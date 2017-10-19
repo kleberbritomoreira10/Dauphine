@@ -43,7 +43,7 @@ void PStateAiming::handleInput(const std::array<bool, GameKeys::MAX> keyStates_)
 	}
 
 	if(keyStates_[GameKeys::ACTION]){
-		if(this->player->currentItem == Player::PItems::POTION){
+		if(this->player->current_item == Player::PItems::POTION){
 			this->player->usePotion(THROW_STRENGTH, absoluteCrosshairPlayerDistance());
 			return;
 		}

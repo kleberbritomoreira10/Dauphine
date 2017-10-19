@@ -144,14 +144,14 @@ void BStateTeleport::update ( const double DELTA_TIME )
 		if ( this -> boss -> player -> is_right )
 		{
 
-			this -> boss -> power_X = pX;
-			this -> boss -> power_Y = pY;
+			this -> boss -> power_X_axis = pX;
+			this -> boss -> power_Y_axis = pY;
 
 		}else
 		{
 
-			this -> boss -> power_X = pX;
-			this -> boss -> power_Y = pY;
+			this -> boss -> power_X_axis = pX;
+			this -> boss -> power_Y_axis = pY;
 
 		}if ( tptime >= 4.5 )
 		{
@@ -165,7 +165,7 @@ void BStateTeleport::update ( const double DELTA_TIME )
 		this -> boss -> power_is_activated = true;
 
 		if ( Collision::rects_collided ( this -> boss -> player -> get_bounding_box (),
-			{ ( int ) this -> boss -> power_X - direction * 665, ( int ) this -> boss -> power_Y
+			{ ( int ) this -> boss -> power_X_axis - direction * 665, ( int ) this -> boss -> power_Y_axis
 				+ offset, direction * 665, 262 }) )
 		{
 

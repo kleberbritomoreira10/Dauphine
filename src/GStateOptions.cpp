@@ -14,8 +14,9 @@
 #include "Util.h"
 
 #include <string>
+#include <assert.h>
 
-const std::string GStateOptions::possible_resolutions[3] = {"800x600", "768x432", "960x540"};
+const std::string GStateOptions::possible_resolutions[ 3 ] = { "800x600", "768x432", "960x540" };
 
 /**
 * The constructor.
@@ -24,8 +25,8 @@ const std::string GStateOptions::possible_resolutions[3] = {"800x600", "768x432"
 GStateOptions::GStateOptions() :
 	elapsedTime( 0.0 ),
 	options_image( nullptr ),
-	current_resolution( R_960_540 ),
-	current_option( O_RESOLUTION ),
+	current_resolution( RESOLUTION_960_540 ),
+	current_option( OPTIONS_RESOLUTION ),
 	selector( nullptr ),
 	selector_X_position_left{ 780, 780, 780, 590, 590 },
 	selector_Y_position_left{ 365, 468, 580, 665, 750 },
@@ -35,7 +36,7 @@ GStateOptions::GStateOptions() :
 	sfx_volume( 100 ),
 	resolution( nullptr ),
 	music_volume_text( nullptr ),
-	sfx_volume_text( nullptr )	
+	sfx_volume_text( nullptr )
 {
 	this -> resolution = new Text( 830.0, 365.0, "res/fonts/maturasc.ttf", 45, \
 		possible_resolutions[current_resolution].c_str() );
@@ -50,22 +51,35 @@ GStateOptions::GStateOptions() :
 */
 GStateOptions::~GStateOptions()
 {
+
 	if( this -> resolution != nullptr )
 	{
 		delete this -> resolution;
 		this -> resolution = nullptr;
+
+	}else
+	{
+		// No action.
 	}
 
 	if( this -> music_volume_text != nullptr )
 	{
 		delete this -> music_volume_text;
 		this -> music_volume_text = nullptr;
+
+	}else
+	{
+		// No action.
 	}
 
 	if( this -> sfx_volume_text != nullptr )
 	{
 		delete this -> sfx_volume_text;
 		this -> sfx_volume_text = nullptr;
+
+	}else
+	{
+		// No action.
 	}
 }
 
@@ -76,17 +90,22 @@ GStateOptions::~GStateOptions()
 */
 void GStateOptions::update( const double DELTA_TIME )
 {
+	assert( DELTA_TIME > 0 );
 	this -> elapsedTime += DELTA_TIME;
 
 	this -> resolution -> changeText( possible_resolutions[ current_resolution ].c_str() );
 	this -> music_volume_text -> changeText( Util::toString( this -> music_volume).c_str() );
 	this -> sfx_volume_text -> changeText( Util::toString( this -> sfx_volume ).c_str() );
 
-	const std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+	const std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 
 	if( keyStates[ GameKeys::ESCAPE ] == true)
 	{
 		Game::instance().setState( Game::GStates::MENU );
+
+	}else
+	{
+		// No action.
 	}
 
 	const double SELECTOR_DELAY_TIME = 0.2;
@@ -95,120 +114,143 @@ void GStateOptions::update( const double DELTA_TIME )
 	{
 		if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
 		{
-			if( this -> current_option == (O_TOTAL - 1 ) )
+			if( this -> current_option == ( OPTIONS_TOTAL - 1 ) )
 			{
-				this -> current_option = O_RESOLUTION;
+				this -> current_option = OPTIONS_RESOLUTION;
 			}
 			else
 			{
 				this -> current_option++;
 			}
-			this -> elapsedTime = 0.0;
-		}
-	}
 
-	if( keyStates[ GameKeys::UP ] == true )
+			this -> elapsedTime = 0.0;
+
+		}else
+		{
+			// No action.
+		}
+	}else if( keyStates[ GameKeys::UP ] == true )
 	{
 		if( this -> elapsedTime >= SELECTOR_DELAY_TIME)
 		{
-			if( this -> current_option == O_RESOLUTION )
+			if( this -> current_option == OPTIONS_RESOLUTION )
 			{
-				this -> current_option = ( O_TOTAL - 1 );
+				this -> current_option = ( OPTIONS_TOTAL - 1 );
 			}
 			else
 			{
 				this -> current_option--;
 			}
-			this -> elapsedTime = 0.0;
-		}
-	}
 
-	if( keyStates[ GameKeys::LEFT ] == true)
+			this -> elapsedTime = 0.0;
+
+		}else
+		{
+			// No action.
+		}
+
+	}else if( keyStates[ GameKeys::LEFT ] == true)
 	{
 		if( this->elapsedTime >= SELECTOR_DELAY_TIME )
 		{
 			// Option == Resolution
-			if( this -> current_option == O_RESOLUTION )
+			if( this -> current_option == OPTIONS_RESOLUTION )
 			{
-				if( this -> current_resolution == R_800_600 )
+				if( this -> current_resolution == RESOLUTION_800_600 )
 				{
-					this -> current_resolution = ( R_TOTAL - 1 );
+					this -> current_resolution = ( RESOLUTION_TOTAL - 1 );
 				}
 				else
 				{
 					this -> current_resolution--;
 				}
-			}
-			// Option == VOLUME MUSIC
-			else if( this -> current_option == O_VOLUME_MUSIC )
+
+			}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
 			{
 				if( this -> music_volume > 0 )
-				{	
+				{
 					this -> music_volume -= 5;
+
+				}else
+				{
+					//No action.
 				}
-			}
-			// Option == VOLUME SFX
-			else if( this -> current_option == O_VOLUME_SFX )
+
+			}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
 			{
 				if( this -> sfx_volume > 0)
 				{
 					this -> sfx_volume -= 5;
+
+				}else
+				{
+					// No action.
 				}
+			}else
+			{
+				// No action.
 			}
 
 			this -> elapsedTime = 0.0;
 		}
-	}
 
-	if( keyStates[ GameKeys::RIGHT ] == true )
+	}else if( keyStates[ GameKeys::RIGHT ] == true )
 	{
 		if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
 		{
 			// Option == Resolution
-			if( this -> current_option == O_RESOLUTION )
+			if( this -> current_option == OPTIONS_RESOLUTION )
 			{
-				if( this -> current_resolution == ( R_TOTAL - 1 ) )
+				if( this -> current_resolution == ( RESOLUTION_TOTAL - 1 ) )
 				{
-					this -> current_resolution = R_800_600;
+					this -> current_resolution = RESOLUTION_800_600;
 				}
 				else
 				{
 					this -> current_resolution++;
 				}
-			}
-			// Option == VOLUME MUSIC
-			else if( this -> current_option == O_VOLUME_MUSIC )
+
+			}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
 			{
 				if( this -> music_volume < 100 )
 				{
 					this -> music_volume += 5;
+
+				}else
+				{
+					// No action.
 				}
-			}
-			// Option == VOLUME SFX
-			else if( this -> current_option == O_VOLUME_SFX )
+
+			}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
 			{
 				if( this -> sfx_volume < 100 )
 				{
 					this -> sfx_volume += 5;
+
+				}else
+				{
+					// No action.
 				}
-			}
-			else
+
+			}else
 			{
 				// Condition not implemented
 			}
 
 			this -> elapsedTime = 0.0;
 		}
-	}
 
-	if( keyStates[ GameKeys::SPACE ] == true && this -> current_option == O_APPLY )
+	}else if( keyStates[ GameKeys::SPACE ] == true && this -> current_option == OPTIONS_APPLY )
 	{
 		applyOptions();
-	}
 
-	if( keyStates[ GameKeys::SPACE ] == true && this -> current_option == O_RETURN )
+	}else if( keyStates[ GameKeys::SPACE ] == true && this -> current_option == OPTIONS_RETURN )
 	{
 		Game::instance().setState( Game::GStates::MENU );
+
+	}else
+	{
+		// No action.
 	}
 }
 
@@ -252,17 +294,17 @@ void GStateOptions::load()
 {
 	Log( DEBUG ) << "Loading options...";
 
-	LuaScript luaOptions("lua/Options.lua");
-	const std::string pathOptions = luaOptions.unlua_get<std::string>("options.images.dummy");
-	const std::string path_cursor = luaOptions.unlua_get<std::string>("options.images.cursor");
+	LuaScript luaOptions( "lua/Options.lua" );
+	const std::string path_options = luaOptions.unlua_get< std::string >( "options.images.dummy" );
+	const std::string path_cursor = luaOptions.unlua_get< std::string >( "options.images.cursor" );
 
-	this -> current_resolution = R_960_540;
-	this -> current_option = O_RESOLUTION;
-	
-    this -> options_image = Game::instance().getResources().get( pathOptions );
-    this -> selector = Game::instance().getResources().get( path_cursor );
+	this -> current_resolution = RESOLUTION_960_540;
+	this -> current_option = OPTIONS_RESOLUTION;
 
-    this -> selector -> setWidth( 50 );
+  this -> options_image = Game::instance().getResources().get( path_options );
+  this -> selector = Game::instance().getResources().get( path_cursor );
+
+  this -> selector -> setWidth( 50 );
 }
 
 /**
@@ -279,18 +321,32 @@ void GStateOptions::unload()
 */
 void GStateOptions::applyOptions()
 {
+
 	// Apply resolution
-	if( this -> current_resolution == R_800_600 )
+	if( this -> current_resolution == RESOLUTION_800_600 )
 	{
-		Game::instance().resizeWindow( 800, 600 );
-	}
-	else if( this -> current_resolution == R_768_432 )
+
+		int resolution_X = 800;
+		int resolution_Y = 600;
+		Game::instance().resizeWindow( resolution_X, resolution_Y );
+
+	}else if( this -> current_resolution == RESOLUTION_768_432 )
 	{
-		Game::instance().resizeWindow( 768, 432 );
-	}
-	else if( this -> current_resolution == R_960_540 )
+
+		int resolution_X = 768;
+		int resolution_Y = 432;
+		Game::instance().resizeWindow( resolution_X, resolution_Y );
+
+	}else if( this -> current_resolution == RESOLUTION_960_540 )
 	{
-		Game::instance().resizeWindow( 960, 540 );
+
+		int resolution_X = 960;
+		int resolution_Y = 540;
+		Game::instance().resizeWindow( resolution_X, resolution_Y );
+
+	}else
+	{
+		// No action.
 	}
 
 	// Apply volume music

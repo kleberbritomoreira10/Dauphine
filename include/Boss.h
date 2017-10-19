@@ -100,8 +100,8 @@ class Boss : public DynamicEntity
     bool can_walk; // Condition for the boss to be able to walk.
     Player *player; // Reference to the Player.
     Animation *power_animation; // Reference to animation of Boss's power.
-    double power_X; // Power in the x-axis.
-    double power_Y; // Power in the y-axis.
+    double power_X_axis; // Power in the x-axis.
+    double power_Y_axis; // Power in the y-axis.
     bool power_is_activated; // Boleean condition to activated the power.
     Sprite *power; // Referece to visual represetation of Boss power.
     SDL_Rect power_clip; // A structure that contains the definition of a rectangle, with the origin at the upper left.

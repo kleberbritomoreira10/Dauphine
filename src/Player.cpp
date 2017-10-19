@@ -43,16 +43,16 @@
 Player::Player( const double x_, const double y_, const std::string &PATH ) :
     DynamicEntity( x_, y_, PATH ),
     potions_left( 3 ),
-    maxPotions( 3 ),
+    max_potions( 3 ),
     crosshair( new Crosshair(0.0, 0.0, "res/images/alvo.png" )),
     life( 3 ),
-    attackStrength( 50 ),
+    attack_strength( 50 ),
     can_attack( true ),
-    currentItem(PItems::POTION),
-    closestEnemyIsRight( true ),
+    current_item(PItems::POTION),
+    closest_enemy_is_right( true ),
     is_vulnerable( true ),
-    invulnerableTime( 0 ),
-    canMove( true ),
+    invulnerable_time( 0 ),
+    can_move( true ),
     animation( nullptr ),
     current_state( nullptr )
 {
@@ -115,7 +115,7 @@ void Player::update( const double DELTA_TIME )
     std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
 
     // Vrifying if the player can move.
-    if ( this -> canMove )
+    if ( this -> can_move )
     {
         this -> current_state -> handleInput( keyStates );
     }
@@ -146,10 +146,10 @@ void Player::update( const double DELTA_TIME )
     // Verifying if the player is vulnerable, if not, the player can attack.
     if ( !this -> is_vulnerable )
     {
-        this -> invulnerableTime += DELTA_TIME;
-        if ( this -> invulnerableTime >= 1 )
+        this -> invulnerable_time += DELTA_TIME;
+        if ( this -> invulnerable_time >= 1 )
         {
-            this -> invulnerableTime = 0;
+            this -> invulnerable_time = 0;
             this -> is_vulnerable = true;
             this -> can_attack = true;
         }
@@ -295,9 +295,9 @@ void Player::usePotion( const int strength_, const int distance_ )
 void Player::addPotions( const unsigned int quantity_ )
 {
     // Adding potions if the total of potions is < maximum number of potions.
-    if ( this -> potions_left + quantity_ > this -> maxPotions )
+    if ( this -> potions_left + quantity_ > this ->  max_potions)
     {
-        this -> potions_left = this -> maxPotions;
+        this -> potions_left = this -> max_potions;
     } else
     {
         this -> potions_left += quantity_;

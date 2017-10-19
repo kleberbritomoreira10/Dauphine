@@ -206,7 +206,7 @@ void LevelThree::update(const double DELTA_TIME){
 				if(this->player->is_current_state(Player::player_states::ATTACK) || this->player->is_current_state(Player::player_states::ATTACKMOVING)){
 					
 					if(enemy->life > 0 && this->player->can_attack){
-						enemy->life -= this->player->attackStrength;
+						enemy->life -= this->player->attack_strength;
 						this->player->can_attack = false;
 					}
 					// Log(DEBUG) << "Enemy Life = " << enemy->life;

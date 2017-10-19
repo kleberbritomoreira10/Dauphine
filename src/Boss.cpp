@@ -33,7 +33,7 @@ double timePasssed = 0;
  * @param SDL_FLIP_NONE : Renderer flip
  */
 Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* const player_ ) :
-	DynamicEntity(x_, y_, PATH), potions_left(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X(0.0), power_Y(0.0), power_is_activated(false), power(nullptr),
+	DynamicEntity(x_, y_, PATH), potions_left(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X_axis(0.0), power_Y_axis(0.0), power_is_activated(false), power(nullptr),
 	  power_clip{0,0,0,0}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{0,0,0,0},
 	  current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
@@ -168,8 +168,8 @@ void Boss::render( const double cameraX_, const double cameraY_)
 	}
 
 	//Constants for define position x e y to camera
-	const double pdx = this -> power_X - cameraX_;
-	const double pdy = this -> power_Y - cameraY_;
+	const double pdx = this -> power_X_axis - cameraX_;
+	const double pdy = this -> power_Y_axis - cameraY_;
 
 	//Power render
 	if ( this -> power != nullptr && this -> power_is_activated )

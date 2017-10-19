@@ -58,20 +58,20 @@ class GStateOptions : public StateGame
 
 		enum Option : uint8_t
 		{
-			O_RESOLUTION = 0,
-			O_VOLUME_MUSIC,
-			O_VOLUME_SFX,
-			O_APPLY,
-			O_RETURN,
-			O_TOTAL
+			OPTIONS_RESOLUTION = 0,
+			OPTIONS_VOLUME_MUSIC,
+			OPTIONS_VOLUME_SFX,
+			OPTIONS_APPLY,
+			OPTIONS_RETURN,
+			OPTIONS_TOTAL
 		};
 
 		enum Resolution : uint8_t
 		{
-			R_800_600 = 0,
-			R_768_432,
-			R_960_540,
-			R_TOTAL
+			RESOLUTION_800_600 = 0,
+			RESOLUTION_768_432,
+			RESOLUTION_960_540,
+			RESOLUTION_TOTAL
 		};
 
 		Sprite *options_image; /**< The image shown on the menu. */
@@ -81,10 +81,10 @@ class GStateOptions : public StateGame
 
 		Sprite *selector; /**< The selector shown on the menu. */
 
-		int selector_X_position_left [ Option::O_TOTAL ]; /**< The X position of the left selector.. */
-		int selector_Y_position_left [ Option::O_TOTAL ]; /**< The Y position of the left selector.. */
-		int selector_X_position_right [ Option::O_TOTAL ]; /**< The X position of the left selector.. */
-		int selector_Y_position_right [ Option::O_TOTAL ]; /**< The Y position of the left selector.. */
+		int selector_X_position_left [ Option::OPTIONS_TOTAL ]; /**< The X position of the left selector.. */
+		int selector_Y_position_left [ Option::OPTIONS_TOTAL ]; /**< The Y position of the left selector.. */
+		int selector_X_position_right [ Option::OPTIONS_TOTAL ]; /**< The X position of the left selector.. */
+		int selector_Y_position_right [ Option::OPTIONS_TOTAL ]; /**< The Y position of the left selector.. */
 
 		static const std::string possible_resolutions [ MAX_NUMBER_OF_RESOLUTIONS ]; // Array of possible resolutions >= 3
 

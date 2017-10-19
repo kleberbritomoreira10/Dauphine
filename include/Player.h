@@ -113,24 +113,24 @@ class Player : public DynamicEntity
 		void addPotions( const unsigned int quantity_ );
 
 		unsigned int potions_left;
-		unsigned int maxPotions;
-		std::vector<Potion*> potions;
+		unsigned int max_potions;
+		std::vector< Potion * > potions;
 
 		Crosshair *crosshair;
 
 		unsigned int life;
-		unsigned int attackStrength;
+		unsigned int attack_strength;
 		//unsigned int maxLife;
 
 		bool can_attack;
-		unsigned int currentItem;
+		unsigned int current_item;
 
 		bool isDead();
-		bool closestEnemyIsRight;
+		bool closest_enemy_is_right;
 
 		bool is_vulnerable;
-		double invulnerableTime;
-		bool canMove;
+		double invulnerable_time;
+		bool can_move;
 
 	private:
 		virtual void updateBoundingBox();

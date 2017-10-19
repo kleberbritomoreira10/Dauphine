@@ -28,8 +28,8 @@ void BStateMagicProjectile::enter ()
   this -> boss -> power_animation -> changeAnimation( 0, 0, 4, false, 0.5 );
   this -> boss -> velocity_x_axis = 0;
   this -> boss -> velocity_y_axis = 0;
-  this -> boss -> power_X = this -> boss -> x + 50;
-  this -> boss -> power_Y = this -> boss -> y + 150;
+  this -> boss -> power_X_axis = this -> boss -> x + 50;
+  this -> boss -> power_Y_axis = this -> boss -> y + 150;
 
   leg_x_axis = this -> boss -> player -> get_bounding_box().x + 50 - this -> boss -> get_bounding_box().x;
   leg_y_axis = this -> boss -> player -> get_bounding_box().y + 50 - this -> boss -> get_bounding_box().y;
@@ -58,12 +58,12 @@ void BStateMagicProjectile::exit ()
 void BStateMagicProjectile::update ( const double DELTA_TIME ) 
 {
   projectileTime += DELTA_TIME;
-  this -> boss -> power_X += leg_x_axis * 15;
-  this -> boss -> power_Y += leg_y_axis * 15;
+  this -> boss -> power_X_axis += leg_x_axis * 15;
+  this -> boss -> power_Y_axis += leg_y_axis * 15;
   this -> boss -> power_is_activated = true;
 
-  if ( Collision::rects_collided( this -> boss -> player -> get_bounding_box(), { ( int )this -> boss -> power_X, 
-    (int)this -> boss -> power_Y, 50, 50 } ) )
+  if ( Collision::rects_collided( this -> boss -> player -> get_bounding_box(), { ( int )this -> boss -> power_X_axis, 
+    (int)this -> boss -> power_Y_axis, 50, 50 } ) )
   {
     this -> boss -> player -> life--;
     this -> boss -> changeState( Boss::BStates::IDLE );

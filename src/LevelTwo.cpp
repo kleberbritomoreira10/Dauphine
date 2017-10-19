@@ -14,6 +14,8 @@
 #include "TileMap.h"
 #include "Collision.h"
 #include "Crosshair.h"
+#include <assert.h>
+#include <cstddef>
 
 /**
 * The constructor.
@@ -64,6 +66,7 @@ void LevelTwo::load ()
   LuaScript luaLevel1 ( "lua/Level1.lua" );
   const std::string PATH_PLAYER_SPRITE_SHEET = luaLevel1.unlua_get<std::string> (
     "level.player.spriteSheet" );
+
   // Alert!: in variable PATH_BACKGROUND_AUDIO is assigned a value is never used.
   const std::string PATH_BACKGROUND_AUDIO = luaLevel1.unlua_get<std::string> (
     "level.audio.background" );
@@ -73,7 +76,7 @@ void LevelTwo::load ()
   // Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
 
   Player *level_player = nullptr;  // Loading the player.
-  
+
   if ( Game::instance ().get_saves ().is_saved ( Game::instance ().current_slot ) 
       && Game::instance ().get_saves ().get_saved_level ( Game::instance ().current_slot ) == 2 )
   {
@@ -83,19 +86,19 @@ void LevelTwo::load ()
     Game::instance ().get_saves ().get_player_position ( saved_x_position, saved_y_position, Game::instance ().current_slot );
 
     level_player = new Player ( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
-  }
-  else
-  {
-    level_player = new Player ( this -> tile_map -> get_initial_x (), 
+  } else
+    {
+      level_player = new Player ( this -> tile_map -> get_initial_x (), 
                           this -> tile_map -> get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
-  }
+    }
   
   Camera *level_camera = new Camera ( level_player ); // Loading the camera.
-  
+  assert( level_player == nullptr);
+
   this -> player_Hud = new PlayerHUD ( level_player );
 
   // Load all the enemies from the tile_map.
-  for( unsigned int i = 0; i < this -> tile_map->get_enemies_x().size(); i++ )
+  for ( unsigned int i = 0; i < this -> tile_map->get_enemies_x().size(); i++ )
   {
     Enemy *enemy = new Enemy ( this -> tile_map -> get_enemies_x().at( i ) ,
       this -> tile_map -> get_enemies_y ().at ( i ), PATH_ENEMY,
@@ -107,8 +110,15 @@ void LevelTwo::load ()
           Game::instance().get_saves().get_saved_level ( Game::instance().current_slot ) == 2 )
       {
         enemy -> set_dead ( true );
+        assert( enemy == nullptr);
+      } else
+        {
+          //No action   
+        }
+    } else
+      {
+        //No action 
       }
-    }
     enemy -> setLevelWH ( this -> width, this -> height );
     this -> enemies.push_back ( enemy );
   }
@@ -118,8 +128,9 @@ void LevelTwo::load ()
   Enemy::points_life = this -> player -> life;
 
   set_camera ( level_camera );
+  assert( level_camera == nullptr);
 
-  Game::instance ().get_fade ().fade_out ( 0, 0.002 );
+  Game::instance().get_fade().fade_out ( 0, 0.002 );
 }
 
 /**
@@ -147,13 +158,14 @@ void LevelTwo::unload ()
 * @see LevelTwo::load()
 */
 void LevelTwo::update ( const double DELTA_TIME )
-{
+{ 
+  assert( DELTA_TIME <= 0);
   // Populating the QuadTree.
   this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 
   // Updating the entities, using the QuadTree.
   std::vector<CollisionRect> return_objects;
-  for( auto entity : this -> entities )
+  for ( auto entity : this -> entities )
   {
     return_objects.clear ();
     this->quadTree -> retrieve ( return_objects, entity -> get_bounding_box () );
@@ -162,7 +174,7 @@ void LevelTwo::update ( const double DELTA_TIME )
   }
 
   // Updating the enemies.
-  for ( auto enemy : this->enemies )
+  for ( auto enemy : this -> enemies )
   {
     return_objects.clear();
     this -> quadTree->retrieve ( return_objects, enemy->get_bounding_box () );
@@ -171,11 +183,14 @@ void LevelTwo::update ( const double DELTA_TIME )
   }
 
   // Set to GameOver if the player is dead.
-  if( this -> player -> isDead () )
+  if ( this -> player -> isDead() )
   {
-    Game::instance ().setState ( Game::GStates::GAMEOVER );
+    Game::instance().setState ( Game::GStates::GAMEOVER );
     return;
-  }
+  } else
+    {
+      //No action
+    }
 
   // Updating the potions.
   for ( auto potion : this -> player->potions )
@@ -185,7 +200,7 @@ void LevelTwo::update ( const double DELTA_TIME )
     potion -> setCollisionRects ( return_objects );
   }
 
-  /// @todo Maybe refactor this static Enemy::px, Enemy::py.
+  // @todo Maybe refactor this static Enemy::px, Enemy::py.
   // Updating player info for the enemies.
   Enemy::px = this -> player -> x;
   Enemy::py = this -> player -> y;
@@ -199,22 +214,24 @@ void LevelTwo::update ( const double DELTA_TIME )
     {
       this -> player -> addPotions(3);
       caught_items [ i ] =true;
-    }
+    } else
+      {
+        //No action
+      }
   }
 
   if ( this -> player -> life != Enemy::points_life )
   {
-    if( this -> player -> is_vulnerable )
+    if ( this -> player -> is_vulnerable )
     {
       this -> player -> life--;
       Enemy::points_life = this -> player -> life;
       this -> player -> changeState ( Player::player_states::HITED );
       this -> player -> is_vulnerable = false;
-    }
-    else
-    {
-
-    }
+    } else
+      {
+        //No action 
+      }
   }
 
   // Updating the HUD.
@@ -229,31 +246,45 @@ void LevelTwo::update ( const double DELTA_TIME )
     Game::instance ().transitionTo = Game::GStates::LEVEL_THREE;
     Game::instance ().setState ( Game::GStates::TRANSITION );
     return;
-  }
+  } else
+    {
+      //No action
+    }
 
   // Updating the potion/enemy collision.
-  for( auto potion : this -> player -> potions )
+  for ( auto potion : this -> player -> potions )
   {
-    for(auto enemy : this -> enemies)
+    for ( auto enemy : this -> enemies )
     {
-      if( Collision::rects_collided ( potion -> get_bounding_box (), enemy -> get_bounding_box () ) )
+      if ( Collision::rects_collided ( potion -> get_bounding_box (), enemy -> get_bounding_box () ) )
       {
         if ( potion -> activated )
-        {
-          
+        {     
           if ( enemy -> life > 0 && this -> player -> can_attack )
           {
             enemy -> life -= 100;
             potion -> activated = false;
-          }
+          } else
+            {
+              // No action
+            }
           // Log(DEBUG) << "Enemy Life = " << enemy->life;
 
-          if( enemy -> life <= 0 )
+          if ( enemy -> life <= 0 )
           {
             enemy -> changeState ( Enemy::EStates::DEAD );
+          } else
+            {
+              // No action
+            }
+        } else
+          {
+            // No action
           }
+      } else
+        {
+          // No action
         }
-      }
     }
   }
 
@@ -262,24 +293,38 @@ void LevelTwo::update ( const double DELTA_TIME )
   {
     if ( Collision::rects_collided ( this -> player -> get_bounding_box (), enemy -> get_bounding_box () ) )
     {
-      if( this -> player -> is_right != enemy -> is_right )
-        if( this -> player -> is_current_state( Player::player_states::ATTACK ) || 
+      if ( this -> player -> is_right != enemy -> is_right )
+      {
+        if ( this -> player -> is_current_state( Player::player_states::ATTACK ) || 
             this -> player -> is_current_state( Player::player_states::ATTACKMOVING ) )
         {
-          
           if ( enemy -> life > 0 && this -> player -> can_attack )
           {
             enemy -> life -= this -> player -> attack_strength;
             this -> player -> can_attack = false;
-          }
+          } else
+            {
+              // No action
+            }
           // Log(DEBUG) << "Enemy Life = " << enemy->life;
-
-          if( enemy -> life <= 0 )
+          if ( enemy -> life <= 0 )
           {
             enemy -> changeState ( Enemy::EStates::DEAD );
+          } else
+            {
+              // No action
+            }
+        } else
+          {
+            // No action
           }
-        }
-    }
+        } else {
+            //No action
+          }
+    } else
+      {
+        // No action
+      }
   }
 
   //Saving the game state
@@ -293,7 +338,10 @@ void LevelTwo::update ( const double DELTA_TIME )
       this -> checkpoints [ j ] = Game::instance ().getResources ().get( "res/images/checkpoint_visited.png" );
       Game::instance ().get_saves ().saveLevel ( 2, this -> player, this -> enemies, Game::instance ().current_slot );
       this -> checkpoints_visited [ j ] = true;
-    } 
+    } else
+      {
+        // No action
+      }
   }
 
   // Documents check
@@ -302,11 +350,10 @@ void LevelTwo::update ( const double DELTA_TIME )
     if ( Collision::rects_collided ( this -> player -> get_bounding_box (), document -> get_bounding_box () ) )
     {
       document -> should_render = true;
-    }
-    else
-    {
-      document -> should_render = false;
-    }
+    } else
+      {
+        document -> should_render = false;
+      }
   }
 }
 
@@ -332,15 +379,15 @@ void LevelTwo::render ()
 
   this -> player_Hud -> render ();
 
-  for( auto enemy : this -> enemies )
+  for ( auto enemy : this -> enemies )
   {
     enemy -> render ( CAMERA_X, CAMERA_Y );
   }
 
   // Render all the entities in the list.
-  for( auto entity : this -> entities )
+  for ( auto entity : this -> entities )
   {
-        entity -> render( CAMERA_X, CAMERA_Y );
+    entity -> render( CAMERA_X, CAMERA_Y );
   }
 
   for ( unsigned int i = 0; i < NUMBER_ITEMS; i++ )
@@ -349,7 +396,10 @@ void LevelTwo::render ()
     {
       
       this -> image -> Sprite::render ( ( items [ 0 ] [ i ]+60 ) - CAMERA_X, ( ( items [ 1 ] [ i ] ) - CAMERA_Y ) );
-    }
+    } else
+      {
+        // No action
+      }
   }
 
   // Document text image
@@ -359,6 +409,9 @@ void LevelTwo::render ()
     if ( document -> should_render )
     {
       document -> renderDocumentText ();
-    }
+    } else
+      {
+       // No action
+      }
   }
 }

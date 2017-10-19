@@ -23,7 +23,6 @@
 #define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> states_map.emplace(stateEnum, new stateClass( this ))
 #define ADD_STATE_INSERT(stateEnum, stateClass) this -> states_map.insert(std::make_pair<BStates, StateBoss*>(stateEnum, new stateClass( this )));
 
-double timePasssed = 0;
 
 /*
  * Method used to create all characteristics Boss
@@ -109,11 +108,14 @@ Boss::~Boss()
  * Update the characteristics Boss
  * @param DELTA_TIME : Delta time (catch variation time).
  */
+
+double time_passed = 0; // Take the time that has passed through delta time.
+
 void Boss::update( const double DELTA_TIME)
 {
 
 	assert(DELTA_TIME >= 0);
-	timePasssed += DELTA_TIME;
+	time_passed += DELTA_TIME;
 
 	scoutPosition(DELTA_TIME);
 

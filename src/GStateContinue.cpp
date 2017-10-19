@@ -112,7 +112,6 @@ void GStateContinue::load ()
 
 	if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
   {	
-  	assert( SLOT_3 <= 0 || SLOT_3 >= 7);
 		//Load level 2 if it was saved in slot 3
 		const int LEVEL_FROM_SAVE = Game::instance().get_saves().get_saved_level( SLOT_3 );
 
@@ -165,7 +164,7 @@ void GStateContinue::unload ()
 */
 void GStateContinue::update ( const double DELTA_TIME )
 {
-	assert( DELTA_TIME < 0 );
+	assert( DELTA_TIME > 0 );
 	this -> passed_time += DELTA_TIME;
 
 	handleSelectorMenu ();
@@ -397,6 +396,7 @@ void GStateContinue::handleSelectorMenu ()
     	default:
 				break;
 		}
+
 	} else
 	  {
       //Nothing to do 

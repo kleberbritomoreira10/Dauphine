@@ -7,14 +7,14 @@
 
 #include "InputHandler.h"
 #include "Logger.h"
+#include <assert.h>
+#include <cstddef>
 
 /**
 * The constructor.
 * Used to create the input handler instance.
 */
-InputHandler::InputHandler() :
-	controllerHandler ( new ControllerHandler() ),
-	quitFlag ( false )
+InputHandler::InputHandler() : controllerHandler ( new ControllerHandler() ), quitFlag ( false )
 {
 	this -> keyStates.fill ( false );
 }
@@ -29,13 +29,16 @@ InputHandler::~InputHandler()
 	{
 		delete this -> controllerHandler;
 		this -> controllerHandler = nullptr;
-	}	
+	} else
+	  {
+	    //Nothing to do	
+	  }	
 }
 
-/**
-* Handles the input.
-* Detects the pending events, and handles them appropriately.
-*/
+/*
+ * Handles the input.
+ * Detects the pending events, and handles them appropriately.
+ */
 void InputHandler::handleInput ()
 {
 	this -> keyStates[ GameKeys::SPACE ] = false;
@@ -48,22 +51,22 @@ void InputHandler::handleInput ()
 
 	do
 	{
-
 		pendingEvent = SDL_PollEvent ( &this -> sdlEvent ); 
 
-		if ( this -> sdlEvent.type == SDL_CONTROLLERBUTTONDOWN 
-			|| this -> sdlEvent.type == SDL_CONTROLLERBUTTONUP 
-			|| this -> sdlEvent.type == SDL_CONTROLLERAXISMOTION )
+		if ( this -> sdlEvent.type == SDL_CONTROLLERBUTTONDOWN  || this -> sdlEvent.type == SDL_CONTROLLERBUTTONUP || 
+			   this -> sdlEvent.type == SDL_CONTROLLERAXISMOTION )
 		{
-			
-			this -> controllerHandler -> handleInput (this -> sdlEvent );
+			this -> controllerHandler -> handleInput ( this -> sdlEvent );
 
 			for ( unsigned int i = 0; i < this -> keyStates.size(); i++ )
 			{
 				this -> keyStates[ i ] = this -> controllerHandler -> keyStates[ i ];
 			}
 			
-		}
+		} else
+	    {
+	      //Nothing to do	
+	    }
 
 		// On keydown.
 		if ( this -> sdlEvent.type == SDL_KEYDOWN )
@@ -74,7 +77,10 @@ void InputHandler::handleInput ()
 					if ( this -> sdlEvent.key.repeat == 0 )
 					{
 						this -> keyStates[ GameKeys::SPACE ] = true;
-					}	
+					}	else
+	          {
+	            //Nothing to do	
+	          }
 					break;
 
 				case SDLK_UP: // UP.
@@ -94,10 +100,13 @@ void InputHandler::handleInput ()
 					break;
 
 				case SDLK_c: // roll.
-					if(this -> sdlEvent.key.repeat == 0)
+					if ( this -> sdlEvent.key.repeat == 0 )
 					{
 						this -> keyStates[ GameKeys::ROLL ] = true;
-					}
+					} else
+	          {
+	            //Nothing to do	
+	          }
 					break;
 
 				case SDLK_LCTRL: // crouch
@@ -105,10 +114,13 @@ void InputHandler::handleInput ()
 					break;
 
 				case SDLK_a: // a.
-					if(this -> sdlEvent.key.repeat == 0)
+					if ( this -> sdlEvent.key.repeat == 0 )
 					{
 						this -> keyStates[ GameKeys::ACTION ] = true;
-					}
+					} else
+	          {
+	            //Nothing to do	
+	          }
 					break;
 
 				case SDLK_LSHIFT: // d.
@@ -119,7 +131,10 @@ void InputHandler::handleInput ()
 					if ( this -> sdlEvent.key.repeat == 0 )
 					{
 						this -> keyStates[ GameKeys::LATTACK ] = true;
-					}
+					} else
+	          {
+	            //Nothing to do	
+	          }
 					break;
 
 				case SDLK_TAB:
@@ -130,16 +145,22 @@ void InputHandler::handleInput ()
 					if ( this -> sdlEvent.key.repeat == 0 )
 					{
 						this -> keyStates[ GameKeys::ESCAPE ] = true;
-					}
+					} else
+	          {
+	            //Nothing to do	
+	          }
 					break;
 
 				default:
 					break;
 			}
-		}
+		} else
+	    {
+	      //Nothing to do	
+	    }
 
 		// On keyup.
-		else if ( this -> sdlEvent.type == SDL_KEYUP )
+		if ( this -> sdlEvent.type == SDL_KEYUP )
 		{	
 			switch ( this -> sdlEvent.key.keysym.sym )
 			{
@@ -193,43 +214,50 @@ void InputHandler::handleInput ()
 				default:
 					break;
 			}
-		}
+		} else
+	    {
+	      //Nothing to do	
+	    }
 		
 		//On window exit (X).
-		else if ( this -> sdlEvent.type == SDL_QUIT )
+		if ( this -> sdlEvent.type == SDL_QUIT )
 		{
 			signalExit();
-		}
+		} else
+	    {
+	      //Nothing to do	
+	    }
 
 	} while ( pendingEvent != 0 );
 }
 
-/**
-* @return InputHandler::keyStates
-*/
+/*
+ * @return InputHandler::keyStates
+ */
 std::array<bool, GameKeys::MAX> InputHandler::getKeyStates ()
 {
 	return this -> keyStates;
 }
 
-/**
-* @return InputHandler::quitFlag
-*/
+/*
+ * @return InputHandler::quitFlag
+ */
 bool InputHandler::isQuitFlag ()
 {
 	return this -> quitFlag;
 }
 
-/**
-* Sets InputHandler::quitFlag to true.
-*/
+/*
+ * Sets InputHandler::quitFlag to true.
+ */
 void InputHandler::signalExit ()
 {
 	this -> quitFlag = true;
 }
-/**
-* Sets InputHandler::keyStates to false.
-*/
+
+/*
+ * Sets InputHandler::keyStates to false.
+ */
 void InputHandler::clearKey ( const GameKeys KEY )
 {
 	this -> keyStates.at( KEY ) = false;

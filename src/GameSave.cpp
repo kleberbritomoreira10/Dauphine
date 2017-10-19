@@ -9,6 +9,8 @@
 #include "GameSave.h"
 #include "Logger.h"
 #include <cstdlib>
+#include <assert.h>
+#include <cstddef>
 
 std::string filePath = "";
 
@@ -27,8 +29,9 @@ GameSave::GameSave()
 */
 void GameSave::setSlot ( int SAVE_SELECTION )
 {	
+	assert( SAVE_SELECTION < 10 );
 	switch ( SAVE_SELECTION )
-  {
+  {	
 		case this -> Selection::SLOT_1:
 			this -> filePath = "saveSlot1.dauphine";
 		break;
@@ -55,12 +58,10 @@ void GameSave::createSave()
   {
 		this -> saveFile << "-1" << std::endl;
 		this -> saveFile.close();
-	}
-
-	else
-  {
-		Log(DEBUG) << "Could not create save file at " + this -> filePath;
-  }
+	} else
+    {
+		  Log(DEBUG) << "Could not create save file at " + this -> filePath;
+    }
 
 	return;
 }
@@ -75,7 +76,6 @@ void GameSave::createSave()
 */
 void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Enemy*> enemies, unsigned SLOT )
 {
-
 	this -> setSlot(SLOT);	
 	this -> saveFile.open( this -> filePath.c_str() );
 
@@ -84,6 +84,7 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 
 	if ( !this -> saveFile.fail() )
   {
+  	
 		this -> CURRENT_LEVEL = level_;
 		this -> saveFile << this -> CURRENT_LEVEL << std::endl;
 		this -> saveFile << player -> x << std::endl;
@@ -96,12 +97,10 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 		}
 		
 		this -> saveFile.close();
-	}
-
-	else
-  {
-		Log(DEBUG) << "Could not open save file at " + this -> filePath;
-  }
+	} else
+    {
+		  Log(DEBUG) << "Could not open save file at " + this -> filePath;
+    }
 }
 
 /**
@@ -110,6 +109,7 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 */
 int GameSave::get_saved_level ( int continueSelection_ )
 {
+	assert( continueSelection_ > 0 );
 	this -> saveSelection = continueSelection_;
 	
 	std::string level = "-1";
@@ -117,17 +117,26 @@ int GameSave::get_saved_level ( int continueSelection_ )
 	if ( this -> saveSelection == 0 )
   {
 		this -> continueFile.open( "saveSlot1.dauphine" );
-	}
+	} else
+	  {
+	    //Nothing to do	
+	  }
 
-	else if ( this -> saveSelection == 1 )
+	if ( this -> saveSelection == 1 )
   {
 		this -> continueFile.open( "saveSlot2.dauphine" );
-	}
+	} else
+	  {
+	    //Nothing to do	
+	  }
 
-	else if ( this -> saveSelection == 2)
+	if ( this -> saveSelection == 2)
   {
 		this -> continueFile.open ( "saveSlot3.dauphine" );
-	}
+	} else
+	  {
+	    //Nothing to do	
+	  }
 	
 	this -> continueFile >> level;
 
@@ -142,7 +151,6 @@ int GameSave::get_saved_level ( int continueSelection_ )
 */
 bool GameSave::is_saved( const int SAVE_SLOT )
 {
-
 	this -> setSlot( SAVE_SLOT );	
 	this -> continueFile.open( this -> filePath.c_str() );
 
@@ -158,14 +166,12 @@ bool GameSave::is_saved( const int SAVE_SLOT )
   {
 		// Log(WARN) << "There is NO save at slot " << 1 + SAVE_SLOT; 
 		return false;
-	}
-
-	else
-  {
-		// Log(WARN) << "There is a save at slot " << 1 + SAVE_SLOT;
-		this -> continueFile.close();
-		return true;
-	}
+	} else
+    {
+		  // Log(WARN) << "There is a save at slot " << 1 + SAVE_SLOT;
+		  this -> continueFile.close();
+		  return true;
+	  }
 }
 
 /**
@@ -177,7 +183,7 @@ bool GameSave::is_saved( const int SAVE_SLOT )
 void GameSave::get_player_position ( double& player_x, double& player_y, const int SLOT )
 {	
 	setSlot( SLOT );
-
+	assert( SLOT < 0 );
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
 	this -> continueFile >> CURRENT_LEVEL; 
 	this -> continueFile >> player_x;
@@ -192,7 +198,7 @@ void GameSave::get_player_position ( double& player_x, double& player_y, const i
 */
 bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 {
-
+	assert( SLOT < 0 );
 	double skip = 0; //Shifts right and adds either 0s, if value is an unsigned type, or extends the top bit (to preserve the sign) if its a signed type.
 	int totalEnemies = 0; //Declaring variable to count quantity enemies
 	int currentEnemy = 0; //Declaring variable to know current enemy
@@ -218,9 +224,15 @@ bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 			if ( currentEnemy == 1 )
       {
 				rc = true;
-      }
+      } else
+	      {
+	        //Nothing to do	
+	      }
 			break;			
-		}
+		} else
+	    {
+	      //Nothing to do	
+	    }
 	}
 
 	this -> continueFile.close();	

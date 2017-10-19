@@ -7,6 +7,7 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "Enemy.h"
 #include "Logger.h"
 #include "LuaScript.h"
@@ -99,6 +100,7 @@ Enemy::~Enemy()
  */
 void Enemy::update( const double DELTA_TIME)
 {
+	assert( DELTA_TIME >= 0 );
 	//const double dt is passed as a parameter to know the time elapsed.
 	this -> current_state -> update( DELTA_TIME);
 	forceMaxSpeed();

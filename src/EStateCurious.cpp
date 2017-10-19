@@ -2,11 +2,12 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @EStateCurious.cpp
- * File responsible for implementing the maximum time Nadine can observe without being discovered. 
+ * File responsible for implementing the maximum time Nadine can observe without being discovered.
  * Using the time elapsed.
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "EStateCurious.h"
 #include "Logger.h"
 
@@ -43,7 +44,7 @@ void EStateCurious::exit()
  */
 void EStateCurious::update( const double DELTA_TIME)
 {
-
+	assert( DELTA_TIME >= 0);
 	this -> time_elapsed += DELTA_TIME;
 
 	// Aerial
@@ -52,20 +53,20 @@ void EStateCurious::update( const double DELTA_TIME)
 		this -> enemy -> changeState( Enemy::EStates::AERIAL );
 		return;
 	}
-  
+
 	if ( this -> enemy -> x - Enemy::px < 0.0)
 	{
 		this -> enemy -> velocity_x_axis += this -> enemy -> speed;
 	} else {
 		  this -> enemy -> velocity_x_axis -= this -> enemy -> speed;
 	  }
- 
+
 	if ( abs( this -> enemy->x - Enemy::px) < Enemy::alert_range && abs( this -> enemy->y-Enemy::py ) < Enemy::alert_range)
 	{
 		this -> enemy -> changeState(Enemy::EStates::ALERT);
 		return;
 	}
-  
+
   //if the time elapsed is greater than the time observing the enemy returns to patrol.
 	if ( time_elapsed >= MAX_CURIOUS_TIME )
 	{

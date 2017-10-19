@@ -2,11 +2,12 @@
  * Universidade de Brasília - FGA
  * Técnicas de Programação, 2/2017
  * @Boss.cpp
- * File responsible for implementing the boss, the most powerful enemy of the game. 
+ * File responsible for implementing the boss, the most powerful enemy of the game.
  * In this file the boss's characteristics are created and INITIALIZED, updated and destroyed when requested.
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "Boss.h"
 #include "Logger.h"
 #include "Game.h"
@@ -70,14 +71,14 @@ Boss::~Boss()
 		delete this -> animation;
 		this -> animation = nullptr;
 	}
-	
+
 	//Delete power_animation if null
 	if ( this -> power_animation != nullptr )
 	{
 		delete this -> power_animation;
 		this -> power_animation = nullptr;
 	}
-  
+
   //Delete shield_animation if null
 	if ( this -> shield_animation != nullptr )
 	{
@@ -102,18 +103,19 @@ Boss::~Boss()
  */
 void Boss::update( const double DELTA_TIME)
 {
-	
+
+	assert(DELTA_TIME >= 0);
 	timePasssed += DELTA_TIME;
 
 	scoutPosition(DELTA_TIME);
-  
+
   //Characteristics boss to update
 	this -> animation -> update( this -> animationClip, DELTA_TIME);
 	this -> power_animation -> update( this -> power_clip, DELTA_TIME);
 	this -> shield_animation -> update( this -> shield_clip, DELTA_TIME);
 
 	updateBoundingBox();
-  
+
   //Array to detect collision
 	const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
 	handleCollision( detections );
@@ -142,7 +144,7 @@ void Boss::render( const double cameraX_, const double cameraY_)
 {
 	const double dx = this -> x - cameraX_;
 	const double dy = this -> y - cameraY_;
-	
+
 	if ( this -> sprite != nullptr )
 	{
 		// Sprite render.
@@ -155,7 +157,7 @@ void Boss::render( const double cameraX_, const double cameraY_)
 			  this -> sprite -> render( dx, dy, &this->animationClip, false, 0.0, nullptr, flip );
 		  }
 	}
-	// Shield render.	
+	// Shield render.
 	if ( this -> has_shield )
 	{
 		SDL_RendererFlip flip = getFlip();
@@ -173,7 +175,7 @@ void Boss::render( const double cameraX_, const double cameraY_)
 
 	//Power render
 	if ( this -> power != nullptr && this -> power_is_activated )
-	{	
+	{
 		if ( this -> power_flip == SDL_FLIP_HORIZONTAL )
 		{
 			this -> power->render(pdx - this -> power_clip.w, pdy, &this ->power_clip, false, 0.0, nullptr, this -> power_flip);
@@ -181,8 +183,8 @@ void Boss::render( const double cameraX_, const double cameraY_)
 			  this->power->render(pdx, pdy, &this->power_clip, false, 0.0, nullptr, this->power_flip);
 		  }
 	}
- 
-  for ( auto potion : this -> potions ) 
+
+  for ( auto potion : this -> potions )
   {
     potion -> render( cameraX_, cameraY_);
   }
@@ -218,7 +220,7 @@ void Boss::destroyStates()
  * @param state_ : constant to know the state of the boss.
  */
 void Boss::changeState( const BStates state_)
-{ 
+{
 	this -> current_state -> exit();
 	this -> current_state = this -> states_map.at(state_);
 	this -> current_state -> enter();
@@ -229,15 +231,15 @@ void Boss::changeState( const BStates state_)
  * @param detections_ : array to detect collisions.
  */
 void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detections_)
-{ 
+{
 	//Check collision occurrence on top
 	if ( detections_.at( CollisionSide::SOLID_TOP ) )
-	{ 
+	{
 		this -> velocity_y_axis = 0.0;
 	}
 	//Check collision occurrence on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM ) )
-	{		
+	{
 		this -> nextY -= fmod( this -> nextY, 64.0) - 16.0;
 		this -> velocity_y_axis = 0.0;
 	}
@@ -262,6 +264,8 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
  */
 void Boss::usePotion( const int strength_, const int distance_)
 {
+	assert( strength_ >= 0 );
+	assert( distance_ >= 0 );
   if ( this -> potions_left > 0)
   {
     this -> potions_left--;
@@ -281,7 +285,7 @@ Animation *Boss::getAnimation()
 
 /*
  * Verify condition to Boss (dead or alive)
- * @param isDead_ : boolean variable to check the boss's condition. 
+ * @param isDead_ : boolean variable to check the boss's condition.
  */
 void Boss::set_dead(bool isDead_)
 {
@@ -292,7 +296,7 @@ void Boss::set_dead(bool isDead_)
  * Check if Boss is alive
  */
 bool Boss::isDead()
-{ 
+{
 	return this -> dead;
 }
 
@@ -300,7 +304,7 @@ bool Boss::isDead()
  * Updating boundaries for the boss
  */
 void Boss::updateBoundingBox()
-{ 
+{
 	this -> boundingBox.x = (int) this -> x + 40;
 	this -> boundingBox.y = (int) this -> y + 40;
 	this -> boundingBox.w = 150;

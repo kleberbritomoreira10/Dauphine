@@ -24,7 +24,7 @@ void PStateAerial::enter()
 	this -> player -> getAnimation() -> changeAnimation( 4, 3, 14, false, 1.4 );
 	this -> player -> isGrounded = false;
 
-    Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/FALL_NADINE_01.wav");
+    Game::instance().get_audio_handler().addSoundEffect( "res/audio/FX_NADINE/FALL_NADINE_01.wav" );
 }
 
 /**
@@ -39,7 +39,7 @@ void PStateAerial::exit()
 * Controlls the input for player entering in aerial mode.
 * @param keyStates_: Array with frames of player positions.
 */
-void PStateAerial::handleInput( const std::array<bool, GameKeys::MAX> keyStates_ )
+void PStateAerial::handleInput( const std::array< bool, GameKeys::MAX > keyStates_ )
 {
 
 	// Idle
@@ -47,19 +47,18 @@ void PStateAerial::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   {
     this -> player -> changeState( Player::player_states::IDLE );
     return;
-  }
 
-  if( keyStates_[ GameKeys::LATTACK ])
+  }else if( keyStates_ [ GameKeys::LATTACK ])
   {
     this -> player -> changeState( Player::player_states::ATTACKJUMPING );
     return;
-  }
-
+  }else
+  {
 	// Gravity
 	this -> player -> applyGravity();
-
 	// Move (while on air)
   this -> player -> move( keyStates_[ GameKeys::LEFT ], keyStates_[ GameKeys::RIGHT ]);
+  }
 }
 
 /**

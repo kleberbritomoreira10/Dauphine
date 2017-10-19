@@ -254,13 +254,13 @@ void GStateOptions::load()
 
 	LuaScript luaOptions("lua/Options.lua");
 	const std::string pathOptions = luaOptions.unlua_get<std::string>("options.images.dummy");
-	const std::string pathCursor = luaOptions.unlua_get<std::string>("options.images.cursor");
+	const std::string path_cursor = luaOptions.unlua_get<std::string>("options.images.cursor");
 
 	this -> current_resolution = R_960_540;
 	this -> current_option = O_RESOLUTION;
 	
     this -> options_image = Game::instance().getResources().get( pathOptions );
-    this -> selector = Game::instance().getResources().get( pathCursor );
+    this -> selector = Game::instance().getResources().get( path_cursor );
 
     this -> selector -> setWidth( 50 );
 }

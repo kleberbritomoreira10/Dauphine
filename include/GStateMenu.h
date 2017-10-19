@@ -51,7 +51,7 @@ class GStateMenu : public StateGame
 
 		void handleSelectorMenu ();
 
-		bool shouldIgnore;
+		bool should_ignore;
 
 	private:
 		enum Selection : uint8_t

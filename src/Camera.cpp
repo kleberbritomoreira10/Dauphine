@@ -14,7 +14,7 @@
 * The constructor.
 * Initializes the attributes.
 */
-Camera::Camera( Entity* const entity_ ):
+Camera::Camera( Entity *const entity_ ):
   entity( entity_ ),
   level_width( 0 ),
   level_height( 0 ),
@@ -39,7 +39,7 @@ void Camera::update()
   updatePosition();
 }
 
-SDL_Rect& Camera::getClip()
+SDL_Rect &Camera::getClip()
 {
   return this -> clip;
 }
@@ -49,6 +49,7 @@ SDL_Rect& Camera::getClip()
 */
 void Camera::updatePosition()
 {
+
   this -> clip.x = ( this -> entity -> x + this -> entity -> getWidth() / 2 ) - ( this -> clip.w / 2 );
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );
 
@@ -56,21 +57,28 @@ void Camera::updatePosition()
   if( this -> clip.x < 0 )
   {
     this -> clip.x = 0;
-  }
-  // Right wall.
-  else if( this -> clip.x > ( int )this -> level_width - this -> clip.w )
+
+  }else if( this -> clip.x > ( int )this -> level_width - this -> clip.w ) // Right wall.
   {
     this -> clip.x = ( int ) this -> level_width - this -> clip.w;
+
+  }else
+  {
+    // No action.
   }
+
   // Top wall.
   if( this -> clip.y < 0)
   {
     this -> clip.y = 0;
-  }
-  // Bottom wall.
-  else if( this -> clip.y > ( int ) this -> level_height - this -> clip.h)
+
+  }else if( this -> clip.y > ( int ) this -> level_height - this -> clip.h) // Bottom wall.
   {
     this -> clip.y = ( int ) this -> level_height - this -> clip.h;
+
+  }else
+  {
+    // No action.
   }
 }
 
@@ -78,7 +86,7 @@ void Camera::updatePosition()
 * Changing the camera position in the game for the center.
 * @param entity_: Character of the game that will be in the center.
 */
-void Camera::centralizeOn(Entity* const entity_)
+void Camera::centralizeOn(Entity *const entity_)
 {
   this -> entity = entity_;
 }

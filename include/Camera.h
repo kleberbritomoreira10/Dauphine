@@ -39,7 +39,7 @@ class Camera {
 		/**
 		* @return The camera clip (an SDL_Rect).
 		*/
-		SDL_Rect& getClip ();
+		SDL_Rect &getClip ();
 
 		/**
 		* @param width_,height_ : Tells the camera what the width and height of the level is.

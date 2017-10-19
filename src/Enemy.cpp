@@ -66,8 +66,8 @@ Enemy::Enemy( const double x_, const double y_, const std::string& PATH, const b
 	{
 		this -> current_state = this -> states_map.at(PATROLLING);
 	} else {
-		  this -> current_state = this -> states_map.at(IDLE);
-	  }
+	  this -> current_state = this -> states_map.at(IDLE);
+	}
 
 	this -> current_state -> enter();
 }
@@ -153,7 +153,7 @@ void Enemy::render( const double cameraX_, const double cameraY_)
 			this -> sprite->render(dx - 120, dy, &this -> animationClip, false, 0.0, nullptr, flip);
 		} else {
 			  this -> sprite -> render(dx, dy, &this -> animationClip, false, 0.0, nullptr, flip);
-		  }
+		}
 	}
 }
 
@@ -218,20 +218,26 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 			if ( this -> isDead() )
 			{
 				this -> changeState(EStates::DEAD);
-			}
+			} else {
+        // No Action.
+      }
 			if ( this -> patrol )
 			{
 				this -> changeState(EStates::PATROLLING);
 			} else {
-				  this -> changeState(EStates::IDLE);
-				  return;
-			  }
-		}
+        this -> changeState(EStates::IDLE);
+        return;
+			}
+		} else {
+      // No Actiion.
+    }
 	} else {
 		  if ( this -> current_state != this -> states_map.at(EStates::AERIAL) )
 		  {
 			  changeState(EStates::AERIAL);
-		  }
+		  } else {
+        // No Action.
+      }
 	  }
 	//Collision on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT) )

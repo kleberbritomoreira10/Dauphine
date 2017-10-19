@@ -121,10 +121,10 @@ std::vector<std::string> LuaScript::unlua_getTableKeys( const std::string& name_
     {
       temp += test.at(i);
     } else {
-        strings.push_back(temp);
-        temp= "";
-      }
+      strings.push_back(temp);
+      temp= "";
     }
+  }
   unlua_clean();
   return strings;
 }
@@ -148,30 +148,31 @@ bool LuaScript::unlua_getToStack( const std::string& variableName_ )
       {
         lua_getglobal( this -> luaState, var.c_str() );
       } else {
-          lua_getfield( this -> luaState, -1, var.c_str() );
-        }
+        lua_getfield( this -> luaState, -1, var.c_str() );
+      }
       if ( lua_isnil( this -> luaState, -1))
       {
         Log(ERROR) << "Can't get " << variableName_ << ". " << var << " is not defined.";
         return false;
       } else {
-          var = "";
-          this -> level++;
-        }
-    } else {
-        var += variableName_.at(i);
+        var = "";
+        this -> level++;
       }
+    } else {
+      var += variableName_.at(i);
+    }
   }
   if ( level == 0 )
   {
     lua_getglobal( this -> luaState, var.c_str() );
   } else {
-      lua_getfield( this -> luaState, -1, var.c_str() );
-    }
+    lua_getfield( this -> luaState, -1, var.c_str() );
+  }
   if ( lua_isnil(luaState, -1) )
   {
     Log(ERROR) << "Can't get " << variableName_ << ". " << var << " is not defined.";
     return false;
+  } else {
+    return true;  
   }
-  return true;
 }

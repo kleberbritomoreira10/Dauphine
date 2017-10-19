@@ -86,9 +86,9 @@ class Game
 		*/
 		ResourceManager &getResources ();
 
-		FadeScreen& get_fade ();
+		FadeScreen &get_fade ();
 
-		GameSave& get_saves ();
+		GameSave &get_saves ();
 
 		/**
 		* Stops execution and closes the game.
@@ -103,10 +103,10 @@ class Game
 
 		unsigned int current_slot; // Current slot value.
 
-		static const int total_number_of_lines = 14; //Total number of lines in the slot.
+		static const int total_number_to_be_parameterizedof_lines = 14; //Total number of lines in the slot.
 		unsigned int current_line; // Current line value.
 
-		Sprite *dialog[total_number_of_lines];
+		Sprite *dialog[total_number_to_be_parameterizedof_lines];
 
 		GStates transitionTo;
 

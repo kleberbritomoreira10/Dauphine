@@ -17,7 +17,7 @@ void BStateShield::enter()
 {
 	Log( DEBUG ) << "STATE SHIELD BOSS";
 	this -> boss -> getAnimation() -> changeAnimation( 0, 0, 1, false, 0 );
-	this->boss->has_shield = true;
+	this -> boss -> has_shield = true;
 }
 
 /**
@@ -44,7 +44,7 @@ void BStateShield::update( const double DELTA_TIME )
 * The constructor.
 * Initializes the attributes.
 */
-BStateShield::BStateShield( Boss* const BOSS ) :
+BStateShield::BStateShield( Boss *const BOSS ) :
 	StateBoss( BOSS )
 {
 

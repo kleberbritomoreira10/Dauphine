@@ -39,17 +39,21 @@ void BStateIdle::update( const double DELTA_TIME )
 	if( this -> boss -> is_right && this -> boss -> x > 1960 )
 	{
 		this -> boss -> is_right = false;
-	}
-	else if( !this -> boss -> is_right && this -> boss -> x < 300 )
+
+	}else if( !this -> boss -> is_right && this -> boss -> x < 300 )
 	{
 		this -> boss -> is_right = true;
+
+	}else
+	{
+		this -> boss -> is_right = false;
 	}
-	
+
 	if( this -> boss -> is_right )
 	{
 		this -> boss -> move( false, true );
-	}
-	else
+
+	}else
 	{
 		this -> boss -> move( true, false );
 	}
@@ -57,6 +61,10 @@ void BStateIdle::update( const double DELTA_TIME )
 	if( this -> boss -> saw_player )
 	{
 		this -> boss -> changeState( Boss::BStates::ATTACK );
+
+	}else
+	{
+		// No action;
 	}
 
 }
@@ -65,7 +73,7 @@ void BStateIdle::update( const double DELTA_TIME )
 * The constructor.
 * Initializes the attributes.
 */
-BStateIdle::BStateIdle( Boss* const BOSS ) :
+BStateIdle::BStateIdle( Boss *const BOSS ) :
 	StateBoss( BOSS )
 {
 

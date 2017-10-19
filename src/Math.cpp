@@ -8,23 +8,27 @@
 */
 
 #include "Math.h"
+#include <assert.h>
+#include <cstddef>
 
 /**
 * Sets the value of the numbers in zero, positives or negatives.
 * Is used for sets the character state of life.
-* @param number_: The value that will be parameterized.
+* @param number_to_be_parameterized: The value that will be parameterized.
 */
-int Math::sign( const int number_ )
+int Math::sign( const int number_to_be_parameterized )
 {
-  if( number_ > 0 )
-  { 
+  assert( !number_to_be_parameterized );
+
+  if( number_to_be_parameterized > 0 )
+  {
     return 1;
-  }
-  else if( number_ < 0 )
+
+  }else if( number_to_be_parameterized < 0 )
   {
     return -1;
-  }
-  else
+
+  }else
   {
     return 0;
   }
@@ -33,19 +37,19 @@ int Math::sign( const int number_ )
 /**
 * Sets the value of the numbers in zero, positives or negatives.
 * Is used for sets the character state of life.
-* @param number_: The value that will be parameterized.
+* @param number_to_be_parameterized: The value that will be parameterized.
 */
-int Math::sign( const double number_ )
+int Math::sign( const double number_to_be_parameterized )
 {
-  if( number_ > 0.0 )
-  { 
+  if( number_to_be_parameterized > 0.0 )
+  {
     return 1;
-  }
-  else if( number_ < 0.0 )
+
+  }else if( number_to_be_parameterized < 0.0 )
   {
     return -1;
-  }
-  else
+
+  }else
   {
     return 0;
   }

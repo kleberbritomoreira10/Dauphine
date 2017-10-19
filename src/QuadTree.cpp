@@ -19,8 +19,8 @@
 * Initializes the attributes.
 */
 QuadTree::QuadTree( int level_, SDL_Rect bounds_ ) :
-	max_number_of_objects( 10 ),
-	max_number_of_levels( 5 ),
+	max_number_to_be_parameterizedof_objects( 10 ),
+	max_number_to_be_parameterizedof_levels( 5 ),
 	level( level_ ),
 	objects(),
 	bounds( bounds_ ),
@@ -135,7 +135,7 @@ void QuadTree::insert( CollisionRect rect_ ){
 
 	this -> objects.push_back( rect_ );
 
-	if((int)this -> objects.size() > this -> max_number_of_objects && level < this->max_number_of_objects )
+	if((int)this -> objects.size() > this -> max_number_to_be_parameterizedof_objects && level < this->max_number_to_be_parameterizedof_objects )
 	{
 		if( nodes[ 0 ] == nullptr )
 		{

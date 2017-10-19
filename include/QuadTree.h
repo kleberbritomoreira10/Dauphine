@@ -43,8 +43,8 @@ class QuadTree
 
 	private:
 
-		const int max_number_of_objects; // Max number of quadtree objects.
-		const int max_number_of_levels; // Max number of quadtree levels.
+		const int max_number_to_be_parameterizedof_objects; // Max number of quadtree objects.
+		const int max_number_to_be_parameterizedof_levels; // Max number of quadtree levels.
 
 		int level; // The current quadtree level.
 		std::vector < CollisionRect > objects; // Array of collision objects.

@@ -25,13 +25,13 @@
 
 #define ADD_STATE_EMPLACE ( stateEnum, stateClass ) \
 	this -> states_map.emplace ( stateEnum, new stateClass() )
-#define ADD_STATE_INSERT(stateEnum, stateClass) \
-	this -> states_map.insert ( std::make_pair <GStates, StateGame*> ( stateEnum, new stateClass() ) )
+#define ADD_STATE_INSERT( stateEnum, stateClass ) \
+	this -> states_map.insert ( std::make_pair < GStates, StateGame * > ( stateEnum, new stateClass() ) )
 
 
-Game& Game::instance ()
+Game &Game::instance ()
 {
-	static Game* instance = new Game();
+	static Game *instance = new Game();
 	return *instance;
 }
 
@@ -59,32 +59,38 @@ Game::Game () :
 	selector_X_position_right { 930, 930 },
 	selector_Y_position_right { 400, 470 }
 {
-	this->window = new Window( Configuration::getScreenWidth(),
+	this -> window = new Window( Configuration::getScreenWidth(),
 		Configuration::getScreenHeight(), Configuration::getWindowTitle() );
 
-	assert( this->window != nullptr && "The window should not be null!" );
+	assert( this -> window != nullptr && "The window should not be null!" );
 
 	initializeStates();
 
 	std::string path = "res/images/Dialog/dialog";
 	std::string extension = ".png";
 
-	for( int i = 0; i < total_number_of_lines; i++ )
+	for( int i = 0; i < total_number_to_be_parameterizedof_lines; i++ )
 	{
-		this->dialog[ i ] = nullptr;
-		this->dialog[ i ] = getResources().get( path + Util::toString(i) + extension );
+		 this -> dialog[ i ] = nullptr;
+		 this -> dialog[ i ] = getResources().get( path + Util::toString(i) + extension );
 
-		if( this->dialog[i] == nullptr )
+		if( this -> dialog[i] == nullptr )
 		{
 			Log( ERROR ) << "Invalid dialog image.";
+
+		}else
+		{
+			// No action.
 		}
 	}
 
-	this->pause_image = getResources().get("res/images/pause_overlay.png");
-	this->pause_selector = getResources().get("res/images/cursor_regular.png");
-	this->pause_selector -> setWidth(50);
+	int width_value = 50;
 
-	this->is_running = true;
+	this -> pause_image = getResources().get("res/images/pause_overlay.png");
+	this -> pause_selector = getResources().get("res/images/cursor_regular.png");
+	this -> pause_selector -> setWidth( width_value );
+
+	this -> is_running = true;
 	FPSWrapper::initialize( this -> fps_manager );
 }
 
@@ -93,6 +99,10 @@ Game::~Game()
 	if( this -> current_state != nullptr )
 	{
 		this -> current_state -> unload();
+
+	}else
+	{
+		// No action.
 	}
 
 	destroyStates();
@@ -100,24 +110,46 @@ Game::~Game()
 	if( this -> audio_handler != nullptr )
 	{
 		delete this -> audio_handler;
+
+	}else{
+			// No action.
 	}
+
 	if( this -> input_handler != nullptr )
 	{
 		delete this->input_handler;
+
+	}else
+	{
+		// No action.
 	}
+
 	if( this -> resource_manager != nullptr )
 	{
 		delete this -> resource_manager;
+
+	}else
+	{
+		// No action.
 	}
+
 	if( this -> fade_screen != nullptr )
 	{
 		delete this -> fade_screen;
+
+	}else
+	{
+		// No action.
 	}
 
 	if( this -> window != nullptr )
 	{
 		delete this -> window;
 		this -> window = nullptr;
+
+	}else
+	{
+		// No action.
 	}
 }
 
@@ -125,23 +157,23 @@ void Game::runGame()
 {
 	this -> fade_screen = new FadeScreen();
 
-	this -> current_state = this -> states_map.at(GStates::SPLASH);
+	this -> current_state = this -> states_map.at( GStates::SPLASH );
 	this -> current_state -> load();
 
 	// Get the first game time.
-	double totalGameTime = 0.0;
-	const double deltaTime = 1.0 / 60.0;
-	double accumulatedTime = 0.0;
+	double total_game_time = 0.0;
+	const double delta_time = 1.0 / 60.0;
+	double accumulated_time = 0.0;
 
 	// This is the main game loop.
 	while( this -> is_running )
 	{
 
-		const double frameTime = FPSWrapper::delay( this -> fps_manager );
-		accumulatedTime += frameTime;
+		const double frame_time = FPSWrapper::delay( this -> fps_manager );
+		accumulated_time += frame_time;
 
 		// Update.
-		while( accumulatedTime >= deltaTime )
+		while( accumulated_time >= delta_time )
 		{
 			this -> input_handler -> handleInput();
 
@@ -150,54 +182,70 @@ void Game::runGame()
 			{
 				stop();
 				return;
-			}
 
-			std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+			}else
+			{
+				// No action.
+			}
+			std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 
 			if( keyStates[ GameKeys::ESCAPE ] && isPauseAble() )
 			{
 				this -> current_selection = PSelection::RESUME;
 				this -> is_paused = true;
+
+			}else
+			{
+				// No action.
 			}
 
+			assert( delta_time > 0 );
 			if( !this -> is_paused )
 			{
-				this -> current_state -> update( deltaTime );
+
+				this -> current_state -> update( delta_time );
+
 			}
 			else if( !this -> is_cut_scene)
 			{
-				this -> passed_time += deltaTime;
+				this -> passed_time += delta_time;
 				updatePause();
 			}
 			else
 			{
-				this -> passed_time += deltaTime;
+				this -> passed_time += delta_time;
 				updateDialog();
 			}
 
-			this -> fade_screen -> update( deltaTime );
+			this -> fade_screen -> update( delta_time );
 
-			accumulatedTime -= deltaTime;
-			totalGameTime += deltaTime;
+			accumulated_time -= delta_time;
+			total_game_time += delta_time;
 		}
 
 		// Render of window.
 		window -> clear();
 
 		this -> current_state -> render();
+
+		assert( total_number_to_be_parameterizedof_lines > 0 );
+
 		if( this -> is_paused )
 		{
 			renderPause();
 		}
 		else if( this -> is_cut_scene )
 		{
-			if( current_line < total_number_of_lines )
+			if( current_line < total_number_to_be_parameterizedof_lines )
 				renderDialog();
 			else
 			{
 				current_line = 0;
 				is_cut_scene = false;
 			}
+		}else
+		{
+			//No action.
 		}
 
 		this -> fade_screen -> render();
@@ -241,20 +289,29 @@ void Game::initializeStates()
 void Game::renderDialog()
 {
 
-	if( current_line > total_number_of_lines )
+	if( current_line > total_number_to_be_parameterizedof_lines )
 	{
 		current_line = 0;
 		return;
+	}else
+	{
+		// No action.
 	}
 
 	if( this -> dialog[ current_line ] )
+	{
 		this -> dialog[ current_line ] -> render( 0, 0, nullptr, true );
+
+	}else
+	{
+		// No action.
+	}
 
 }
 
 void Game::handleDialog()
 {
-	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
 
 	const double SELECTOR_DELAY_TIME = 0.2;
 
@@ -263,7 +320,13 @@ void Game::handleDialog()
 		if( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
 			current_line++;
+		}else
+		{
+			// No action.
 		}
+	}else
+	{
+		// No action.
 	}
 }
 
@@ -285,8 +348,8 @@ void Game::renderPause()
 
 		this -> pause_selector -> render( selector_X_position_right[ current_selection ],
 			selector_Y_position_right[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
-	}
-	else
+
+	}else
 	{
 		Log( WARN ) << "No image set to display on the menu!";
 	}
@@ -308,68 +371,82 @@ void Game::handleSelectorMenu()
 	{
 		if( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
-			if( current_selection < ( PSelection::TOTAL - 1 )){
+			if( current_selection < ( PSelection::TOTAL - 1 ))
+			{
 				current_selection++;
-			}
-			else
+
+			}else
 			{
 				current_selection = PSelection::RESUME;
 			}
 			this -> passed_time = 0.0;
+
+		}else
+		{
+			// No action.
 		}
-	}
-	else if( keyStates[ GameKeys::UP ] == true || keyStates[ GameKeys::LEFT ] == true )
+
+	}else if( keyStates[ GameKeys::UP ] == true || keyStates[ GameKeys::LEFT ] == true )
 	{
-		if(this -> passed_time >= SELECTOR_DELAY_TIME )
+		if( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
 			if( current_selection > PSelection::RESUME )
 			{
 				current_selection--;
-			}
-			else
+
+			}else
 			{
 				current_selection = ( PSelection::TOTAL - 1 );
 			}
+
 			this -> passed_time = 0.0;
+
+		}else
+		{
+			// No action.
 		}
-	}
-	else if( current_selection == PSelection::RESUME && keyStates[ GameKeys::SPACE ] == true )
+
+	}else if( current_selection == PSelection::RESUME && keyStates[ GameKeys::SPACE ] == true )
 	{
 		this -> is_paused = false;
-	}
 
-	else if( current_selection == PSelection::EXIT && keyStates[ GameKeys::SPACE ] == true)
+	}else if( current_selection == PSelection::EXIT && keyStates[ GameKeys::SPACE ] == true)
 	{
 		Game::instance().setState( Game::GStates::MENU );
 		this -> is_paused = false;
+
+	}else
+	{
+		// No action.
 	}
 }
 
 void Game::destroyStates()
 {
-	std::map<GStates, StateGame*>::const_iterator iterator;
+	std::map < GStates, StateGame * >::const_iterator iterator;
+
     for( iterator = this -> states_map.begin(); iterator != this -> states_map.end(); iterator++ )
     {
         delete iterator -> second;
     }
 }
 
-AudioHandler& Game::get_audio_handler()
+AudioHandler &Game::get_audio_handler()
 {
-	return ( *( this->audio_handler ));
+	return ( *( this -> audio_handler ));
 }
 
-std::array<bool, GameKeys::MAX> Game::getInput()
+std::array < bool, GameKeys::MAX > Game::getInput()
 {
 	return this -> input_handler -> getKeyStates();
 }
 
-ResourceManager& Game::getResources()
+ResourceManager &Game::getResources()
 {
 	return ( *( this -> resource_manager ) );
 }
 
-GameSave& Game::get_saves()
+GameSave &Game::get_saves()
 {
 	return ( *( this -> game_save ) );
 }
@@ -384,7 +461,7 @@ void Game::clearKeyFromInput( const GameKeys KEY )
 	this -> input_handler -> clearKey( KEY );
 }
 
-FadeScreen& Game::get_fade()
+FadeScreen &Game::get_fade()
 {
 	return ( *( this -> fade_screen ));
 }
@@ -400,27 +477,54 @@ bool Game::isPauseAble()
 	if( this -> current_state == this -> states_map.at( Game::GStates::LEVEL_ONE ) )
 	{
 		return true;
+
+	}else
+	{
+		return false;
 	}
+
 	if( this -> current_state == this -> states_map.at( Game::GStates::LEVEL_TWO ) )
 	{
 		return true;
+
+	}else
+	{
+		return false;
 	}
+
 	if( this -> current_state == this -> states_map.at( Game::GStates::LEVEL_THREE ) )
 	{
 		return true;
+
+	}else
+	{
+		return false;
 	}
+
 	if( this -> current_state == this -> states_map.at( Game::GStates::LEVEL_FOUR ) )
 	{
 		return true;
+
+	}else
+	{
+		return false;
 	}
+
 	if(this -> current_state == this -> states_map.at( Game::GStates::LEVEL_FIVE ) )
 	{
 		return true;
+
+	}else
+	{
+		return false;
 	}
+
 	if(this -> current_state == this -> states_map.at( Game::GStates::LEVEL_BOSS ) )
 	{
 		return true;
-	}
 
-	return false;
+	}else
+	{
+		return false;
+	}
 }

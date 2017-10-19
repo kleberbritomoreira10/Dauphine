@@ -6,10 +6,11 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "EStateDead.h"
 #include "Logger.h"
 
-double deadTime;
+double dead_time;
 
 /*
  * Informs the dead state
@@ -37,8 +38,11 @@ void EStateDead::exit()
  */
 void EStateDead::update( const double DELTA_TIME)
 {
-	deadTime += DELTA_TIME;
-	if ( deadTime >= 2 )
+	assert (DELTA_TIME >= 0 );
+	assert ( dead_time >= 0 );
+	
+	dead_time += DELTA_TIME;
+	if ( dead_time >= 2 )
 	{
 		this -> enemy -> set_dead(true);
 	}

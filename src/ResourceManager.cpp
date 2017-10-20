@@ -31,7 +31,7 @@ ResourceManager::~ResourceManager()
   {
     if ( it -> second.use_count() != 1 )
     {
-        Log(WARN) << "Resource deleted with use count different than 1 (" << it -> first << ").";
+      Log(WARN) << "Resource deleted with use count different than 1 (" << it -> first << ").";
     } else
       {
         //Nothing to do

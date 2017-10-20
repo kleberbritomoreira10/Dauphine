@@ -22,12 +22,10 @@ int main ( int argc, char** argv )
     Game::instance().runGame();
 		// Deallocate the instance of the game.
     delete &Game::instance();
-  }
-
-  else
-  {
-    Log(ERROR) << "System were not INITIALIZED.";
-  }
+  } else
+    {
+      Log(ERROR) << "System were not INITIALIZED.";
+    }
 
   // Closes SDL used libraries.
   SDLWrapper::close();

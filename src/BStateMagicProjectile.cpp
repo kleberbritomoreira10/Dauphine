@@ -14,7 +14,6 @@
 #include <assert.h>
 #include <cstddef>
 
-double projectileTime = 0.0;  //Declaring variable that stores the launch time of the projectile executed by the boss.
 double leg_x_axis = 0;  //Declaration variable for side x of the cateto.
 double leg_y_axis = 0;  //Declaration variable for side y of the cateto.
 double hypotenuse = 0;  //Declaration variable for hypotenuse calculation.
@@ -40,6 +39,8 @@ void BStateMagicProjectile::enter ()
   leg_x_axis /= hypotenuse;
   leg_y_axis /= hypotenuse;
 }
+
+double projectileTime = 0.0;  //Declaring variable that stores the launch time of the projectile executed by the boss.
 
 /**
 * @see StateBoss::exit

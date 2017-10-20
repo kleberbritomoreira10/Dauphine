@@ -90,8 +90,6 @@ void LevelTwo::load ()
     {
       level_player = new Player ( this -> tile_map -> get_initial_x (), this -> tile_map -> get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
     }
-  
-  Camera *level_camera = new Camera ( level_player ); // Loading the camera.
 
   assert( level_player != nullptr );
   this -> player_Hud = new PlayerHUD ( level_player );
@@ -127,6 +125,7 @@ void LevelTwo::load ()
   set_player ( level_player );
   Enemy::points_life = this -> player -> life;
 
+  Camera *level_camera = new Camera ( level_player ); // Loading the camera.
   set_camera ( level_camera );
   assert( level_camera != nullptr );
 
@@ -196,7 +195,7 @@ void LevelTwo::update ( const double DELTA_TIME )
   for ( auto potion : this -> player->potions )
   {
     return_objects.clear ();
-    this -> quadTree -> retrieve ( return_objects, potion->get_bounding_box () );
+    this -> quadTree -> retrieve ( return_objects, potion -> get_bounding_box() );
     potion -> setCollisionRects ( return_objects );
   }
 

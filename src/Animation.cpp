@@ -9,8 +9,6 @@
 #include <assert.h>
 #include <cstddef>
 
-int animationCount = 0;  //Declaring auxiliary variable for the repeat structure.
-
 /**
  * The constructor.
  * Initializes all attributes.
@@ -35,6 +33,8 @@ Animation::~Animation()
 {
 
 }
+
+int animationCount = 0;  //Declaring auxiliary variable for the repeat structure.
 
 /**
 * Updates the animation clip.

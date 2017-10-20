@@ -16,16 +16,12 @@
 * @return True if every system was INITIALIZED successfully, else it returns false.
 */
 bool SDLWrapper::initialize()
-{
-	bool successSDL = false;     //Declaring boolean variable that checks if sdlInit = 0    
-	bool success_image = false;  //Declaring boolean variable that checks if image init
-	bool successMixer = false;  //Declaring boolean variable that checks if INITIALIZED = 0
-	bool successTTF = false;  //Declaring boolean variable that checks if ttfInit = 0
-
+{    
 	SDL_version compiled;
 
 	Log(DEBUG) << "Initializing systems...";
 
+	bool successTTF = false;  //Declaring boolean variable that checks if ttfInit = 0
 	// Initializing SDL_TTF.
 	const int ttfInit = TTF_Init();
 	if ( ttfInit == 0 )
@@ -43,6 +39,7 @@ bool SDLWrapper::initialize()
 	const Uint32 initFlags = SDL_INIT_EVERYTHING;
 	const int sdlInit = SDL_Init( initFlags );
 
+	bool successSDL = false;     //Declaring boolean variable that checks if sdlInit = 0
 	if ( sdlInit == 0 )
   {
 		successSDL = true;
@@ -57,6 +54,7 @@ bool SDLWrapper::initialize()
 		  Log(ERROR) << "Could not initialize SDL." << SDL_GetError();
 	  }
 
+	bool success_image = false;  //Declaring boolean variable that checks if image init  
 	// Initializing SDL_image with image_flags.
 	const Uint32 image_flags = IMG_INIT_PNG;
 	if ( (IMG_Init( image_flags) & image_flags ) )
@@ -76,6 +74,7 @@ bool SDLWrapper::initialize()
 	const int CHUNKSIZE = 4096;
 	const int INITIALIZED = Mix_OpenAudio( FREQUENCY, MIX_DEFAULT_FORMAT, CHANNELS, CHUNKSIZE );
 	
+	bool successMixer = false;  //Declaring boolean variable that checks if INITIALIZED = 0
   if ( INITIALIZED == 0 )
   {
 		successMixer = true;

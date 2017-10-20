@@ -28,7 +28,6 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
   {
     this -> width = this -> sprite -> getWidth();
     this -> height = this -> sprite -> getHeight();
-    
     this -> boundingBox.w = this -> width;
     this -> boundingBox.h = this -> height;
   } else

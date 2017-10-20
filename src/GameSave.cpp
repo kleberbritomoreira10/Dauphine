@@ -12,8 +12,6 @@
 #include <assert.h>
 #include <cstddef>
 
-std::string filePath = "";
-
 /**
  * The constructor.
  * Initializes all the attributes.
@@ -22,6 +20,8 @@ GameSave::GameSave()
 {
 
 }
+
+std::string filePath = "";
 
 /**
  * Sets the slot for save game.
@@ -60,7 +60,7 @@ void GameSave::createSave()
 		this -> saveFile.close();
 	} else
     {
-		  Log(DEBUG) << "Could not create save file at " + this -> filePath;
+	  Log(DEBUG) << "Could not create save file at " + this -> filePath;
     }
 
 	return;
@@ -201,19 +201,20 @@ void GameSave::get_player_position ( double& player_x, double& player_y, const i
 bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 {	
 	assert( SLOT >= 0);
-	double skip = 0; //Shifts right and adds either 0s, if value is an unsigned type, or extends the top bit (to preserve the sign) if its a signed type.
-	int totalEnemies = 0; //Declaring variable to count quantity enemies
-	int currentEnemy = 0; //Declaring variable to know current enemy
-	bool rc = false;    //Declaring boolean variable to identify if enemy is dead   
-
+	  
 	setSlot( SLOT );
 
+	double skip = 0; //Shifts right and adds either 0s, if value is an unsigned type, or extends the top bit (to preserve the sign) if its a signed type.
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
 	this -> continueFile >> skip;
 	this -> continueFile >> skip;
 	this -> continueFile >> skip;
+	
+	int totalEnemies = 0; //Declaring variable to count quantity enemies
 	this -> continueFile >> totalEnemies;
 
+	int currentEnemy = 0; //Declaring variable to know current enemy
+	bool rc = false;    //Declaring boolean variable to identify if enemy is dead 
 	// Log(DEBUG) << "Total Enemies on Level " << totalEnemies;
 	for ( int i = 0; i < totalEnemies; i++ )
   {

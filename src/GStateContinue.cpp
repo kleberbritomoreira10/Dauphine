@@ -121,7 +121,6 @@ void GStateContinue::load ()
 			
 		if ( LEVEL_FROM_SAVE == -1 )
     {
-
 			this -> slot3 -> changeText( "Empty Slot" );
     } else
       {
@@ -137,11 +136,12 @@ void GStateContinue::load ()
 	//Declaring constant as path to receive background image
 	const std::string PATH_BACKGROUND = luaMenu.unlua_get<std::string>( "continue.images.background" );
 
+	this -> background = Game::instance().getResources().get( PATH_BACKGROUND );
+
 	//Declaring constant as path to receive background image
 	const std::string PATH_SELECTOR = luaMenu.unlua_get<std::string>( "continue.images.selector" );
-
-	this -> background = Game::instance().getResources().get( PATH_BACKGROUND );
 	this -> selector = Game::instance().getResources().get( PATH_SELECTOR );
+	
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
 	this -> current_selection = Selection::SLOT_1;
@@ -229,7 +229,7 @@ void GStateContinue::handleSelectorMenu ()
   {
 		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
     {
-			if ( current_selection < (Selection::TOTAL - 1) )
+			if ( current_selection < ( Selection::TOTAL - 1 ) )
       {
 				current_selection++;
 			} else

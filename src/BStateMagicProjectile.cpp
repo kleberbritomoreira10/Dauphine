@@ -11,6 +11,8 @@
 #include "Game.h"
 #include "Collision.h"
 #include <cmath>
+#include <assert.h>
+#include <cstddef>
 
 double projectileTime = 0.0;  //Declaring variable that stores the launch time of the projectile executed by the boss.
 double leg_x_axis = 0;  //Declaration variable for side x of the cateto.
@@ -56,7 +58,8 @@ void BStateMagicProjectile::exit ()
 * @see StateBoss::update 
 */
 void BStateMagicProjectile::update ( const double DELTA_TIME ) 
-{
+{ 
+  assert(DELTA_TIME < 0);
   projectileTime += DELTA_TIME;
   this -> boss -> power_X_axis += leg_x_axis * 15;
   this -> boss -> power_Y_axis += leg_y_axis * 15;
@@ -67,20 +70,25 @@ void BStateMagicProjectile::update ( const double DELTA_TIME )
   {
     this -> boss -> player -> life--;
     this -> boss -> changeState( Boss::BStates::IDLE );
-  }
+  } else
+    {
+      //Nothing to do
+    }
   
   if ( projectileTime > 3 )
   {
     this -> boss -> changeState( Boss::BStates::IDLE );
-  }
+  } else
+    {
+      //Nothing to do
+    }
 }
 
 /**
 * The constructor.
 * @param BOSS : Reference to the Boss.
 */
-BStateMagicProjectile::BStateMagicProjectile( Boss* const BOSS ) :
-  StateBoss( BOSS )
+BStateMagicProjectile::BStateMagicProjectile( Boss* const BOSS ) : StateBoss( BOSS )
 {
 
 }

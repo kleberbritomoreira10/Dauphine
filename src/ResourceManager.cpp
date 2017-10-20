@@ -6,6 +6,8 @@
 */
 
 #include "ResourceManager.h"
+#include <assert.h>
+#include <cstddef>
 #include "Logger.h"
 
 /**
@@ -30,7 +32,10 @@ ResourceManager::~ResourceManager()
     if ( it -> second.use_count() != 1 )
     {
         Log(WARN) << "Resource deleted with use count different than 1 (" << it -> first << ").";
-    }
+    } else
+      {
+        //Nothing to do
+      }
   }
 }
 
@@ -47,12 +52,10 @@ Sprite* ResourceManager::get( const std::string& PATH )
   if ( it != this -> resources.end() )
   {
     return it -> second.get();
-  }
-  
-  else
-  {
-    return load( PATH ).get();
-  }
+  } else
+    {
+      return load( PATH ).get();
+    }
 }
 
 /**
@@ -76,7 +79,10 @@ void ResourceManager::unregisterResource( const std::string& PATH )
 
   if (it != this -> resources.end()){
     this -> resources.erase( it );
-  }
+  } else
+    {
+      //Nothing to do
+    }
 }
 
 /**

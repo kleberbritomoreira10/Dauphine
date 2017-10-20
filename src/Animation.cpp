@@ -6,6 +6,8 @@
  */
 
 #include "Animation.h"
+#include <assert.h>
+#include <cstddef>
 
 int animationCount = 0;  //Declaring auxiliary variable for the repeat structure.
 
@@ -19,19 +21,9 @@ int animationCount = 0;  //Declaring auxiliary variable for the repeat structure
  * @param numberOfImages_ : The number of images to animate inside the spritesheet.
  * @param loop_ : Whether to loop or not.
  */
-Animation::Animation ( const int x_, const int y_, const int spriteWidth_,
-	const int spriteHeight_, const unsigned int numberOfImages_, const bool loop_ ) :
-	
-	ANIMATION_LIMIT( 10 ),
-	x( x_ ),
-	y( y_ ),
-	initial_x( 0 ),
-	initial_y( 0 ),
-	sprite_width( spriteWidth_ ),
-	sprite_height( spriteHeight_ ),
-	loop( loop_ ),
-	totalElapsedTime( 0.0 ),
-	totalTime( 0.0 )
+Animation::Animation ( const int x_, const int y_, const int spriteWidth_, const int spriteHeight_, 
+	const unsigned int numberOfImages_, const bool loop_ ) : ANIMATION_LIMIT( 10 ), x( x_ ), y( y_ ), initial_x( 0 ), initial_y( 0 ), sprite_width( spriteWidth_ ), sprite_height( spriteHeight_ ), loop( loop_ ), 
+    totalElapsedTime( 0.0 ), totalTime( 0.0 )
 {
 	this -> numberOfImages = (numberOfImages_ == 0) ? 1 : numberOfImages_;
 }
@@ -51,7 +43,8 @@ Animation::~Animation()
 * @param totalTime_ : How much time each frame should have. Affects the speed on which the animation changes.
 */
 void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
-{
+{	
+	assert( DELTA_TIME > 0 );
 	// Compare the position on the sprite with the number of positions to know if is the end of the animation.
 	bool endOfAnimation = ( ( animationCount + 1 ) >= this -> numberOfImages );
 
@@ -71,21 +64,29 @@ void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
         if ( this -> x < ( int )ANIMATION_LIMIT )
         {
         	this -> x += 1;
-        }
-        else
-        {
-        	this -> y += 1;
-        	this -> x = 0;
-        }
-    	}
+        } else
+          {
+        	  this -> y += 1;
+        	  this -> x = 0;
+          }  
+    	} else
+    	  {
+          //Nothing to do 
+    	  }
 
     	if ( endOfAnimation )
       {
     		this -> x= this -> initial_x;
     		this -> y= this -> initial_y;
     		Animation::animationCount = 0;
+    	} else
+    	  {
+          //Nothing to do 
+    	  }
+    } else
+    	{
+        //Nothing to do 
     	}
-    }
 
    	const int POSITION_X = this -> x * this -> sprite_width;  //Defining width animation
   	const int POSITION_Y = this -> y * this -> sprite_height; //Defining height animation
@@ -99,7 +100,7 @@ void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
 void Animation::changeAnimation ( const int x_, const int y_, const unsigned int numberOfImages_,
 	const bool loop_, const double totalTime_ )
 {
-
+  //assert( totalTime_ > 0 );
 	this -> x = x_;
 	this -> y = y_;
 	this -> initial_x = x_;
@@ -140,6 +141,7 @@ int Animation::getCurrentFrame ()
 */
 void Animation::changeWidthHeight ( int width_, int height_ )
 {
+	assert( width_ < 0 || height_ < 0 );
 	this -> sprite_width = width_;
 	this -> sprite_height = height_;
 }

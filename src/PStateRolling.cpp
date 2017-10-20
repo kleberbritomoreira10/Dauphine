@@ -1,6 +1,8 @@
 #include "PStateRolling.h"
 #include "Logger.h"
 #include "Game.h"
+#include <assert.h>
+#include <cstddef>
 
 void PStateRolling::enter ()
 {
@@ -26,7 +28,10 @@ void PStateRolling::handleInput ( const std::array<bool, GameKeys::MAX> keyState
   {
     this -> player -> changeState( Player::player_states::AERIAL );
     return;
-  }
+  } else
+    {
+      //Nothing to do
+    }
 
   this -> player -> slowVx();
 
@@ -36,18 +41,23 @@ void PStateRolling::handleInput ( const std::array<bool, GameKeys::MAX> keyState
     this -> player -> jump();
     this -> player -> changeState( Player::player_states::AERIAL );
     return;
-  }
+  } else
+    {
+      //Nothing to do
+    }
 
 // Idle
   if ( this -> player -> velocity_x_axis < 1.0 && this -> player -> velocity_x_axis > ( -1.0 ) )
   {
     this -> player -> changeState( Player::player_states::IDLE );
     return;
-  }
+  } else
+    {
+      //Nothing to do
+    }
 }
 
-PStateRolling::PStateRolling ( Player* const player_ ) :
-    StatePlayer( player_ )
+PStateRolling::PStateRolling ( Player* const player_ ) : StatePlayer( player_ )
 {
 
 }

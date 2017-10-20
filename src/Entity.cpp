@@ -10,6 +10,8 @@
 #include "Game.h"
 #include "SDLWrapper.h"
 #include "Logger.h"
+#include <assert.h>
+#include <cstddef>
 
 /**
 * The constructor.
@@ -29,12 +31,10 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
     
     this -> boundingBox.w = this -> width;
     this -> boundingBox.h = this -> height;
-  }
-
-  else
-  {
+  } else
+    {
       Log(WARN) << "Entity sprite is null, width and height will be undefined.";
-  }
+    }
 }
 
 /**

@@ -93,7 +93,6 @@ void LevelTwo::load ()
     }
   
   Camera *level_camera = new Camera ( level_player ); // Loading the camera.
-  assert( level_player == nullptr);
 
   this -> player_Hud = new PlayerHUD ( level_player );
 
@@ -128,7 +127,7 @@ void LevelTwo::load ()
   Enemy::points_life = this -> player -> life;
 
   set_camera ( level_camera );
-  assert( level_camera == nullptr);
+  //assert( level_camera == nullptr );
 
   Game::instance().get_fade().fade_out ( 0, 0.002 );
 }
@@ -159,7 +158,7 @@ void LevelTwo::unload ()
 */
 void LevelTwo::update ( const double DELTA_TIME )
 { 
-  assert( DELTA_TIME <= 0);
+  assert( DELTA_TIME > 0);
   // Populating the QuadTree.
   this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 

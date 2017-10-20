@@ -7,6 +7,8 @@
 
 #include "SDLWrapper.h"
 #include "Logger.h"
+#include <assert.h>
+#include <cstddef>
 
 /**
 * The system initializer.
@@ -27,24 +29,22 @@ bool SDLWrapper::initialize()
 	// Initializing SDL_TTF.
 	const int ttfInit = TTF_Init();
 	if ( ttfInit == 0 )
-    {
+  {
 		successTTF = true;
 
 		SDL_TTF_VERSION(&compiled);
 		SDLWrapper::logSDLVersion( "SDL_TTF", compiled );
-	}
-
-	else
+	} else
     {
-		Log(ERROR) << "Could not initialize TTF." << TTF_GetError();
-	}
+		  Log(ERROR) << "Could not initialize TTF." << TTF_GetError();
+	  }
 
 	// Initializing SDL with initFlags.
 	const Uint32 initFlags = SDL_INIT_EVERYTHING;
 	const int sdlInit = SDL_Init( initFlags );
 
 	if ( sdlInit == 0 )
-    {
+  {
 		successSDL = true;
 
 		SDL_version linked;
@@ -52,27 +52,23 @@ bool SDLWrapper::initialize()
 		SDL_GetVersion( &linked );
 
 		SDLWrapper::logSDLVersion( "SDL", compiled, SDL_GetRevision() );
-	}
-
-	else
+	} else
     {
-		Log(ERROR) << "Could not initialize SDL." << SDL_GetError();
-	}
+		  Log(ERROR) << "Could not initialize SDL." << SDL_GetError();
+	  }
 
 	// Initializing SDL_image with image_flags.
 	const Uint32 image_flags = IMG_INIT_PNG;
 	if ( (IMG_Init( image_flags) & image_flags ) )
-    {
+  {
 		success_image = true;
 
 		SDL_IMAGE_VERSION( &compiled );
 		SDLWrapper::logSDLVersion( "SDL_image", compiled );
-	}
-
-	else
+	} else
     {
-		Log(ERROR) << "Could not initialize SDL_Image." << IMG_GetError();
-	}
+		  Log(ERROR) << "Could not initialize SDL_Image." << IMG_GetError();
+	  }
 
 	// Initializing SDL_mixer.
 	const int FREQUENCY = 44100;
@@ -86,12 +82,10 @@ bool SDLWrapper::initialize()
 
 		SDL_MIXER_VERSION( &compiled );
 		SDLWrapper::logSDLVersion( "SDL_mixer", compiled );
-  }
-
-	else
-  {
-		Log(ERROR) << "Could not initialize SDL_Mixer" << Mix_GetError();
-	}
+  } else
+    {
+		  Log(ERROR) << "Could not initialize SDL_Mixer" << Mix_GetError();
+	  }
 
 	// If even one system fails to initialize, returns false.
 	return ( successSDL && success_image && successMixer && successTTF );
@@ -127,11 +121,8 @@ void SDLWrapper::close ()
 * @param linked_ : The linked version.
 * @param revision_ : If any, the revision.
 */
-void SDLWrapper::logSDLVersion ( const std::string& what_, const SDL_version& compiled_,
-	std::string revision_ )
-{
-
-	Log(DEBUG) << what_ << " Version (Compiled): " << ( int )compiled_.major << "." <<
-		( int )compiled_.minor << "." << ( int )compiled_.patch <<
-		( ( !revision_.empty() ) ? revision_ : "" );
+void SDLWrapper::logSDLVersion ( const std::string& what_, const SDL_version& compiled_, std::string revision_ )
+{	
+	Log(DEBUG) << what_ << " Version (Compiled): " << ( int )compiled_.major << "." << ( int )compiled_.minor << "." 
+	  << ( int )compiled_.patch << ( ( !revision_.empty() ) ? revision_ : "" );
 }

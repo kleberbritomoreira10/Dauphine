@@ -109,7 +109,6 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 */
 int GameSave::get_saved_level ( int continueSelection_ )
 {
-	assert( continueSelection_ > 0 );
 	this -> saveSelection = continueSelection_;
 	
 	std::string level = "-1";
@@ -183,7 +182,6 @@ bool GameSave::is_saved( const int SAVE_SLOT )
 void GameSave::get_player_position ( double& player_x, double& player_y, const int SLOT )
 {	
 	setSlot( SLOT );
-	assert( SLOT < 0 );
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
 	this -> continueFile >> CURRENT_LEVEL; 
 	this -> continueFile >> player_x;
@@ -198,7 +196,6 @@ void GameSave::get_player_position ( double& player_x, double& player_y, const i
 */
 bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 {
-	assert( SLOT < 0 );
 	double skip = 0; //Shifts right and adds either 0s, if value is an unsigned type, or extends the top bit (to preserve the sign) if its a signed type.
 	int totalEnemies = 0; //Declaring variable to count quantity enemies
 	int currentEnemy = 0; //Declaring variable to know current enemy

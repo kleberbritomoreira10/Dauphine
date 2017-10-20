@@ -7,6 +7,8 @@
 #include "PStateAttack.h"
 #include "Logger.h"
 #include "Game.h"
+#include <assert.h>
+#include <cstddef>
 
 /**
 * @see StatePlayer::enter
@@ -40,15 +42,17 @@ void PStateAttack::handleInput ( const std::array<bool, GameKeys::MAX> keyStates
   if ( this -> player -> getAnimation() -> getCurrentFrame() == 14 )
   {
     this -> player -> changeState( Player::player_states::IDLE );
-  }
+  } else
+    {
+      //Nothing to do
+    }
 }
 
 /**
 * The constructor.
 * @param player_ : Reference to the player.
 */
-PStateAttack::PStateAttack( Player* const player_ ) :
-  StatePlayer( player_ )
+PStateAttack::PStateAttack( Player* const player_ ) : StatePlayer( player_ )
 {
 
 }

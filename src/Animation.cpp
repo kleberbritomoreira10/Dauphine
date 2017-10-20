@@ -118,7 +118,7 @@ void Animation::changeAnimation ( const int x_, const int y_, const unsigned int
 * @param y_ : New y position.
 */
 void Animation::updateClip ( SDL_Rect& clip, const int x_, const int y_ )
-{
+{ 
 	clip.x = x_;
 	clip.y = y_;
 	clip.w = this -> sprite_width;
@@ -141,7 +141,7 @@ int Animation::getCurrentFrame ()
 */
 void Animation::changeWidthHeight ( int width_, int height_ )
 {
-	assert( width_ < 0 || height_ < 0 );
+	assert( width_ > 0 || height_ > 0 );
 	this -> sprite_width = width_;
 	this -> sprite_height = height_;
 }

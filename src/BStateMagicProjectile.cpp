@@ -59,7 +59,7 @@ void BStateMagicProjectile::exit ()
 */
 void BStateMagicProjectile::update ( const double DELTA_TIME ) 
 { 
-  assert(DELTA_TIME < 0);
+  assert(DELTA_TIME > 0);
   projectileTime += DELTA_TIME;
   this -> boss -> power_X_axis += leg_x_axis * 15;
   this -> boss -> power_Y_axis += leg_y_axis * 15;

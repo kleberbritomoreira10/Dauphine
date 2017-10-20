@@ -88,12 +88,12 @@ void LevelTwo::load ()
     level_player = new Player ( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
   } else
     {
-      level_player = new Player ( this -> tile_map -> get_initial_x (), 
-                          this -> tile_map -> get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
+      level_player = new Player ( this -> tile_map -> get_initial_x (), this -> tile_map -> get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
     }
   
   Camera *level_camera = new Camera ( level_player ); // Loading the camera.
 
+  assert( level_player != nullptr );
   this -> player_Hud = new PlayerHUD ( level_player );
 
   // Load all the enemies from the tile_map.
@@ -109,7 +109,7 @@ void LevelTwo::load ()
           Game::instance().get_saves().get_saved_level ( Game::instance().current_slot ) == 2 )
       {
         enemy -> set_dead ( true );
-        assert( enemy == nullptr);
+        assert( enemy != nullptr);
       } else
         {
           //No action   
@@ -119,6 +119,7 @@ void LevelTwo::load ()
         //No action 
       }
     enemy -> setLevelWH ( this -> width, this -> height );
+    assert( width > 0 || height > 0);
     this -> enemies.push_back ( enemy );
   }
 
@@ -127,7 +128,7 @@ void LevelTwo::load ()
   Enemy::points_life = this -> player -> life;
 
   set_camera ( level_camera );
-  //assert( level_camera == nullptr );
+  assert( level_camera != nullptr );
 
   Game::instance().get_fade().fade_out ( 0, 0.002 );
 }
@@ -158,7 +159,7 @@ void LevelTwo::unload ()
 */
 void LevelTwo::update ( const double DELTA_TIME )
 { 
-  assert( DELTA_TIME > 0);
+  assert( DELTA_TIME >= 0);
   // Populating the QuadTree.
   this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 
@@ -327,7 +328,7 @@ void LevelTwo::update ( const double DELTA_TIME )
   }
 
   //Saving the game state
-  for( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
+  for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
   {
     if ( !this -> checkpoints_visited [ j ] && this -> player -> get_bounding_box().x >= checkpoints_X [ j ] 
         && this -> player -> get_bounding_box().x <= checkpoints_X [ j ] + 100 &&

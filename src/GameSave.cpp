@@ -29,7 +29,7 @@ GameSave::GameSave()
 */
 void GameSave::setSlot ( int SAVE_SELECTION )
 {	
-	assert( SAVE_SELECTION < 10 );
+	assert( SAVE_SELECTION >= 0 );
 	switch ( SAVE_SELECTION )
   {	
 		case this -> Selection::SLOT_1:
@@ -75,7 +75,8 @@ void GameSave::createSave()
  * @param SLOT: The slot where are saving the game.
 */
 void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Enemy*> enemies, unsigned SLOT )
-{
+{	
+	assert(level_ > 0 );
 	this -> setSlot(SLOT);	
 	this -> saveFile.open( this -> filePath.c_str() );
 
@@ -108,7 +109,8 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
  * @continueSelection_: The number of the slot where is saved the game.
 */
 int GameSave::get_saved_level ( int continueSelection_ )
-{
+{	
+	assert( continueSelection_ >= 0 );
 	this -> saveSelection = continueSelection_;
 	
 	std::string level = "-1";
@@ -149,7 +151,8 @@ int GameSave::get_saved_level ( int continueSelection_ )
  * @SAVE_SLOT: The slot where is saved the game.
 */
 bool GameSave::is_saved( const int SAVE_SLOT )
-{
+{	
+	assert( SAVE_SLOT >= 0 );
 	this -> setSlot( SAVE_SLOT );	
 	this -> continueFile.open( this -> filePath.c_str() );
 
@@ -181,6 +184,7 @@ bool GameSave::is_saved( const int SAVE_SLOT )
 */
 void GameSave::get_player_position ( double& player_x, double& player_y, const int SLOT )
 {	
+	assert( SLOT >= 0);
 	setSlot( SLOT );
 	this -> continueFile.open( filePath.c_str(), std::ios_base::in );
 	this -> continueFile >> CURRENT_LEVEL; 
@@ -195,7 +199,8 @@ void GameSave::get_player_position ( double& player_x, double& player_y, const i
  * @SLOT: The slot where the game will be saved.
 */
 bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
-{
+{	
+	assert( SLOT >= 0);
 	double skip = 0; //Shifts right and adds either 0s, if value is an unsigned type, or extends the top bit (to preserve the sign) if its a signed type.
 	int totalEnemies = 0; //Declaring variable to count quantity enemies
 	int currentEnemy = 0; //Declaring variable to know current enemy

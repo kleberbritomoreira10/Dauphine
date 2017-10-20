@@ -20,7 +20,7 @@
 GStateContinue::GStateContinue() : background ( nullptr ), selector ( nullptr ), passed_time( 0.0 ), 
   current_selection ( Selection::SLOT_1 ), selectorXPosition ( 562 ), selectorYPosition { 500, 610, 723 }
 {	
-	assert( SLOT_1 <= 0 || SLOT_1 >= 7);
+	assert( SLOT_1 >= 1 || SLOT_1 <= 6 );
 	this -> slot1 = new Text ( 615.0, 520.0, "res/fonts/maturasc.ttf", 45, "Empty Slot" );
 	this -> slot2 = new Text ( 615.0, 630.0, "res/fonts/maturasc.ttf", 45, "Empty Slot" );
 	this -> slot3 = new Text ( 615.0, 730.0, "res/fonts/maturasc.ttf", 45, "Empty Slot" );
@@ -69,7 +69,7 @@ void GStateContinue::load ()
 	
 	if ( Game::instance().get_saves().is_saved( SLOT_1 ) )
   {	
-  	assert( SLOT_1 <= 0 || SLOT_1 >= 7);
+  	assert( SLOT_1 >= 1 || SLOT_1 <= 6);
 		//Load level 2 if it was saved in slot 1
 		const int LEVEL_FROM_SAVE = Game::instance().get_saves().get_saved_level( SLOT_1 );
 		
@@ -90,7 +90,7 @@ void GStateContinue::load ()
 
 	if ( Game::instance().get_saves().is_saved( SLOT_2 ) )
   {
-  	assert( SLOT_2 <= 0 || SLOT_2 >= 7);
+  	assert( SLOT_2 >= 1 || SLOT_2 <= 6);
 		//Load level 2 if it was saved in slot 2
 		const int LEVEL_FROM_SAVE = Game::instance().get_saves().get_saved_level( SLOT_2 );
 		
@@ -112,6 +112,7 @@ void GStateContinue::load ()
 
 	if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
   {	
+  	assert( SLOT_3 >= 1 || SLOT_3 <= 6);
 		//Load level 2 if it was saved in slot 3
 		const int LEVEL_FROM_SAVE = Game::instance().get_saves().get_saved_level( SLOT_3 );
 
@@ -164,7 +165,7 @@ void GStateContinue::unload ()
 */
 void GStateContinue::update ( const double DELTA_TIME )
 {
-	assert( DELTA_TIME > 0 );
+	assert( DELTA_TIME >= 0 );
 	this -> passed_time += DELTA_TIME;
 
 	handleSelectorMenu ();

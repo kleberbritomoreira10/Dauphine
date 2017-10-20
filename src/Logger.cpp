@@ -30,7 +30,6 @@ Logger::~Logger()
  */
 std::ostringstream& Logger::log( const LogLevel level_)
 {
-  assert(level_ != nullptr);  
   this -> os << levelToString(level_);
   return this -> os;
 }
@@ -41,7 +40,6 @@ std::ostringstream& Logger::log( const LogLevel level_)
  */
 std::string Logger::levelToString( const LogLevel level_)
 {
-  assert(level_ != nullptr);
   static const char* const buffer[] = {"[Info]:    ", "[Warning]: ", "[Error]:  ", "[Debug]:   "};
   return buffer[level_];
 }

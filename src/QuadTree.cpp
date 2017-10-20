@@ -8,6 +8,7 @@
 */
 
 #include "QuadTree.h"
+#include <assert.h>
 
 /*
 * Thanks to:
@@ -19,8 +20,8 @@
 * Initializes the attributes.
 */
 QuadTree::QuadTree( int level_, SDL_Rect bounds_ ) :
-	max_number_to_be_parameterizedof_objects( 10 ),
-	max_number_to_be_parameterizedof_levels( 5 ),
+	max_number_of_quadtree_objects( 10 ),
+	max_number_of_quadtree_levels( 5 ),
 	level( level_ ),
 	objects(),
 	bounds( bounds_ ),
@@ -49,6 +50,10 @@ void QuadTree::clear()
 		{
 			this -> nodes[ i ] -> clear();
 			this -> nodes[ i ] = nullptr;
+
+		}else
+		{
+			// No action.
 		}
 	}
 }
@@ -80,38 +85,45 @@ void QuadTree::split()
 */
 int QuadTree::getIndex( SDL_Rect rect_ )
 {
+
 	int index = -1;
-	double verticalMidpoint = this -> bounds.x + ( this -> bounds.w / 2 );
-	double horizontalMidpoint = this -> bounds.y + ( this->bounds.h / 2 );
+	double vertical_mid_point = this -> bounds.x + ( this -> bounds.w / 2 );
+	double horizontal_mid_point = this -> bounds.y + ( this->bounds.h / 2 );
+
+	assert( vertical_mid_point > 0 && horizontal_mid_point > 0 );
 
 	// Object can completely fit within the top quadrants
-	bool topQuadrant = ( rect_.y < horizontalMidpoint && rect_.y + rect_.h < horizontalMidpoint );
+	bool top_quadrant = ( rect_.y < horizontal_mid_point && rect_.y + rect_.h < horizontal_mid_point );
+
 	// Object can completely fit within the bottom quadrants
-	bool bottomQuadrant = ( rect_.y > horizontalMidpoint );
+	bool bottom_quadrant = ( rect_.y > horizontal_mid_point );
 
 	// Object can completely fit within the left quadrants
-	if( rect_.x < verticalMidpoint && rect_.x + rect_.w < verticalMidpoint )
+	if( rect_.x < vertical_mid_point && rect_.x + rect_.w < vertical_mid_point )
 	{
-		if( topQuadrant )
+		if( top_quadrant )
 		{
 			index = 1;
-		}
-		else if ( bottomQuadrant )
+
+		}else if ( bottom_quadrant )
 		{
 			index = 2;
 		}
-	}
-	// Object can completely fit within the right quadrants
-	else if ( rect_.x > verticalMidpoint )
+
+	}else if ( rect_.x > vertical_mid_point ) // Object can completely fit within the right quadrants
 	{
-		if (topQuadrant)
+		if (top_quadrant)
 		{
 			index = 0;
 		}
-		else if ( bottomQuadrant )
+		else if ( bottom_quadrant )
 		{
 			index = 3;
 		}
+
+	}else
+	{
+		// No action.
 	}
 
 	return index;
@@ -122,6 +134,7 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 * @param rect_: object used for manage the postions in the axys.
 */
 void QuadTree::insert( CollisionRect rect_ ){
+
 	if( nodes[ 0 ] != nullptr )
 	{
 		int index = getIndex( rect_.rect );
@@ -130,43 +143,64 @@ void QuadTree::insert( CollisionRect rect_ ){
 		{
 			nodes[ index ] -> insert( rect_ );
 			return;
+
+		}else
+		{
+			// No action.
 		}
+
+	}else
+	{
+		// No action.
 	}
 
 	this -> objects.push_back( rect_ );
 
-	if((int)this -> objects.size() > this -> max_number_to_be_parameterizedof_objects && level < this->max_number_to_be_parameterizedof_objects )
+	if((int)this -> objects.size() > this -> max_number_of_quadtree_objects && level < this->max_number_of_quadtree_objects )
 	{
 		if( nodes[ 0 ] == nullptr )
 		{
 			split();
+		}else
+		{
+			// No action.
 		}
 
 		int i = 0;
 		while( i < ( int ) this -> objects.size())
 		{
-			int index = getIndex(this->objects.at(i).rect);
+			int index = getIndex( this->objects.at(i).rect );
 			if( index != -1 )
 			{
-				CollisionRect moveRect = this -> objects.at( i );
+				CollisionRect move_rect = this -> objects.at( i );
 				this -> objects.erase( this -> objects.begin() + i );
-				nodes[ index ] -> insert( moveRect );
-			}
-			else
+				nodes[ index ] -> insert( move_rect );
+
+			}else
 			{
 				i++;
 			}
 		}
+	}else
+	{
+		// No action.
 	}
 }
 
-std::vector<CollisionRect> QuadTree::retrieve( std::vector<CollisionRect>& returnObjects_, SDL_Rect rect_ )
+std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &returnObjects_, SDL_Rect rect_ )
 {
+
 	int index = getIndex( rect_ );
+
 	if( index != -1 && nodes[ 0 ] != nullptr )
 	{
 		nodes[ index ] -> retrieve( returnObjects_, rect_ );
+
+	}else
+	{
+		//No action.
 	}
+
 
 	returnObjects_.insert( returnObjects_.end(), this -> objects.begin(), this -> objects.end() );
 
@@ -177,7 +211,7 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector<CollisionRect>& retur
 * Updating the objects in the game after the colisions.
 * @param object_: object used for manage after the colisions.
 */
-void QuadTree::setObjects( std::vector<CollisionRect>& objects_ )
+void QuadTree::setObjects( std::vector< CollisionRect > &objects_ )
 {
 	this -> objects.clear();
 	this -> objects = objects_;

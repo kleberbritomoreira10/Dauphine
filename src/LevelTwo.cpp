@@ -54,7 +54,7 @@ void LevelTwo::load ()
   this -> quadTree = new QuadTree ( 0, bounds );
 
   this -> background = Game::instance (). getResources ().get ( "res/images/lv1_background.png" );
-  for( int i = 0; i < this -> NUMBER_OF_CHECKPOINTS; ++i )
+  for( int i = 0; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
   {
     this -> checkpoints.push_back ( Game::instance ().getResources ().get ( "res/images/checkpoint.png" ) );
   }
@@ -283,7 +283,7 @@ void LevelTwo::update ( const double DELTA_TIME )
   }
 
   //Saving the game state
-  for( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
+  for( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
   {
     if ( !this -> checkpoints_visited [ j ] && this -> player -> get_bounding_box().x >= checkpoints_X [ j ] 
         && this -> player -> get_bounding_box().x <= checkpoints_X [ j ] + 100 &&
@@ -322,7 +322,7 @@ void LevelTwo::render ()
 
   this -> background -> render ( 0, 0 );
 
-  for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
+  for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
   {
     this -> checkpoints [ j ] -> render ( this -> checkpoints_X [ j ] - CAMERA_X, this -> checkpoints_Y [ j ] - CAMERA_Y );
   }

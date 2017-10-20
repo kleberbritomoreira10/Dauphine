@@ -61,7 +61,7 @@ void LevelOne::load ()
 	 "res/images/lv1_parallax_top.png" );
 
 	 // Load the number of checkpoints achieved
-	for ( int i = 0; i < this -> NUMBER_OF_CHECKPOINTS; ++i )
+	for ( int i = 0; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
 	{
 
 		this -> checkpoints.push_back ( Game::instance (). getResources (). get (
@@ -358,7 +358,7 @@ void LevelOne::update ( const double DELTA_TIME )
 	}
 
 	//Saving the game state
-	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
+	for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
 	{
 
 		if ( !this -> checkpoints_visited [ j ] && this -> player -> get_bounding_box (). x
@@ -409,7 +409,7 @@ void LevelOne::render ()
 	// Render the tiles in the TileMap.
 	this -> tile_map -> render ( CAMERA_X, CAMERA_Y );
 
-	for ( int j = 0; j < this -> NUMBER_OF_CHECKPOINTS; ++j )
+	for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
 	{
 		this -> checkpoints [ j ] -> render ( this -> checkpoints_X [ j ] - CAMERA_X,
 			this -> checkpoints_Y [ j ] - CAMERA_Y );

@@ -10,6 +10,7 @@
 #include "Level.h"
 #include "Logger.h"
 #include "Game.h"
+#include <assert.h>
 
 /**
 * The constructor.
@@ -28,7 +29,7 @@ Level::Level() :
 	checkpoints_X{ 0, 0, 0, 0, 0 },
 	checkpoints_Y{ 0, 0, 0, 0, 0 },
 	checkpoints_visited{ false, false, false, false, false},
-	NUMBER_OF_CHECKPOINTS( 5 )
+	TOTAL_NUMBER_OF_CHECKPOINTS( 5 )
 {
 	// Only serves as the initializer for the derived classes.
 }
@@ -44,39 +45,43 @@ Level::~Level()
 	{
 		delete this -> camera;
 		this -> camera = nullptr;
-	}
 
-	if( this -> player_Hud != nullptr )
+	}else if( this -> player_Hud != nullptr )
 	{
 		delete this -> player_Hud;
 		this -> player_Hud = nullptr;
-	}
 
-	if( this -> tile_map != nullptr )
+	}else if( this -> tile_map != nullptr )
 	{
 		delete this -> tile_map;
 		this -> tile_map = nullptr;
-	}
 
-	if( this -> quadTree != nullptr )
+	}else if( this -> quadTree != nullptr )
 	{
 		delete this -> quadTree;
 		this -> quadTree = nullptr;
+
+	}else
+	{
+		// No action.
 	}
 }
 
 /**
 * Change the current checkpoint, updating for the last reached checkpoint.
-* @param NUMBER_OF_CHECKPOINTS_: the number maximun of checkpoints.
+* @param TOTAL_NUMBER_OF_CHECKPOINTS_: the number maximun of checkpoints.
 * @param checkpoints_X_: vector for checkpoint position in axis x of the.
 * @param checkpoints_Y_: vector for checkpoint position in axis y of the.
 */
-void Level::changeCheckpoints( int NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
+void Level::changeCheckpoints( int TOTAL_NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
 		std::vector <double> checkpoints_Y_ )
 {
+	assert( TOTAL_NUMBER_OF_CHECKPOINTS > 0 );
+
 	this -> checkpoints_X = checkpoints_X_;
 	this -> checkpoints_Y = checkpoints_Y_;
-	this -> NUMBER_OF_CHECKPOINTS = NUMBER_OF_CHECKPOINTS_;
+	this -> TOTAL_NUMBER_OF_CHECKPOINTS = TOTAL_NUMBER_OF_CHECKPOINTS_;
+
 }
 
 unsigned int Level::getWidth()
@@ -93,28 +98,33 @@ unsigned int Level::getHeight()
 * Sets the proprieties for the players of the game.
 * @param player_: the current object player will be configured.
 */
-void Level::set_player( Player* const player_ )
+void Level::set_player( Player *const player_ )
 {
+
+	assert( player_ );
+
 	this -> player = player_;
 
 	if( this -> player != nullptr)
 	{
 		this -> player -> setLevelWH( this -> width, this -> height );
 		addEntity( this -> player );
-	}
-	else
+
+	}else
 	{
 		Log( WARN ) << "Setting a null player for the level!";
 	}
-	
+
 }
 
 /**
 * Sets the proprieties for the cameras of the game.
 * @param camera_: the current object camera will be configured.
 */
-void Level::set_camera(Camera *const camera_)
+void Level::set_camera( Camera *const camera_ )
 {
+	assert( camera_ );
+
 	this -> camera = camera_;
 
 	if( this -> camera != nullptr )
@@ -122,13 +132,13 @@ void Level::set_camera(Camera *const camera_)
 		if( this -> player != nullptr)
 		{
 			this -> camera -> setLevelWH( this -> width, this -> height );
-		}
-		else
+
+		}else
 		{
 			Log( WARN ) << "Shouldn't set the camera before the player, in Level!";
 		}
-	}
-	else
+
+	}else
 	{
 		Log( WARN ) << "Setting a null camera!";
 	}
@@ -140,6 +150,9 @@ void Level::set_camera(Camera *const camera_)
 * @param bos_: the object bos will be configured.
 */
 void Level::setBoss( Boss *const BOSS ){
+
+	assert( BOSS );
+
 	this -> boss = BOSS;
 
 	if( this -> boss != nullptr )
@@ -147,13 +160,13 @@ void Level::setBoss( Boss *const BOSS ){
 		if( this -> player != nullptr )
 		{
 			this -> boss -> setLevelWH( this -> width, this -> height );
-		}
-		else
+
+		}else
 		{
 			Log( WARN ) << "Shouldn't set the boss before the player, in Level!";
 		}
-	}
-	else
+
+	}else
 	{
 		Log( WARN ) << "Setting a null boss!";
 	}

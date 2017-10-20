@@ -7,6 +7,7 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "LevelOne.h"
 #include "Game.h"
 #include "GameSave.h"
@@ -44,6 +45,7 @@ void LevelOne::load ()
 
 	// Loading the tile/tilemap.
 	this -> tile_map = new TileMap ( "res/maps/level1.tmx" );
+	assert( this-> tile_map != nullptr);
 
 	// Setting the level width/height.
 	this -> width = this -> tile_map -> getMapWidth ();
@@ -53,6 +55,7 @@ void LevelOne::load ()
 	SDL_Rect bounds = { 0, 0, ( int )this -> width, ( int )this -> height };
 
 	this -> quadTree = new QuadTree ( 0, bounds );
+	assert( this -> quadTree != nullptr );
 
 	this -> background = Game::instance (). getResources (). get (
 	 "res/images/lv1_background_parallax.png" );
@@ -109,8 +112,10 @@ void LevelOne::load ()
 
 	// Loading the refill of potion.
 	this -> image = Game::instance (). getResources (). get( "res/images/potion.png" );
+	assert(this -> image != nullptr);
 
 	this -> player_Hud = new PlayerHUD( level_player );
+	assert(this -> player_Hud != nullptr);
 
 	// Load all the enemies from the tile_map.
 	for ( unsigned int i = 0; i < this -> tile_map -> get_enemies_x (). size (); i++ )
@@ -405,6 +410,8 @@ void LevelOne::render ()
 
 	this -> background -> render ( 0, 480 - CAMERA_Y );
 	this -> backgroud_top -> render( -CAMERA_X / 10, 1165 - CAMERA_Y );
+	assert( this -> background != nullptr );
+	assert( this -> backgroud_top != nullptr );
 
 	// Render the tiles in the TileMap.
 	this -> tile_map -> render ( CAMERA_X, CAMERA_Y );

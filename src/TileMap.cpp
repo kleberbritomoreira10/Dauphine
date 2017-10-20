@@ -27,6 +27,8 @@ void TileMap::load(const std::string& mapPath_){
 	this->map = new Tmx::Map();
 	this->map->ParseFile(mapPath_);
 
+	assert( this -> map != nullptr );
+
 	if(!this->map->HasError()){
 
 		const Tmx::Tileset* metaTileset = nullptr;
@@ -183,7 +185,7 @@ void TileMap::renderLayer(const double cameraX_, const double cameraY_, const un
 					//flip = (SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
 				}
 				if((tilePosition & Tmx::FlippedHorizontallyFlag) != 0){
-					flip = SDL_FLIP_HORIZONTAL;	
+					flip = SDL_FLIP_HORIZONTAL;
 				}
 				if((tilePosition & Tmx::FlippedVerticallyFlag) != 0){
 					flip = SDL_FLIP_VERTICAL;
@@ -211,9 +213,9 @@ void TileMap::renderLayer(const double cameraX_, const double cameraY_, const un
 					tileClip.y = (tilePosition/tilesPerLine) * TILE_SIZE;
 					tileClip.w = TILE_SIZE;
 					tileClip.h = TILE_SIZE;
-					
+
 					tilesetSprite->render(posX, posY, &tileClip, false, 0.0, nullptr, flip);
-					
+
 				}
 				else{
 					// Do nothing, no rendering an empty tilespace.
@@ -222,7 +224,7 @@ void TileMap::renderLayer(const double cameraX_, const double cameraY_, const un
 			else{
 				// Tile is not on screen, don't render.
 			}
-			
+
 		}
 	}
 }

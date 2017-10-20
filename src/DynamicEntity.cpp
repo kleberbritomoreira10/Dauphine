@@ -7,6 +7,7 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "DynamicEntity.h"
 #include "Logger.h"
 #include "Collision.h"
@@ -77,7 +78,7 @@ of processing speed.
 */
 void DynamicEntity::scoutPosition ( const double DELTA_TIME )
 {
-	//
+	assert( DELTA_TIME >= 0 );
 	this -> nextX += this -> velocity_x_axis * DELTA_TIME;
 	this -> nextY += this -> velocity_y_axis * DELTA_TIME;
 

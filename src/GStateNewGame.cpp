@@ -6,6 +6,7 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "GStateNewGame.h"
 #include "LuaScript.h"
 #include "Game.h"
@@ -34,12 +35,15 @@ GStateNewGame::GStateNewGame () :
 	*/
 	this -> slot1 = new Text ( 615.0, 520.0, "res/fonts/maturasc.ttf",
 		45, "Empty Slot");
+	assert( this -> slot1 != nullptr );
 
 	this -> slot2 = new Text ( 615.0, 630.0, "res/fonts/maturasc.ttf",
 		45, "Empty Slot");
+	assert( this -> slot2 != nullptr );
 
 	this -> slot3 = new Text ( 615.0, 730.0, "res/fonts/maturasc.ttf",
 		45, "Empty Slot");
+	assert( this -> slot3 != nullptr );
 
 }
 
@@ -155,7 +159,10 @@ void GStateNewGame::load ()
 		"continue.images.selector" );
 
 	this -> background = Game::instance (). getResources (). get ( PATH_BACKGROUND );
-    this -> selector = Game::instance (). getResources (). get ( PATH_SELECTOR );
+  this -> selector = Game::instance (). getResources (). get ( PATH_SELECTOR );
+
+	assert( this -> background != nullptr );
+	assert( this -> selector != nullptr );
 
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
@@ -179,6 +186,7 @@ void GStateNewGame::update ( const double DELTA_TIME )
 {
 
 	this -> passed_time += DELTA_TIME;
+	assert( this -> passed_time >= 0 );
 
 	handleSelectorMenu ();
 

@@ -23,7 +23,6 @@
 #define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> states_map.emplace(stateEnum, new stateClass( this ))
 #define ADD_STATE_INSERT(stateEnum, stateClass) this -> states_map.insert(std::make_pair<BStates, StateBoss*>(stateEnum, new stateClass( this )));
 
-double timePasssed = 0;
 
 /*
  * Method used to create all characteristics Boss
@@ -70,6 +69,8 @@ Boss::~Boss()
 	{
 		delete this -> animation;
 		this -> animation = nullptr;
+	} else {
+		// No action.
 	}
 
 	//Delete power_animation if null
@@ -77,6 +78,8 @@ Boss::~Boss()
 	{
 		delete this -> power_animation;
 		this -> power_animation = nullptr;
+	} else {
+		// No action.
 	}
 
   //Delete shield_animation if null
@@ -84,12 +87,16 @@ Boss::~Boss()
 	{
 		delete this -> shield_animation;
 		this -> shield_animation = nullptr;
+	} else {
+		// No action.
 	}
 
 	//Exit Boss if current_state is different of the null
 	if ( this -> current_state != nullptr )
 	{
 		this -> current_state -> exit();
+	} else {
+		// No action.
 	}
 
 	this -> player = nullptr;
@@ -101,11 +108,14 @@ Boss::~Boss()
  * Update the characteristics Boss
  * @param DELTA_TIME : Delta time (catch variation time).
  */
+
+double time_passed = 0; // Take the time that has passed through delta time.
+
 void Boss::update( const double DELTA_TIME)
 {
 
 	assert(DELTA_TIME >= 0);
-	timePasssed += DELTA_TIME;
+	time_passed += DELTA_TIME;
 
 	scoutPosition(DELTA_TIME);
 
@@ -154,8 +164,8 @@ void Boss::render( const double cameraX_, const double cameraY_)
 		{
 			this -> sprite -> render( dx - 120, dy, &this -> animationClip, false, 0.0, nullptr, flip );
 		} else {
-			  this -> sprite -> render( dx, dy, &this->animationClip, false, 0.0, nullptr, flip );
-		  }
+			this -> sprite -> render( dx, dy, &this->animationClip, false, 0.0, nullptr, flip );
+		}
 	}
 	// Shield render.
 	if ( this -> has_shield )
@@ -236,6 +246,8 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 	if ( detections_.at( CollisionSide::SOLID_TOP ) )
 	{
 		this -> velocity_y_axis = 0.0;
+	} else {
+		// No Action.
 	}
 	//Check collision occurrence on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM ) )
@@ -243,17 +255,25 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 		this -> nextY -= fmod( this -> nextY, 64.0) - 16.0;
 		this -> velocity_y_axis = 0.0;
 	}
+	else {
+		// No Action.
+	}
 	//Check collision occurrence on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT ))
 	{
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = 0.0;
+	} else {
+		// No action.
 	}
 	//Check collision occurrence on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
 	{
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = -0.001;
+	}
+	else {
+		// No action.
 	}
 }
 
@@ -272,7 +292,9 @@ void Boss::usePotion( const int strength_, const int distance_)
     const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this->boundingBox.x);
     Potion* potion = new Potion(potionX , this -> y, "res/images/potion.png", strength_, this -> velocity_x_axis, distance_, this ->is_right);
     this -> potions.push_back( potion );
-  }
+  } else {
+		// No Action.
+	}
 }
 
 /*

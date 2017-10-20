@@ -181,6 +181,8 @@ void LevelFour::update( const double DELTA_TIME )
   {
     Game::instance().setState( Game::GStates::GAMEOVER );
     return;
+  } else {
+    // No Action.
   }
 
   // Updating the potions.
@@ -218,8 +220,8 @@ void LevelFour::update( const double DELTA_TIME )
       this -> player -> changeState( Player::player_states::HITED );
       this -> player -> is_vulnerable = false;
     } else {
-
-      }
+        // No Actiion.
+    }
   }
 
   // Updating the HUD.
@@ -293,6 +295,8 @@ void LevelFour::update( const double DELTA_TIME )
       this -> checkpoints[j] = Game::instance().getResources().get("res/images/checkpoint_visited.png");
       Game::instance().get_saves().saveLevel(4, this -> player, this -> enemies, Game::instance().current_slot );
       this -> checkpoints_visited[j] = true;
+    } else {
+      // No Action.
     }
   }
 
@@ -355,6 +359,8 @@ void LevelFour::render()
     if ( document -> should_render )
     {
       document -> renderDocumentText();
+    } else {
+      // No action.
     }
   }
 }

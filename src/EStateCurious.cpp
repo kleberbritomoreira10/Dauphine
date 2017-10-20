@@ -26,6 +26,8 @@ void EStateCurious::enter()
 	{
 		enemy -> velocity_y_axis = 0;
 		enemy -> changeState(Enemy::EStates::DEAD);
+	} else {
+		// No action.
 	}
 }
 

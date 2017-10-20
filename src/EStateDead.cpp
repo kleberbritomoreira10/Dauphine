@@ -10,7 +10,6 @@
 #include "EStateDead.h"
 #include "Logger.h"
 
-double dead_time;
 
 /*
  * Informs the dead state
@@ -36,15 +35,20 @@ void EStateDead::exit()
  * @param DELTA_TIME : delta time (time elapsed)
  * @see StateEnemy::update
  */
+
+double dead_time = 0; // Informs the state of death through delta time 
+
 void EStateDead::update( const double DELTA_TIME)
 {
 	assert (DELTA_TIME >= 0 );
 	assert ( dead_time >= 0 );
-	
+
 	dead_time += DELTA_TIME;
 	if ( dead_time >= 2 )
 	{
 		this -> enemy -> set_dead(true);
+	} else {
+		this -> enemy -> set_dead(false);
 	}
 	this -> enemy -> velocity_x_axis = 0;
 }

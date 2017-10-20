@@ -10,6 +10,7 @@
 #include "GStateVictory.h"
 #include "Game.h"
 #include "Logger.h"
+#include <assert.h>
 
 // Initializes all the attributes.
 GStateVictory::GStateVictory () :
@@ -37,6 +38,7 @@ void GStateVictory::load ()
 
     this -> victoryImage = Game::instance (). getResources (). get(
     	"res/images/victory.png" );
+		assert( this -> victoryImage != nullptr );
 
 	this -> lifeTime = 5.0;
 

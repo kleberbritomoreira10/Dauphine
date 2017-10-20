@@ -7,6 +7,7 @@
  * License: Copyright (C) 2014 Alke Games.
  */
 
+#include <assert.h>
 #include "GStateTransition.h"
 #include "Game.h"
 #include "Logger.h"
@@ -37,9 +38,11 @@ void GStateTransition::load ()
 
 	this -> loading = Game::instance (). getResources (). get (
 		"res/images/loading.png" );
+	assert( this -> loading != nullptr);
 
 	this -> point = Game::instance (). getResources (). get(
 		"res/images/point.png");
+	assert( this -> point != nullptr);
 
 	if ( this -> loading == nullptr )
 	{
@@ -77,6 +80,7 @@ void GStateTransition::unload ()
 void GStateTransition::update ( const double DELTA_TIME )
 {
 	this -> passed_time += DELTA_TIME;
+	assert( this -> passed_time >= 0 );
 
 	if ( this -> passed_time >= this -> lifeTime )
 	{

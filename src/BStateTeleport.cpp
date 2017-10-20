@@ -6,6 +6,7 @@
 * License: Copyright (C) 2014 Alke Games.
 */
 
+#include <assert.h>
 #include "BStateTeleport.h"
 #include "Game.h"
 #include "Collision.h"
@@ -29,6 +30,7 @@ void BStateTeleport::enter ()
 	// Log(DEBUG) << "STATE TELEPORT BOSS";
 	this -> boss -> power = Game::instance (). getResources (). get(
 		"res/images/laser_sheet.png" );
+	assert( this -> boss -> power != nullptr );
 
 	this -> boss -> power_animation -> changeWidthHeight ( 700, 340 );
 	this -> boss -> power_animation -> changeAnimation ( 0, 0, 3, false, 0.5 );
@@ -58,6 +60,7 @@ void BStateTeleport::exit ()
 void BStateTeleport::update ( const double DELTA_TIME )
 {
 	tptime += DELTA_TIME;
+	assert( tptime >= 0 );
 
 	if ( tptime < 3 )
 	{

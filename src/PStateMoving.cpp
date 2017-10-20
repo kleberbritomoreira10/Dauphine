@@ -47,7 +47,9 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   {
     this -> player->changeState(Player::player_states::AERIAL);
     return;     
-  }
+  } else {
+		// No Action.
+	}
 
   // Jump
   if ( keyStates_[GameKeys::SPACE] && this -> player -> isGrounded )
@@ -55,7 +57,9 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player -> jump();
     this -> player -> isGrounded = false;
     return;
-  }
+  } else {
+		// No Action.
+	}
   
   //Use potion
   if ( keyStates_[GameKeys::ACTION] )
@@ -63,14 +67,18 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     // Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/WOOSH_NADINE_03.wav");
     this -> player->usePotion(THROW_STRENGTH, THROW_DISTANCE);
     return;
-  }
+  } else {
+		// No Action.
+	}
   
   //Change state player
   if ( keyStates_[GameKeys::LATTACK])
   {
     this -> player -> changeState(Player::player_states::ATTACKMOVING);
     return;
-  }
+  } else {
+		// No Action.
+	}
 
   this -> player -> move(keyStates_[GameKeys::LEFT], keyStates_[GameKeys::RIGHT]);
   
@@ -79,21 +87,27 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
   {
     this -> player->changeState(Player::player_states::ROLLING);
     return;
-  }
+  } else {
+		// No Action.
+	}
 
   // Idle
   if ( this -> player -> velocity_x_axis < 1.0 && this -> player -> velocity_x_axis > (-1.0))
   {
     this -> player->changeState(Player::player_states::IDLE);
     return;
-  }
+  } else {
+		// No Action.
+	}
 
   // Attack
   if ( keyStates_[GameKeys::LATTACK])
   {
     this -> player->changeState(Player::player_states::ATTACK);
     return;
-  }
+  } else {
+		// No Action.
+	}
 }
 
 /*

@@ -76,6 +76,8 @@ void FadeHandler::update( const double DELTA_TIME)
 	{
 		Log(WARN) << "No sprite set to Fade Handler.";
 		return;
+	} else {
+		// No Action.
 	}
 
   //Check the rate that should fade at the input
@@ -86,10 +88,10 @@ void FadeHandler::update( const double DELTA_TIME)
 			this -> current_percentage += this -> rate * DELTA_TIME/1000.0;
 			this -> sprite->setAlpha( 255.0 * this -> current_percentage );
 		} else {
-			  should_fade_in = false;
-			  this -> current_percentage = this -> stop_percentage;
-			  this -> sprite -> setAlpha( 255.0 * this -> current_percentage );
-		  }
+			should_fade_in = false;
+			this -> current_percentage = this -> stop_percentage;
+			this -> sprite -> setAlpha( 255.0 * this -> current_percentage );
+		}
 	}
 	//check the rate that should fade at the output
 	else if ( should_fade_out )
@@ -103,6 +105,8 @@ void FadeHandler::update( const double DELTA_TIME)
 			  this -> current_percentage = this -> stop_percentage;
 			  this -> sprite -> setAlpha(255.0 * this -> current_percentage);
 		  }
+	} else {
+		// No Action.
 	}
 }
 

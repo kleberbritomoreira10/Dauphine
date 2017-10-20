@@ -52,6 +52,8 @@ void EStateIdle::update( const double DELTA_TIME)
 	{
 		this -> enemy -> changeState( Enemy::EStates::AERIAL );
 		return;
+	} else {
+		// No Action.
 	}
 
 	/// @todo Make the range be only in the direciton the enemy is facing.
@@ -65,6 +67,8 @@ void EStateIdle::update( const double DELTA_TIME)
 	{
 		this -> enemy -> changeState(Enemy::EStates::CURIOUS);
 		return;
+	} else {
+		// No Action.
 	}
 }
 

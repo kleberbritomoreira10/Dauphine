@@ -44,10 +44,9 @@ void PStateHit::exit()
   if ( this -> player -> is_right )
   {
     this -> player -> velocity_x_axis = 0.0;
-  } else
-	{
-	  this -> player -> velocity_x_axis = -0.001;
-  	}
+  } else {
+    this -> player -> velocity_x_axis = -0.001;
+  }
 }
 
 /*

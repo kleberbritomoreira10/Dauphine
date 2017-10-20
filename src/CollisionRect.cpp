@@ -64,7 +64,7 @@ TypeCollision CollisionRect::stringToType( const std::string& strType_ )
 	{
 		return CUTSCENE;
 	} else {
-		  Log(ERROR) << "Unknown collision type for " << strType_ << " .";
-		  return NONE;
-	  }
+		Log(ERROR) << "Unknown collision type for " << strType_ << " .";
+		return NONE;
+	}
 }

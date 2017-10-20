@@ -63,7 +63,6 @@ void Window::destroy()
 void Window::minimize()
 {
   SDL_MinimizeWindow( this -> sdl_window );
-  assert(SDL_MinimizeWindow != nullptr);  
 }
 
 /*

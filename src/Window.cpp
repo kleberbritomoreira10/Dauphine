@@ -53,6 +53,7 @@ void Window::destroy()
   // Destroys the Window window.
   SDL_DestroyWindow( this -> sdl_window );
   this -> sdl_window = nullptr;
+  assert(this -> sdl_window != nullptr);
 }
 
 /*
@@ -62,6 +63,7 @@ void Window::destroy()
 void Window::minimize()
 {
   SDL_MinimizeWindow( this -> sdl_window );
+  assert(SDL_MinimizeWindow != nullptr);  
 }
 
 /*
@@ -118,6 +120,7 @@ void Window::create(const unsigned int width_, const unsigned int height_)
 
       if ( linearFilter )
       {
+        assert(linearFilter != true);  
         Log(INFO) << "Linear texture filtering enabled!";
         rescale(Configuration::getLogicalRenderSize());
       } else {
@@ -187,6 +190,9 @@ void Window::getLogicalSize(int* w, int* h)
 {
   assert(w != NULL);
   assert(h != NULL);
+  assert(*w >= 0);
+  assert(*h >= 0);
+  
   //Render window based on height and width.
   SDL_RenderGetLogicalSize(Window::getRenderer(), w, h);
 }

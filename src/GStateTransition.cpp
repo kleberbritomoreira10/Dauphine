@@ -103,16 +103,22 @@ void GStateTransition::render ()
 	if ( this -> passed_time > 0.83 )
 	{
 		this -> point -> render ( 670, 235 );
+	} else {
+		// Do nothing.
 	}
 
 	if ( this -> passed_time > 1.66 )
 	{
 		this -> point -> render ( 770, 235 );
+	} else {
+		// Do nothing.
 	}
 
 	if ( this -> passed_time > 2.5 )
 	{
 		this -> point -> render ( 870, 235 );
+	} else {
+		// Do nothing.
 	}
 
 }

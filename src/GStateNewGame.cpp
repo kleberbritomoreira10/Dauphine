@@ -57,18 +57,24 @@ GStateNewGame::~GStateNewGame ()
 		delete this -> slot1;
 		this -> slot1 = nullptr;
 
+	} else {
+		// Do Nothing.
 	}
 
 	if ( this -> slot2 != nullptr )
 	{
 		delete this -> slot2;
 		this -> slot2 = nullptr;
+	} else {
+		// Do nothing.
 	}
 
 	if ( this -> slot3 != nullptr )
 	{
 		delete this -> slot3;
 		this -> slot3 = nullptr;
+	} else {
+		// Do nothing.
 	}
 }
 
@@ -195,6 +201,8 @@ void GStateNewGame::update ( const double DELTA_TIME )
 	if ( keyStates [ GameKeys::ESCAPE ] == true )
 	{
 		Game::instance ().setState ( Game::GStates::MENU );
+	} else {
+		// Do nothing.
 	}
 }
 
@@ -238,6 +246,8 @@ void GStateNewGame::handleSelectorMenu ()
 		if ( this -> passed_time >= SELECTOR_DELAY_TIME )
 		{
 			Game::instance (). setState ( Game::GStates::MENU );
+		} else {
+			// Do nothing.
 		}
 	}
 

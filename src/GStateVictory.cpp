@@ -75,6 +75,8 @@ void GStateVictory::update ( const double DELTA_TIME )
 		Game::instance (). setState ( Game::GStates::CREDITS );
 		return;
 
+	} else {
+		// Do nothing.
 	}
 }
 

@@ -135,6 +135,8 @@ void LevelOne::load ()
 
 				enemy -> set_dead ( true );
 
+			} else {
+				enemy -> set_dead ( false );
 			}
 		}
 
@@ -291,6 +293,8 @@ void LevelOne::update ( const double DELTA_TIME )
 		Game::instance (). setState ( Game::GStates::TRANSITION );
 		return;
 
+	} else {
+		// Do nothing.
 	}
 
 	// Updating the potion/enemy collision.
@@ -444,6 +448,8 @@ void LevelOne::render ()
 			this -> image -> Sprite::render ( ( items [ 0 ] [ i ] + 60 ) - CAMERA_X,
 				( ( items [ 1 ] [ i ] ) - CAMERA_Y ) );
 
+		} else {
+			// Do nohing;
 		}
 	}
 
@@ -456,6 +462,8 @@ void LevelOne::render ()
 		if ( document -> should_render )
 		{
 			document -> renderDocumentText ();
+		} else {
+			// Do nothing .
 		}
 	}
 

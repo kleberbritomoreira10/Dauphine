@@ -90,6 +90,8 @@ Text::~Text ()
 	{
 		delete this -> sprite;
 		this -> sprite = nullptr;
+	} else {
+		// Do nothing.
 	}
 
 	TTF_CloseFont ( this -> font );
@@ -103,6 +105,8 @@ void Text::changeText ( const char *text_, const SDL_Color color_ )
 	{
 		delete this-> sprite;
 		this -> sprite = nullptr;
+	} else {
+		// Do nothing.
 	}
 
 	SDL_Surface *surface = TTF_RenderText_Blended ( this -> font, text_, color_ );
@@ -134,6 +138,8 @@ void Text::changeText ( const char *text_ )
 	{
 		delete this -> sprite;
 		this -> sprite = nullptr;
+	} else {
+		// Do nothing.
 	}
 
 	SDL_Surface *surface = TTF_RenderText_Blended ( this -> font, text_, { 0xCE, 0xCE, 0xCE, 255 } );

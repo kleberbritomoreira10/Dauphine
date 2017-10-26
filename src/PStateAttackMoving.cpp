@@ -37,6 +37,8 @@ void PStateAttackMoving::handleInput ( const std::array < bool, GameKeys::MAX > 
 	if ( this -> player -> getAnimation () -> getCurrentFrame () == 9 )
 	{
 		this -> player -> changeState ( Player::player_states::MOVING );
+	} else {
+		// Do nothing.
 	}
 }
 

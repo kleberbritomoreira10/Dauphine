@@ -30,6 +30,8 @@ FadeScreen::~FadeScreen ()
 		delete this -> fadeHandler;
 		this -> fadeHandler = nullptr;
 
+	} else {
+		// Do nothing.
 	}
 }
 
@@ -49,6 +51,8 @@ void FadeScreen::render ()
 	if ( this -> fadeImage != nullptr )
 	{
 		this -> fadeImage -> render ( 0, 0, nullptr, true );
+	} else {
+		// Do nothing.
 	}
 }
 
@@ -64,6 +68,8 @@ bool FadeScreen::isFaded ()
 	if ( current_percentage == 1.0 )
 	{
 		faded = true;
+	} else {
+		faded = false;
 	}
 
 	return faded;

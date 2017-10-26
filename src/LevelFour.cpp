@@ -45,15 +45,15 @@ void LevelFour::load()
 
   // Loading the tile/tilemap.
 
-  assert( this -> tile_map != nullptr );        
   this -> tile_map = new TileMap("res/maps/level4.tmx");
+  assert( this -> tile_map != nullptr );
 
   // Setting the level width/height.
   this -> width = this -> tile_map -> getMapWidth();
   this -> height = this -> tile_map -> getMapHeight();
   SDL_Rect bounds = { 0, 0, ( int ) this -> width, ( int ) this -> height };
-  assert( this -> quadTree != nullptr );        
   this -> quadTree = new QuadTree( 0, bounds );
+  assert( this -> quadTree != nullptr );
 
   //Setting the background image
   this -> background = Game::instance().getResources().get("res/images/lv1_background.png");
@@ -85,18 +85,16 @@ void LevelFour::load()
 
     Game::instance().get_saves().get_player_position(saved_x_position, saved_y_position, Game::instance().current_slot);
 
-    assert( level_player != nullptr );          
     level_player = new Player( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
   } else {
-      assert( level_player != nullptr );          
       level_player = new Player( this -> tile_map -> get_initial_x(), this -> tile_map -> get_initial_y(), PATH_PLAYER_SPRITE_SHEET);
     }
 
   Camera* level_camera = new Camera( level_player );
 
   //Instantiating elements of the game.
-  assert( this -> player_Hud != nullptr );            
   this -> player_Hud = new PlayerHUD( level_player );
+  assert( this -> player_Hud != nullptr );
 
   // Load all the enemies from the tile_map.
   for ( unsigned  int i = 0; i < this -> tile_map -> get_enemies_x().size(); i++ )
@@ -114,7 +112,7 @@ void LevelFour::load()
         enemy->set_dead(false);
       }
     } else {
-      enemy->set_dead(false);      
+      enemy->set_dead(false);
     }
     enemy -> setLevelWH( this -> width, this -> height );
     this -> enemies.push_back( enemy );
@@ -289,7 +287,7 @@ void LevelFour::update( const double DELTA_TIME )
   {
     if ( Collision::rects_collided( this -> player -> get_bounding_box(), enemy -> get_bounding_box()) )
     {
-      if ( this -> player -> is_right != enemy -> is_right ) { 
+      if ( this -> player -> is_right != enemy -> is_right ) {
         if ( this -> player -> is_current_state( Player::player_states::ATTACK) || this->player->is_current_state(Player::player_states::ATTACKMOVING) )
         {
 

@@ -28,7 +28,7 @@ void LevelThree::load(){
 	// Loading the tile/tilemap.
 	this->tile_map = new TileMap("res/maps/level3.tmx");
 	assert(this->tile_map!=nullptr);
-	
+
 	// Setting the level width/height.
 	this->width = this->tile_map->getMapWidth();
 	this->height = this->tile_map->getMapHeight();
@@ -49,16 +49,13 @@ void LevelThree::load(){
 		"level.audio.background");
 	const std::string PATH_ENEMY = luaLevel1.unlua_get<std::string>("level.enemy");
 
-	assert(PATH_PLAYER_SPRITE_SHEET.empty());
-	assert(PATH_BACKGROUND_AUDIO.empty());
-	assert(PATH_ENEMY.empty());
 
 	// Changing the music.
 	// Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
 
 	// Loading the player and the camera.
 	Player* level_player = nullptr;
-	
+
 	if(Game::instance().get_saves().is_saved(Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 3){
 		double saved_x_position = 0.0;
 		double saved_y_position = 0.0;
@@ -68,17 +65,15 @@ void LevelThree::load(){
 		level_player = new Player(saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET);
 	}
 	else{
-		assert(this->tile_map->get_initial_x()!=NULL);
-		assert(this->tile_map->get_initial_y()!=NULL);
 		level_player = new Player(this->tile_map->get_initial_x(), this->tile_map->get_initial_y(), PATH_PLAYER_SPRITE_SHEET);
 	}
-	
-	Camera* level_camera = new Camera(level_player); 
-	
+
+	Camera* level_camera = new Camera(level_player);
+
 	this->player_Hud = new PlayerHUD(level_player);
 	assert(this->player_Hud!=nullptr);
 
-		
+
 	// Load all the enemies from the tile_map.
 	for(unsigned  int i = 0; i < this->tile_map->get_enemies_x().size(); i++){
 		Enemy* enemy = new Enemy(this->tile_map->get_enemies_x().at(i),
@@ -114,7 +109,7 @@ void LevelThree::unload(){
 		caught_items[i] = false;
 	}
 
-	//this->checkpointVisited = false;	
+	//this->checkpointVisited = false;
 }
 
 void LevelThree::update(const double DELTA_TIME){
@@ -156,8 +151,8 @@ void LevelThree::update(const double DELTA_TIME){
 	Enemy::px = this->player->x;
 	Enemy::py = this->player->y;
 	Enemy::position_vulnerable = this->player->is_vulnerable;
-	
-	for (int i = 0; i < NUMBER_ITEMS; ++i){	
+
+	for (int i = 0; i < NUMBER_ITEMS; ++i){
 		if(Collision::rects_collided(this->player->get_bounding_box(), {items[0][i], items[1][i], 192, 192}) && caught_items[i] == false){
 			this->player->addPotions(3);
 			caught_items[i]=true;
@@ -194,7 +189,7 @@ void LevelThree::update(const double DELTA_TIME){
 		for(auto enemy : this->enemies){
 			if(Collision::rects_collided(potion->get_bounding_box(), enemy->get_bounding_box())){
 				if(potion->activated){
-					
+
 					if(enemy->life > 0 && this->player->can_attack){
 						enemy->life -= 100;
 						potion->activated = false;
@@ -213,7 +208,7 @@ void LevelThree::update(const double DELTA_TIME){
 		if(Collision::rects_collided(this->player->get_bounding_box(), enemy->get_bounding_box())){
 			if(this->player->is_right != enemy->is_right)
 				if(this->player->is_current_state(Player::player_states::ATTACK) || this->player->is_current_state(Player::player_states::ATTACKMOVING)){
-					
+
 					if(enemy->life > 0 && this->player->can_attack){
 						enemy->life -= this->player->attack_strength;
 						this->player->can_attack = false;
@@ -228,13 +223,13 @@ void LevelThree::update(const double DELTA_TIME){
 
 	//Saving the game state
 	for(int j = 0; j < this->TOTAL_NUMBER_OF_CHECKPOINTS; ++j){
-		if(!this->checkpoints_visited[j] && this->player->get_bounding_box().x >= checkpoints_X[j] 
+		if(!this->checkpoints_visited[j] && this->player->get_bounding_box().x >= checkpoints_X[j]
 				&& this->player->get_bounding_box().x <= checkpoints_X[j] + 100 && this->player->get_bounding_box().y >= checkpoints_Y[j]
 				&& this->player->get_bounding_box().y <= checkpoints_Y[j] + 200){
 			this->checkpoints[j] = Game::instance().getResources().get("res/images/checkpoint_visited.png");
 			Game::instance().get_saves().saveLevel(3, this->player, this->enemies, Game::instance().current_slot);
 			this->checkpoints_visited[j] = true;
-		}	
+		}
 	}
 
 	// Documents check
@@ -274,9 +269,9 @@ void LevelThree::render(){
 
 	for (unsigned int i = 0; i < NUMBER_ITEMS; i++){
 		if(this->image != nullptr && caught_items[i] == false){
-			
+
 			this->image->Sprite::render((items[0][i]+60) - CAMERA_X, ((items[1][i]) - CAMERA_Y));
-		
+
 		}
 	}
 
@@ -288,4 +283,3 @@ void LevelThree::render(){
 		}
 	}
 }
-

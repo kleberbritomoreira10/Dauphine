@@ -66,10 +66,25 @@ Game::Game () :
 
 	initializeStates();
 
+	getDialog();
+
+	int width_value = 50;
+
+	this -> pause_image = getResources().get("res/images/pause_overlay.png");
+	this -> pause_selector = getResources().get("res/images/cursor_regular.png");
+	this -> pause_selector -> setWidth( width_value );
+
+	this -> is_running = true;
+	FPSWrapper::initialize( this -> fps_manager );
+}
+
+// Get all the dialogs image.
+void Game::getDialog()
+{
 	std::string path = "res/images/Dialog/dialog";
 	std::string extension = ".png";
 
-	for( int i = 0; i < total_number_to_be_parameterizedof_lines; i++ )
+	for( int i = 0; i < total_number_to_be_parameterized; i++ )
 	{
 		 this -> dialog[ i ] = nullptr;
 		 this -> dialog[ i ] = getResources().get( path + Util::toString(i) + extension );
@@ -83,18 +98,26 @@ Game::Game () :
 			// No action.
 		}
 	}
-
-	int width_value = 50;
-
-	this -> pause_image = getResources().get("res/images/pause_overlay.png");
-	this -> pause_selector = getResources().get("res/images/cursor_regular.png");
-	this -> pause_selector -> setWidth( width_value );
-
-	this -> is_running = true;
-	FPSWrapper::initialize( this -> fps_manager );
 }
 
 Game::~Game()
+{
+	unload_current_state();
+
+	destroyStates();
+
+	delete_audio_handler();
+
+	delete_input_handler();
+
+	delete_resource_manager();
+
+	delete_fade_screen();
+
+	delete_window();
+}
+
+void Game::unload_current_state()
 {
 	if( this -> current_state != nullptr )
 	{
@@ -104,9 +127,10 @@ Game::~Game()
 	{
 		// No action.
 	}
+}
 
-	destroyStates();
-
+void Game::delete_audio_handler()
+{
 	if( this -> audio_handler != nullptr )
 	{
 		delete this -> audio_handler;
@@ -114,16 +138,22 @@ Game::~Game()
 	}else{
 			// No action.
 	}
+}
 
+void Game::delete_input_handler()
+{
 	if( this -> input_handler != nullptr )
 	{
-		delete this->input_handler;
+		delete this -> input_handler;
 
 	}else
 	{
 		// No action.
 	}
+}
 
+void Game::delete_resource_manager()
+{
 	if( this -> resource_manager != nullptr )
 	{
 		delete this -> resource_manager;
@@ -133,6 +163,10 @@ Game::~Game()
 		// No action.
 	}
 
+}
+
+void Game::delete_fade_screen()
+{
 	if( this -> fade_screen != nullptr )
 	{
 		delete this -> fade_screen;
@@ -141,7 +175,10 @@ Game::~Game()
 	{
 		// No action.
 	}
+}
 
+void Game::delete_window()
+{
 	if( this -> window != nullptr )
 	{
 		delete this -> window;
@@ -177,45 +214,13 @@ void Game::runGame()
 		{
 			this -> input_handler -> handleInput();
 
-			// Check for an exit signal from input.
-			if( this -> input_handler -> isQuitFlag() == true )
-			{
-				stop();
-				return;
+			check_exit_signal();
 
-			}else
-			{
-				// No action.
-			}
-			std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
-
-			if( keyStates[ GameKeys::ESCAPE ] && isPauseAble() )
-			{
-				this -> current_selection = PSelection::RESUME;
-				this -> is_paused = true;
-
-			}else
-			{
-				// No action.
-			}
+			get_current_selection();
 
 			assert( delta_time > 0 );
-			if( !this -> is_paused )
-			{
 
-				this -> current_state -> update( delta_time );
-
-			}
-			else if( !this -> is_cut_scene)
-			{
-				this -> passed_time += delta_time;
-				updatePause();
-			}
-			else
-			{
-				this -> passed_time += delta_time;
-				updateDialog();
-			}
+			time_verifications(delta_time);
 
 			this -> fade_screen -> update( delta_time );
 
@@ -228,25 +233,9 @@ void Game::runGame()
 
 		this -> current_state -> render();
 
-		assert( total_number_to_be_parameterizedof_lines > 0 );
+		assert( total_number_to_be_parameterized > 0 );
 
-		if( this -> is_paused )
-		{
-			renderPause();
-		}
-		else if( this -> is_cut_scene )
-		{
-			if( current_line < total_number_to_be_parameterizedof_lines )
-				renderDialog();
-			else
-			{
-				current_line = 0;
-				is_cut_scene = false;
-			}
-		}else
-		{
-			//No action.
-		}
+		render_pause_and_dialog();
 
 		this -> fade_screen -> render();
 
@@ -254,6 +243,77 @@ void Game::runGame()
 
 	}
 
+}
+
+// Check for an exit signal from input.
+void Game::check_exit_signal()
+{
+	if( this -> input_handler -> isQuitFlag() == true )
+	{
+		stop();
+		return;
+
+	}else
+	{
+		// No action.
+	}
+}
+
+void Game::get_current_selection()
+{
+	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
+
+	if( keyStates[ GameKeys::ESCAPE ] && isPauseAble() )
+	{
+		this -> current_selection = PSelection::RESUME;
+		this -> is_paused = true;
+
+	}else
+	{
+		// No action.
+	}
+}
+
+void Game::time_verifications(const double delta_time)
+{
+	if( !this -> is_paused )
+	{
+
+		this -> current_state -> update( delta_time );
+
+	}
+	else if( !this -> is_cut_scene)
+	{
+		this -> passed_time += delta_time;
+		updatePause();
+	}
+	else
+	{
+		this -> passed_time += delta_time;
+		updateDialog();
+	}
+
+}
+
+void Game::render_pause_and_dialog()
+{
+	if( this -> is_paused )
+	{
+		renderPause();
+	}
+	else if( this -> is_cut_scene )
+	{
+		if( current_line < total_number_to_be_parameterized )
+			renderDialog();
+		else
+		{
+			current_line = 0;
+			is_cut_scene = false;
+		}
+	}else
+	{
+		//No action.
+	}
 }
 
 void Game::setState( const GStates state_ )
@@ -289,14 +349,7 @@ void Game::initializeStates()
 void Game::renderDialog()
 {
 
-	if( current_line > total_number_to_be_parameterizedof_lines )
-	{
-		current_line = 0;
-		return;
-	}else
-	{
-		// No action.
-	}
+	verify_current_line();
 
 	if( this -> dialog[ current_line ] )
 	{
@@ -307,6 +360,18 @@ void Game::renderDialog()
 		// No action.
 	}
 
+}
+
+void Game::verify_current_line()
+{
+	if( current_line > total_number_to_be_parameterized )
+	{
+		current_line = 0;
+		return;
+	}else
+	{
+		// No action.
+	}
 }
 
 void Game::handleDialog()
@@ -369,42 +434,13 @@ void Game::handleSelectorMenu()
 
 	if( keyStates[ GameKeys::DOWN ] == true || keyStates[ GameKeys::RIGHT ] == true )
 	{
-		if( this -> passed_time >= SELECTOR_DELAY_TIME )
-		{
-			if( current_selection < ( PSelection::TOTAL - 1 ))
-			{
-				current_selection++;
 
-			}else
-			{
-				current_selection = PSelection::RESUME;
-			}
-			this -> passed_time = 0.0;
-
-		}else
-		{
-			// No action.
-		}
+		handle_selection_keys_down_and_right(SELECTOR_DELAY_TIME);
 
 	}else if( keyStates[ GameKeys::UP ] == true || keyStates[ GameKeys::LEFT ] == true )
 	{
-		if( this -> passed_time >= SELECTOR_DELAY_TIME )
-		{
-			if( current_selection > PSelection::RESUME )
-			{
-				current_selection--;
-
-			}else
-			{
-				current_selection = ( PSelection::TOTAL - 1 );
-			}
-
-			this -> passed_time = 0.0;
-
-		}else
-		{
-			// No action.
-		}
+		
+		handle_selection_keys_up_and_left( SELECTOR_DELAY_TIME );
 
 	}else if( current_selection == PSelection::RESUME && keyStates[ GameKeys::SPACE ] == true )
 	{
@@ -414,6 +450,47 @@ void Game::handleSelectorMenu()
 	{
 		Game::instance().setState( Game::GStates::MENU );
 		this -> is_paused = false;
+
+	}else
+	{
+		// No action.
+	}
+}
+
+void Game::handle_selection_keys_down_and_right( const double SELECTOR_DELAY_TIME )
+{
+	if( this -> passed_time >= SELECTOR_DELAY_TIME )
+	{
+		if( current_selection < ( PSelection::TOTAL - 1 ))
+		{
+			current_selection++;
+
+		}else
+		{
+			current_selection = PSelection::RESUME;
+		}
+		this -> passed_time = 0.0;
+
+	}else
+	{
+		// No action.
+	}
+}
+
+void Game::handle_selection_keys_up_and_left( const double SELECTOR_DELAY_TIME )
+{
+	if( this -> passed_time >= SELECTOR_DELAY_TIME )
+	{
+		if( current_selection > PSelection::RESUME )
+		{
+			current_selection--;
+
+		}else
+		{
+			current_selection = ( PSelection::TOTAL - 1 );
+		}
+
+		this -> passed_time = 0.0;
 
 	}else
 	{

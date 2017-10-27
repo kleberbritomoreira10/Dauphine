@@ -36,6 +36,42 @@ void BStateIdle::update( const double DELTA_TIME )
 {
 	( ( void )DELTA_TIME ); // Unused.
 
+	// if( this -> boss -> is_right && this -> boss -> x > 1960 )
+	// {
+	// 	this -> boss -> is_right = false;
+	//
+	// }else if( !this -> boss -> is_right && this -> boss -> x < 300 )
+	// {
+	// 	this -> boss -> is_right = true;
+	//
+	// }else
+	// {
+	// 	this -> boss -> is_right = false;
+	// }
+	handle_boss_position();
+
+	// if( this -> boss -> is_right )
+	// {
+	// 	this -> boss -> move( false, true );
+	//
+	// }else
+	// {
+	// 	this -> boss -> move( true, false );
+	// }
+	//
+	// if( this -> boss -> saw_player )
+	// {
+	// 	this -> boss -> changeState( Boss::BStates::ATTACK );
+	//
+	// }else
+	// {
+	// 	// No action;
+	// }
+	handle_boss_movements();
+}
+
+void BStateIdle::handle_boss_position()
+{
 	if( this -> boss -> is_right && this -> boss -> x > 1960 )
 	{
 		this -> boss -> is_right = false;
@@ -48,7 +84,10 @@ void BStateIdle::update( const double DELTA_TIME )
 	{
 		this -> boss -> is_right = false;
 	}
+}
 
+void BStateIdle::handle_boss_movements()
+{
 	if( this -> boss -> is_right )
 	{
 		this -> boss -> move( false, true );
@@ -66,7 +105,6 @@ void BStateIdle::update( const double DELTA_TIME )
 	{
 		// No action;
 	}
-
 }
 
 /**

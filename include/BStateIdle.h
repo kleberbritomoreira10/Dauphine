@@ -3,7 +3,7 @@
 
 #include "StateBoss.h"
 
-class BStateIdle : public StateBoss 
+class BStateIdle : public StateBoss
 {
 
 	public:
@@ -12,7 +12,7 @@ class BStateIdle : public StateBoss
 		* @param BOSS : Reference to the Boss.
 		*/
 		BStateIdle( Boss *const BOSS );
-		
+
 		/**
 		* The destructor.
 		*/
@@ -32,6 +32,10 @@ class BStateIdle : public StateBoss
 		* @see StateBoss::update
 		*/
 		virtual void update ( const double DELTA_TIME );
+
+		void handle_boss_position();
+
+		void handle_boss_movements();
 
 };
 

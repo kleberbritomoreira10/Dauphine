@@ -103,10 +103,10 @@ class Game
 
 		unsigned int current_slot; // Current slot value.
 
-		static const int total_number_to_be_parameterizedof_lines = 14; //Total number of lines in the slot.
+		static const int total_number_to_be_parameterized = 14; //Total number of lines in the slot.
 		unsigned int current_line; // Current line value.
 
-		Sprite *dialog[total_number_to_be_parameterizedof_lines];
+		Sprite *dialog[total_number_to_be_parameterized];
 
 		GStates transitionTo;
 
@@ -140,6 +140,34 @@ class Game
 		void handleDialog ();
 
 		void updateDialog ();
+
+		void getDialog(); // Get all the dialogs image.
+
+		void unload_current_state();
+
+		void delete_audio_handler();
+
+		void delete_input_handler();
+
+		void delete_resource_manager();
+
+		void delete_fade_screen();
+
+		void delete_window();
+
+		void check_exit_signal(); // Check for an exit signal from input.
+
+		void get_current_selection();
+
+		void time_verifications( const double delta_time );
+
+		void render_pause_and_dialog();
+
+		void verify_current_line();
+
+		void handle_selection_keys_down_and_right( const double SELECTOR_DELAY_TIME );
+
+		void handle_selection_keys_up_and_left( const double SELECTOR_DELAY_TIME );
 
 		Window *window; /**< The game Window. */
 		bool is_running; /**< Whether the game is currently running/looping or not. */

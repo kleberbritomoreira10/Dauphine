@@ -65,7 +65,7 @@ void PStateAerial::handleInput( const std::array< bool, GameKeys::MAX > keyState
 * The constructor.
 * Initializes the attributes.
 */
-PStateAerial::PStateAerial( Player* const player_ ) :
+PStateAerial::PStateAerial( Player *const player_ ) :
 	StatePlayer( player_ )
 {
 

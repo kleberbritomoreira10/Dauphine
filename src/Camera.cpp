@@ -53,6 +53,13 @@ void Camera::updatePosition()
   this -> clip.x = ( this -> entity -> x + this -> entity -> getWidth() / 2 ) - ( this -> clip.w / 2 );
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );
 
+  update_position_x();
+
+  update_position_y();
+}
+
+void Camera::update_position_x()
+{
   // Left wall.
   if( this -> clip.x < 0 )
   {
@@ -66,7 +73,10 @@ void Camera::updatePosition()
   {
     // No action.
   }
+}
 
+void Camera::update_position_y()
+{
   // Top wall.
   if( this -> clip.y < 0)
   {

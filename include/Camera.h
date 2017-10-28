@@ -60,6 +60,10 @@ class Camera {
 		SDL_Rect clip; /**< Clip which will be used to clip the rendering only to the extent of
 			the camera. */
 
+		void update_position_x();
+
+		void update_position_y();
+
 };
 
 #endif //INCLUDE_CAMERA_H

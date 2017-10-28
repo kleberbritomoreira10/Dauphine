@@ -99,7 +99,7 @@ void LevelOne::load ()
 		double saved_y_position = 0.0;
 
 		Game::instance (). get_saves (). get_player_position ( saved_x_position, saved_y_position,
-			Game::instance ().current_slot );
+		Game::instance ().current_slot );
 
 		level_player = new Player ( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
 	}else
@@ -172,11 +172,8 @@ void LevelOne::unload ()
 	}
 }
 
-/**
-* Updates the objects within the Level.
-* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
-*/
-void LevelOne::update ( const double DELTA_TIME )
+// Update the entities from Level 1.
+void LevelOne::updateEntities (const double DELTA_TIME )
 {
 
 	// Populating the QuadTree.
@@ -197,6 +194,16 @@ void LevelOne::update ( const double DELTA_TIME )
 		entity -> update( DELTA_TIME );
 
 	}
+}
+
+// Update enemies from Level 1.
+void LevelOne::updateEnemies ( const double DELTA_TIME )
+{
+	// Populating the QuadTree.
+	this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
+
+	// Updating the entities, using the QuadTree.
+	std::vector < CollisionRect > return_objects;
 
 	// Updating the enemies.
 	for ( auto enemy : this -> enemies )
@@ -211,25 +218,16 @@ void LevelOne::update ( const double DELTA_TIME )
 		enemy -> update( DELTA_TIME );
 
 	}
+}
 
-	// Set to GameOver if the player is dead.
-	if ( this -> player -> isDead () )
-	{
+// Update the potions from Level 1.
+void LevelOne::updatePotions ( )
+{
+	// Populating the QuadTree.
+	this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 
-		this -> player -> changeState ( Player::player_states::DEAD );
-
-		ok = ok + DELTA_TIME;
-
-		if( ok > 3 )
-		{
-
-			Game::instance (). setState ( Game::GStates::GAMEOVER );
-
-		}
-
-		return;
-
-	}
+	// Updating the entities, using the QuadTree.
+	std::vector < CollisionRect > return_objects;
 
 	// Updating the potions.
 	for( auto potion : this -> player -> potions )
@@ -242,7 +240,11 @@ void LevelOne::update ( const double DELTA_TIME )
 		potion -> setCollisionRects ( return_objects );
 
 	}
+}
 
+// Update the position and state from player.
+void LevelOne::updatePlayer ( )
+{
 	/// @todo Maybe refactor this static Enemy::px, Enemy::py.
 	// Updating player info for the enemies.
 	Enemy::px = this -> player -> x;
@@ -296,7 +298,11 @@ void LevelOne::update ( const double DELTA_TIME )
 	} else {
 		// Do nothing.
 	}
+}
 
+// Update the potion collision on enemies.
+void LevelOne::updatePotionEnemyCollision ( )
+{
 	// Updating the potion/enemy collision.
 	for ( auto potion : this -> player -> potions )
 	{
@@ -330,6 +336,11 @@ void LevelOne::update ( const double DELTA_TIME )
 		}
 	}
 
+}
+
+// Update the attack collision on enemies.
+void LevelOne::updateAttackEnemiesCollision ( )
+{
 	// Updating the player attack/enemy collision.
 	for ( auto enemy : this -> enemies )
 	{
@@ -366,27 +377,37 @@ void LevelOne::update ( const double DELTA_TIME )
 		}
 	}
 
-	//Saving the game state
+}
+
+// Update the checkpoints from Level 1.
+void LevelOne::updateCheckpoints()
+{
+	double player_x = this -> player -> get_bounding_box (). x;
+	double player_y = this -> player -> get_bounding_box (). y;
+
+	// Updating the checkpoints.
 	for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
 	{
 
-		if ( !this -> checkpoints_visited [ j ] && this -> player -> get_bounding_box (). x
-			>= checkpoints_X [ j ] && this -> player -> get_bounding_box (). x <= checkpoints_X[j]
-		    + 100 && this -> player -> get_bounding_box (). y >= checkpoints_Y [ j ]
-		    && this -> player -> get_bounding_box (). y <= checkpoints_Y [ j ] + 200 )
+		if ( !this -> checkpoints_visited [ j ] && player_x >= checkpoints_X [ j ] && player_x <= checkpoints_X[j]
+		    + 100 && player_y >= checkpoints_Y [ j ] && player_y <= checkpoints_Y [ j ] + 200 )
 		{
 
 			this -> checkpoints [ j ] = Game::instance (). getResources (). get (
-				"res/images/checkpoint_visited.png" );
+			"res/images/checkpoint_visited.png" );
 
 			Game::instance (). get_saves ().saveLevel ( 1, this -> player, this -> enemies,
-				Game::instance (). current_slot );
+			Game::instance (). current_slot );
 
 			this -> checkpoints_visited [ j ] = true;
 
 		}
 	}
+}
 
+// Update Documents from Level 1.
+void LevelOne::updateDocuments( )
+{
 	// Checks the condition of the document to render
 	for ( auto document : this -> documents )
 	{
@@ -400,6 +421,49 @@ void LevelOne::update ( const double DELTA_TIME )
 			document -> should_render = false;
 		}
 	}
+}
+
+/**
+* Updates the objects within the Level.
+* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
+*/
+void LevelOne::update ( const double DELTA_TIME )
+{
+
+	updateEntities( DELTA_TIME );
+
+	updateEnemies( DELTA_TIME );
+
+	// Set to GameOver if the player is dead.
+	if ( this -> player -> isDead () )
+	{
+
+		this -> player -> changeState ( Player::player_states::DEAD );
+
+		ok = ok + DELTA_TIME;
+
+		if( ok > 3 )
+		{
+
+			Game::instance (). setState ( Game::GStates::GAMEOVER );
+
+		}
+
+		return;
+
+	}
+
+	updatePotions();
+
+	updatePlayer();
+
+	updatePotionEnemyCollision();
+
+	updateAttackEnemiesCollision();
+
+	updateCheckpoints();
+
+	updateDocuments();
 }
 
 /*
@@ -423,7 +487,7 @@ void LevelOne::render ()
 	for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
 	{
 		this -> checkpoints [ j ] -> render ( this -> checkpoints_X [ j ] - CAMERA_X,
-			this -> checkpoints_Y [ j ] - CAMERA_Y );
+		this -> checkpoints_Y [ j ] - CAMERA_Y );
 	}
 
 	this -> player_Hud -> render ();

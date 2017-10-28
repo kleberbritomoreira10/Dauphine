@@ -38,9 +38,17 @@ class LevelOne : public Level
 		virtual void load ();
 
 		/**
-		* Updates the objects within the Level.
+		* Updates the objects from phase 1.
 		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 		*/
+		virtual void updateEntities ( const double DELTA_TIME );
+		virtual void updateEnemies ( const double DELTA_TIME );
+		virtual void updatePotions ( );
+		virtual void updatePlayer ( );
+		virtual void updatePotionEnemyCollision ( );
+		virtual void updateAttackEnemiesCollision ( );
+		virtual void updateCheckpoints ( );
+		virtual void updateDocuments( );
 		virtual void update ( const double DELTA_TIME );
 
 		/**

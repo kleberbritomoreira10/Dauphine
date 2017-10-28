@@ -59,27 +59,8 @@ void BStateIcePrision::update( const double DELTA_TIME )
   {
     this -> boss -> power_animation -> changeAnimation( 2, 0, 1, false, 0 );
 
-    if( Collision::rects_collided( this -> boss -> player -> get_bounding_box(),  { ( int )this -> boss -> power_X_axis,
-    ( int ) this -> boss -> power_Y_axis, 340,1020 }))
-    {
-
-      if( this -> boss -> player -> is_vulnerable)
-      {
-
-          this -> boss -> player -> can_move = false;
-          this -> boss -> player -> is_vulnerable = false;
-          this -> boss -> player -> velocity_x_axis = 0;
-          this -> boss -> player -> velocity_y_axis = 0;
-          this -> boss -> player -> getAnimation() -> changeAnimation( 4, 8, 1, false, 0 );
-
-      }else
-      {
-        // No action.
-      }
-    }else
-    {
-      // No action.
-    }
+    update_player();
+    
   }
   if( prision_time > 4 )
   {
@@ -91,6 +72,31 @@ void BStateIcePrision::update( const double DELTA_TIME )
     // No action.
   }
 
+}
+
+void BStateIcePrision::update_player()
+{
+  if( Collision::rects_collided( this -> boss -> player -> get_bounding_box(),  { ( int )this -> boss -> power_X_axis,
+  ( int ) this -> boss -> power_Y_axis, 340,1020 }))
+  {
+    if( this -> boss -> player -> is_vulnerable)
+    {
+
+        this -> boss -> player -> can_move = false;
+        this -> boss -> player -> is_vulnerable = false;
+        this -> boss -> player -> velocity_x_axis = 0;
+        this -> boss -> player -> velocity_y_axis = 0;
+        this -> boss -> player -> getAnimation() -> changeAnimation( 4, 8, 1, false, 0 );
+
+    }else
+    {
+      // No action.
+    }
+
+  }else
+  {
+    // No action.
+  }
 }
 
 /**

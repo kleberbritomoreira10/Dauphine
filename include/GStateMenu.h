@@ -53,6 +53,18 @@ class GStateMenu : public StateGame
 
 		bool should_ignore;
 
+		void change_shwing_animation();
+
+		void handle_attract();
+
+		void render_menu();
+
+		void handle_current_selection_down_and_right( const double SELECTOR_DELAY_TIME );
+
+		void verify_should_ignore();
+
+		void handle_current_selection_up_and_left( const double SELECTOR_DELAY_TIME );
+
 	private:
 		enum Selection : uint8_t
 		{

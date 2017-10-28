@@ -3,7 +3,7 @@
 
 #include "StateBoss.h"
 
-class BStateIcePrision : public StateBoss 
+class BStateIcePrision : public StateBoss
 {
 
 	public:
@@ -12,7 +12,7 @@ class BStateIcePrision : public StateBoss
 		* @param BOSS : Reference to the Boss.
 		*/
 		BStateIcePrision( Boss *const BOSS );
-		
+
 		/**
 		* The destructor.
 		*/
@@ -32,6 +32,8 @@ class BStateIcePrision : public StateBoss
 		* @see StateBoss::update
 		*/
 		virtual void update ( const double DELTA_TIME );
+
+		void update_player();
 
 };
 

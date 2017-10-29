@@ -67,7 +67,38 @@ void GStateContinue::load ()
 {
 	Log(DEBUG) << "Loading Continue Screen...";
 	
-	if ( Game::instance().get_saves().is_saved( SLOT_1 ) )
+	continue_slot1();
+
+	continue_slot2();
+
+	continue_slot3();	
+
+	load_lua_script();	
+
+	Game::instance().get_fade().fade_out ( 0, 0.002);
+}
+
+void GStateContinue::load_lua_script()
+{
+  LuaScript luaMenu( "lua/Continue.lua" );
+
+	//Declaring constant as path to receive background image
+	const std::string PATH_BACKGROUND = luaMenu.unlua_get<std::string>( "continue.images.background" );
+
+	this -> background = Game::instance().getResources().get( PATH_BACKGROUND );
+
+	//Declaring constant as path to receive background image
+	const std::string PATH_SELECTOR = luaMenu.unlua_get<std::string>( "continue.images.selector" );
+	this -> selector = Game::instance().getResources().get( PATH_SELECTOR );
+	
+	this -> selector -> setWidth ( 410 );
+	this -> selector -> setHeight ( 102 );
+	this -> current_selection = Selection::SLOT_1;
+}
+
+void GStateContinue::continue_slot1()
+{
+if ( Game::instance().get_saves().is_saved( SLOT_1 ) )
   {	
   	assert( SLOT_1 >= 1 || SLOT_1 <= 6);
 		//Load level 2 if it was saved in slot 1
@@ -87,8 +118,11 @@ void GStateContinue::load ()
     {
 		  this -> slot1 -> changeText( "Empty Slot" );
 	  }
+}
 
-	if ( Game::instance().get_saves().is_saved( SLOT_2 ) )
+void GStateContinue::continue_slot2()
+{
+  if ( Game::instance().get_saves().is_saved( SLOT_2 ) )
   {
   	assert( SLOT_2 >= 1 || SLOT_2 <= 6);
 		//Load level 2 if it was saved in slot 2
@@ -109,8 +143,11 @@ void GStateContinue::load ()
     {
 		  this -> slot2 -> changeText( "Empty Slot" );
 	  }
+}
 
-	if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
+void GStateContinue::continue_slot3()
+{
+if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
   {	
   	assert( SLOT_3 >= 1 || SLOT_3 <= 6);
 		//Load level 2 if it was saved in slot 3
@@ -130,23 +167,6 @@ void GStateContinue::load ()
     {
 		  this -> slot3 -> changeText( "Empty Slot" );
 	  }
-
-	LuaScript luaMenu( "lua/Continue.lua" );
-
-	//Declaring constant as path to receive background image
-	const std::string PATH_BACKGROUND = luaMenu.unlua_get<std::string>( "continue.images.background" );
-
-	this -> background = Game::instance().getResources().get( PATH_BACKGROUND );
-
-	//Declaring constant as path to receive background image
-	const std::string PATH_SELECTOR = luaMenu.unlua_get<std::string>( "continue.images.selector" );
-	this -> selector = Game::instance().getResources().get( PATH_SELECTOR );
-	
-	this -> selector -> setWidth ( 410 );
-	this -> selector -> setHeight ( 102 );
-	this -> current_selection = Selection::SLOT_1;
-
-	Game::instance().get_fade().fade_out ( 0, 0.002);
 }
 
 /**
@@ -185,7 +205,8 @@ void GStateContinue::update ( const double DELTA_TIME )
 * Always renders on 0,0 position.
 * @see Sprite::render
 */
-void GStateContinue::render(){
+void GStateContinue::render()
+{
 
 	if ( this -> background != nullptr )
   {

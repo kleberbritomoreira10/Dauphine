@@ -41,6 +41,16 @@ class GStateContinue : public StateGame
 		*/
 		virtual void unload ();
 
+		virtual void continue_slot1();
+
+		virtual void continue_slot2();
+
+		virtual void continue_slot3();
+
+		virtual void load_lua_script();
+
+		//virtual void selection_slot1();
+
 		/**
 		* Renders the state.
 		* Always renders on 0,0 position.

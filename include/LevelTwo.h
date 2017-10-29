@@ -3,6 +3,7 @@
 
 #include "Level.h"
 #include "Sprite.h"
+#include "CollisionRect.h"
 
 #define NUMBER_ITEMS 4
 
@@ -30,7 +31,23 @@ class LevelTwo : public Level
 		* From the Level1.lua script, loads all the necessary objects.
 		*/
 		virtual void load ();
-		
+
+		virtual Player* create_player();
+
+		virtual void load_enemy ();
+
+		virtual void save();
+
+		virtual void document_check();
+
+		virtual void update_collision();
+
+		virtual void update_potion();
+
+		virtual void update_number_potion();
+
+		virtual std::vector<CollisionRect> update_entity (std::vector<CollisionRect> return_objects, const double DELTA_TIME);
+
 		/**
 		* Updates the objects within the Level.
 		* @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.

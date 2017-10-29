@@ -56,26 +56,44 @@ void LevelTwo::load ()
   this -> quadTree = new QuadTree ( 0, bounds );
 
   this -> background = Game::instance (). getResources ().get ( "res/images/lv1_background.png" );
-  for( int i = 0; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
+  for ( int i = 0; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
   {
     this -> checkpoints.push_back ( Game::instance ().getResources ().get ( "res/images/checkpoint.png" ) );
   }
   this -> image = Game::instance ().getResources ().get ( "res/images/potion.png" );
 
-  // Getting information from lua script.
-  LuaScript luaLevel1 ( "lua/Level1.lua" );
-  const std::string PATH_PLAYER_SPRITE_SHEET = luaLevel1.unlua_get<std::string> (
-    "level.player.spriteSheet" );
-
-  // Alert!: in variable PATH_BACKGROUND_AUDIO is assigned a value is never used.
-  const std::string PATH_BACKGROUND_AUDIO = luaLevel1.unlua_get<std::string> (
-    "level.audio.background" );
-  const std::string PATH_ENEMY = luaLevel1.unlua_get<std::string> ( "level.enemy" );
-
   // Changing the music.
   // Game::instance().get_audio_handler().change_music(PATH_BACKGROUND_AUDIO);
 
   Player *level_player = nullptr;  // Loading the player.
+
+  level_player = create_player();
+
+  assert( level_player != nullptr );
+  this -> player_Hud = new PlayerHUD ( level_player );
+
+  load_enemy();
+
+  // Finally, setting the player and the camera.
+  set_player ( level_player );
+  Enemy::points_life = this -> player -> life;
+
+  Camera *level_camera = new Camera ( level_player ); // Loading the camera.
+  set_camera ( level_camera );
+  assert( level_camera != nullptr );
+
+  Game::instance().get_fade().fade_out ( 0, 0.002 );
+}
+
+Player *LevelTwo::create_player()
+{
+  Player *level_player = nullptr;  // Loading the player.
+
+  LuaScript luaLevel1 ( "lua/Level1.lua" );
+  const std::string PATH_PLAYER_SPRITE_SHEET = luaLevel1.unlua_get<std::string> (
+    "level.player.spriteSheet" );
+  const std::string PATH_BACKGROUND_AUDIO = luaLevel1.unlua_get<std::string> (
+    "level.audio.background" );
 
   if ( Game::instance ().get_saves ().is_saved ( Game::instance ().current_slot ) 
       && Game::instance ().get_saves ().get_saved_level ( Game::instance ().current_slot ) == 2 )
@@ -91,10 +109,17 @@ void LevelTwo::load ()
       level_player = new Player ( this -> tile_map -> get_initial_x (), this -> tile_map -> get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
     }
 
-  assert( level_player != nullptr );
-  this -> player_Hud = new PlayerHUD ( level_player );
+  return level_player;    
+}
 
+void LevelTwo::load_enemy()
+{ 
+  // Getting information from lua script.
+  LuaScript luaLevel1 ( "lua/Level1.lua" );
+  
+  const std::string PATH_ENEMY = luaLevel1.unlua_get<std::string> ( "level.enemy" );
   // Load all the enemies from the tile_map.
+  
   for ( unsigned int i = 0; i < this -> tile_map->get_enemies_x().size(); i++ )
   {
     Enemy *enemy = new Enemy ( this -> tile_map -> get_enemies_x().at( i ) ,
@@ -120,16 +145,6 @@ void LevelTwo::load ()
     assert( width > 0 || height > 0);
     this -> enemies.push_back ( enemy );
   }
-
-  // Finally, setting the player and the camera.
-  set_player ( level_player );
-  Enemy::points_life = this -> player -> life;
-
-  Camera *level_camera = new Camera ( level_player ); // Loading the camera.
-  set_camera ( level_camera );
-  assert( level_camera != nullptr );
-
-  Game::instance().get_fade().fade_out ( 0, 0.002 );
 }
 
 /**
@@ -162,15 +177,9 @@ void LevelTwo::update ( const double DELTA_TIME )
   // Populating the QuadTree.
   this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 
-  // Updating the entities, using the QuadTree.
   std::vector<CollisionRect> return_objects;
-  for ( auto entity : this -> entities )
-  {
-    return_objects.clear ();
-    this->quadTree -> retrieve ( return_objects, entity -> get_bounding_box () );
-    entity -> setCollisionRects ( return_objects );
-    entity -> update( DELTA_TIME );
-  }
+
+  return_objects = update_entity (return_objects, DELTA_TIME);
 
   // Updating the enemies.
   for ( auto enemy : this -> enemies )
@@ -205,19 +214,7 @@ void LevelTwo::update ( const double DELTA_TIME )
   Enemy::py = this -> player -> y;
   Enemy::position_vulnerable = this -> player -> is_vulnerable;
 
-  //update number of potions where limit of number itens = 4 for level two. 
-  for ( int i = 0; i < NUMBER_ITEMS; ++i )
-  { 
-    if ( Collision::rects_collided ( this -> player -> get_bounding_box (), 
-      {items [ 0 ] [ i ], items [ 1 ] [ i ], 192, 192}) && caught_items [ i ] == false )
-    {
-      this -> player -> addPotions(3);
-      caught_items [ i ] =true;
-    } else
-      {
-        //No action
-      }
-  }
+  update_number_potion();
 
   if ( this -> player -> life != Enemy::points_life )
   {
@@ -250,7 +247,36 @@ void LevelTwo::update ( const double DELTA_TIME )
       //No action
     }
 
-  // Updating the potion/enemy collision.
+  update_potion();   
+  
+  update_collision();
+
+  save();
+
+  document_check();  
+
+}
+
+void LevelTwo::update_number_potion()
+{
+//update number of potions where limit of number itens = 4 for level two. 
+  for ( int i = 0; i < NUMBER_ITEMS; ++i )
+  { 
+    if ( Collision::rects_collided ( this -> player -> get_bounding_box (), 
+      {items [ 0 ] [ i ], items [ 1 ] [ i ], 192, 192}) && caught_items [ i ] == false )
+    {
+      this -> player -> addPotions(3);
+      caught_items [ i ] =true;
+    } else
+      {
+        //No action
+      }
+  }
+}
+
+void LevelTwo::update_potion()
+{
+// Updating the potion/enemy collision.
   for ( auto potion : this -> player -> potions )
   {
     for ( auto enemy : this -> enemies )
@@ -286,7 +312,10 @@ void LevelTwo::update ( const double DELTA_TIME )
         }
     }
   }
+}
 
+void LevelTwo::update_collision()
+{
   // Updating the player attack/enemy collision.
   for ( auto enemy : this -> enemies )
   {
@@ -326,7 +355,26 @@ void LevelTwo::update ( const double DELTA_TIME )
       }
   }
 
-  //Saving the game state
+}
+
+void LevelTwo::document_check()
+{
+  // Documents check
+  for ( auto document : this -> documents )
+  {
+    if ( Collision::rects_collided ( this -> player -> get_bounding_box (), document -> get_bounding_box () ) )
+    {
+      document -> should_render = true;
+    } else
+      {
+        document -> should_render = false;
+      }
+  }
+}
+
+void LevelTwo::save()
+{
+//Saving the game state
   for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
   {
     if ( !this -> checkpoints_visited [ j ] && this -> player -> get_bounding_box().x >= checkpoints_X [ j ] 
@@ -342,18 +390,21 @@ void LevelTwo::update ( const double DELTA_TIME )
         // No action
       }
   }
+}
 
-  // Documents check
-  for ( auto document : this -> documents )
+std::vector<CollisionRect> LevelTwo::update_entity (std::vector<CollisionRect> return_objects, const double DELTA_TIME)
+{ 
+  // Updating the entities, using the QuadTree.
+  
+  for ( auto entity : this -> entities )
   {
-    if ( Collision::rects_collided ( this -> player -> get_bounding_box (), document -> get_bounding_box () ) )
-    {
-      document -> should_render = true;
-    } else
-      {
-        document -> should_render = false;
-      }
+    return_objects.clear ();
+    this->quadTree -> retrieve ( return_objects, entity -> get_bounding_box () );
+    entity -> setCollisionRects ( return_objects );
+    entity -> update( DELTA_TIME );
   }
+
+  return return_objects;
 }
 
 /**

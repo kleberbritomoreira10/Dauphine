@@ -36,6 +36,11 @@ class LevelOne : public Level
 		* From the Level1.lua script, loads all the necessary objects.
 		*/
 		virtual void load ();
+		virtual void loadTilemap ();
+		virtual void loadWidthHeight ();
+		virtual void loadCheckpoints ();
+		virtual void loadPlayer ();
+		virtual void loadEnemies ();
 
 		/**
 		* Updates the objects from phase 1.
@@ -62,6 +67,9 @@ class LevelOne : public Level
 		* Always renders on 0,0 position.
 		* @see Sprite::render()
 		*/
+		virtual void renderTileMap ();
+		virtual void renderEntities ();
+		virtual void renderDocuments ();
 		virtual void render ();
 
 		Sprite *image; // the image attributed to the Sprite

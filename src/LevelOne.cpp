@@ -39,14 +39,13 @@ LevelOne::~LevelOne ()
 * Loads the level.
 * From the Level1.lua script, loads all the necessary objects.
 */
-void LevelOne::load ()
-{
-	Log ( DEBUG ) << "Loading level 1...";
 
+void LevelOne::loadTilemap(){
 	// Loading the tile/tilemap.
 	this -> tile_map = new TileMap ( "res/maps/level1.tmx" );
 	assert( this-> tile_map != nullptr);
-
+}
+void LevelOne::loadWidthHeight(){
 	// Setting the level width/height.
 	this -> width = this -> tile_map -> getMapWidth ();
 
@@ -62,61 +61,69 @@ void LevelOne::load ()
 
 	this -> backgroud_top = Game::instance (). getResources (). get (
 	 "res/images/lv1_parallax_top.png" );
+}
 
-	 // Load the number of checkpoints achieved
-	for ( int i = 0; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
-	{
+void LevelOne::loadCheckpoints(){
+	// Load the number of checkpoints achieved
+ for ( int i = 0; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
+ {
 
-		this -> checkpoints.push_back ( Game::instance (). getResources (). get (
-		 "res/images/checkpoint.png" ));
+	 this -> checkpoints.push_back ( Game::instance (). getResources (). get (
+		"res/images/checkpoint.png" ));
 
-	}
+ }
+}
 
+void LevelOne::loadPlayer(){
 	// Getting information from lua script.
 	LuaScript luaLevel1 ( "lua/Level1.lua" );
 
 	const std::string PATH_PLAYER_SPRITE_SHEET = luaLevel1.unlua_get <std::string> (
 		"level.player.spriteSheet" );
 
-	const std::string PATH_BACKGROUND_AUDIO = luaLevel1.unlua_get <std::string> (
-		"level.audio.background" );
+		// Loading the player and the camera.
 
+		Player *level_player = nullptr;
+
+		if ( Game::instance (). get_saves (). is_saved ( Game::instance (). current_slot )
+		 && Game::instance (). get_saves (). get_saved_level ( Game::instance (). current_slot ) == 1 )
+		{
+
+			double saved_x_position = 0.0;
+			double saved_y_position = 0.0;
+
+			Game::instance (). get_saves (). get_player_position ( saved_x_position, saved_y_position,
+			Game::instance ().current_slot );
+
+			level_player = new Player ( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
+		}else
+		{
+			level_player = new Player ( this -> tile_map -> get_initial_x (), this -> tile_map ->
+				get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
+		}
+		Camera *level_camera = new Camera ( level_player );
+		// Loading the refill of potion.
+		this -> image = Game::instance (). getResources (). get( "res/images/potion.png" );
+		assert(this -> image != nullptr);
+
+		this -> player_Hud = new PlayerHUD( level_player );
+		assert(this -> player_Hud != nullptr);
+
+		// Finally, setting the player and the camera.
+		set_player ( level_player );
+
+		Enemy::points_life = this -> player -> life;
+
+		set_camera ( level_camera );
+
+		Game::instance (). get_fade (). fade_out ( 0, 0.002 );
+}
+
+void LevelOne::loadEnemies()
+{
+	// Getting information from lua script.
+	LuaScript luaLevel1 ( "lua/Level1.lua" );
 	const std::string PATH_ENEMY = luaLevel1.unlua_get <std::string> ( "level.enemy" );
-
-
-	// Changing the music.
-	Game::instance (). get_audio_handler (). change_music ( PATH_BACKGROUND_AUDIO );
-
-	// Loading the player and the camera.
-
-	Player *level_player = nullptr;
-
-	if ( Game::instance (). get_saves (). is_saved ( Game::instance (). current_slot )
-	 && Game::instance (). get_saves (). get_saved_level ( Game::instance (). current_slot ) == 1 )
-	{
-
-		double saved_x_position = 0.0;
-		double saved_y_position = 0.0;
-
-		Game::instance (). get_saves (). get_player_position ( saved_x_position, saved_y_position,
-		Game::instance ().current_slot );
-
-		level_player = new Player ( saved_x_position, saved_y_position, PATH_PLAYER_SPRITE_SHEET );
-	}else
-	{
-		level_player = new Player ( this -> tile_map -> get_initial_x (), this -> tile_map ->
-			get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
-	}
-
-	Camera *level_camera = new Camera ( level_player );
-
-	// Loading the refill of potion.
-	this -> image = Game::instance (). getResources (). get( "res/images/potion.png" );
-	assert(this -> image != nullptr);
-
-	this -> player_Hud = new PlayerHUD( level_player );
-	assert(this -> player_Hud != nullptr);
-
 	// Load all the enemies from the tile_map.
 	for ( unsigned int i = 0; i < this -> tile_map -> get_enemies_x (). size (); i++ )
 	{
@@ -144,15 +151,28 @@ void LevelOne::load ()
 		this -> enemies. push_back ( enemy );
 
 	}
+}
+void LevelOne::load ()
+{
+	Log ( DEBUG ) << "Loading level 1...";
 
-	// Finally, setting the player and the camera.
-	set_player ( level_player );
+	loadTilemap ();
+	loadWidthHeight ();
+	loadCheckpoints ();
 
-	Enemy::points_life = this -> player -> life;
 
-	set_camera ( level_camera );
+	// Getting information from lua script.
+	LuaScript luaLevel1 ( "lua/Level1.lua" );
 
-	Game::instance (). get_fade (). fade_out ( 0, 0.002 );
+	const std::string PATH_BACKGROUND_AUDIO = luaLevel1.unlua_get <std::string> (
+		"level.audio.background" );
+
+	// Changing the music.
+	Game::instance (). get_audio_handler (). change_music ( PATH_BACKGROUND_AUDIO );
+
+	loadPlayer();
+
+	loadEnemies();
 }
 
 // Unloads everything that was loaded.
@@ -466,13 +486,8 @@ void LevelOne::update ( const double DELTA_TIME )
 	updateDocuments();
 }
 
-/*
-Renders the level.
-Always renders on 0,0 position.
-*/
-void LevelOne::render ()
+void LevelOne::renderTileMap ( )
 {
-
 	const int CAMERA_X = this -> camera -> getClip (). x;
 	const int CAMERA_Y = this -> camera -> getClip (). y;
 
@@ -496,6 +511,12 @@ void LevelOne::render ()
 	{
 		enemy -> render ( CAMERA_X, CAMERA_Y );
 	}
+}
+
+void LevelOne::renderEntities ( )
+{
+	const int CAMERA_X = this -> camera -> getClip (). x;
+	const int CAMERA_Y = this -> camera -> getClip (). y;
 
 	// Render all the entities in the list.
 	for ( auto entity : this -> entities )
@@ -517,6 +538,13 @@ void LevelOne::render ()
 		}
 	}
 
+}
+
+void LevelOne::renderDocuments( )
+{
+	const int CAMERA_X = this -> camera -> getClip (). x;
+	const int CAMERA_Y = this -> camera -> getClip (). y;
+
 	// Render the document text
 	for ( auto document : this -> documents )
 	{
@@ -530,5 +558,19 @@ void LevelOne::render ()
 			// Do nothing .
 		}
 	}
+}
+
+/*
+Renders the level.
+Always renders on 0,0 position.
+*/
+void LevelOne::render ()
+{
+
+	renderTileMap();
+
+	renderEntities();
+
+	renderDocuments();
 
 }

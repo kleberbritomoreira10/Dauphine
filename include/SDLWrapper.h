@@ -34,6 +34,14 @@ class SDLWrapper
 		*/
 		static void close ();
 
+		static bool SDL_TTF(SDL_version compiled);
+
+		static bool SUCCESS_SDL(SDL_version compiled);
+
+		static bool SDL_success_image(SDL_version compiled);
+
+		static bool SDL_mixer(SDL_version compiled);
+
 	private:
 		/**
 		* Logs the SDL API version.

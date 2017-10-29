@@ -50,8 +50,16 @@ GStateOptions::GStateOptions() :
 * The destructor.
 */
 GStateOptions::~GStateOptions()
-{
+{	
+	delete_resolution();
 
+	delete_music_volume_text();
+
+	delete_sfx_volume_text();
+}
+
+void GStateOptions::delete_resolution()
+{
 	if( this -> resolution != nullptr )
 	{
 		delete this -> resolution;
@@ -61,7 +69,10 @@ GStateOptions::~GStateOptions()
 	{
 		// No action.
 	}
+}
 
+void GStateOptions::delete_music_volume_text()
+{
 	if( this -> music_volume_text != nullptr )
 	{
 		delete this -> music_volume_text;
@@ -71,7 +82,10 @@ GStateOptions::~GStateOptions()
 	{
 		// No action.
 	}
+}
 
+void GStateOptions::delete_sfx_volume_text()
+{
 	if( this -> sfx_volume_text != nullptr )
 	{
 		delete this -> sfx_volume_text;
@@ -112,133 +126,23 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	if( keyStates[ GameKeys::DOWN ] == true )
 	{
-		if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
-		{
-			if( this -> current_option == ( OPTIONS_TOTAL - 1 ) )
-			{
-				this -> current_option = OPTIONS_RESOLUTION;
-			}
-			else
-			{
-				this -> current_option++;
-			}
 
-			this -> elapsedTime = 0.0;
+		handle_current_option_down_key( SELECTOR_DELAY_TIME );
 
-		}else
-		{
-			// No action.
-		}
 	}else if( keyStates[ GameKeys::UP ] == true )
 	{
-		if( this -> elapsedTime >= SELECTOR_DELAY_TIME)
-		{
-			if( this -> current_option == OPTIONS_RESOLUTION )
-			{
-				this -> current_option = ( OPTIONS_TOTAL - 1 );
-			}
-			else
-			{
-				this -> current_option--;
-			}
 
-			this -> elapsedTime = 0.0;
-
-		}else
-		{
-			// No action.
-		}
+		handle_current_option_up_key( SELECTOR_DELAY_TIME );
 
 	}else if( keyStates[ GameKeys::LEFT ] == true)
 	{
-		if( this->elapsedTime >= SELECTOR_DELAY_TIME )
-		{
-			// Option == Resolution
-			if( this -> current_option == OPTIONS_RESOLUTION )
-			{
-				if( this -> current_resolution == RESOLUTION_800_600 )
-				{
-					this -> current_resolution = ( RESOLUTION_TOTAL - 1 );
-				}
-				else
-				{
-					this -> current_resolution--;
-				}
 
-			}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
-			{
-				if( this -> music_volume > 0 )
-				{
-					this -> music_volume -= 5;
-
-				}else
-				{
-					//No action.
-				}
-
-			}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
-			{
-				if( this -> sfx_volume > 0)
-				{
-					this -> sfx_volume -= 5;
-
-				}else
-				{
-					// No action.
-				}
-			}else
-			{
-				// No action.
-			}
-
-			this -> elapsedTime = 0.0;
-		}
+		handle_current_option_left_key( SELECTOR_DELAY_TIME );
 
 	}else if( keyStates[ GameKeys::RIGHT ] == true )
 	{
-		if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
-		{
-			// Option == Resolution
-			if( this -> current_option == OPTIONS_RESOLUTION )
-			{
-				if( this -> current_resolution == ( RESOLUTION_TOTAL - 1 ) )
-				{
-					this -> current_resolution = RESOLUTION_800_600;
-				}
-				else
-				{
-					this -> current_resolution++;
-				}
 
-			}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
-			{
-				if( this -> music_volume < 100 )
-				{
-					this -> music_volume += 5;
-
-				}else
-				{
-					// No action.
-				}
-
-			}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
-			{
-				if( this -> sfx_volume < 100 )
-				{
-					this -> sfx_volume += 5;
-
-				}else
-				{
-					// No action.
-				}
-
-			}else
-			{
-				// Condition not implemented
-			}
-
-			this -> elapsedTime = 0.0;
-		}
+		handle_current_option_right_key( SELECTOR_DELAY_TIME );
 
 	}else if( keyStates[ GameKeys::SPACE ] == true && this -> current_option == OPTIONS_APPLY )
 	{
@@ -254,10 +158,158 @@ void GStateOptions::update( const double DELTA_TIME )
 	}
 }
 
+
+void GStateOptions::handle_current_option_down_key( const double SELECTOR_DELAY_TIME )
+{
+	if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
+	{
+		if( this -> current_option == ( OPTIONS_TOTAL - 1 ) )
+		{
+			this -> current_option = OPTIONS_RESOLUTION;
+		}
+		else
+		{
+			this -> current_option++;
+		}
+
+		this -> elapsedTime = 0.0;
+
+	}else
+	{
+		// No action.
+	}
+}
+
+void GStateOptions::handle_current_option_up_key( const double SELECTOR_DELAY_TIME )
+{
+	if( this -> elapsedTime >= SELECTOR_DELAY_TIME)
+	{
+		if( this -> current_option == OPTIONS_RESOLUTION )
+		{
+			this -> current_option = ( OPTIONS_TOTAL - 1 );
+
+		}else
+		{
+			this -> current_option--;
+		}
+
+		this -> elapsedTime = 0.0;
+
+	}else
+	{
+		// No action.
+	}
+}
+
+void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_TIME )
+{
+	if( this->elapsedTime >= SELECTOR_DELAY_TIME )
+	{
+		// Option == Resolution
+		if( this -> current_option == OPTIONS_RESOLUTION )
+		{
+			if( this -> current_resolution == RESOLUTION_800_600 )
+			{
+				this -> current_resolution = ( RESOLUTION_TOTAL - 1 );
+			}
+			else
+			{
+				this -> current_resolution--;
+			}
+
+		}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
+		{
+			if( this -> music_volume > 0 )
+			{
+				this -> music_volume -= 5;
+
+			}else
+			{
+				//No action.
+			}
+
+		}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
+		{
+			if( this -> sfx_volume > 0)
+			{
+				this -> sfx_volume -= 5;
+
+			}else
+			{
+				// No action.
+			}
+		}else
+		{
+			// No action.
+		}
+
+		this -> elapsedTime = 0.0;
+	}
+}
+
+void GStateOptions::handle_current_option_right_key( const double SELECTOR_DELAY_TIME )
+{
+	if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
+	{
+		// Option == Resolution
+		if( this -> current_option == OPTIONS_RESOLUTION )
+		{
+			if( this -> current_resolution == ( RESOLUTION_TOTAL - 1 ) )
+			{
+				this -> current_resolution = RESOLUTION_800_600;
+			}
+			else
+			{
+				this -> current_resolution++;
+			}
+
+		}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
+		{
+			if( this -> music_volume < 100 )
+			{
+				this -> music_volume += 5;
+
+			}else
+			{
+				// No action.
+			}
+
+		}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
+		{
+			if( this -> sfx_volume < 100 )
+			{
+				this -> sfx_volume += 5;
+
+			}else
+			{
+				// No action.
+			}
+
+		}else
+		{
+			// Condition not implemented
+		}
+
+		this -> elapsedTime = 0.0;
+	}
+}
+
 /**
 * Showing the options of the game.
 */
 void GStateOptions::render()
+{
+	render_options_image();
+
+	this -> resolution -> render( 0, 0 );
+	this -> music_volume_text -> render( 0, 0 );
+	this -> sfx_volume_text -> render( 0, 0 );
+
+	render_selector();
+
+}
+
+void GStateOptions::render_options_image()
 {
 	if( this -> options_image != nullptr )
 	{
@@ -267,23 +319,22 @@ void GStateOptions::render()
 	{
 		Log( WARN ) << "No image set for the options screen!";
 	}
+}
 
-	this -> resolution -> render( 0, 0 );
-	this -> music_volume_text -> render( 0, 0 );
-	this -> sfx_volume_text -> render( 0, 0 );
+void GStateOptions::render_selector()
+{
+		if( this -> selector != nullptr )
+		{
+			this -> selector -> render( selector_X_position_left[ current_option ],
+				selector_Y_position_left[ current_option ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 
-	if( this -> selector != nullptr )
-	{
-		this -> selector -> render( selector_X_position_left[ current_option ],
-			selector_Y_position_left[ current_option ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
-
-		this -> selector -> render( selector_X_position_right[ current_option ],
-			selector_Y_position_right[ current_option ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
-	}
-	else
-	{
-		Log( WARN ) << "No image set for the selector.";
-	}
+			this -> selector -> render( selector_X_position_right[ current_option ],
+				selector_Y_position_right[ current_option ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
+		}
+		else
+		{
+			Log( WARN ) << "No image set for the selector.";
+		}
 
 }
 
@@ -349,6 +400,11 @@ void GStateOptions::applyOptions()
 		// No action.
 	}
 
+	apply_volume();
+}
+
+void GStateOptions::apply_volume()
+{
 	// Apply volume music
 	Game::instance().get_audio_handler().setMusicVolume( this -> music_volume );
 

@@ -46,6 +46,14 @@ class PlayerHUD
 		*/
 		void render ();
 
+		void restart_hud_sprites();
+
+		void restart_is_can_render_hud();
+
+		void render_hud_sprites();
+
+		void render_potions_left();
+
 	private:
 		enum HUD_Elements : uint8_t
 		{

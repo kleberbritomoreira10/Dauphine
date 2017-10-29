@@ -51,6 +51,26 @@ class GStateOptions : public StateGame
 		*/
 		virtual void render ();
 
+		void delete_resolution();
+
+		void delete_music_volume_text();
+
+		void delete_sfx_volume_text();
+
+		void handle_current_option_down_key( const double SELECTOR_DELAY_TIME );
+
+		void handle_current_option_up_key( const double SELECTOR_DELAY_TIME );
+
+		void handle_current_option_left_key( const double SELECTOR_DELAY_TIME );
+
+		void handle_current_option_right_key( const double SELECTOR_DELAY_TIME );
+
+		void render_options_image();
+
+		void render_selector();
+
+		void apply_volume();
+
 	private:
 		void applyOptions ();
 

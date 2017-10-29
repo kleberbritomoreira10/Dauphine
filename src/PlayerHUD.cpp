@@ -12,18 +12,36 @@ PlayerHUD::PlayerHUD( Player *const player_ ):
 
 	assert( player_ );
 
+	// for( unsigned int i = 0; i < TOTAL_HUD; i++ )
+	// {
+	// 	this -> player_hud_sprites[ i ] = nullptr;
+	// }
+	restart_hud_sprites();
+
+	initializeSprites();
+
+	// for( int i = 0; i < TOTAL_HUD; i++ )
+	// {
+	// 	this -> is_can_render_hud[ i ] = true;
+	// }
+	restart_is_can_render_hud();
+
+}
+
+void PlayerHUD::restart_hud_sprites()
+{
 	for( unsigned int i = 0; i < TOTAL_HUD; i++ )
 	{
 		this -> player_hud_sprites[ i ] = nullptr;
 	}
+}
 
-	initializeSprites();
-
+void PlayerHUD::restart_is_can_render_hud()
+{
 	for( int i = 0; i < TOTAL_HUD; i++ )
 	{
 		this -> is_can_render_hud[ i ] = true;
 	}
-
 }
 
 PlayerHUD::~PlayerHUD()
@@ -66,10 +84,36 @@ void PlayerHUD::update()
 		}
 
 		this -> potions_left -> changeText( ( "Potions: " + Util::toString( this -> player -> potions_left ) ).c_str() );
-	
+
 }
 
 void PlayerHUD::render()
+{
+	// for( int i = 0; i < TOTAL_HUD; i++)
+	// {
+	// 	if( this -> is_can_render_hud[ i ])
+	// 	{
+	// 		this -> player_hud_sprites[ i ] -> render( 0, 0 );
+	//
+	// 	}else
+	// 	{
+	// 		// No action.
+	// 	}
+	// }
+	render_hud_sprites();
+
+	// if( this -> potions_left != nullptr)
+	// {
+	// 	this -> potions_left -> render( 0, 0 );
+	//
+	// }else
+	// {
+	// 	Log( WARN ) << "Potions left HUD text is null";
+	// }
+	render_potions_left();
+}
+
+void PlayerHUD::render_hud_sprites()
 {
 	for( int i = 0; i < TOTAL_HUD; i++)
 	{
@@ -82,7 +126,10 @@ void PlayerHUD::render()
 			// No action.
 		}
 	}
+}
 
+void PlayerHUD::render_potions_left()
+{
 	if( this -> potions_left != nullptr)
 	{
 		this -> potions_left -> render( 0, 0 );

@@ -30,15 +30,19 @@ void PStateClimbing::enter()
 
     this -> player -> velocity_y_axis = 0;
 
-    if( !this -> player -> is_right )
-    {
-			this -> player -> velocity_x_axis = -0.001;
+		handle_velocity_x_axis();
+}
 
-		}else
-		{
-			this -> player -> velocity_x_axis = 0.0;
-		}
+void PStateClimbing::handle_velocity_x_axis()
+{
+	if( !this -> player -> is_right )
+	{
+		this -> player -> velocity_x_axis = -0.001;
 
+	}else
+	{
+		this -> player -> velocity_x_axis = 0.0;
+	}
 }
 
 /**
@@ -55,24 +59,7 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 
 	this -> player -> moveVertical( keyStates_[GameKeys::UP], keyStates_[ GameKeys::DOWN ]);
 
-	if( abs( this -> player -> velocity_y_axis ) < 1 )
-	{
-		this -> player -> getAnimation() -> changeAnimation( this -> player -> getAnimation() -> getCurrentFrame() - 1,
-			6, 1, false, 0 );
-			is_moving = true;
-
-	}else
-	{
-		if( is_moving )
-		{
-			this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
-			is_moving = false;
-
-		}else
-		{
-			// No action.
-		}
-	}
+	handle_climbing_animation();
 
 	// Jump
 	if( keyStates_[ GameKeys::SPACE ] )
@@ -102,6 +89,25 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 	{
 		// No action.
 	}
+}
+
+void PStateClimbing::handle_climbing_animation()
+{
+	if( abs( this -> player -> velocity_y_axis ) < 1 )
+	{
+		this -> player -> getAnimation() -> changeAnimation( this -> player -> getAnimation() -> getCurrentFrame() - 1,
+			6, 1, false, 0 );
+			is_moving = true;
+
+	}else	if( is_moving )
+				{
+					this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
+					is_moving = false;
+
+				}else
+				{
+					// No action.
+				}
 }
 
 /**

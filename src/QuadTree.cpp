@@ -86,9 +86,10 @@ void QuadTree::split()
 int QuadTree::getIndex( SDL_Rect rect_ )
 {
 
-	int index = -1;
+	// int index = -1;
+	int result_index = -1;
 	double vertical_mid_point = this -> bounds.x + ( this -> bounds.w / 2 );
-	double horizontal_mid_point = this -> bounds.y + ( this->bounds.h / 2 );
+	double horizontal_mid_point = this -> bounds.y + ( this -> bounds.h / 2 );
 
 	assert( vertical_mid_point > 0 && horizontal_mid_point > 0 );
 
@@ -101,37 +102,75 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 	// Object can completely fit within the left quadrants
 	if( rect_.x < vertical_mid_point && rect_.x + rect_.w < vertical_mid_point )
 	{
-		if( top_quadrant )
-		{
-			index = 1;
-
-		}else if ( bottom_quadrant )
-		{
-			index = 2;
-		}
+		// if( top_quadrant )
+		// {
+		// 	index = 1;
+		//
+		// }else if ( bottom_quadrant )
+		// {
+		// 	index = 2;
+		// }
+		result_index = handle_index_left_quadrants( top_quadrant, bottom_quadrant );
 
 	}else if ( rect_.x > vertical_mid_point ) // Object can completely fit within the right quadrants
 	{
-		if (top_quadrant)
-		{
-			index = 0;
-		}
-		else if ( bottom_quadrant )
-		{
-			index = 3;
-		}
+		// if (top_quadrant)
+		// {
+		// 	index = 0;
+		// }
+		// else if ( bottom_quadrant )
+		// {
+		// 	index = 3;
+		// }
+		result_index = handle_index_right_quadrants( top_quadrant, bottom_quadrant );
 
 	}else
 	{
 		// No action.
 	}
 
-	return index;
+	return result_index;
+}
+
+int QuadTree::handle_index_left_quadrants( bool top_quadrant, bool bottom_quadrant )
+{
+	int index = -1;
+
+	if( top_quadrant )
+	{
+		return index = 1;
+
+	}else if ( bottom_quadrant )
+	{
+		return index = 2;
+
+	}else
+	{
+		return index;
+	}
+}
+
+int QuadTree::handle_index_right_quadrants( bool top_quadrant, bool bottom_quadrant )
+{
+	int index = -1;
+
+	if (top_quadrant)
+	{
+		return index = 0;
+	}
+	else if ( bottom_quadrant )
+	{
+		return index = 3;
+
+	}else
+	{
+		return index;
+	}
 }
 
 /**
 * Managing the insertion for colisions objects of the Quad Tree on the game.
-* @param rect_: object used for manage the postions in the axys.
+* @param rect_: object used for manage the positions in the axys.
 */
 void QuadTree::insert( CollisionRect rect_ ){
 
@@ -156,7 +195,8 @@ void QuadTree::insert( CollisionRect rect_ ){
 
 	this -> objects.push_back( rect_ );
 
-	if((int)this -> objects.size() > this -> max_number_of_quadtree_objects && level < this->max_number_of_quadtree_objects )
+	if((int)this -> objects.size() > this -> max_number_of_quadtree_objects &&
+		level < this->max_number_of_quadtree_objects )
 	{
 		if( nodes[ 0 ] == nullptr )
 		{
@@ -166,24 +206,30 @@ void QuadTree::insert( CollisionRect rect_ ){
 			// No action.
 		}
 
-		int i = 0;
-		while( i < ( int ) this -> objects.size())
-		{
-			int index = getIndex( this->objects.at(i).rect );
-			if( index != -1 )
-			{
-				CollisionRect move_rect = this -> objects.at( i );
-				this -> objects.erase( this -> objects.begin() + i );
-				nodes[ index ] -> insert( move_rect );
+		insert_all_objects();
 
-			}else
-			{
-				i++;
-			}
-		}
 	}else
 	{
 		// No action.
+	}
+}
+
+void QuadTree::insert_all_objects()
+{
+	int i = 0;
+	while( i < ( int ) this -> objects.size())
+	{
+		int index = getIndex( this -> objects.at( i ).rect );
+		if( index != -1 )
+		{
+			CollisionRect move_rect = this -> objects.at( i );
+			this -> objects.erase( this -> objects.begin() + i );
+			nodes[ index ] -> insert( move_rect );
+
+		}else
+		{
+			i++;
+		}
 	}
 }
 
@@ -200,7 +246,6 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &ret
 	{
 		//No action.
 	}
-
 
 	returnObjects_.insert( returnObjects_.end(), this -> objects.begin(), this -> objects.end() );
 

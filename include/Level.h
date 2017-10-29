@@ -63,7 +63,7 @@ class Level : public StateGame
 		virtual void clear_documents();
 
 		void changeCheckpoints ( int TOTAL_NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
-		std::vector <double> checkpoints_Y_ );
+		std::vector < double > checkpoints_Y_ );
 
 		unsigned int width; /**< Width that defines the horizontal limits. */
 		unsigned int height; /**< Height that defines the vertical limits. */
@@ -79,14 +79,22 @@ class Level : public StateGame
 
 		Sprite *background; // Sprite of the background.
 		Sprite *backgroud_top; // Sprite of backgroud top.
-		std::vector <Sprite*> checkpoints; // Array of checkpoints sprites.
-		std::vector <double> checkpoints_X; // Array of checkpoint in X axis.
-		std::vector <double> checkpoints_Y; // Array of checkpoint in Y axis.
-		std::vector <bool> checkpoints_visited; // Array of all checkpoints visited.
+		std::vector < Sprite * > checkpoints; // Array of checkpoints sprites.
+		std::vector < double > checkpoints_X; // Array of checkpoint in X axis.
+		std::vector < double > checkpoints_Y; // Array of checkpoint in Y axis.
+		std::vector < bool > checkpoints_visited; // Array of all checkpoints visited.
 		int TOTAL_NUMBER_OF_CHECKPOINTS; // Total number of checkpoints.
 
 		std::vector <Enemy*> enemies; // Array of direct reference to the enemies.
 		std::vector <Document*> documents; //Array of direct reference to documents.
+
+		void delete_camera();
+
+		void delete_player_hud();
+
+		void delete_tile_map();
+
+		void delete_quadTree();
 
 };
 

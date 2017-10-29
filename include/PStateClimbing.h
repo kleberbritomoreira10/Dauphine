@@ -5,9 +5,9 @@
 
 /**
 * The state for when the player is not grounded.
-* 
+*
 */
-class PStateClimbing : public StatePlayer 
+class PStateClimbing : public StatePlayer
 {
 
 	public:
@@ -36,6 +36,10 @@ class PStateClimbing : public StatePlayer
 		* @see StatePlayer::handleInput
 		*/
 		virtual void handleInput ( const std::array < bool, GameKeys::MAX > keyStates_ );
+
+		void handle_velocity_x_axis();
+
+		void handle_climbing_animation();
 
 };
 

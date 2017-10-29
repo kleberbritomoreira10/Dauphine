@@ -41,6 +41,12 @@ class QuadTree
 
 		void setObjects ( std::vector < CollisionRect > &objects_ );
 
+		int handle_index_left_quadrants( bool top_quadrant, bool bottom_quadrant );
+
+		int handle_index_right_quadrants( bool top_quadrant, bool bottom_quadrant );
+
+		void insert_all_objects();
+
 	private:
 
 		const int max_number_of_quadtree_objects; // Max number of quadtree objects.

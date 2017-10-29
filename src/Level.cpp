@@ -43,28 +43,48 @@ Level::~Level()
 
 	if( this -> camera != nullptr )
 	{
-		delete this -> camera;
-		this -> camera = nullptr;
+		delete_camera();
 
 	}else if( this -> player_Hud != nullptr )
 	{
-		delete this -> player_Hud;
-		this -> player_Hud = nullptr;
+		delete_player_hud();
 
 	}else if( this -> tile_map != nullptr )
 	{
-		delete this -> tile_map;
-		this -> tile_map = nullptr;
+		delete_tile_map();
 
 	}else if( this -> quadTree != nullptr )
 	{
-		delete this -> quadTree;
-		this -> quadTree = nullptr;
+		delete_quadTree();
 
 	}else
 	{
 		// No action.
 	}
+}
+
+void Level::delete_camera()
+{
+	delete this -> camera;
+	this -> camera = nullptr;
+}
+
+void Level::delete_player_hud()
+{
+	delete this -> player_Hud;
+	this -> player_Hud = nullptr;
+}
+
+void Level::delete_tile_map()
+{
+	delete this -> tile_map;
+	this -> tile_map = nullptr;
+}
+
+void Level::delete_quadTree()
+{
+	delete this -> quadTree;
+	this -> quadTree = nullptr;
 }
 
 /**

@@ -85,7 +85,6 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 
 	if ( !this -> saveFile.fail() )
   {
-  	
 		this -> CURRENT_LEVEL = level_;
 		this -> saveFile << this -> CURRENT_LEVEL << std::endl;
 		this -> saveFile << player -> x << std::endl;

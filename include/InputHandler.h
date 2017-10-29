@@ -45,6 +45,14 @@ class InputHandler
 
 		void clearKey ( const GameKeys KEY );
 
+		void SDL_controller_button();
+
+		void SDL_keydown();
+
+		void SDL_keyup();
+
+		void SDL_exit();
+
 	private:
 		/**
 		* Sets InputHandler::quitFlag to true.

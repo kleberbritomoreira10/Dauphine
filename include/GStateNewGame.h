@@ -36,6 +36,10 @@ class GStateNewGame : public StateGame
 		* From the menu.lua script, loads all the necessary objects.
 		*/
 		virtual void load ();
+		virtual void loadSlotOne ();
+		virtual void loadSlotTwo ();
+		virtual void loadSlotThree ();
+		virtual void loadResources ();
 
 		/**
 		* Updates the objects within the StateGame.

@@ -82,11 +82,8 @@ GStateNewGame::~GStateNewGame ()
 Loads the level.
 From the menu.lua script, loads all the necessary objects.
 */
-void GStateNewGame::load ()
-{
 
-	Log ( DEBUG ) << "Loading Choose Slot Screen...";
-
+void GStateNewGame::loadSlotOne(){
 	// Start a new game on slot 1.
 	if ( Game::instance (). get_saves (). is_saved ( SLOT_1 ) )
 	{
@@ -110,6 +107,10 @@ void GStateNewGame::load ()
 		this -> slot1 -> changeText ( "Empty Slot" );
 	}
 
+}
+
+void GStateNewGame::loadSlotTwo()
+{
 	// Start a new game on slot 2.
 	if ( Game::instance (). get_saves (). is_saved ( SLOT_2 ) )
 	{
@@ -133,6 +134,10 @@ void GStateNewGame::load ()
 		this -> slot2 -> changeText ( "Empty Slot" );
 	}
 
+}
+
+void GStateNewGame::loadSlotThree()
+{
 	// Start a new game on slot 3.
 	if ( Game::instance (). get_saves (). is_saved ( SLOT_3 ) )
 	{
@@ -154,7 +159,10 @@ void GStateNewGame::load ()
 	{
 		this -> slot3 -> changeText ( "Empty Slot" );
 	}
+}
 
+void GStateNewGame::loadResources()
+{
 	//As is uses the same resources as the Continue screen...
 	LuaScript luaMenu ( "lua/Continue.lua");
 
@@ -165,7 +173,7 @@ void GStateNewGame::load ()
 		"continue.images.selector" );
 
 	this -> background = Game::instance (). getResources (). get ( PATH_BACKGROUND );
-  this -> selector = Game::instance (). getResources (). get ( PATH_SELECTOR );
+	this -> selector = Game::instance (). getResources (). get ( PATH_SELECTOR );
 
 	assert( this -> background != nullptr );
 	assert( this -> selector != nullptr );
@@ -173,9 +181,24 @@ void GStateNewGame::load ()
 	this -> selector -> setWidth ( 410 );
 	this -> selector -> setHeight ( 102 );
 
-    this -> current_selection = Selection::SLOT_1;
+	this -> current_selection = Selection::SLOT_1;
 
-    Game::instance (). get_fade (). fade_out ( 0, 0.002 );
+	Game::instance (). get_fade (). fade_out ( 0, 0.002 );
+}
+
+void GStateNewGame::load ()
+{
+
+	Log ( DEBUG ) << "Loading Choose Slot Screen...";
+
+	loadSlotOne();
+
+	loadSlotTwo();
+
+	loadSlotThree();
+
+	loadResources();
+
 }
 
 // Unloads everything that was loaded.

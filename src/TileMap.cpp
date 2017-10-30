@@ -140,7 +140,10 @@ void TileMap::render(const double cameraX_, const double cameraY_){
 	const Tmx::Layer* currentLayer;
 	for(unsigned int i = 0; i < this->layers - 1; i++){
 		currentLayer = this->map->GetLayer(i);
-		if (i > this->tileMatrix[0][0].size()){
+		if (i <= this->tileMatrix[0][0].size()){
+			// nothing to do.
+		}
+		else{
 			Log(ERROR) << "Invalid layer number for rendering a TileMap layer.";
 			continue;
 		}

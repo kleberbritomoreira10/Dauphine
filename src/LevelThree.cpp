@@ -159,15 +159,17 @@ void LevelThree::update(const double DELTA_TIME){
 		}
 	}
 
-	if(this->player->life != Enemy::points_life){
+	if(this->player->life == Enemy::points_life){
+		//notting to do, player don't take damage
+	}
+	else{
 		if(this->player->is_vulnerable){
 			this->player->life--;
 			Enemy::points_life = this->player->life;
 			this->player->changeState(Player::player_states::HITED);
 			this->player->is_vulnerable = false;
-		}
-		else{
-
+		}else{
+			//noting to do, the player don't take damage
 		}
 	}
 
@@ -178,7 +180,10 @@ void LevelThree::update(const double DELTA_TIME){
 	this->camera->update();
 
 	// Set next level if end is reached.
-	if(this->player->reached_level_end){
+	if(!this->player->reached_level_end){
+		//noting to do, the ṕlayer stay on this level
+	}
+	else{
 		Game::instance().transitionTo = Game::GStates::LEVEL_FOUR;
 		Game::instance().setState(Game::GStates::TRANSITION);
 		return;

@@ -69,6 +69,10 @@ class Player : public DynamicEntity
 		* 	of processing speed.
 		*/
 		virtual void update( const double DELTA_TIME );
+		virtual void updateActions( const double DELTA_TIME );
+		virtual void updateAnimation( const double DELTA_TIME );
+		virtual void updateVunerability( const double DELTA_TIME );
+		virtual void updateClimbing();
 
 		/**
 		* Renders the player.

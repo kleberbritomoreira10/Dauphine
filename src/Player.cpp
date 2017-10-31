@@ -108,6 +108,60 @@ Player::~Player()
 * @param DELTA_TIME : Delta time. Time elapsed between one frame and the other, independent
 *   of processing speed.
 */
+
+void Player::updateActions( const double DELTA_TIME )
+{
+  // Updating the actions.
+  Game::instance().clearKeyFromInput( GameKeys::ACTION );
+  scoutPosition( DELTA_TIME );
+  updateBoundingBox();
+
+  // Loading collision.
+  const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
+  handleCollision( detections );
+  updatePosition( DELTA_TIME );
+}
+
+void Player::updateAnimation( const double DELTA_TIME )
+{
+  // Updating animation.
+  this -> animation -> update( this -> animationClip, DELTA_TIME );
+
+  // Updating potions if activated.
+  for ( auto potion : this -> potions )
+  {
+      if ( !potion -> activated )
+      {
+          // Delete potion.
+      }
+      potion -> update(DELTA_TIME);
+  }
+}
+
+void Player::updateVunerability( const double DELTA_TIME )
+{
+  // Verifying if the player is vulnerable, if not, the player can attack.
+  if ( !this -> is_vulnerable )
+  {
+      this -> invulnerable_time += DELTA_TIME;
+      if ( this -> invulnerable_time >= 1 )
+      {
+          this -> invulnerable_time = 0;
+          this -> is_vulnerable = true;
+          this -> can_attack = true;
+      }
+  }
+}
+
+void Player::updateClimbing()
+{
+  // Verifying if player is climbing.
+  if ( this -> isClimbing && !is_current_state(player_states::CLIMBING) )
+  {
+      changeState( player_states::CLIMBING );
+  }
+}
+
 void Player::update( const double DELTA_TIME )
 {
 
@@ -120,47 +174,13 @@ void Player::update( const double DELTA_TIME )
         this -> current_state -> handleInput( keyStates );
     }
 
-    // Updating the actions.
-    Game::instance().clearKeyFromInput( GameKeys::ACTION );
-    scoutPosition( DELTA_TIME );
-    updateBoundingBox();
+    updateActions( DELTA_TIME );
 
-    // Loading collision.
-    const std::array<bool, CollisionSide::SOLID_TOTAL> detections = detectCollision();
-    handleCollision( detections );
-    updatePosition( DELTA_TIME );
+    updateAnimation( DELTA_TIME );
 
-    // Updating animation.
-    this -> animation -> update( this -> animationClip, DELTA_TIME );
+    updateVunerability( DELTA_TIME );
 
-    // Updating potions if activated.
-    for ( auto potion : this -> potions )
-    {
-        if ( !potion -> activated )
-        {
-            // Delete potion.
-        }
-        potion -> update(DELTA_TIME);
-    }
-
-    // Verifying if the player is vulnerable, if not, the player can attack.
-    if ( !this -> is_vulnerable )
-    {
-        this -> invulnerable_time += DELTA_TIME;
-        if ( this -> invulnerable_time >= 1 )
-        {
-            this -> invulnerable_time = 0;
-            this -> is_vulnerable = true;
-            this -> can_attack = true;
-        }
-    }
-
-    // Verifying if player is climbing.
-    if ( this -> isClimbing && !is_current_state(player_states::CLIMBING) )
-    {
-        changeState( player_states::CLIMBING );
-    }
-
+    updateClimbing();
 }
 
 /**

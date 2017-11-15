@@ -214,7 +214,7 @@ void LevelFour::update( const double DELTA_TIME )
     Game::instance().setState( Game::GStates::GAMEOVER );
     return;
   } else {
-    // No Action.
+    Log ( INFO ) << "\tPlayer is dead";
   }
 
   // Updating the potions.
@@ -240,7 +240,7 @@ void LevelFour::update( const double DELTA_TIME )
       this -> player -> addPotions(3);
       caught_items[i] = true;
     } else {
-      // No Action..
+      Log ( INFO ) << "\tPlayer not collected potions";
     }
   }
 
@@ -254,10 +254,10 @@ void LevelFour::update( const double DELTA_TIME )
       this -> player -> changeState( Player::player_states::HITED );
       this -> player -> is_vulnerable = false;
     } else {
-        // No Actiion.
+      Log ( INFO ) << "\tPlayer is not vulnerable";
     }
   } else {
-    // No Action.
+    Log ( INFO ) << "\tPlayer is with equal life points than the enemy";
   }
 
   // Updating the HUD.
@@ -273,7 +273,7 @@ void LevelFour::update( const double DELTA_TIME )
     Game::instance().setState(Game::GStates::TRANSITION);
     return;
   } else {
-    // No Action.
+    Log ( DEBUG ) << "\tLevel not setted";
   }
 
   // Updating the potion/enemy collision.
@@ -295,13 +295,13 @@ void LevelFour::update( const double DELTA_TIME )
           {
             enemy->changeState( Enemy::EStates::DEAD );
           } else {
-            // No Action.
+            Log ( INFO ) << "\tUpdate not executed";
           }
         } else {
-          // No Action.
+          Log ( INFO ) << "\tUpdate not executed";
         }
       } else {
-        // No Action.
+        Log ( INFO ) << "\tUpdate not executed";
       }
     }
   }
@@ -325,14 +325,14 @@ void LevelFour::update( const double DELTA_TIME )
           {
             enemy -> changeState( Enemy::EStates::DEAD );
           } else {
-            // No Action.
+            Log ( INFO ) << "\tUpdate not executed";
           }
         } else {
-          // No Action.
+          Log ( INFO ) << "\tUpdate not executed";
         }
       }
     } else {
-      // No Action.
+      Log ( INFO ) << "\tUpdate not executed";
     }
   }
 
@@ -346,7 +346,7 @@ void LevelFour::update( const double DELTA_TIME )
       Game::instance().get_saves().saveLevel(NUMBER_LEVEL, this -> player, this -> enemies, Game::instance().current_slot );
       this -> checkpoints_visited[j] = true;
     } else {
-      // No Action.
+      Log ( INFO ) << "\tGame Not Saved";
     }
   }
 
@@ -400,7 +400,7 @@ void LevelFour::render()
     {
       this -> image -> Sprite::render( ( items[0][i]+60) - CAMERA_X, ((items[1][i]) - CAMERA_Y) );
     } else {
-      // No Action.
+      Log ( INFO ) << "\tImage not rendered";
     }
   }
 
@@ -412,7 +412,7 @@ void LevelFour::render()
     {
       document -> renderDocumentText();
     } else {
-      // No action.
+      Log ( INFO ) << "\tDocument not rendered";
     }
   }
 }

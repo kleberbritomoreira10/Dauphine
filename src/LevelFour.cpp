@@ -19,15 +19,39 @@
 #include "Crosshair.h"
 #include "Document.h"
 
+#define CHECKPOINTS_X_AXIS_1 3712  // 58 * 64
+#define CHECKPOINTS_Y_AXIS_1 4544  // 71 * 64
+#define CHECKPOINTS_X_AXIS_2 7232  // 113 * 64
+#define CHECKPOINTS_Y_AXIS_2 1280  // 20 * 64
+#define NUMBER_CHECKPOINT 2
+#define NUMBER_LEVEL 4
+#define POSITION_X_ITEM_1 207
+#define POSITION_X_ITEM_2 11261
+#define POSITION_X_ITEM_3 6800
+#define POSITION_X_ITEM_4 10000
+#define POSITION_Y_ITEM_1 5600
+#define POSITION_Y_ITEM_2 2050
+#define POSITION_Y_ITEM_3 2850
+#define POSITION_Y_ITEM_4 2712
+#define TOTAL_LIFE 100
+#define TOTAL_POTIONS 192
+#define ZERO 0
+
 /*
  * Numbering for items that can be captured in phase 4.
  */
 LevelFour::LevelFour() :
   Level(),
-  items{ { 207, 11261, 6800, 10000 },{ 5600, 2050, 5850, 2712 } },
+  items{ 
+    { POSITION_X_ITEM_1, POSITION_X_ITEM_2, POSITION_X_ITEM_3, POSITION_X_ITEM_4 },
+    { POSITION_Y_ITEM_1, POSITION_Y_ITEM_2, POSITION_Y_ITEM_3, POSITION_Y_ITEM_4 } 
+  },
   caught_items{ false, false, false, true }
 {
-  this -> changeCheckpoints( 2, { 58*64,71*64 }, { 113*64,20*64 } );
+  this -> changeCheckpoints( NUMBER_CHECKPOINT, 
+    { CHECKPOINTS_X_AXIS_1, CHECKPOINTS_Y_AXIS_1 }, 
+    { CHECKPOINTS_X_AXIS_2, CHECKPOINTS_Y_AXIS_2 }
+  );
 }
 
 LevelFour::~LevelFour()
@@ -51,13 +75,13 @@ void LevelFour::load()
   // Setting the level width/height.
   this -> width = this -> tile_map -> getMapWidth();
   this -> height = this -> tile_map -> getMapHeight();
-  SDL_Rect bounds = { 0, 0, ( int ) this -> width, ( int ) this -> height };
-  this -> quadTree = new QuadTree( 0, bounds );
+  SDL_Rect bounds = { ZERO, ZERO, ( int ) this -> width, ( int ) this -> height };
+  this -> quadTree = new QuadTree( ZERO, bounds );
   assert( this -> quadTree != nullptr );
 
   //Setting the background image
   this -> background = Game::instance().getResources().get("res/images/lv1_background.png");
-  for ( int i = 0; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
+  for ( int i = ZERO; i < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++i )
   {
     this -> checkpoints.push_back( Game::instance().getResources().get("res/images/checkpoint.png") );
   }
@@ -78,7 +102,7 @@ void LevelFour::load()
   Player* level_player = nullptr;
 
   //check to see if the player is in stage 4, and if so, determine the position on the x-axis and y
-  if ( Game::instance().get_saves().is_saved(Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 4 )
+  if ( Game::instance().get_saves().is_saved(Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == NUMBER_LEVEL )
   {
     double saved_x_position = 0.0;
     double saved_y_position = 0.0;
@@ -97,7 +121,7 @@ void LevelFour::load()
   assert( this -> player_Hud != nullptr );
 
   // Load all the enemies from the tile_map.
-  for ( unsigned  int i = 0; i < this -> tile_map -> get_enemies_x().size(); i++ )
+  for ( unsigned  int i = ZERO; i < this -> tile_map -> get_enemies_x().size(); i++ )
   {
     Enemy* enemy = new Enemy( this -> tile_map -> get_enemies_x().at(i),
     this -> tile_map -> get_enemies_y().at(i), PATH_ENEMY,
@@ -105,7 +129,7 @@ void LevelFour::load()
 
     if ( Game::instance().get_saves().is_saved(Game::instance().current_slot) )
     {
-      if ( Game::instance().get_saves().is_enemy_dead(i, Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == 4 )
+      if ( Game::instance().get_saves().is_enemy_dead(i, Game::instance().current_slot) && Game::instance().get_saves().get_saved_level(Game::instance().current_slot) == NUMBER_LEVEL )
       {
         enemy->set_dead(true);
       } else {
@@ -134,7 +158,7 @@ void LevelFour::load()
 
   set_camera( level_camera );
 
-  Game::instance().get_fade().fade_out( 0, 0.002 );
+  Game::instance().get_fade().fade_out( ZERO, 0.002 );
 }
 
 /*
@@ -148,7 +172,7 @@ void LevelFour::unload()
   clear_enemies();
   clear_documents();
 
-  for ( int i = 0; i < NUMBER_ITEMS; ++i )
+  for ( int i = ZERO; i < NUMBER_ITEMS; ++i )
   {
     caught_items[i] = false;
   }
@@ -161,7 +185,7 @@ void LevelFour::unload()
  */
 void LevelFour::update( const double DELTA_TIME )
 {
-  assert( DELTA_TIME >= 0 );
+  assert( DELTA_TIME >= ZERO );
   // Populating the QuadTree.
   this -> quadTree -> setObjects( this -> tile_map -> getCollisionRects() );
 
@@ -208,9 +232,9 @@ void LevelFour::update( const double DELTA_TIME )
   Enemy::position_vulnerable = this -> player -> is_vulnerable;
 
   //If collect item, update the amount of potions to 3
-  for ( int i = 0; i < NUMBER_ITEMS; ++i )
+  for ( int i = ZERO; i < NUMBER_ITEMS; ++i )
   {
-    if ( Collision::rects_collided( this -> player->get_bounding_box(), {items[0][i], items[1][i], 192, 192}) &&
+    if ( Collision::rects_collided( this -> player->get_bounding_box(), {items[0][i], items[1][i], TOTAL_POTIONS, TOTAL_POTIONS}) &&
       caught_items[i] == false )
     {
       this -> player -> addPotions(3);
@@ -261,13 +285,13 @@ void LevelFour::update( const double DELTA_TIME )
       {
         if ( potion -> activated )
         {
-          if ( enemy -> life > 0 && this -> player -> can_attack )
+          if ( enemy -> life > ZERO && this -> player -> can_attack )
           {
-            enemy -> life -= 100;
+            enemy -> life -= TOTAL_LIFE;
             potion -> activated = false;
           }
           // Log(DEBUG) << "Enemy Life = " << enemy->life;
-          else if ( enemy -> life <= 0 )
+          else if ( enemy -> life <= ZERO )
           {
             enemy->changeState( Enemy::EStates::DEAD );
           } else {
@@ -291,13 +315,13 @@ void LevelFour::update( const double DELTA_TIME )
         if ( this -> player -> is_current_state( Player::player_states::ATTACK) || this->player->is_current_state(Player::player_states::ATTACKMOVING) )
         {
 
-          if ( enemy -> life > 0 && this -> player -> can_attack )
+          if ( enemy -> life > ZERO && this -> player -> can_attack )
           {
             enemy -> life -= this -> player -> attack_strength;
             this -> player -> can_attack = false;
           }
           // Log(DEBUG) << "Enemy Life = " << enemy->life;
-          else if ( enemy -> life <= 0 )
+          else if ( enemy -> life <= ZERO )
           {
             enemy -> changeState( Enemy::EStates::DEAD );
           } else {
@@ -313,13 +337,13 @@ void LevelFour::update( const double DELTA_TIME )
   }
 
   //Saving the game state
-  for ( int j = 0; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
+  for ( int j = ZERO; j < this -> TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
   {
     if ( !this -> checkpoints_visited[j] && this -> player -> get_bounding_box().x >= checkpoints_X[j]
-        && this -> player -> get_bounding_box().x <= checkpoints_X[j] + 100 && this -> player -> get_bounding_box().y >= checkpoints_Y[j] && this -> player -> get_bounding_box().y <= checkpoints_Y[j] + 200 )
+        && this -> player -> get_bounding_box().x <= checkpoints_X[j] + TOTAL_LIFE && this -> player -> get_bounding_box().y >= checkpoints_Y[j] && this -> player -> get_bounding_box().y <= checkpoints_Y[j] + 200 )
     {
       this -> checkpoints[j] = Game::instance().getResources().get("res/images/checkpoint_visited.png");
-      Game::instance().get_saves().saveLevel(4, this -> player, this -> enemies, Game::instance().current_slot );
+      Game::instance().get_saves().saveLevel(NUMBER_LEVEL, this -> player, this -> enemies, Game::instance().current_slot );
       this -> checkpoints_visited[j] = true;
     } else {
       // No Action.
@@ -346,9 +370,9 @@ void LevelFour::render()
   const int CAMERA_X = this -> camera -> getClip().x;
   const int CAMERA_Y = this -> camera -> getClip().y;
 
-  this -> background->render(0, 0);
+  this -> background->render(ZERO, ZERO);
 
-  for ( int j = 0; j < this->TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
+  for ( int j = ZERO; j < this->TOTAL_NUMBER_OF_CHECKPOINTS; ++j )
   {
     this -> checkpoints[j] -> render( this -> checkpoints_X[j] - CAMERA_X, this -> checkpoints_Y[j] - CAMERA_Y );
   }
@@ -370,7 +394,7 @@ void LevelFour::render()
   }
 
   // Potion refill
-  for ( unsigned int i = 0; i < NUMBER_ITEMS; i++ )
+  for ( unsigned int i = ZERO; i < NUMBER_ITEMS; i++ )
   {
     if ( this -> image != nullptr && caught_items[i] == false )
     {

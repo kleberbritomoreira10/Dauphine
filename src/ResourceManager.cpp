@@ -53,7 +53,14 @@ Sprite* ResourceManager::get( const std::string& PATH )
   {
     return it -> second.get();
   } else
-    {
+    { 
+      if (typeid(load( PATH ).get()) == typeid(Sprite))
+      {
+        Log(DEBUG) << "Data type appropriate"; 
+      } else
+        {
+          Log(DEBUG) << "Data type not appropriate";
+        }
       return load( PATH ).get();
     }
 }
@@ -93,5 +100,14 @@ Sprite::SpritePtr ResourceManager::load( const std::string& PATH )
 {
   Sprite::SpritePtr sprite = std::make_shared<Sprite>( PATH );
   registerResource( PATH, sprite );
+
+  if (typeid(sprite) == typeid(Sprite))
+  {
+    Log(DEBUG) << "Data type appropriate"; 
+  } else
+    {
+      Log(DEBUG) << "Data type not appropriate";
+    }
+
   return sprite;
 }

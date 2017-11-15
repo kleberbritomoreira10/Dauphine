@@ -122,6 +122,14 @@ if ( Game::instance().get_saves().is_saved( SLOT_1 ) )
 		//Assign level saved in slot 1 to the current level
 		const std::string CURRENT_LEVEL = "Level " + Util::toString( LEVEL_FROM_SAVE );
 		
+		if ( LEVEL_FROM_SAVE > 0)
+    {
+      Log(DEBUG) << "Game saved in slot1"; 
+    } else
+      {
+        Log(DEBUG) << "Game not saved in slot1";
+      }
+
 		if ( LEVEL_FROM_SAVE == -1 )
     {
 			this -> slot1 -> changeText( TEXT );
@@ -143,6 +151,14 @@ void GStateContinue::continue_slot2()
 		//Load level 2 if it was saved in slot 2
 		const int LEVEL_FROM_SAVE = Game::instance().get_saves().get_saved_level( SLOT_2 );
 		
+		if ( LEVEL_FROM_SAVE > 0)
+    {
+      Log(DEBUG) << "Game saved in slot2"; 
+    } else
+      {
+        Log(DEBUG) << "Game not saved in slot2";
+      }
+
 		//Assign level saved in slot 2 to the current level
 		const std::string CURRENT_LEVEL = "Level " + Util::toString( LEVEL_FROM_SAVE );
 
@@ -167,6 +183,14 @@ if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
   	assert( SLOT_3 >= 1 || SLOT_3 <= 6);
 		//Load level 2 if it was saved in slot 3
 		const int LEVEL_FROM_SAVE = Game::instance().get_saves().get_saved_level( SLOT_3 );
+
+		if ( LEVEL_FROM_SAVE > 0)
+    {
+      Log(DEBUG) << "Game saved in slot3"; 
+    } else
+      {
+        Log(DEBUG) << "Game not saved in slot3";
+      }
 
 		//Assign level saved in slot 3 to the current level
 		const std::string CURRENT_LEVEL = "Level " + Util::toString( LEVEL_FROM_SAVE );

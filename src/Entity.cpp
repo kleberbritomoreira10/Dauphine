@@ -63,7 +63,15 @@ Entity::~Entity ()
 * @return The Entity width.
 */
 unsigned int Entity::getWidth ()
-{
+{ 
+  if ( this -> width > 0 )
+  {
+    Log(DEBUG) << "width minimally allowed"; 
+  } else
+    {
+      Log(DEBUG) << "width not allowed";
+    }
+
 	return this -> width;
 }
 
@@ -71,7 +79,15 @@ unsigned int Entity::getWidth ()
 * @return The Entity height.
 */
 unsigned int Entity::getHeight ()
-{
+{ 
+  if ( this -> height > 0 )
+  {
+    Log(DEBUG) << "height minimally allowed"; 
+  } else
+    {
+      Log(DEBUG) << "height not allowed";
+    }
+
 	return this -> height;
 }
 

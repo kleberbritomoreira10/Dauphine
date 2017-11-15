@@ -54,6 +54,15 @@ bool SDLWrapper::SDL_mixer(SDL_version compiled)
     {
 		  Log(ERROR) << "Could not initialize SDL_Mixer" << Mix_GetError();
 	  }
+
+	if (successMixer == true)
+  {
+    Log(DEBUG) << "successMixer initialized with success"; 
+  } else
+    {
+      Log(DEBUG) << "successMixer not initialized";
+    }
+
 	return successMixer;
 }
 
@@ -72,6 +81,14 @@ bool SDLWrapper::SDL_TTF(SDL_version compiled)
     {
 		  Log(ERROR) << "Could not initialize TTF." << TTF_GetError();
 	  }
+
+	if (successTTF == true)
+  {
+    Log(DEBUG) << "successTTF initialized with success"; 
+  } else
+    {
+      Log(DEBUG) << "successTTF not initialized";
+    }
 
 	return successTTF;  
 }
@@ -96,6 +113,15 @@ bool SDLWrapper::SUCCESS_SDL(SDL_version compiled)
     {
 		  Log(ERROR) << "Could not initialize SDL." << SDL_GetError();
 	  }
+
+	if (successSDL == true)
+  {
+    Log(DEBUG) << "successSDL initialized with success"; 
+  } else
+    {
+      Log(DEBUG) << "successSDL not initialized";
+    }
+      
 	return successSDL;
 }
 
@@ -114,7 +140,16 @@ bool SDLWrapper::SDL_success_image(SDL_version compiled)
     {
 		  Log(ERROR) << "Could not initialize SDL_Image." << IMG_GetError();
 	  }
-	 return success_image; 
+
+	if (success_image == true)
+  {
+    Log(DEBUG) << "success_image initialized with success"; 
+  } else
+    {
+      Log(DEBUG) << "success_image not initialized";
+    } 
+	 
+	return success_image; 
 }
 
 /**

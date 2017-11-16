@@ -9,6 +9,8 @@
 #include "LuaScript.h"
 #include "Logger.h"
 
+#define ZERO
+
 /*
  * The constructor.
  * Initializes a new lua state, and loads the desired script.
@@ -17,11 +19,11 @@
 LuaScript::LuaScript( const std::string& filename_)
 {
   // @todo Log an error message for different lua error codes.
-  this -> level = 0;
+  this -> level = ZERO;
   this -> luaState = luaL_newstate();
 
   const int loadedFile = luaL_loadfile( this -> luaState, filename_.c_str());
-  const int calledFunction = lua_pcall(luaState, 0, 0, 0);
+  const int calledFunction = lua_pcall(luaState, ZERO, ZERO, ZERO);
 
   //Struct control to open libs. Otherwise load file
   if ( loadedFile == LUA_OK && calledFunction == LUA_OK )
@@ -48,7 +50,7 @@ LuaScript::~LuaScript()
   } else {
     // No action.
   }
-  this -> level = 0;
+  this -> level = ZERO;
 }
 
 /*
@@ -100,12 +102,12 @@ std::vector<std::string> LuaScript::unlua_getTableKeys( const std::string& name_
   //Execute code
   luaL_loadstring( this -> luaState, code.c_str());
   //Execute function
-  lua_pcall( this -> luaState, 0, 0, 0);
+  lua_pcall( this -> luaState, ZERO, ZERO, ZERO);
   //Get function
   lua_getglobal( this -> luaState, "getKeys");
   lua_pushstring( this -> luaState, name_.c_str());
   //Execute function
-  lua_pcall( this -> luaState, 1 , 1, 0 );
+  lua_pcall( this -> luaState, 1 , 1, ZERO );
 
   //Declare constant test and convert to string the LuaState
   const std::string test = lua_tostring( luaState, -1 );
@@ -115,7 +117,7 @@ std::vector<std::string> LuaScript::unlua_getTableKeys( const std::string& name_
   Log(DEBUG) << "TEMP: " << test;
 
   //Repetition structure to check debug.
-  for ( unsigned int i = 0; i < test.size(); i++ )
+  for ( unsigned int i = ZERO; i < test.size(); i++ )
   {
     if ( test.at(i) != ',' )
     {
@@ -136,15 +138,15 @@ std::vector<std::string> LuaScript::unlua_getTableKeys( const std::string& name_
  */
 bool LuaScript::unlua_getToStack( const std::string& variableName_ )
 {
-  this -> level = 0;
+  this -> level = ZERO;
   std::string var = "";
 
   //Structure repetition to check whether the name is set or not
-  for ( unsigned int i = 0; i < variableName_.size(); i++ )
+  for ( unsigned int i = ZERO; i < variableName_.size(); i++ )
   {
     if ( variableName_.at(i) == '.')
     {
-      if ( this -> level == 0)
+      if ( this -> level == ZERO)
       {
         lua_getglobal( this -> luaState, var.c_str() );
       } else {
@@ -162,7 +164,7 @@ bool LuaScript::unlua_getToStack( const std::string& variableName_ )
       var += variableName_.at(i);
     }
   }
-  if ( level == 0 )
+  if ( level == ZERO )
   {
     lua_getglobal( this -> luaState, var.c_str() );
   } else {

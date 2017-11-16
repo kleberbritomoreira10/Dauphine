@@ -185,7 +185,7 @@ void LevelOne::unload ()
 	clear_enemies ();
 	clear_documents ();
 
-	for ( int i = 0; i < NUMBER_ITEMS; ++i )
+	for ( int i = 0; i < 4; ++i )
 	{
 
 		caught_items [ i ] = false;
@@ -271,7 +271,7 @@ void LevelOne::updatePlayer ( )
 	Enemy::py = this -> player -> y;
 	Enemy::position_vulnerable = this -> player -> is_vulnerable;
 
-	for ( int i = 0; i < NUMBER_ITEMS; ++i )
+	for ( int i = 0; i < 4; ++i )
 	{
 
 		if ( Collision::rects_collided ( this -> player -> get_bounding_box (),
@@ -524,7 +524,7 @@ void LevelOne::renderEntities ( )
         entity -> render ( CAMERA_X, CAMERA_Y );
 	}
 
-	for ( unsigned int i = 0; i < NUMBER_ITEMS; i++ )
+	for ( unsigned int i = 0; i < 4; i++ )
 	{
 
 		if ( this -> image != nullptr && caught_items [ i ] == false )

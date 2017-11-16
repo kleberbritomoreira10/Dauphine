@@ -13,8 +13,6 @@
 #include "Level.h"
 #include "Sprite.h"
 
-#define NUMBER_ITEMS 4
-
 /**
 * The first level of the game.
 * Derived from Level class.
@@ -73,8 +71,8 @@ class LevelOne : public Level
 		virtual void render ();
 
 		Sprite *image; // the image attributed to the Sprite
-		int items [ 2 ] [ NUMBER_ITEMS ]; // upper index of items on the game
-		bool caught_items [ NUMBER_ITEMS ]; // boolean for the number of items that were caught or not
+		const int items [ 2 ] [ 4 ]; // upper index of items on the game
+		const bool caught_items [ 4 ]; // boolean for the number of items that were caught or not
 
 };
 

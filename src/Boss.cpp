@@ -22,7 +22,9 @@
 
 #define ADD_STATE_EMPLACE(stateEnum, stateClass) this -> states_map.emplace(stateEnum, new stateClass( this ))
 #define ADD_STATE_INSERT(stateEnum, stateClass) this -> states_map.insert(std::make_pair<BStates, StateBoss*>(stateEnum, new stateClass( this )));
-
+#define INITIAL_BOSS_SPEED 400.0
+#define INITIAL_BOSS_WIDTH 360
+#define ZERO 0
 
 /*
  * Method used to create all characteristics Boss
@@ -34,21 +36,21 @@
  */
 Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* const player_ ) :
 	DynamicEntity(x_, y_, PATH), potions_left(3), saw_player(false), potions(), life(8), has_shield(false), can_walk(true), player(player_), power_animation(nullptr), power_X_axis(0.0), power_Y_axis(0.0), power_is_activated(false), power(nullptr),
-	  power_clip{0,0,0,0}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{0,0,0,0},
+	  power_clip{ZERO, ZERO, ZERO, ZERO}, power_flip(SDL_FLIP_NONE), shield_animation(nullptr), shield(nullptr), shield_clip{ZERO, ZERO, ZERO, ZERO},
 	  current_state(nullptr), animation(nullptr), states_map(), dead(false)
 {
 	initializeStates();
 
 	// Initialize all the states for the Boss.
 	this -> is_right = true;
-	this -> speed = 400.0;
-	this -> width = 360;
-	this -> height = 360;
-	this -> animation = new Animation(0, 0, this -> width, this -> height, 7, false);
-	this -> power_animation = new Animation(0, 0, 0, 0, 0, false);
-	this -> shield_animation = new Animation(0, 0, 340, 340, 6, false);
+	this -> speed = INITIAL_BOSS_SPEED;
+	this -> width = INITIAL_BOSS_WIDTH;
+	this -> height = INITIAL_BOSS_WIDTH;
+	this -> animation = new Animation(ZERO, ZERO, this -> width, this -> height, 7, false);
+	this -> power_animation = new Animation(ZERO, ZERO, ZERO, ZERO, ZERO, false);
+	this -> shield_animation = new Animation(ZERO, ZERO, 340, 340, 6, false);
 	this -> shield = Game::instance().getResources().get("res/images/shield.png");
-	this -> shield_animation->changeAnimation(0,0,3,false,1);
+	this -> shield_animation->changeAnimation(ZERO, ZERO, 3, false, 1);
 	this -> current_state = this -> states_map.at(IDLE);
 	this -> current_state->enter();
 
@@ -111,12 +113,12 @@ Boss::~Boss()
  * @param DELTA_TIME : Delta time (catch variation time).
  */
 
-double time_passed = 0; // Take the time that has passed through delta time.
+double time_passed = ZERO; // Take the time that has passed through delta time.
 
 void Boss::update( const double DELTA_TIME)
 {
 
-	assert(DELTA_TIME >= 0);
+	assert(DELTA_TIME >= ZERO);
 	time_passed += DELTA_TIME;
 
 	scoutPosition(DELTA_TIME);
@@ -292,9 +294,9 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
  */
 void Boss::usePotion( const int strength_, const int distance_)
 {
-	assert( strength_ >= 0 );
-	assert( distance_ >= 0 );
-  if ( this -> potions_left > 0)
+	assert( strength_ >= ZERO );
+	assert( distance_ >= ZERO );
+  if ( this -> potions_left > ZERO)
   {
     this -> potions_left--;
     const double potionX = (( this -> is_right ) ? this -> boundingBox.x + this -> boundingBox.w : this->boundingBox.x);

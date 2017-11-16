@@ -59,7 +59,7 @@ Boss::Boss( const double x_, const double y_, const std::string& PATH, Player* c
 	{
 		Log(WARN) << "Passing a null player to the Boss.";
 	} else {
-		// No Action.
+		Log ( INFO ) << "\tPlayer is not playing";
 	}
 }
 
@@ -74,7 +74,7 @@ Boss::~Boss()
 		delete this -> animation;
 		this -> animation = nullptr;
 	} else {
-		// No action.
+		Log ( INFO ) << "\tAnimation not deleted";
 	}
 
 	//Delete power_animation if null
@@ -83,7 +83,7 @@ Boss::~Boss()
 		delete this -> power_animation;
 		this -> power_animation = nullptr;
 	} else {
-		// No action.
+		Log ( INFO ) << "\tPower not deleted";
 	}
 
   //Delete shield_animation if null
@@ -92,7 +92,7 @@ Boss::~Boss()
 		delete this -> shield_animation;
 		this -> shield_animation = nullptr;
 	} else {
-		// No action.
+		Log ( INFO ) << "\tShield not deleted";
 	}
 
 	//Exit Boss if current_state is different of the null
@@ -100,7 +100,7 @@ Boss::~Boss()
 	{
 		this -> current_state -> exit();
 	} else {
-		// No action.
+		Log ( INFO ) << "\tCurrent State is null";
 	}
 
 	this -> player = nullptr;
@@ -145,7 +145,7 @@ void Boss::update( const double DELTA_TIME)
     {
       // Delete potion.
 	} else {
-	  // No Action.
+	  Log ( INFO ) << "\tEmpty colision";
 	}
      potion -> update( DELTA_TIME);
   }
@@ -173,7 +173,7 @@ void Boss::render( const double cameraX_, const double cameraY_)
 			this -> sprite -> render( dx, dy, &this->animationClip, false, 0.0, nullptr, flip );
 		}
 	} else {
-	  // No Action.
+	  Log ( INFO ) << "\tBoss not rendered";
 	}
 	// Shield render.
 	if ( this -> has_shield )
@@ -186,7 +186,7 @@ void Boss::render( const double cameraX_, const double cameraY_)
 		  this -> shield->render(dx -120, dy, &this -> shield_clip);
 		}
 	} else {
-		// No Action.
+		Log ( INFO ) << "\tShield not rendered";
 	}
 
 	//Constants for define position x e y to camera
@@ -203,7 +203,7 @@ void Boss::render( const double cameraX_, const double cameraY_)
 			  this->power->render(pdx, pdy, &this->power_clip, false, 0.0, nullptr, this->power_flip);
 		  }
 	} else {
-		// No Action.
+		Log ( INFO ) << "\tPower not rendered";		
 	}
 
   for ( auto potion : this -> potions )
@@ -259,7 +259,7 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 	{
 		this -> velocity_y_axis = 0.0;
 	} else {
-	  // No Action.
+		Log ( INFO ) << "\tColisions not detected";	  
 	}
 	//Check collision occurrence on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM ) )
@@ -267,7 +267,7 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 		this -> nextY -= fmod( this -> nextY, 64.0) - 16.0;
 		this -> velocity_y_axis = 0.0;
 	} else {
-	  // No Action.
+		Log ( INFO ) << "\tColisions not detected";	  
 	}
 	//Check collision occurrence on left
 	if ( detections_.at(CollisionSide::SOLID_LEFT ))
@@ -275,7 +275,7 @@ void Boss::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detecti
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = 0.0;
 	} else {
-	  // No action.
+		Log ( INFO ) << "\tColisions not detected";	  
 	}
 	//Check collision occurrence on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )

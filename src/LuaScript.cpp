@@ -9,7 +9,7 @@
 #include "LuaScript.h"
 #include "Logger.h"
 
-#define ZERO
+#define ZERO 0
 
 /*
  * The constructor.

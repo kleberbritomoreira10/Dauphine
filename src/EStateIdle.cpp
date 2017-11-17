@@ -12,6 +12,8 @@
 #include "SDLWrapper.h"
 #include "Logger.h"
 
+#define ZERO 0
+
 /*
  * Check if the enemy is lying down, if yes declares him dead.
  * @see StateEnemy::enter
@@ -20,9 +22,9 @@ void EStateIdle::enter()
 {
 	this -> enemy -> isGrounded = true;
 
-	if ( enemy -> life <= 0 )
+	if ( enemy -> life <= ZERO )
 	{
-		enemy -> velocity_y_axis = 0;
+		enemy -> velocity_y_axis = ZERO;
 		enemy -> changeState( Enemy::EStates::DEAD );
 	} else {
 		// No action.
@@ -44,7 +46,7 @@ void EStateIdle::exit()
  */
 void EStateIdle::update( const double DELTA_TIME)
 {
-	assert( DELTA_TIME >= 0 );
+	assert( DELTA_TIME >= ZERO );
 	((void)DELTA_TIME); // Unused.
 
 	// Aerial

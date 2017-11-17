@@ -11,7 +11,9 @@
 #include "EStateCurious.h"
 #include "Logger.h"
 
+#define INITIAL_ENEMY_SPEED 5.0
 #define MAX_CURIOUS_TIME 4.666
+#define ZERO 0
 
 /*
  * Enter some data for animation
@@ -19,12 +21,12 @@
  */
 void EStateCurious::enter()
 {
-	this -> enemy -> getAnimation() -> changeAnimation(1, 0, 9, false, 1.2);
-	this -> enemy -> speed = 5.0;
+	this -> enemy -> getAnimation() -> changeAnimation(1, ZERO, 9, false, 1.2);
+	this -> enemy -> speed = INITIAL_ENEMY_SPEED;
 
-	if ( enemy -> life <= 0)
+	if ( enemy -> life <= ZERO)
 	{
-		enemy -> velocity_y_axis = 0;
+		enemy -> velocity_y_axis = ZERO;
 		enemy -> changeState(Enemy::EStates::DEAD);
 	} else {
 		// No action.
@@ -46,7 +48,7 @@ void EStateCurious::exit()
  */
 void EStateCurious::update( const double DELTA_TIME)
 {
-	assert( DELTA_TIME >= 0);
+	assert( DELTA_TIME >= ZERO);
 	this -> time_elapsed += DELTA_TIME;
 
 	// Aerial

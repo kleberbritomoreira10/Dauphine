@@ -10,6 +10,8 @@
 #include "EStateDead.h"
 #include "Logger.h"
 
+#define MINIMUN_DEAD_TIME 2
+#define ZERO 0
 
 /*
  * Informs the dead state
@@ -17,9 +19,9 @@
  */
 void EStateDead::enter()
 {
-	this -> enemy -> life = 0;
+	this -> enemy -> life = ZERO;
 	this -> enemy -> set_dead(true);
-	this -> enemy -> getAnimation() -> changeAnimation(1, 1, 1, false, 0);
+	this -> enemy -> getAnimation() -> changeAnimation(1, 1, 1, false, ZERO);
 }
 
 /*
@@ -36,21 +38,21 @@ void EStateDead::exit()
  * @see StateEnemy::update
  */
 
-double dead_time = 0; // Informs the state of death through delta time 
+double dead_time = ZERO; // Informs the state of death through delta time 
 
 void EStateDead::update( const double DELTA_TIME)
 {
-	assert (DELTA_TIME >= 0 );
-	assert ( dead_time >= 0 );
+	assert (DELTA_TIME >= ZERO );
+	assert ( dead_time >= ZERO );
 
 	dead_time += DELTA_TIME;
-	if ( dead_time >= 2 )
+	if ( dead_time >= MINIMUN_DEAD_TIME )
 	{
 		this -> enemy -> set_dead(true);
 	} else {
 		this -> enemy -> set_dead(false);
 	}
-	this -> enemy -> velocity_x_axis = 0;
+	this -> enemy -> velocity_x_axis = ZERO;
 }
 
 /*

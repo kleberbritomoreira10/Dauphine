@@ -9,6 +9,14 @@
 #include "PStateHit.h"
 #include "Logger.h"
 
+#define PLAYER_STATE_MOVING_BOX_X 58
+#define PLAYER_STATE_MOVING_BOX_Y 72
+#define PLAYER_STATE_MOVING_BOX_W 130
+#define PLAYER_STATE_MOVING_BOX_H 160
+#define PLAYER_VELOCITY_X 5000
+#define PLAYER_VELOCITY_Y -130
+#define ZERO 0
+
 /*
  * Method to check the position of the beat
  * @see StatePlayer::enter
@@ -18,21 +26,21 @@ void PStateHit::enter()
   //Displays this log on the terminal
   Log(DEBUG) << "STATE ATTACK JUMPING";
 
-  this -> box.x = 58;
-  this -> box.y = 72;
-  this -> box.w = 130;
-  this -> box.h = 145;
-  this -> player -> getAnimation() -> changeAnimation(4, 8, 1, false, 0);
+  this -> box.x = PLAYER_STATE_MOVING_BOX_X;
+  this -> box.y = PLAYER_STATE_MOVING_BOX_Y;
+  this -> box.w = PLAYER_STATE_MOVING_BOX_W;
+  this -> box.h = PLAYER_STATE_MOVING_BOX_H;
+  this -> player -> getAnimation() -> changeAnimation(4, 8, 1, false, ZERO);
 
-  int direction = 0;
+  int direction = ZERO;
   if ( this -> player -> is_right )
   {
     direction = -1;
   } else {
     direction = 1;
   }
-  this -> player -> velocity_y_axis = -130;
-  this -> player -> velocity_x_axis = 5000 * direction;
+  this -> player -> velocity_y_axis = -PLAYER_VELOCITY_Y;
+  this -> player -> velocity_x_axis = PLAYER_VELOCITY_X * direction;
 }
 
 /*

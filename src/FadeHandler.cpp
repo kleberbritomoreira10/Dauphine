@@ -10,6 +10,10 @@
 #include "FadeHandler.h"
 #include "Logger.h"
 
+#define UNITY_ALPHA 255.0
+#define THOUSAND 1000.0
+#define ZERO 0
+
 /*
  * The constructor
  * @param sprite_ : representation for animation
@@ -24,7 +28,7 @@ FadeHandler::FadeHandler(Sprite* const sprite_) :
 	current_percentage(0.0),
 	rate(0.0)
 {
-	this -> current_percentage = ( this -> sprite->getAlpha()/255.0 );
+	this -> current_percentage = ( this -> sprite->getAlpha()/UNITY_ALPHA );
 }
 
 /*
@@ -42,12 +46,12 @@ FadeHandler::~FadeHandler()
  */
 void FadeHandler::fadeIn( const double percentage_, const double time_)
 {
-	assert( percentage_ >= 0 );
-	assert( time_ >= 0 );
+	assert( percentage_ >= ZERO );
+	assert( time_ >= ZERO );
 	this -> should_fade_in = true;
 	this -> should_fade_out = false;
 	this -> stop_percentage = percentage_;
-	this -> current_percentage = ( this -> sprite->getAlpha()/255.0);
+	this -> current_percentage = ( this -> sprite->getAlpha()/UNITY_ALPHA);
 	this -> rate = ( this -> stop_percentage - this -> current_percentage)/time_;
 }
 
@@ -61,7 +65,7 @@ void FadeHandler::fade_out( const double percentage_, const double time_)
 	this -> should_fade_out = true;
 	this -> should_fade_in = false;
 	this -> stop_percentage = percentage_;
-	this -> current_percentage = ( this -> sprite->getAlpha()/255.0);
+	this -> current_percentage = ( this -> sprite->getAlpha()/UNITY_ALPHA);
 	this -> rate = ( this -> current_percentage - this -> stop_percentage)/time_;
 }
 
@@ -71,7 +75,7 @@ void FadeHandler::fade_out( const double percentage_, const double time_)
  */
 void FadeHandler::update( const double DELTA_TIME)
 {
-	assert ( DELTA_TIME >= 0 );
+	assert ( DELTA_TIME >= ZERO );
 	if ( this -> sprite == nullptr )
 	{
 		Log(WARN) << "No sprite set to Fade Handler.";
@@ -85,12 +89,12 @@ void FadeHandler::update( const double DELTA_TIME)
 	{
 		if ( this -> current_percentage < this -> stop_percentage )
 		{
-			this -> current_percentage += this -> rate * DELTA_TIME/1000.0;
-			this -> sprite->setAlpha( 255.0 * this -> current_percentage );
+			this -> current_percentage += this -> rate * DELTA_TIME/THOUSAND;
+			this -> sprite->setAlpha( UNITY_ALPHA * this -> current_percentage );
 		} else {
 			should_fade_in = false;
 			this -> current_percentage = this -> stop_percentage;
-			this -> sprite -> setAlpha( 255.0 * this -> current_percentage );
+			this -> sprite -> setAlpha( UNITY_ALPHA * this -> current_percentage );
 		}
 	}
 	//check the rate that should fade at the output
@@ -98,12 +102,12 @@ void FadeHandler::update( const double DELTA_TIME)
 	{
 		if ( this -> current_percentage > this -> stop_percentage )
 		{
-			this -> current_percentage -= this -> rate * DELTA_TIME/1000.0;
-			this -> sprite -> setAlpha( 255.0 * this -> current_percentage );
+			this -> current_percentage -= this -> rate * DELTA_TIME/THOUSAND;
+			this -> sprite -> setAlpha( UNITY_ALPHA * this -> current_percentage );
 		} else {
 			  should_fade_out = false;
 			  this -> current_percentage = this -> stop_percentage;
-			  this -> sprite -> setAlpha(255.0 * this -> current_percentage);
+			  this -> sprite -> setAlpha(UNITY_ALPHA * this -> current_percentage);
 		  }
 	} else {
 		// No Action.

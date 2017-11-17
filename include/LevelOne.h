@@ -72,7 +72,7 @@ class LevelOne : public Level
 
 		Sprite *image; // the image attributed to the Sprite
 		const int items [ 2 ] [ 4 ]; // upper index of items on the game
-		const bool caught_items [ 4 ]; // boolean for the number of items that were caught or not
+		 bool caught_items [ 4 ]; // boolean for the number of items that were caught or not
 
 };
 

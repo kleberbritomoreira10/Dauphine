@@ -62,21 +62,21 @@ class DynamicEntity : public Entity
 		*/
 		virtual void setLevelWH ( const unsigned int width_, const unsigned int height_ );
 
-		const double velocity_x_axis = 0.0; // The dynamic entity's speed on the x axis.
-		const double velocity_y_axis = 0.0; // The dynamic entity's speed on the y axis.
-		const double speed = 20.0; // Speed that moves dynamic entity on input.
-		const double maxSpeed = 550.0; // Dynamic entity max speed.
-		const bool isGrounded = false; // Check for if the dynamic entity is on the ground.
-		const double nextX; // Used to update next position on x-axis.
-		const double nextY; // Used to update next position on y-axis.
-		const bool reached_level_end = false; // Boolean value to evaluate the level end.
+		 double velocity_x_axis = 0.0; // The dynamic entity's speed on the x axis.
+		 double velocity_y_axis = 0.0; // The dynamic entity's speed on the y axis.
+		 double speed = 20.0; // Speed that moves dynamic entity on input.
+		 double maxSpeed = 550.0; // Dynamic entity max speed.
+		 bool isGrounded = false; // Check for if the dynamic entity is on the ground.
+		 double nextX; // Used to update next position on x-axis.
+		 double nextY; // Used to update next position on y-axis.
+		 bool reached_level_end = false; // Boolean value to evaluate the level end.
 
-	  const bool activated = false;
-	  const int strength = 0;
-	  const int distance = 0;
-	  const double flightTime = 0.0;
+		const bool activated = false;
+		const int strength = 0;
+		const int distance = 0;
+		const double flightTime = 0.0;
 
-	  const bool isClimbing = false; // Boolean value evaluate the character's climbing condition
+	   bool isClimbing = false; // Boolean value evaluate the character's climbing condition
 
 	protected:
 		/**

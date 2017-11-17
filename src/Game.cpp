@@ -28,6 +28,12 @@
 #define ADD_STATE_INSERT( stateEnum, stateClass ) \
 	this -> states_map.insert ( std::make_pair < GStates, StateGame * > ( stateEnum, new stateClass() ) )
 
+#define INITIAL_TIME 0
+#define POSITION_X 0
+#define POSITION_Y 0
+#define WIDTH_VALUE 50
+#define NO_NUMBERS_TO_BE_PARAMETERIZED 0
+#define NO_LINES 0
 
 Game &Game::instance ()
 {
@@ -68,11 +74,10 @@ Game::Game () :
 
 	getDialog();
 
-	int width_value = 50;
 
 	this -> pause_image = getResources().get("res/images/pause_overlay.png");
 	this -> pause_selector = getResources().get("res/images/cursor_regular.png");
-	this -> pause_selector -> setWidth( width_value );
+	this -> pause_selector -> setWidth( WIDTH_VALUE );
 
 	this -> is_running = true;
 	FPSWrapper::initialize( this -> fps_manager );
@@ -198,9 +203,9 @@ void Game::runGame()
 	this -> current_state -> load();
 
 	// Get the first game time.
-	double total_game_time = 0.0;
+	double total_game_time = INITIAL_TIME;
 	const double delta_time = 1.0 / 60.0;
-	double accumulated_time = 0.0;
+	double accumulated_time = INITIAL_TIME;
 
 	// This is the main game loop.
 	while( this -> is_running )
@@ -218,7 +223,7 @@ void Game::runGame()
 
 			get_current_selection();
 
-			assert( delta_time > 0 );
+			assert( delta_time > INITIAL_TIME );
 
 			time_verifications(delta_time);
 
@@ -233,7 +238,7 @@ void Game::runGame()
 
 		this -> current_state -> render();
 
-		assert( total_number_to_be_parameterized > 0 );
+		assert( total_number_to_be_parameterized > NO_NUMBERS_TO_BE_PARAMETERIZED );
 
 		render_pause_and_dialog();
 
@@ -307,7 +312,7 @@ void Game::render_pause_and_dialog()
 			renderDialog();
 		else
 		{
-			current_line = 0;
+			current_line = NO_LINES;
 			is_cut_scene = false;
 		}
 	}else
@@ -353,7 +358,7 @@ void Game::renderDialog()
 
 	if( this -> dialog[ current_line ] )
 	{
-		this -> dialog[ current_line ] -> render( 0, 0, nullptr, true );
+		this -> dialog[ current_line ] -> render( POSITION_X, POSITION_Y, nullptr, true );
 
 	}else
 	{
@@ -366,7 +371,7 @@ void Game::verify_current_line()
 {
 	if( current_line > total_number_to_be_parameterized )
 	{
-		current_line = 0;
+		current_line = NO_LINES;
 		return;
 	}else
 	{
@@ -406,7 +411,7 @@ void Game::renderPause()
 {
 	if( this -> pause_image != nullptr )
 	{
-		this -> pause_image -> render( 0, 0, nullptr, true );
+		this -> pause_image -> render( POSITION_X, POSITION_Y, nullptr, true );
 
 		this -> pause_selector -> render( selector_X_position_left[ current_selection ],
 			selector_Y_position_left[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
@@ -435,7 +440,7 @@ void Game::handleSelectorMenu()
 	if( keyStates[ GameKeys::DOWN ] == true || keyStates[ GameKeys::RIGHT ] == true )
 	{
 
-		handle_selection_keys_down_and_right(SELECTOR_DELAY_TIME);
+		handle_selection_keys_down_and_right( SELECTOR_DELAY_TIME );
 
 	}else if( keyStates[ GameKeys::UP ] == true || keyStates[ GameKeys::LEFT ] == true )
 	{
@@ -469,7 +474,7 @@ void Game::handle_selection_keys_down_and_right( const double SELECTOR_DELAY_TIM
 		{
 			current_selection = PSelection::RESUME;
 		}
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 
 	}else
 	{
@@ -490,7 +495,7 @@ void Game::handle_selection_keys_up_and_left( const double SELECTOR_DELAY_TIME )
 			current_selection = ( PSelection::TOTAL - 1 );
 		}
 
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 
 	}else
 	{

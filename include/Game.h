@@ -98,13 +98,13 @@ class Game
 		void clearKeyFromInput ( const GameKeys KEY );
 		void resizeWindow ( const unsigned int width_, const unsigned int height_ );
 
-		bool is_cut_scene; // Verify if the scene is cutted.
-		bool is_paused; // Verify if the scene is paused.
+		 bool is_cut_scene = false; // Verify if the scene is cutted.
+		 bool is_paused = false; // Verify if the scene is paused.
 
-		unsigned int current_slot; // Current slot value.
+		unsigned int current_slot = 0; // Current slot value.
 
 		static const int total_number_to_be_parameterized = 14; //Total number of lines in the slot.
-		unsigned int current_line; // Current line value.
+		unsigned int current_line = 0; // Current line value.
 
 		Sprite *dialog[total_number_to_be_parameterized];
 
@@ -170,7 +170,7 @@ class Game
 		void handle_selection_keys_up_and_left( const double SELECTOR_DELAY_TIME );
 
 		Window *window; /**< The game Window. */
-		bool is_running; /**< Whether the game is currently running/looping or not. */
+		 bool is_running = false; /**< Whether the game is currently running/looping or not. */
 
 		Sprite *pause_image; // Sprite to pause the image.
 		Sprite *pause_selector; // Sprite to pause de selector.
@@ -197,13 +197,13 @@ class Game
 			TOTAL
 		};
 
-		double passed_time; /**< The time already elapsed since the beggining of the menu. */
+		 double passed_time = 0; /**< The time already elapsed since the beggining of the menu. */
 
-		int current_selection; // The value of the current selection.
-		int selector_X_position_left [ PSelection::TOTAL ]; /**< The X position of the left selector.. */
-		int selector_Y_position_left [ PSelection::TOTAL ]; /**< The Y position of the left selector.. */
-		int selector_X_position_right [ PSelection::TOTAL ]; /**< The X position of the left selector.. */
-		int selector_Y_position_right [ PSelection::TOTAL ]; /**< The Y position of the left selector.. */
+		int current_selection = 0; // The value of the current selection.
+		const int selector_X_position_left [ PSelection::TOTAL ]; /**< The X position of the left selector.. */
+		const int selector_Y_position_left [ PSelection::TOTAL ]; /**< The Y position of the left selector.. */
+		const int selector_X_position_right [ PSelection::TOTAL ]; /**< The X position of the left selector.. */
+		const int selector_Y_position_right [ PSelection::TOTAL ]; /**< The Y position of the left selector.. */
 
 };
 

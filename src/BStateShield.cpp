@@ -10,13 +10,18 @@
 #include "BStateShield.h"
 #include "Logger.h"
 
+#define POSITION_X 0
+#define POSITION_Y 0
+#define NUMBER_OF_IMAGES 1
+#define TOTAL_TIME 0
+
 /**
 * Shows the animation of the boss getting a shield.
 */
 void BStateShield::enter()
 {
 	Log( DEBUG ) << "STATE SHIELD BOSS";
-	this -> boss -> getAnimation() -> changeAnimation( 0, 0, 1, false, 0 );
+	this -> boss -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES, false, TOTAL_TIME );
 	this -> boss -> has_shield = true;
 }
 

@@ -14,6 +14,11 @@
 #include <string>
 #include <assert.h>
 
+#define INITIAL_TIME 0
+#define WIDTH 50
+#define POSITION_X 0
+#define POSITION_Y 0
+
 /**
 * The constructor.
 * Initializes the attributes.
@@ -102,7 +107,7 @@ void GStateMenu::unload()
 */
 void GStateMenu::update( const double DELTA_TIME )
 {
-	assert( DELTA_TIME >= 0 );
+	assert( DELTA_TIME >= INITIAL_TIME );
 	this -> passed_time += DELTA_TIME;
 
 	handleSelectorMenu();
@@ -127,7 +132,7 @@ void GStateMenu::change_shwing_animation()
 {
 	if( this -> is_shwing_activated )
 	{
-		 this -> shwing_animation -> changeAnimation( 0, 0, 12, false, 2 );
+		 this -> shwing_animation -> changeAnimation( POSITION_X, POSITION_Y, 12, false, 2 );
 		 this -> is_shwing_activated = false;
 
 	}else
@@ -144,8 +149,8 @@ void GStateMenu::render()
 
 	if( this -> passed_time > 10 )
 	{
-		this -> attrack_mode_background -> render( 0, 0, nullptr, true );
-		this -> attract_mode -> render( 0, 0, &this -> attractClip, true );
+		this -> attrack_mode_background -> render( POSITION_X, POSITION_Y, nullptr, true );
+		this -> attract_mode -> render( POSITION_X, POSITION_Y, &this -> attractClip, true );
 
 		should_ignore = true;
 
@@ -190,9 +195,9 @@ void GStateMenu::handle_attract()
 
 void GStateMenu::render_menu()
 {
-	this -> menu_image -> render( 0, 0, nullptr, true );
+	this -> menu_image -> render( POSITION_X, POSITION_Y, nullptr, true );
 
-	this -> menu_selector -> setWidth( 50 );
+	this -> menu_selector -> setWidth( WIDTH );
 
 	this -> menu_selector -> render( selector_X_position_left[ current_selection ],
 		selector_Y_position_left[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
@@ -228,7 +233,7 @@ void GStateMenu::handleSelectorMenu()
 		verify_should_ignore();
 
 		Game::instance().setState( Game::GStates::NEW_GAME );
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
 	}
@@ -239,7 +244,7 @@ void GStateMenu::handleSelectorMenu()
 		verify_should_ignore();
 
 		Game::instance().setState( Game::GStates::CONTINUE );
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
 	}
@@ -249,7 +254,7 @@ void GStateMenu::handleSelectorMenu()
 		verify_should_ignore();
 
 		Game::instance().setState( Game::GStates::OPTIONS );
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
 	}
@@ -259,7 +264,7 @@ void GStateMenu::handleSelectorMenu()
 		verify_should_ignore();
 
 		Game::instance().setState( Game::GStates::CREDITS );
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
 	}
@@ -269,7 +274,7 @@ void GStateMenu::verify_should_ignore()
 {
 	if( should_ignore )
 	{
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 		should_ignore = false;
 		return;
@@ -293,8 +298,8 @@ void GStateMenu::handle_current_selection_down_and_right( const double SELECTOR_
 			current_selection = Selection::NEWGAME;
 		}
 
-		this->passed_time = 0.0;
-		this->attractClip.y = 0;
+		this -> passed_time = INITIAL_TIME;
+		this -> attractClip.y = 0;
 
 	}else
 	{
@@ -314,7 +319,7 @@ void GStateMenu::handle_current_selection_up_and_left( const double SELECTOR_DEL
 		{
 			current_selection = ( Selection::TOTAL - 1 );
 		}
-		this -> passed_time = 0.0;
+		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
 	}else

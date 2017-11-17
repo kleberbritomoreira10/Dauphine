@@ -16,6 +16,14 @@
 #include <string>
 #include <assert.h>
 
+#define TEXT_SIZE 45
+#define INITIAL_TIME 0
+#define INITIAL_VOLUME 0
+#define MAX_VOLUME 100
+#define WIDTH_VALUE 50
+#define POSITION_X 0
+#define POSITION_Y 0
+
 const std::string GStateOptions::possible_resolutions[ 3 ] = { "800x600", "768x432", "960x540" };
 
 /**
@@ -38,11 +46,11 @@ GStateOptions::GStateOptions() :
 	music_volume_text( nullptr ),
 	sfx_volume_text( nullptr )
 {
-	this -> resolution = new Text( 830.0, 365.0, "res/fonts/maturasc.ttf", 45, \
+	this -> resolution = new Text( 830.0, 365.0, "res/fonts/maturasc.ttf", TEXT_SIZE, \
 		possible_resolutions[current_resolution].c_str() );
-	this -> music_volume_text = new Text( 830.0, 468.0, "res/fonts/maturasc.ttf", 45, \
+	this -> music_volume_text = new Text( 830.0, 468.0, "res/fonts/maturasc.ttf", TEXT_SIZE, \
 		Util::toString( this -> music_volume ).c_str() );
-	this -> sfx_volume_text = new Text( 830.0, 580.0, "res/fonts/maturasc.ttf", 45, \
+	this -> sfx_volume_text = new Text( 830.0, 580.0, "res/fonts/maturasc.ttf", TEXT_SIZE, \
 		Util::toString( this -> sfx_volume ).c_str() );
 }
 
@@ -104,7 +112,7 @@ void GStateOptions::delete_sfx_volume_text()
 */
 void GStateOptions::update( const double DELTA_TIME )
 {
-	assert( DELTA_TIME > 0 );
+	assert( DELTA_TIME > INITIAL_TIME );
 	this -> elapsedTime += DELTA_TIME;
 
 	this -> resolution -> changeText( possible_resolutions[ current_resolution ].c_str() );
@@ -219,7 +227,7 @@ void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_
 
 		}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
 		{
-			if( this -> music_volume > 0 )
+			if( this -> music_volume > INITIAL_VOLUME )
 			{
 				this -> music_volume -= 5;
 
@@ -230,7 +238,7 @@ void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_
 
 		}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
 		{
-			if( this -> sfx_volume > 0)
+			if( this -> sfx_volume > INITIAL_VOLUME )
 			{
 				this -> sfx_volume -= 5;
 
@@ -265,7 +273,7 @@ void GStateOptions::handle_current_option_right_key( const double SELECTOR_DELAY
 
 		}else if( this -> current_option == OPTIONS_VOLUME_MUSIC ) // Option == VOLUME MUSIC
 		{
-			if( this -> music_volume < 100 )
+			if( this -> music_volume < MAX_VOLUME )
 			{
 				this -> music_volume += 5;
 
@@ -276,7 +284,7 @@ void GStateOptions::handle_current_option_right_key( const double SELECTOR_DELAY
 
 		}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
 		{
-			if( this -> sfx_volume < 100 )
+			if( this -> sfx_volume < MAX_VOLUME )
 			{
 				this -> sfx_volume += 5;
 
@@ -301,9 +309,9 @@ void GStateOptions::render()
 {
 	render_options_image();
 
-	this -> resolution -> render( 0, 0 );
-	this -> music_volume_text -> render( 0, 0 );
-	this -> sfx_volume_text -> render( 0, 0 );
+	this -> resolution -> render( POSITION_X, POSITION_Y );
+	this -> music_volume_text -> render( POSITION_X, POSITION_Y );
+	this -> sfx_volume_text -> render( POSITION_X, POSITION_Y );
 
 	render_selector();
 
@@ -313,7 +321,7 @@ void GStateOptions::render_options_image()
 {
 	if( this -> options_image != nullptr )
 	{
-		this -> options_image -> render( 0, 0, nullptr, true );
+		this -> options_image -> render( POSITION_X, POSITION_Y, nullptr, true );
 	}
 	else
 	{
@@ -355,7 +363,7 @@ void GStateOptions::load()
   this -> options_image = Game::instance().getResources().get( path_options );
   this -> selector = Game::instance().getResources().get( path_cursor );
 
-  this -> selector -> setWidth( 50 );
+  this -> selector -> setWidth( WIDTH_VALUE );
 }
 
 /**

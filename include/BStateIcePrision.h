@@ -35,6 +35,8 @@ class BStateIcePrision : public StateBoss
 
 		void update_player();
 
+		double prision_time = 0.0;
+
 };
 
 #endif // INCLUDE_BSTATEICEPRISION_H

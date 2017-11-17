@@ -9,6 +9,7 @@
 
 #include "Camera.h"
 #include "Configuration.h"
+#include "assert.h"
 
 /**
 * The constructor.
@@ -60,6 +61,7 @@ void Camera::updatePosition()
 
 void Camera::update_position_x()
 {
+
   // Left wall.
   if( this -> clip.x < 0 )
   {
@@ -77,12 +79,13 @@ void Camera::update_position_x()
 
 void Camera::update_position_y()
 {
+
   // Top wall.
   if( this -> clip.y < 0)
   {
     this -> clip.y = 0;
 
-  }else if( this -> clip.y > ( int ) this -> level_height - this -> clip.h) // Bottom wall.
+  }else if( this -> clip.y > ( int ) this -> level_height - this -> clip.h ) // Bottom wall.
   {
     this -> clip.y = ( int ) this -> level_height - this -> clip.h;
 
@@ -96,7 +99,7 @@ void Camera::update_position_y()
 * Changing the camera position in the game for the center.
 * @param entity_: Character of the game that will be in the center.
 */
-void Camera::centralizeOn(Entity *const entity_)
+void Camera::centralizeOn( Entity *const entity_ )
 {
   this -> entity = entity_;
 }

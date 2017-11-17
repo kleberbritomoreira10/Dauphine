@@ -14,7 +14,12 @@
 #include "Collision.h"
 #include <assert.h>
 
-double prision_time = 0.0;
+#define WIDTH_VALUE 340
+#define HEIGHT_VALUE 1020
+#define ANIMATION_POSITION_X 0
+#define ANIMATION_POSITION_Y 0
+#define ANIMATION_TOTAL_TIME 0
+
 
 /**
 * Shows the animation of the boss entering in the state of ice prision.
@@ -23,8 +28,8 @@ void BStateIcePrision::enter()
 {
   // Log(DEBUG) << "STATE ICE PRISION BOSS";
   this -> boss -> power = Game::instance().getResources().get( "res/images/ice_prision.png" );
-  this -> boss -> power_animation -> changeWidthHeight( 340,1020 );
-  this -> boss -> power_animation -> changeAnimation( 0, 0, 2, false, 0.5 );
+  this -> boss -> power_animation -> changeWidthHeight( WIDTH_VALUE, HEIGHT_VALUE );
+  this -> boss -> power_animation -> changeAnimation( ANIMATION_POSITION_X, ANIMATION_POSITION_X, 2, false, 0.5 );
   this -> boss -> velocity_x_axis = 0;
   this -> boss -> velocity_y_axis = 0;
   this -> boss -> power_is_activated = true;
@@ -40,7 +45,8 @@ void BStateIcePrision::exit()
 {
   this -> boss -> power_is_activated = false;
   this -> boss -> player -> is_vulnerable = true;
-  this -> boss -> power_animation -> changeAnimation( 0, 0, 1, false, 0 );
+  this -> boss -> power_animation -> changeAnimation( ANIMATION_POSITION_X, ANIMATION_POSITION_Y, 1, 
+                                                    false, ANIMATION_TOTAL_TIME );
   prision_time = 0.0;
   this -> boss -> player -> can_move = true;
 }
@@ -57,7 +63,7 @@ void BStateIcePrision::update( const double DELTA_TIME )
 
   if( prision_time > 1 )
   {
-    this -> boss -> power_animation -> changeAnimation( 2, 0, 1, false, 0 );
+    this -> boss -> power_animation -> changeAnimation( 2, ANIMATION_POSITION_Y, 1, false, ANIMATION_TOTAL_TIME );
 
     update_player();
     
@@ -77,7 +83,7 @@ void BStateIcePrision::update( const double DELTA_TIME )
 void BStateIcePrision::update_player()
 {
   if( Collision::rects_collided( this -> boss -> player -> get_bounding_box(),  { ( int )this -> boss -> power_X_axis,
-  ( int ) this -> boss -> power_Y_axis, 340,1020 }))
+  ( int ) this -> boss -> power_Y_axis, WIDTH_VALUE, HEIGHT_VALUE }))
   {
     if( this -> boss -> player -> is_vulnerable)
     {

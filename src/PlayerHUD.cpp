@@ -4,26 +4,24 @@
 #include "Logger.h"
 #include <assert.h>
 
+#define TEXT_POSITION_X 200.0
+#define TEXT_POSITION_Y 25.00
+#define TEXT_SIZE 50
+#define CAMERA_POSITION_X 0
+#define CAMERA_POSITION_Y 0
+
 PlayerHUD::PlayerHUD( Player *const player_ ):
 
 	player( player_ ),
-	potions_left( new Text( 200.0, 25.0, "res/fonts/maturasc.ttf", 50, "Potions: x" ) )
+	potions_left( new Text( TEXT_POSITION_X, TEXT_POSITION_Y, "res/fonts/maturasc.ttf", TEXT_SIZE, "Potions: x" ) )
 {
 
 	assert( player_ );
 
-	// for( unsigned int i = 0; i < TOTAL_HUD; i++ )
-	// {
-	// 	this -> player_hud_sprites[ i ] = nullptr;
-	// }
 	restart_hud_sprites();
 
 	initializeSprites();
 
-	// for( int i = 0; i < TOTAL_HUD; i++ )
-	// {
-	// 	this -> is_can_render_hud[ i ] = true;
-	// }
 	restart_is_can_render_hud();
 
 }
@@ -100,7 +98,7 @@ void PlayerHUD::render_hud_sprites()
 	{
 		if( this -> is_can_render_hud[ i ])
 		{
-			this -> player_hud_sprites[ i ] -> render( 0, 0 );
+			this -> player_hud_sprites[ i ] -> render( CAMERA_POSITION_X, CAMERA_POSITION_Y );
 
 		}else
 		{
@@ -111,9 +109,9 @@ void PlayerHUD::render_hud_sprites()
 
 void PlayerHUD::render_potions_left()
 {
-	if( this -> potions_left != nullptr)
+	if( this -> potions_left != nullptr )
 	{
-		this -> potions_left -> render( 0, 0 );
+		this -> potions_left -> render( CAMERA_POSITION_X, CAMERA_POSITION_Y );
 
 	}else
 	{

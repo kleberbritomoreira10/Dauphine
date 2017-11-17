@@ -13,6 +13,9 @@
 #include "Collision.h"
 #include "Math.h"
 
+#define TURN_HANDLE 5.5
+#define ROLL_STRENGTH 120.0
+#define VELOCITY 10.0
 /*
 * @param x_ : position in x axis.
 * @param y_ : position in y axis.
@@ -232,7 +235,6 @@ void DynamicEntity::applyGravity ()
 void DynamicEntity::move ( const bool movingLeft_, const bool movingRight_ )
 {
 
-	const double turnHandle = 5.5;
 	// Applies Apply right and left movement on entity speed on the x axis.
 	if ( movingLeft_ || movingRight_ )
 	{
@@ -243,7 +245,7 @@ void DynamicEntity::move ( const bool movingLeft_, const bool movingRight_ )
 			if ( this -> velocity_x_axis > 0.0)
 			{
 
-				this -> velocity_x_axis -= this -> speed * turnHandle;
+				this -> velocity_x_axis -= this -> speed * TURN_HANDLE;
 
 			}else{
 
@@ -261,7 +263,7 @@ void DynamicEntity::move ( const bool movingLeft_, const bool movingRight_ )
 			if ( this -> velocity_x_axis < 0.0 )
 			{
 
-				this -> velocity_x_axis += this -> speed * turnHandle;
+				this -> velocity_x_axis += this -> speed * TURN_HANDLE;
 
 			}else
 			{
@@ -281,7 +283,6 @@ void DynamicEntity::move ( const bool movingLeft_, const bool movingRight_ )
 void DynamicEntity::moveVertical ( const bool movingUp_, const bool movingDown_ )
 {
 
-	const double turnHandle = 5.5;
 	// Apply the movement up and down on entity speed on the y axis
 	if ( movingUp_ || movingDown_ )
 	{
@@ -292,7 +293,7 @@ void DynamicEntity::moveVertical ( const bool movingUp_, const bool movingDown_ 
 			if ( this -> velocity_y_axis > 0.0 )
 			{
 
-				this -> velocity_y_axis -= this -> speed * turnHandle;
+				this -> velocity_y_axis -= this -> speed * TURN_HANDLE;
 
 			}else
 			{
@@ -311,7 +312,7 @@ void DynamicEntity::moveVertical ( const bool movingUp_, const bool movingDown_ 
 			if ( this -> velocity_y_axis < 0.0 )
 			{
 
-				this -> velocity_y_axis += this -> speed * turnHandle;
+				this -> velocity_y_axis += this -> speed * TURN_HANDLE;
 
 			}else
 			{
@@ -360,23 +361,20 @@ void DynamicEntity::slowVy ()
 void DynamicEntity::roll ()
 {
 
-	const double rollStrength = 120.0;
-
 	// Apply the roll on a dynamic entity speed on the x axis.
 	if ( this -> is_right )
 	{
-		this -> velocity_x_axis = rollStrength * this -> speed;
+		this -> velocity_x_axis = ROLL_STRENGTH * this -> speed;
 	}else
 	{
-		this -> velocity_x_axis = -rollStrength * this -> speed;
+		this -> velocity_x_axis = -ROLL_STRENGTH * this -> speed;
 	}
 }
 
 void DynamicEntity::aim ( Crosshair *const crosshair, const double direction)
 {
 	// Apply the aim on a dynamic entity speed on the x axis.
-	const double velocity = 10.0;
-	crosshair -> x += velocity * direction;
+	crosshair -> x += VELOCITY * direction;
 
 }
 

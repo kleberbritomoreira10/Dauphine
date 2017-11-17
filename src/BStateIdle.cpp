@@ -10,13 +10,18 @@
 #include "BStateIdle.h"
 #include "Logger.h"
 
+#define POSITION_X 0
+#define POSITION_Y 0
+#define NUMBER_OF_IMAGES 7
+#define TOTAL_TIME_ANIMATION 1
+
 /**
 * Shows the animation of the boss entering in idle.
 */
 void BStateIdle::enter()
 {
 	Log( DEBUG ) << "STATE IDLE BOSS";
-	this -> boss -> getAnimation() -> changeAnimation( 0, 0, 7, false, 1 );
+	this -> boss -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES, false, TOTAL_TIME_ANIMATION );
 }
 
 /**

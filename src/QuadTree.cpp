@@ -10,6 +10,10 @@
 #include "QuadTree.h"
 #include <assert.h>
 
+#define MAX_NUMBER_OF_NODES 4
+#define INDEX_NOT_ALLOWED -1
+#define FIRST_NODE 0
+
 /*
 * Thanks to:
 * http://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
@@ -44,7 +48,7 @@ void QuadTree::clear()
 {
 	this -> objects.clear();
 
-	for( int i = 0; i < 4; i++ )
+	for( int i = 0; i < MAX_NUMBER_OF_NODES; i++ )
 	{
 		if( this -> nodes[ i ] != nullptr)
 		{
@@ -65,18 +69,18 @@ void QuadTree::split()
 {
 	const int subWidth = this -> bounds.w / 2;
 	const int subHeight = this -> bounds.h / 2;
-	const int x = this -> bounds.x;
-	const int y = this -> bounds.y;
+	const int position_x = this -> bounds.x;
+	const int position_y = this -> bounds.y;
 
-	SDL_Rect rect0 = { x + subWidth, y, subWidth, subHeight };
-	SDL_Rect rect1 = { x, y, subWidth, subHeight };
-	SDL_Rect rect2 = { x, y + subHeight, subWidth, subHeight };
-	SDL_Rect rect3 = { x + subWidth, y + subHeight, subWidth, subHeight };
+	SDL_Rect rect0 = { position_x + subWidth, position_y, subWidth, subHeight };
+	SDL_Rect rect1 = { position_x, position_y, subWidth, subHeight };
+	SDL_Rect rect2 = { position_x, position_y + subHeight, subWidth, subHeight };
+	SDL_Rect rect3 = { position_x + subWidth, position_y + subHeight, subWidth, subHeight };
 
-	this -> nodes[ 0 ] = new QuadTree( this -> level+1, rect0 );
-	this -> nodes[ 1 ] = new QuadTree( this -> level+1, rect1 );
-	this -> nodes[ 2 ] = new QuadTree(this -> level+1, rect2 );
-	this -> nodes[ 3 ] = new QuadTree(this -> level+1, rect3 );
+	this -> nodes[ 0 ] = new QuadTree( this -> level + 1, rect0 );
+	this -> nodes[ 1 ] = new QuadTree( this -> level + 1, rect1 );
+	this -> nodes[ 2 ] = new QuadTree(this -> level + 1, rect2 );
+	this -> nodes[ 3 ] = new QuadTree(this -> level + 1, rect3 );
 }
 
 /**
@@ -102,26 +106,10 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 	// Object can completely fit within the left quadrants
 	if( rect_.x < vertical_mid_point && rect_.x + rect_.w < vertical_mid_point )
 	{
-		// if( top_quadrant )
-		// {
-		// 	index = 1;
-		//
-		// }else if ( bottom_quadrant )
-		// {
-		// 	index = 2;
-		// }
 		result_index = handle_index_left_quadrants( top_quadrant, bottom_quadrant );
 
 	}else if ( rect_.x > vertical_mid_point ) // Object can completely fit within the right quadrants
 	{
-		// if (top_quadrant)
-		// {
-		// 	index = 0;
-		// }
-		// else if ( bottom_quadrant )
-		// {
-		// 	index = 3;
-		// }
 		result_index = handle_index_right_quadrants( top_quadrant, bottom_quadrant );
 
 	}else
@@ -154,7 +142,7 @@ int QuadTree::handle_index_right_quadrants( bool top_quadrant, bool bottom_quadr
 {
 	int index = -1;
 
-	if (top_quadrant)
+	if ( top_quadrant )
 	{
 		return index = 0;
 	}
@@ -178,7 +166,7 @@ void QuadTree::insert( CollisionRect rect_ ){
 	{
 		int index = getIndex( rect_.rect );
 
-		if( index != -1 )
+		if( index != INDEX_NOT_ALLOWED )
 		{
 			nodes[ index ] -> insert( rect_ );
 			return;
@@ -195,12 +183,13 @@ void QuadTree::insert( CollisionRect rect_ ){
 
 	this -> objects.push_back( rect_ );
 
-	if((int)this -> objects.size() > this -> max_number_of_quadtree_objects &&
-		level < this->max_number_of_quadtree_objects )
+	if( (int)this -> objects.size() > this -> max_number_of_quadtree_objects &&
+		level < this -> max_number_of_quadtree_objects )
 	{
-		if( nodes[ 0 ] == nullptr )
+		if( nodes[ FIRST_NODE ] == nullptr )
 		{
 			split();
+
 		}else
 		{
 			// No action.
@@ -220,7 +209,7 @@ void QuadTree::insert_all_objects()
 	while( i < ( int ) this -> objects.size())
 	{
 		int index = getIndex( this -> objects.at( i ).rect );
-		if( index != -1 )
+		if( index != INDEX_NOT_ALLOWED )
 		{
 			CollisionRect move_rect = this -> objects.at( i );
 			this -> objects.erase( this -> objects.begin() + i );
@@ -238,7 +227,7 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &ret
 
 	int index = getIndex( rect_ );
 
-	if( index != -1 && nodes[ 0 ] != nullptr )
+	if( index != INDEX_NOT_ALLOWED && nodes[ FIRST_NODE ] != nullptr )
 	{
 		nodes[ index ] -> retrieve( returnObjects_, rect_ );
 

@@ -11,6 +11,10 @@
 #include <assert.h>
 #include <cstddef>
 
+#define NO_NUMBERS_TO_BE_PARAMETERIZED 0
+#define INVALID_NUMBER -1
+#define VALID_NUMBER 1
+
 /**
 * Sets the value of the numbers in zero, positives or negatives.
 * Is used for sets the character state of life.
@@ -20,13 +24,13 @@ int Math::sign( const int number_to_be_parameterized )
 {
   assert( !number_to_be_parameterized );
 
-  if( number_to_be_parameterized > 0 )
+  if( number_to_be_parameterized > NO_NUMBERS_TO_BE_PARAMETERIZED )
   {
-    return 1;
+    return VALID_NUMBER;
 
-  }else if( number_to_be_parameterized < 0 )
+  }else if( number_to_be_parameterized < NO_NUMBERS_TO_BE_PARAMETERIZED )
   {
-    return -1;
+    return INVALID_NUMBER;
 
   }else
   {
@@ -43,11 +47,11 @@ int Math::sign( const double number_to_be_parameterized )
 {
   if( number_to_be_parameterized > 0.0 )
   {
-    return 1;
+    return VALID_NUMBER;
 
   }else if( number_to_be_parameterized < 0.0 )
   {
-    return -1;
+    return INVALID_NUMBER;
 
   }else
   {

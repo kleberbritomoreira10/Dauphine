@@ -65,8 +65,8 @@ class Level : public StateGame
 		void changeCheckpoints ( int TOTAL_NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
 		std::vector < double > checkpoints_Y_ );
 
-		unsigned int width; /**< Width that defines the horizontal limits. */
-		unsigned int height; /**< Height that defines the vertical limits. */
+		unsigned int width = 0; /**< Width that defines the horizontal limits. */
+		unsigned int height = 0; /**< Height that defines the vertical limits. */
 
 		Player *player; /**< The direct reference to player, even though its in the list. */
 		Camera *camera; /**< The current camera for that level. */
@@ -83,7 +83,7 @@ class Level : public StateGame
 		std::vector < double > checkpoints_X; // Array of checkpoint in X axis.
 		std::vector < double > checkpoints_Y; // Array of checkpoint in Y axis.
 		std::vector < bool > checkpoints_visited; // Array of all checkpoints visited.
-		int TOTAL_NUMBER_OF_CHECKPOINTS; // Total number of checkpoints.
+		int TOTAL_NUMBER_OF_CHECKPOINTS = 0; // Total number of checkpoints.
 
 		std::vector <Enemy*> enemies; // Array of direct reference to the enemies.
 		std::vector <Document*> documents; //Array of direct reference to documents.

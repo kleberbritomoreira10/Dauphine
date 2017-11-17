@@ -52,7 +52,7 @@ class QuadTree
 		const int max_number_of_quadtree_objects; // Max number of quadtree objects.
 		const int max_number_of_quadtree_levels; // Max number of quadtree levels.
 
-		int level; // The current quadtree level.
+		int level = 0; // The current quadtree level.
 		std::vector < CollisionRect > objects; // Array of collision objects.
 		SDL_Rect bounds;
 		QuadTree *nodes [ 4 ];

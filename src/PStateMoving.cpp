@@ -12,16 +12,20 @@
 
 #define THROW_STRENGTH 30
 #define THROW_DISTANCE 400
+#define PLAYER_STATE_MOVING_BOX_X 58
+#define PLAYER_STATE_MOVING_BOX_Y 72
+#define PLAYER_STATE_MOVING_BOX_W 130
+#define PLAYER_STATE_MOVING_BOX_H 160
 
 /*
  * The state when the player is grounded and moving.
  */
 void PStateMoving::enter()
 {
-  this -> box.x = 58;
-  this -> box.y = 72;
-  this -> box.w = 130;
-  this -> box.h = 160;
+  this -> box.x = PLAYER_STATE_MOVING_BOX_X;
+  this -> box.y = PLAYER_STATE_MOVING_BOX_Y;
+  this -> box.w = PLAYER_STATE_MOVING_BOX_W;
+  this -> box.h = PLAYER_STATE_MOVING_BOX_H;
   this -> player -> getAnimation()->changeAnimation(4,2,9,false,0.7);
 
   Game::instance().get_audio_handler().addSoundEffect("res/audio/FX_NADINE/RUNNING_NADINE_01.wav");

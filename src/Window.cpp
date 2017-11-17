@@ -13,6 +13,9 @@
 #include <iostream>
 #include <assert.h>
 
+#define WINDOW_SIZE 10
+#define ZERO 0
+
 SDL_Renderer* Window::sdl_renderer = nullptr;
 
 /*
@@ -100,8 +103,8 @@ void Window::render()
  */
 void Window::create(const unsigned int width_, const unsigned int height_)
 {
-  assert(width_ != 0);
-  assert(height_ != 0);
+  assert(width_ != ZERO);
+  assert(height_ != ZERO);
   /// @todo Toggle VSync.
   const Uint32 windowFlags = SDL_WINDOW_SHOWN;
   this -> sdl_window = SDL_CreateWindow( this -> window_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -158,9 +161,9 @@ void Window::resize( const unsigned int width_, const unsigned int height_)
 void Window::rescale( unsigned int size_)
 {
   // Just a precaution, so there is no abuse on the size.
-  if ( size_ > 10 )
+  if ( size_ > WINDOW_SIZE )
   {
-    size_ = 10;
+    size_ = WINDOW_SIZE;
   	Log(WARN) << "Trying to rescale for a value too big.";
   } else {
     // No Action.
@@ -187,8 +190,8 @@ void Window::getLogicalSize(int* w, int* h)
 {
   assert(w != NULL);
   assert(h != NULL);
-  assert(*w >= 0);
-  assert(*h >= 0);
+  assert(*w >= ZERO);
+  assert(*h >= ZERO);
 
   //Render window based on height and width.
   SDL_RenderGetLogicalSize(Window::getRenderer(), w, h);

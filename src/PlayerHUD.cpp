@@ -89,27 +89,8 @@ void PlayerHUD::update()
 
 void PlayerHUD::render()
 {
-	// for( int i = 0; i < TOTAL_HUD; i++)
-	// {
-	// 	if( this -> is_can_render_hud[ i ])
-	// 	{
-	// 		this -> player_hud_sprites[ i ] -> render( 0, 0 );
-	//
-	// 	}else
-	// 	{
-	// 		// No action.
-	// 	}
-	// }
 	render_hud_sprites();
 
-	// if( this -> potions_left != nullptr)
-	// {
-	// 	this -> potions_left -> render( 0, 0 );
-	//
-	// }else
-	// {
-	// 	Log( WARN ) << "Potions left HUD text is null";
-	// }
 	render_potions_left();
 }
 

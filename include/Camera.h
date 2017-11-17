@@ -55,8 +55,8 @@ class Camera {
 		void updatePosition ();
 
 		Entity *entity; /**< Reference to the entity. */
-		unsigned int level_width; /**< The width of the level. */
-		unsigned int level_height; /**< The height of the level. */
+		unsigned int level_width = 0; /**< The width of the level. */
+		unsigned int level_height = 0; /**< The height of the level. */
 		SDL_Rect clip; /**< Clip which will be used to clip the rendering only to the extent of
 			the camera. */
 

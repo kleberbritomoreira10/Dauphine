@@ -10,7 +10,11 @@
 #include "PStateClimbing.h"
 #include "Logger.h"
 
-bool is_moving = false;
+#define POSITION_X 0
+#define POSITION_Y 6
+#define NUMBER_OF_IMAGES_ANIMATION 4
+#define TOTAL_TIME_ANIMATION 1
+
 
 /**
 * Shows the animation of the player entering in climbing state.
@@ -26,7 +30,8 @@ void PStateClimbing::enter()
     this -> box.w = 130;
     this -> box.h = 145;
 
-    this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
+    this -> player -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES_ANIMATION, 
+														false, TOTAL_TIME_ANIMATION );
 
     this -> player -> velocity_y_axis = 0;
 
@@ -93,15 +98,17 @@ void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyState
 
 void PStateClimbing::handle_climbing_animation()
 {
+
 	if( abs( this -> player -> velocity_y_axis ) < 1 )
 	{
 		this -> player -> getAnimation() -> changeAnimation( this -> player -> getAnimation() -> getCurrentFrame() - 1,
-			6, 1, false, 0 );
+			POSITION_Y, 1, false, 0 );
 			is_moving = true;
 
 	}else	if( is_moving )
 				{
-					this -> player -> getAnimation() -> changeAnimation( 0, 6, 4, false, 1 );
+					this -> player -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES_ANIMATION, 
+																		false, TOTAL_TIME_ANIMATION );
 					is_moving = false;
 
 				}else

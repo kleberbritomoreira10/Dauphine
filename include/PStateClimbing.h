@@ -41,6 +41,8 @@ class PStateClimbing : public StatePlayer
 
 		void handle_climbing_animation();
 
+		bool is_moving = false;
+
 };
 
 #endif // INCLUDE_PSTATECLIMBING_H

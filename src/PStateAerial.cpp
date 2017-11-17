@@ -11,6 +11,11 @@
 #include "Logger.h"
 #include "Game.h"
 
+#define POSITION_X 4
+#define POSITION_Y 3
+#define NUMBER_OF_IMAGES_ANIMATION 14
+#define TOTAL_TIME_ANIMATION 1.4
+
 /**
 * Shows the animation of the player entering in aerial state.
 */
@@ -21,7 +26,9 @@ void PStateAerial::enter()
   this -> box.w = 130;
   this -> box.h = 145;
 
-	this -> player -> getAnimation() -> changeAnimation( 4, 3, 14, false, 1.4 );
+	this -> player -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES_ANIMATION, 
+                                                      false, TOTAL_TIME_ANIMATION );
+
 	this -> player -> isGrounded = false;
 
     Game::instance().get_audio_handler().addSoundEffect( "res/audio/FX_NADINE/FALL_NADINE_01.wav" );
@@ -54,6 +61,7 @@ void PStateAerial::handleInput( const std::array< bool, GameKeys::MAX > keyState
     return;
   }else
   {
+    
 	// Gravity
 	this -> player -> applyGravity();
 	// Move (while on air)

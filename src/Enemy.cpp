@@ -83,7 +83,7 @@ Enemy::~Enemy()
 		this -> current_state -> exit();
 		this -> current_state = nullptr;
 	} else {
-		// No action.
+		Log ( INFO ) << "\tEnemy is null";		
 	}
 
   //Attribute null to animation
@@ -92,7 +92,8 @@ Enemy::~Enemy()
     delete this -> animation;
     this -> animation = nullptr;
   } else {
-		// No action.
+		Log ( INFO ) << "\tAnimation is null";
+
 	}
 
 	destroyStates();
@@ -205,7 +206,7 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 	{
 		this -> velocity_y_axis = 0.0;
 	} else {
-		// No actiion.
+		Log ( INFO ) << "\tColision not detected";		
 	}
 	//Collision on bottom
 	if ( detections_.at(CollisionSide::SOLID_BOTTOM) )
@@ -219,18 +220,18 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 			{
 				this -> changeState(EStates::DEAD);
 			} else {
-        // No Action.
-      }
+				Log ( INFO ) << "\tColision not detected";
+      		}
 			if ( this -> patrol )
 			{
 				this -> changeState(EStates::PATROLLING);
 			} else {
-        this -> changeState(EStates::IDLE);
-        return;
+				this -> changeState(EStates::IDLE);
+				return;
 			}
 		} else {
-      // No Actiion.
-    }
+			Log ( INFO ) << "\tColision not detected";
+	    }
 	} else {
 		  if ( this -> current_state != this -> states_map.at(EStates::AERIAL) )
 		  {
@@ -245,7 +246,7 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = 0.0;
 	} else {
-		// No action.
+		Log ( INFO ) << "\tColision not detected";
 	}
 	//Collision on right
 	if ( detections_.at(CollisionSide::SOLID_RIGHT) )
@@ -253,7 +254,7 @@ void Enemy::handleCollision( std::array<bool, CollisionSide::SOLID_TOTAL> detect
 		this -> nextX = this -> x;
 		this -> velocity_x_axis = -0.001;
 	} else {
-		// No action.
+		Log ( INFO ) << "\tColision not detected";
 	}
 }
 

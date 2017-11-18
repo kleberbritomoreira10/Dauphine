@@ -81,7 +81,7 @@ void FadeHandler::update( const double DELTA_TIME)
 		Log(WARN) << "No sprite set to Fade Handler.";
 		return;
 	} else {
-		// No Action.
+		Log ( INFO ) << "\tSprite rendered";
 	}
 
   //Check the rate that should fade at the input
@@ -110,7 +110,7 @@ void FadeHandler::update( const double DELTA_TIME)
 			  this -> sprite -> setAlpha(UNITY_ALPHA * this -> current_percentage);
 		  }
 	} else {
-		// No Action.
+		Log ( INFO ) << "\tSprite of fade handler updated";
 	}
 }
 

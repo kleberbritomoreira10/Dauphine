@@ -27,7 +27,7 @@ void EStateIdle::enter()
 		enemy -> velocity_y_axis = ZERO;
 		enemy -> changeState( Enemy::EStates::DEAD );
 	} else {
-		// No action.
+		Log ( INFO ) << "\tEnemy is not in the ground";
 	}
 }
 
@@ -55,7 +55,7 @@ void EStateIdle::update( const double DELTA_TIME)
 		this -> enemy -> changeState( Enemy::EStates::AERIAL );
 		return;
 	} else {
-		// No Action.
+		Log ( INFO ) << "\tEnemy is not in the ground";
 	}
 
 	/// @todo Make the range be only in the direciton the enemy is facing.
@@ -70,7 +70,7 @@ void EStateIdle::update( const double DELTA_TIME)
 		this -> enemy -> changeState(Enemy::EStates::CURIOUS);
 		return;
 	} else {
-		// No Action.
+		Log ( INFO ) << "\tRange is not higher";
 	}
 }
 

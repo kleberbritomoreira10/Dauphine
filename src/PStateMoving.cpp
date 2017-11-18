@@ -52,7 +52,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player->changeState(Player::player_states::AERIAL);
     return;     
   } else {
-		// No Action.
+		Log ( INFO ) << "\tPlayer is not in ground";
 	}
 
   // Jump
@@ -62,7 +62,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player -> isGrounded = false;
     return;
   } else {
-		// No Action.
+		Log ( INFO ) << "\tPlayer is not jumpping";
 	}
   
   //Use potion
@@ -72,7 +72,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player->usePotion(THROW_STRENGTH, THROW_DISTANCE);
     return;
   } else {
-		// No Action.
+		Log ( INFO ) << "\tPotion not used";
 	}
   
   //Change state player
@@ -81,7 +81,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player -> changeState(Player::player_states::ATTACKMOVING);
     return;
   } else {
-		// No Action.
+		Log ( INFO ) << "\tState not changed";
 	}
 
   this -> player -> move(keyStates_[GameKeys::LEFT], keyStates_[GameKeys::RIGHT]);
@@ -101,7 +101,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player->changeState(Player::player_states::IDLE);
     return;
   } else {
-		// No Action.
+		Log ( INFO ) << "\tState not in idle";
 	}
 
   // Attack
@@ -110,7 +110,7 @@ void PStateMoving::handleInput( const std::array<bool, GameKeys::MAX> keyStates_
     this -> player->changeState(Player::player_states::ATTACK);
     return;
   } else {
-		// No Action.
+		Log ( INFO ) << "\tState not attacking";
 	}
 }
 

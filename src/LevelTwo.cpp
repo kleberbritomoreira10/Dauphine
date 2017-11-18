@@ -145,11 +145,11 @@ void LevelTwo::load_enemy()
         assert( enemy != nullptr);
       } else
         {
-          //No action   
+          //Log ( INFO ) << "\tEnemy is alive";   
         }
     } else
       {
-        //No action 
+        Log ( DEBUG ) << "\tGame was not load"; 
       }
     enemy -> setLevelWH ( this -> width, this -> height );
     assert( width > 0 || height > 0);
@@ -163,6 +163,8 @@ void LevelTwo::load_enemy()
 */
 void LevelTwo::unload ()
 {
+  Log ( DEBUG ) << "\tUnloading level 2...";
+
   clean_entities ();
   clear_enemies ();
   clear_documents ();
@@ -205,7 +207,7 @@ void LevelTwo::update ( const double DELTA_TIME )
     return;
   } else
     {
-      //No action
+      //Log ( INFO ) << "\tPlayer is alive";
     }
 
   // Updating the potions.
@@ -234,7 +236,7 @@ void LevelTwo::update ( const double DELTA_TIME )
       this -> player -> is_vulnerable = false;
     } else
       {
-        //No action 
+        Log ( INFO ) << "\tPlayer is not vulnerable"; 
       }
   }
 
@@ -252,7 +254,7 @@ void LevelTwo::update ( const double DELTA_TIME )
     return;
   } else
     {
-      //No action
+      //Log ( INFO ) << "\tPlayer not yet reached level end";
     }
 
   update_potion();   
@@ -277,7 +279,7 @@ void LevelTwo::update_number_potion()
       caught_items [ i ] =true;
     } else
       {
-        //No action
+        //Log ( INFO ) << "\tPlayer not add new potions";
       }
   }
 }
@@ -299,23 +301,24 @@ void LevelTwo::update_potion()
             potion -> activated = false;
           } else
             {
-              // No action
+              Log ( INFO ) << "\tEnemy not can attack";
             }
+            Log(INFO) << "Enemy Life = " << enemy->life;
 
           if ( enemy -> life <= 0 )
           {
             enemy -> changeState ( Enemy::EStates::DEAD );
           } else
             {
-              // No action
+              Log ( INFO ) << "\tEnemy is dead";
             }
         } else
           {
-            // No action
+            //Log ( INFO ) << "\tPotion not yet activated";
           }
       } else
         {
-          // No action
+          //Log ( INFO ) << "\tPlayer not collided with potion";
         }
     }
   }
@@ -339,26 +342,28 @@ void LevelTwo::update_collision()
             this -> player -> can_attack = false;
           } else
             {
-              // No action
+              //Log ( INFO ) << "\tEnemy can't attack";
             }
-         
+          Log(DEBUG) << "Enemy Life = " << enemy->life;
+
           if ( enemy -> life <= 0 )
           {
             enemy -> changeState ( Enemy::EStates::DEAD );
           } else
             {
-              // No action
+              Log ( INFO ) << "\tEnemy is dead";
             }
         } else
           {
-            // No action
+            //Log ( INFO ) << "\tPlayer are not attack or moving";
           }
-        } else {
-            //No action
-          }
+      } else 
+        {
+          //Log ( INFO ) << "\tPlayer and enemy in opposite directions";
+        }
     } else
       {
-        // No action
+        //Log ( INFO ) << "\tPlayer and enemy are not get bounding box";
       }
   }
 
@@ -394,7 +399,7 @@ void LevelTwo::save()
       this -> checkpoints_visited [ j ] = true;
     } else
       {
-        // No action
+        //Log ( INFO ) << "\tLevel two wasn't save";
       }
   }
 }
@@ -455,7 +460,7 @@ void LevelTwo::render ()
       this -> image -> Sprite::render ( ( items [ 0 ] [ i ] + 60 ) - CAMERA_X, ( ( items [ 1 ] [ i ] ) - CAMERA_Y ) );
     } else
       {
-        // No action
+        //Log ( INFO ) << "\tEntity not rendered";
       }
   }
 
@@ -468,7 +473,7 @@ void LevelTwo::render ()
       document -> renderDocumentText ();
     } else
       {
-       // No action
+       Log ( INFO ) << "\tDocument not rendered";
       }
   }
 }

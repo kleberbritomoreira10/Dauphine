@@ -79,9 +79,7 @@ GStateContinue::~GStateContinue ()
 * From the menu.lua script, loads all the necessary objects.
 */
 void GStateContinue::load ()
-{
-	Log(DEBUG) << "Loading Continue Screen...";
-	
+{	
 	continue_slot1();
 
 	continue_slot2();
@@ -190,7 +188,6 @@ if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
 */
 void GStateContinue::unload ()
 {
-	Log(DEBUG) << "\tUnloading menu...";
 	clean_entities();
 }
 
@@ -233,7 +230,7 @@ void GStateContinue::render()
 		this -> slot3 -> render( CAMERA_X, CAMERA_Y );
 	} else
     {
-		  Log(WARN) << "No image set to display on the menu!";
+		  //Nothing to do
 	  }
 }
 

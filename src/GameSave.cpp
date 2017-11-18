@@ -12,6 +12,10 @@
 #include <assert.h>
 #include <cstddef>
 
+#define PATH_SLOT_1 "saveSlot1.dauphine"
+#define PATH_SLOT_2 "saveSlot2.dauphine"
+#define PATH_SLOT_3 "saveSlot3.dauphine"
+
 /**
  * The constructor.
  * Initializes all the attributes.
@@ -33,15 +37,15 @@ void GameSave::setSlot ( int SAVE_SELECTION )
 	switch ( SAVE_SELECTION )
   {	
 		case this -> Selection::SLOT_1:
-			this -> filePath = "saveSlot1.dauphine";
+			this -> filePath = PATH_SLOT_1;
 		break;
 
 		case this -> Selection::SLOT_2:
-			this -> filePath = "saveSlot2.dauphine";
+			this -> filePath = PATH_SLOT_2;
 		break;
 
 		case this -> Selection::SLOT_3:
-			this -> filePath = "saveSlot3.dauphine";
+			this -> filePath = PATH_SLOT_3;
 		break;
 	}
 }
@@ -60,7 +64,7 @@ void GameSave::createSave()
 		this -> saveFile.close();
 	} else
     {
-	  Log(DEBUG) << "Could not create save file at " + this -> filePath;
+	    //Nothing to do
     }
 
 	return;
@@ -80,9 +84,6 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 	this -> setSlot(SLOT);	
 	this -> saveFile.open( this -> filePath.c_str() );
 
-	Log(DEBUG) << "Saved from level " << level_;
-	Log(DEBUG) << "Saved on file " << this -> filePath;	
-
 	if ( !this -> saveFile.fail() )
   {
 		this -> CURRENT_LEVEL = level_;
@@ -99,7 +100,7 @@ void GameSave::saveLevel ( unsigned int level_, Player* player, std::vector <Ene
 		this -> saveFile.close();
 	} else
     {
-		  Log(DEBUG) << "Could not open save file at " + this -> filePath;
+		  //Nothing to do
     }
 }
 
@@ -116,7 +117,7 @@ int GameSave::get_saved_level ( int continueSelection_ )
 
 	if ( this -> saveSelection == 0 )
   {
-		this -> continueFile.open( "saveSlot1.dauphine" );
+		this -> continueFile.open( PATH_SLOT_1 );   
 	} else
 	  {
 	    //Nothing to do	
@@ -124,7 +125,7 @@ int GameSave::get_saved_level ( int continueSelection_ )
 
 	if ( this -> saveSelection == 1 )
   {
-		this -> continueFile.open( "saveSlot2.dauphine" );
+		this -> continueFile.open( PATH_SLOT_2 );
 	} else
 	  {
 	    //Nothing to do	
@@ -132,7 +133,7 @@ int GameSave::get_saved_level ( int continueSelection_ )
 
 	if ( this -> saveSelection == 2)
   {
-		this -> continueFile.open ( "saveSlot3.dauphine" );
+		this -> continueFile.open ( PATH_SLOT_3 );
 	} else
 	  {
 	    //Nothing to do	
@@ -159,17 +160,15 @@ bool GameSave::is_saved( const int SAVE_SLOT )
 
 	this -> continueFile >> testSave;
 
-	// Log(DEBUG) << "TestSave " << testSave;
-
 	this -> continueFile.close();
 
 	if ( testSave == "-1" )
   {
-		// Log(WARN) << "There is NO save at slot " << 1 + SAVE_SLOT; 
+	
 		return false;
 	} else
     {
-		  // Log(WARN) << "There is a save at slot " << 1 + SAVE_SLOT;
+		  
 		  this -> continueFile.close();
 		  return true;
 	  }
@@ -214,13 +213,13 @@ bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 
 	int currentEnemy = 0; //Declaring variable to know current enemy
 	bool rc = false;    //Declaring boolean variable to identify if enemy is dead 
-	// Log(DEBUG) << "Total Enemies on Level " << totalEnemies;
+	
 	for ( int i = 0; i < totalEnemies; i++ )
   {
-		// Log(DEBUG) << "Is Enemy " << i << " dead?";		
+				
 		this -> continueFile >> currentEnemy;
 
-		// Log(DEBUG) << "Enemy under test dead status: " << currentEnemy;		
+				
 		if ( i == NUMBER_ENEMY )
     {
 			if ( currentEnemy == 1 )
@@ -238,11 +237,6 @@ bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 	}
 
 	this -> continueFile.close();	
-
-	// if(rc)
-	// 	Log(DEBUG) << "YES";		
-	// else
-	// 	Log(DEBUG) << "NO";		
 
 	return rc;
 }

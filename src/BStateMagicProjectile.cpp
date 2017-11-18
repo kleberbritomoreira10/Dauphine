@@ -23,7 +23,7 @@ double hypotenuse = 0;  //Declaration variable for hypotenuse calculation.
 */
 void BStateMagicProjectile::enter ()
 {
-  // Log(DEBUG) << "STATE MAGIC PROJECTILE BOSS";
+  
   this -> boss -> power = Game::instance().getResources().get( "res/images/projectile.png" );
   this -> boss -> power_animation -> changeWidthHeight( 50, 50 );
   this -> boss -> power_animation -> changeAnimation( 0, 0, 4, false, 0.5 );

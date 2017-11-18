@@ -19,8 +19,6 @@ bool SDLWrapper::initialize()
 {    
 	SDL_version compiled;
 
-	Log(DEBUG) << "Initializing systems...";
-
 	bool successTTF = false;
 	bool successSDL = false;
 	bool success_image = false;
@@ -52,7 +50,7 @@ bool SDLWrapper::SDL_mixer(SDL_version compiled)
 		SDLWrapper::logSDLVersion( "SDL_mixer", compiled );
   } else
     {
-		  Log(ERROR) << "Could not initialize SDL_Mixer" << Mix_GetError();
+		  // Nothing to do
 	  }
 	return successMixer;
 }
@@ -70,7 +68,7 @@ bool SDLWrapper::SDL_TTF(SDL_version compiled)
 		SDLWrapper::logSDLVersion( "SDL_TTF", compiled );
 	} else
     {
-		  Log(ERROR) << "Could not initialize TTF." << TTF_GetError();
+		  // Nothing to do
 	  }
 
 	return successTTF;  
@@ -94,7 +92,7 @@ bool SDLWrapper::SUCCESS_SDL(SDL_version compiled)
 		SDLWrapper::logSDLVersion( "SDL", compiled, SDL_GetRevision() );
 	} else
     {
-		  Log(ERROR) << "Could not initialize SDL." << SDL_GetError();
+		  // Nothing to do
 	  }
 	return successSDL;
 }
@@ -112,7 +110,7 @@ bool SDLWrapper::SDL_success_image(SDL_version compiled)
 		SDLWrapper::logSDLVersion( "SDL_image", compiled );
 	} else
     {
-		  Log(ERROR) << "Could not initialize SDL_Image." << IMG_GetError();
+		  //Nothing to do
 	  }
 	 return success_image; 
 }
@@ -124,7 +122,7 @@ bool SDLWrapper::SDL_success_image(SDL_version compiled)
 */
 void SDLWrapper::close ()
 {
-	Log(DEBUG) << "Closing SDL.";
+	// Nothing to do
 
 	// Quits SDL_mixer.
 	Mix_CloseAudio();

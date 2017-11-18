@@ -163,8 +163,6 @@ void LevelTwo::load_enemy()
 */
 void LevelTwo::unload ()
 {
-  Log ( DEBUG ) << "\tUnloading level 2...";
-
   clean_entities ();
   clear_enemies ();
   clear_documents ();
@@ -303,7 +301,6 @@ void LevelTwo::update_potion()
             {
               // No action
             }
-          // Log(DEBUG) << "Enemy Life = " << enemy->life;
 
           if ( enemy -> life <= 0 )
           {
@@ -344,7 +341,7 @@ void LevelTwo::update_collision()
             {
               // No action
             }
-          // Log(DEBUG) << "Enemy Life = " << enemy->life;
+         
           if ( enemy -> life <= 0 )
           {
             enemy -> changeState ( Enemy::EStates::DEAD );

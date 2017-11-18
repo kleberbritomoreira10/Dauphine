@@ -9,8 +9,6 @@ int main ( int argc, char** argv )
   ( ( void )argc );
   ( ( void )argv );
 
-  Log(DEBUG) << "Starting Dauphine...";
-
   // Initialize the configuration values, such as width and height of the screen.
   Configuration::initialize();
 
@@ -24,12 +22,11 @@ int main ( int argc, char** argv )
     delete &Game::instance();
   } else
     {
-      Log(ERROR) << "System were not INITIALIZED.";
+      //Nothing to do
     }
 
   // Closes SDL used libraries.
   SDLWrapper::close();
 
-  Log(DEBUG) << "Exiting Dauphine...";
   return 0;
 }

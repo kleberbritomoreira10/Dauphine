@@ -32,7 +32,7 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
     this -> boundingBox.h = this -> height;
   } else
     {
-      Log(WARN) << "Entity sprite is null, width and height will be undefined.";
+      //Nothing to do
     }
 }
 

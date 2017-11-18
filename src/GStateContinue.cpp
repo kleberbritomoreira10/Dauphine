@@ -52,7 +52,7 @@ GStateContinue::~GStateContinue ()
 		this -> slot1 = nullptr;
 	} else
 	  {
-      //Nothing to do 
+      Log(INFO) << "Slot 1 is null"; 
 	  }
 
 	if ( this -> slot2 != nullptr )
@@ -61,7 +61,7 @@ GStateContinue::~GStateContinue ()
 		this -> slot2 = nullptr;
 	} else
 	  {
-      //Nothing to do 
+      Log(INFO) << "Slot 2 is null"; 
 	  }
 
 	if ( this -> slot3 != nullptr )
@@ -70,7 +70,7 @@ GStateContinue::~GStateContinue ()
 		this -> slot3 = nullptr;
 	} else
 	  {
-      //Nothing to do 
+      Log(INFO) << "Slot 3 is null"; 
 	  }
 }
 
@@ -80,6 +80,8 @@ GStateContinue::~GStateContinue ()
 */
 void GStateContinue::load ()
 {	
+	Log(DEBUG) << "Loading Continue Screen..."; 
+
 	continue_slot1();
 
 	continue_slot2();
@@ -187,7 +189,8 @@ if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
 * @param DELTA_TIME : Delta time. Time elapsed between one frame and the other.
 */
 void GStateContinue::unload ()
-{
+{	
+	Log(DEBUG) << "\tUnloading menu...";
 	clean_entities();
 }
 
@@ -230,7 +233,7 @@ void GStateContinue::render()
 		this -> slot3 -> render( CAMERA_X, CAMERA_Y );
 	} else
     {
-		  //Nothing to do
+		  Log(WARN) << "No image set to display on the menu!";
 	  }
 }
 
@@ -340,7 +343,7 @@ void GStateContinue::handleSelectorMenu ()
 		}
 	} else
 	  {
-      //Nothing to do 
+      //Log(DEBUG) << "None level loaded"; 
 	  }
 
 	if ( current_selection == Selection::SLOT_2 && keyStates [ GameKeys::SPACE ] == true )
@@ -386,7 +389,7 @@ void GStateContinue::handleSelectorMenu ()
 		} 
 	} else
 	  {
-      //Nothing to do 
+      //Log(DEBUG) << "None level loaded"; 
 	  }
 
 	if ( current_selection == Selection::SLOT_3 && keyStates [ GameKeys::SPACE ] == true )
@@ -433,6 +436,6 @@ void GStateContinue::handleSelectorMenu ()
 
 	} else
 	  {
-      //Nothing to do 
+      //Log(DEBUG) << "None level loaded"; 
 	  }
 }

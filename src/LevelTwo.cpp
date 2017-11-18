@@ -17,16 +17,26 @@
 #include <assert.h>
 #include <cstddef>
 
+#define CHECKPOINTS_X_AXIS_1 4090
+#define NUMBER_POTION 3
+#define TOTAL_POTIONS 192          // 3 * 64
+#define CHECKPOINTS_Y_AXIS_1 7870 
+#define NUMBER_CHECKPOINT 2
+#define CHECKPOINTS_X_AXIS_2 2776
+#define CHECKPOINTS_Y_AXIS_2 1700
+#define PERCENTAGE 0 
+#define TIME 0.002
+
 /**
 * The constructor.
 * @see Level::Level()
 */
 LevelTwo::LevelTwo () :
   Level (),
-  items{ { 4090 - 3 * 64, 7870 - 3 * 64, 0, 0 },{ 2776, 1700, 0, 0 } },
+  items{ { CHECKPOINTS_X_AXIS_1 - TOTAL_POTIONS, CHECKPOINTS_Y_AXIS_1 - TOTAL_POTIONS, 0, 0 },{ CHECKPOINTS_X_AXIS_2, CHECKPOINTS_Y_AXIS_2, 0, 0 } },
   caught_items{ false, false, true, false }
 {
-  this -> changeCheckpoints ( 2, { 4090, 7870 }, { 2776, 1700 } );
+  this -> changeCheckpoints ( NUMBER_CHECKPOINT, { CHECKPOINTS_X_AXIS_1, CHECKPOINTS_Y_AXIS_1 }, { CHECKPOINTS_X_AXIS_2, CHECKPOINTS_Y_AXIS_2 } );
 }
 
 /**
@@ -82,7 +92,7 @@ void LevelTwo::load ()
   set_camera ( level_camera );
   assert( level_camera != nullptr );
 
-  Game::instance().get_fade().fade_out ( 0, 0.002 );
+  Game::instance().get_fade().fade_out ( PERCENTAGE, TIME );
 }
 
 Player *LevelTwo::create_player()
@@ -263,9 +273,9 @@ void LevelTwo::update_number_potion()
   for ( int i = 0; i < NUMBER_ITEMS; ++i )
   { 
     if ( Collision::rects_collided ( this -> player -> get_bounding_box (), 
-      {items [ 0 ] [ i ], items [ 1 ] [ i ], 192, 192}) && caught_items [ i ] == false )
+      {items [ 0 ] [ i ], items [ 1 ] [ i ], TOTAL_POTIONS, TOTAL_POTIONS}) && caught_items [ i ] == false )
     {
-      this -> player -> addPotions(3);
+      this -> player -> addPotions(NUMBER_POTION);
       caught_items [ i ] =true;
     } else
       {
@@ -445,7 +455,7 @@ void LevelTwo::render ()
     if ( this -> image != nullptr && caught_items [ i ] == false )
     {
       
-      this -> image -> Sprite::render ( ( items [ 0 ] [ i ]+60 ) - CAMERA_X, ( ( items [ 1 ] [ i ] ) - CAMERA_Y ) );
+      this -> image -> Sprite::render ( ( items [ 0 ] [ i ] + 60 ) - CAMERA_X, ( ( items [ 1 ] [ i ] ) - CAMERA_Y ) );
     } else
       {
         // No action

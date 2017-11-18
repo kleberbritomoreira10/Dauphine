@@ -18,6 +18,7 @@ int main ( int argc, char** argv )
   {
 		// Start the game.
     Game::instance().runGame();
+    
 		// Deallocate the instance of the game.
     delete &Game::instance();
   } else

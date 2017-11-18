@@ -10,6 +10,11 @@
 #include <assert.h>
 #include <cstddef>
 
+#define TOTAL_TIME 0.466
+#define NUMBER_OF_IMAGE 14
+#define ANIMATION_POSITION_X 1
+#define ANIMATION_POSITION_Y 7
+
 /**
 * @see StatePlayer::enter
 */
@@ -19,7 +24,7 @@ void PStateAttack::enter ()
   this -> box.y = 75;
   this -> box.w = 140;
   this -> box.h = 160;
-  this -> player -> getAnimation() -> changeAnimation( 1, 7, 14, false, 0.466 );
+  this -> player -> getAnimation() -> changeAnimation( ANIMATION_POSITION_X, ANIMATION_POSITION_Y, NUMBER_OF_IMAGE, false, TOTAL_TIME );
 
   Game::instance().get_audio_handler().addSoundEffect( "res/audio/FX_NADINE/WOOSH_NADINE_02.wav" );
 }
@@ -39,7 +44,7 @@ void PStateAttack::handleInput ( const std::array<bool, GameKeys::MAX> keyStates
 {
 	( ( void )keyStates_ ); // Unused.
   
-  if ( this -> player -> getAnimation() -> getCurrentFrame() == 14 )
+  if ( this -> player -> getAnimation() -> getCurrentFrame() == NUMBER_OF_IMAGE )
   {
     this -> player -> changeState( Player::player_states::IDLE );
   } else

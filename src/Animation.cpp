@@ -9,6 +9,10 @@
 #include <assert.h>
 #include <cstddef>
 
+#define START_X_POSITION 0
+#define START_Y_POSITION 0
+#define ZERO 0.0
+
 /**
  * The constructor.
  * Initializes all attributes.
@@ -20,8 +24,7 @@
  * @param loop_ : Whether to loop or not.
  */
 Animation::Animation ( const int x_, const int y_, const int spriteWidth_, const int spriteHeight_, 
-	const unsigned int numberOfImages_, const bool loop_ ) : ANIMATION_LIMIT( 10 ), x( x_ ), y( y_ ), initial_x( 0 ), initial_y( 0 ), sprite_width( spriteWidth_ ), sprite_height( spriteHeight_ ), loop( loop_ ), 
-    totalElapsedTime( 0.0 ), totalTime( 0.0 )
+	const unsigned int numberOfImages_, const bool loop_ ) : ANIMATION_LIMIT( 10 ), x( x_ ), y( y_ ), initial_x( START_X_POSITION ), initial_y( START_Y_POSITION ), sprite_width( spriteWidth_ ), sprite_height( spriteHeight_ ), loop( loop_ ), totalElapsedTime( ZERO ), totalTime( ZERO )
 {
 	this -> numberOfImages = (numberOfImages_ == 0) ? 1 : numberOfImages_;
 }
@@ -52,45 +55,45 @@ void Animation::update ( SDL_Rect& clip, const double DELTA_TIME )
 	const double DELTA_TOTAL = ( this -> totalTime / this -> numberOfImages );  
 
 	// Check if the frame has changed.
-    this -> totalElapsedTime += DELTA_TIME;
+  this -> totalElapsedTime += DELTA_TIME;
 
-    if ( this -> totalElapsedTime >= DELTA_TOTAL )
-    {    
-      this -> totalElapsedTime = 0;
-      animationCount += 1;
+  if ( this -> totalElapsedTime >= DELTA_TOTAL )
+  {    
+    this -> totalElapsedTime = 0;
+    animationCount += 1;
 
-      if ( Animation::animationCount <= this -> numberOfImages )
+    if ( Animation::animationCount <= this -> numberOfImages )
+    {
+      if ( this -> x < ( int )ANIMATION_LIMIT )
       {
-        if ( this -> x < ( int )ANIMATION_LIMIT )
+        this -> x += 1;
+      } else
         {
-        	this -> x += 1;
-        } else
-          {
-        	  this -> y += 1;
-        	  this -> x = 0;
-          }  
-    	} else
-    	  {
-          //Nothing to do 
-    	  }
-
-    	if ( endOfAnimation )
-      {
-    		this -> x= this -> initial_x;
-    		this -> y= this -> initial_y;
-    		Animation::animationCount = 0;
-    	} else
-    	  {
-          //Nothing to do 
-    	  }
+        	this -> y += 1;
+        	this -> x = 0;
+        }  
     } else
     	{
         //Nothing to do 
     	}
 
-   	const int POSITION_X = this -> x * this -> sprite_width;  //Defining width animation
-  	const int POSITION_Y = this -> y * this -> sprite_height; //Defining height animation
-  	updateClip( clip, POSITION_X, POSITION_Y );
+    if ( endOfAnimation )
+    {
+    	this -> x= this -> initial_x;
+    	this -> y= this -> initial_y;
+    	Animation::animationCount = 0;
+    } else
+    	{
+        //Nothing to do 
+    	}
+  } else
+    {
+      //Nothing to do 
+    }
+
+  const int POSITION_X = this -> x * this -> sprite_width;  //Defining width animation
+  const int POSITION_Y = this -> y * this -> sprite_height; //Defining height animation
+  updateClip( clip, POSITION_X, POSITION_Y );
 }
 
 /**

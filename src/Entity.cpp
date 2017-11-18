@@ -13,6 +13,8 @@
 #include <assert.h>
 #include <cstddef>
 
+#define ZERO 0
+
 /**
 * The constructor.
 * Initializes all the attributes.
@@ -20,8 +22,8 @@
 * @param y_ : position in y axis.
 * @param sprite_ : which sprite to use.
 */
-Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x( x_ ), y( y_ ), is_right( true ), sprite(Game::instance().getResources().get(PATH)), width( 0 ), height( 0 ), animationClip{ 0, 0, 0, 0 }, 
-  boundingBox{ (int)x_, (int)y_, 0, 0 }
+Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x( x_ ), y( y_ ), is_right( true ), sprite(Game::instance().getResources().get(PATH)), width( ZERO ), height( ZERO ), animationClip{ ZERO, ZERO, ZERO, ZERO }, 
+  boundingBox{ (int)x_, (int)y_, ZERO, ZERO }
 {
   // Only serves as the initializer for the derived classes.
   if ( this -> sprite != nullptr )
@@ -43,7 +45,8 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
 * @param y_ : position in y axis.
 */
 Entity::Entity ( const double x_, const double y_ ) : x( x_ ), y( y_ ), is_right( true ), sprite( nullptr ), 
-  width( 0 ), height( 0 ), animationClip{ 0, 0, 0, 0 }, boundingBox{ ( int )x_, ( int )y_, 0, 0 }
+  width( ZERO ), height( ZERO ), animationClip{ ZERO, ZERO, ZERO, ZERO }, boundingBox{ ( int )x_, ( int )y_, ZERO, 
+    ZERO }
 {
     // Only serves as the initializer for the derived classes.
 }

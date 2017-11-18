@@ -13,17 +13,32 @@
 #include <assert.h>
 #include <cstddef>
 
+#define PATH "res/fonts/maturasc.ttf"
+#define TEXT "Empty Slot"
+#define SIZE 45
+#define TEXT_X_POSITION 615.0
+#define TEXT_Y_POSITION_SLOT1 520.0
+#define TEXT_Y_POSITION_SLOT2 630.0
+#define TEXT_Y_POSITION_SLOT3 730.0
+#define WIDTH 410
+#define HEIGHT 102
+#define CAMERA_X 0
+#define CAMERA_Y 0
+#define INITIAL_TIME 0.0
+#define PERCENTAGE 0
+#define TIME 0.002
+
 /**
 * The constructor.
 * Initializes all the attributes.
 */
-GStateContinue::GStateContinue() : background ( nullptr ), selector ( nullptr ), passed_time( 0.0 ), 
+GStateContinue::GStateContinue() : background ( nullptr ), selector ( nullptr ), passed_time( INITIAL_TIME ), 
   current_selection ( Selection::SLOT_1 ), selectorXPosition ( 562 ), selectorYPosition { 500, 610, 723 }
 {	
 	assert( SLOT_1 >= 1 || SLOT_1 <= 6 );
-	this -> slot1 = new Text ( 615.0, 520.0, "res/fonts/maturasc.ttf", 45, "Empty Slot" );
-	this -> slot2 = new Text ( 615.0, 630.0, "res/fonts/maturasc.ttf", 45, "Empty Slot" );
-	this -> slot3 = new Text ( 615.0, 730.0, "res/fonts/maturasc.ttf", 45, "Empty Slot" );
+	this -> slot1 = new Text ( TEXT_X_POSITION, TEXT_Y_POSITION_SLOT1, PATH, SIZE, TEXT );
+	this -> slot2 = new Text ( TEXT_X_POSITION, TEXT_Y_POSITION_SLOT2, PATH, SIZE, TEXT );
+	this -> slot3 = new Text ( TEXT_X_POSITION, TEXT_Y_POSITION_SLOT3, PATH, SIZE, TEXT );
 }
 
 /**
@@ -75,7 +90,7 @@ void GStateContinue::load ()
 
 	load_lua_script();	
 
-	Game::instance().get_fade().fade_out ( 0, 0.002);
+	Game::instance().get_fade().fade_out ( PERCENTAGE, TIME);
 }
 
 void GStateContinue::load_lua_script()
@@ -91,8 +106,8 @@ void GStateContinue::load_lua_script()
 	const std::string PATH_SELECTOR = luaMenu.unlua_get<std::string>( "continue.images.selector" );
 	this -> selector = Game::instance().getResources().get( PATH_SELECTOR );
 	
-	this -> selector -> setWidth ( 410 );
-	this -> selector -> setHeight ( 102 );
+	this -> selector -> setWidth ( WIDTH );
+	this -> selector -> setHeight ( HEIGHT );
 	this -> current_selection = Selection::SLOT_1;
 }
 
@@ -109,14 +124,14 @@ if ( Game::instance().get_saves().is_saved( SLOT_1 ) )
 		
 		if ( LEVEL_FROM_SAVE == -1 )
     {
-			this -> slot1 -> changeText( "Empty Slot" );
+			this -> slot1 -> changeText( TEXT );
     } else
       {
 			  this -> slot1 -> changeText( CURRENT_LEVEL.c_str() );
       }
 	} else
     {
-		  this -> slot1 -> changeText( "Empty Slot" );
+		  this -> slot1 -> changeText( TEXT );
 	  }
 }
 
@@ -133,7 +148,7 @@ void GStateContinue::continue_slot2()
 
 		if ( LEVEL_FROM_SAVE == -1 )
     {
-			this -> slot2 -> changeText( "Empty Slot" );
+			this -> slot2 -> changeText( TEXT );
     } else
       {
 			  this -> slot2 -> changeText( CURRENT_LEVEL.c_str() );
@@ -141,7 +156,7 @@ void GStateContinue::continue_slot2()
 
 	} else
     {
-		  this -> slot2 -> changeText( "Empty Slot" );
+		  this -> slot2 -> changeText( TEXT );
 	  }
 }
 
@@ -158,14 +173,14 @@ if ( Game::instance().get_saves().is_saved( SLOT_3 ) )
 			
 		if ( LEVEL_FROM_SAVE == -1 )
     {
-			this -> slot3 -> changeText( "Empty Slot" );
+			this -> slot3 -> changeText( TEXT );
     } else
       {
 			  this -> slot3 -> changeText( CURRENT_LEVEL.c_str() );
       }
 	} else
     {
-		  this -> slot3 -> changeText( "Empty Slot" );
+		  this -> slot3 -> changeText( TEXT );
 	  }
 }
 
@@ -210,12 +225,12 @@ void GStateContinue::render()
 
 	if ( this -> background != nullptr )
   {
-		this -> background -> render( 0, 0, nullptr, true );
+		this -> background -> render( CAMERA_X, CAMERA_Y, nullptr, true );
 		this -> selector -> render( selectorXPosition, selectorYPosition [ current_selection ], 
       nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
-		this -> slot1 -> render( 0, 0 );
-		this -> slot2 -> render( 0, 0 );
-		this -> slot3 -> render( 0, 0 );
+		this -> slot1 -> render( CAMERA_X, CAMERA_Y );
+		this -> slot2 -> render( CAMERA_X, CAMERA_Y );
+		this -> slot3 -> render( CAMERA_X, CAMERA_Y );
 	} else
     {
 		  Log(WARN) << "No image set to display on the menu!";

@@ -34,7 +34,7 @@ Entity::Entity ( const double x_, const double y_, const std::string& PATH ) : x
     this -> boundingBox.h = this -> height;
   } else
     {
-      //Nothing to do
+      Log(WARN) << "Entity sprite is null, width and height will be undefined.";
     }
 }
 
@@ -48,7 +48,7 @@ Entity::Entity ( const double x_, const double y_ ) : x( x_ ), y( y_ ), is_right
   width( ZERO ), height( ZERO ), animationClip{ ZERO, ZERO, ZERO, ZERO }, boundingBox{ ( int )x_, ( int )y_, ZERO, 
     ZERO }
 {
-    // Only serves as the initializer for the derived classes.
+    Log(INFO) << "Initializer for the derived classes";
 }
 
 /**

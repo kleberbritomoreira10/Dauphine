@@ -244,14 +244,10 @@ bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 	this -> continueFile.close();	
 
 	/*if(rc)
-	{
-    Log(DEBUG) << "YES"; 
-	}	else
-	  {
+	    Log(DEBUG) << "YES"; 
+		else
 	 	  Log(DEBUG) << "NO";
-	 	} 
-	}
-	*/
-
+	*/		 	 
+	
 	return rc;
 }

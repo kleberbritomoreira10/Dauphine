@@ -119,6 +119,14 @@ Player *LevelTwo::create_player()
       level_player = new Player ( this -> tile_map -> get_initial_x (), this -> tile_map -> get_initial_y (), PATH_PLAYER_SPRITE_SHEET );
     }
 
+  if (level_player)
+  {
+    Log(DEBUG) << "Returning pointer level player not null"; 
+  } else
+    {
+      Log(DEBUG) << "Returning pointer level player null";
+    } 
+    
   return level_player;    
 }
 
@@ -190,6 +198,14 @@ void LevelTwo::update ( const double DELTA_TIME )
   std::vector<CollisionRect> return_objects;
 
   return_objects = update_entity (return_objects, DELTA_TIME);
+
+  if (typeid(std::vector<CollisionRect>) == typeid(return_objects))
+  {
+    Log(DEBUG) << "Data type returned with success"; 
+  } else
+    {
+      Log(DEBUG) << "Data type not returned with success";
+    }
 
   // Updating the enemies.
   for ( auto enemy : this -> enemies )

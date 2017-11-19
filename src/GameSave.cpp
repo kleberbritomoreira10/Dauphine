@@ -145,6 +145,14 @@ int GameSave::get_saved_level ( int continueSelection_ )
 	this -> continueFile >> level;
 
 	this -> continueFile.close();
+   
+  if ( typeid(std::stoi(level)) == typeid(int) )
+  {
+    Log(DEBUG) << "Success convertion"; 
+  } else
+    {
+      Log(DEBUG) << "Failure conversion";
+    }
 
 	return std::stoi(level);
 }
@@ -224,7 +232,7 @@ bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 		Log(DEBUG) << "Is Enemy " << i << " dead?";		
 		this -> continueFile >> currentEnemy;
 
-		Log(DEBUG) << "Enemy under test dead status: " << currentEnemy;		
+		//Log(DEBUG) << "Enemy under test dead status: " << currentEnemy;		
 		if ( i == NUMBER_ENEMY )
     {
 			if ( currentEnemy == 1 )
@@ -243,11 +251,13 @@ bool GameSave::is_enemy_dead ( const int NUMBER_ENEMY, const int SLOT )
 
 	this -> continueFile.close();	
 
-	/*if(rc)
-	    Log(DEBUG) << "YES"; 
-		else
-	 	  Log(DEBUG) << "NO";
-	*/		 	 
-	
+	if(rc)
+	{
+    Log(DEBUG) << "Enemy is dead - Success returned";
+	} else
+	  {
+	 	  Log(DEBUG) << "Enemy isn't dead - Success returned";
+		}
+			 	 
 	return rc;
 }

@@ -199,7 +199,7 @@ void LevelTwo::update ( const double DELTA_TIME )
 
   return_objects = update_entity (return_objects, DELTA_TIME);
 
-  if (typeid(std::vector<CollisionRect>) == typeid(return_objects))
+  if ( typeid(std::vector<CollisionRect>) == typeid(return_objects) )
   {
     Log(DEBUG) << "Data type returned with success"; 
   } else

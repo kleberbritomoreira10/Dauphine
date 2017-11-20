@@ -8,6 +8,7 @@
 #include "Animation.h"
 #include <assert.h>
 #include <cstddef>
+#include "Logger.h"
 
 #define START_X_POSITION 0
 #define START_Y_POSITION 0
@@ -133,7 +134,14 @@ void Animation::updateClip ( SDL_Rect& clip, const int x_, const int y_ )
 * @return current frame incremented in one
 */
 int Animation::getCurrentFrame ()
-{
+{ 
+  if(animationCount >= 0)
+  {
+    Log(DEBUG) << "getCurrentFrame is correct"; 
+  } else
+    {
+      Log(DEBUG) << "getCurrentFrame isn't correct";
+    }
 	return animationCount + 1;
 }
 

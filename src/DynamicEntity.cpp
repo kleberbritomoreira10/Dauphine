@@ -56,6 +56,7 @@ void DynamicEntity::setLevelWH ( const unsigned int width_, const unsigned int h
 	this -> level_width = width_;
 	this -> level_height = height_;
 
+
 }
 
 
@@ -72,6 +73,8 @@ void DynamicEntity::updatePosition ( const double DELTA_TIME )
 	this -> y = this -> nextY;
 
 	this -> is_right = ( this -> velocity_x_axis >= 0.0 );
+
+	Log( INFO ) << "Returning the position from the entities";
 }
 
 /*
@@ -213,6 +216,8 @@ std::array < bool, CollisionSide::SOLID_TOTAL > DynamicEntity::detectCollision (
 	} // for collisionRects -- process the tileBox Rects in the rectangle
 
 	return detections;
+
+	Log( INFO ) << "Returning colllisions detections in the retangle";
 }
 
 // Apply the jump on a dynamic entity speed on the y axis.
@@ -230,6 +235,8 @@ void DynamicEntity::applyGravity ()
 	}else{
 		// Do nothing.
 	}
+
+	Log( INFO ) << "Returning gravity on a entity";
 }
 
 void DynamicEntity::move ( const bool movingLeft_, const bool movingRight_ )
@@ -277,7 +284,7 @@ void DynamicEntity::move ( const bool movingLeft_, const bool movingRight_ )
 	{
 		slowVx ();
 	}
-
+	Log( INFO ) << "Returning the right and left moviment from a entity";
 }
 
 void DynamicEntity::moveVertical ( const bool movingUp_, const bool movingDown_ )
@@ -327,7 +334,7 @@ void DynamicEntity::moveVertical ( const bool movingUp_, const bool movingDown_ 
 	{
 		slowVy ();
 	}
-
+	Log( INFO ) << "Returning the moviment down and up from a entity";
 } // if -- moving down and moving up
 
 void DynamicEntity::slowVx ()
@@ -341,6 +348,8 @@ void DynamicEntity::slowVx ()
 	{
         this -> velocity_x_axis = 0.0001 * vsign;
 	}
+
+	Log( INFO ) << "Returning the dynamic entity speed decreases on the x axis ";
 }
 
 void DynamicEntity::slowVy ()
@@ -356,6 +365,7 @@ void DynamicEntity::slowVy ()
         this -> velocity_y_axis = 0.0001 * vsign;
 
 	}
+	Log( INFO ) << "Returning the dynamic entity speed decreases on the y axis ";
 }
 
 void DynamicEntity::roll ()
@@ -375,7 +385,7 @@ void DynamicEntity::aim ( Crosshair *const crosshair, const double direction)
 {
 	// Apply the aim on a dynamic entity speed on the x axis.
 	crosshair -> x += VELOCITY * direction;
-
+	Log( INFO ) << "Returning the aim to flip the potions";
 }
 
 SDL_RendererFlip DynamicEntity::getFlip ()
@@ -391,4 +401,6 @@ SDL_RendererFlip DynamicEntity::getFlip ()
 	}
 
 	return flip;
+
+	Log( INFO ) << "Returning the flip from player";
 }

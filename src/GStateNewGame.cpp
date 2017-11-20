@@ -19,6 +19,9 @@
 #define SELECTOR_HEIGHT 102
 #define RENDER_POSITION_X 0
 #define RENDER_POSITION_Y 0
+#define TEXT_POSITION_X 615.0
+#define FADE_POSITION_X 0
+#define FADE_POSITION_Y 0.002
 
 /*
 The state for the New Game menu screen.
@@ -38,15 +41,15 @@ GStateNewGame::GStateNewGame () :
 	When loading the font of the text appears "Empty slot" or the level that the
 	player stopped in the slot that was taken.
 	*/
-	this -> slot1 = new Text ( 615.0, 520.0, "res/fonts/maturasc.ttf",
+	this -> slot1 = new Text ( TEXT_POSITION_X, 520.0, "res/fonts/maturasc.ttf",
 		45, "Empty Slot");
 	assert( this -> slot1 != nullptr );
 
-	this -> slot2 = new Text ( 615.0, 630.0, "res/fonts/maturasc.ttf",
+	this -> slot2 = new Text ( TEXT_POSITION_X, 630.0, "res/fonts/maturasc.ttf",
 		45, "Empty Slot");
 	assert( this -> slot2 != nullptr );
 
-	this -> slot3 = new Text ( 615.0, 730.0, "res/fonts/maturasc.ttf",
+	this -> slot3 = new Text ( TEXT_POSITION_X, 730.0, "res/fonts/maturasc.ttf",
 		45, "Empty Slot");
 	assert( this -> slot3 != nullptr );
 
@@ -188,7 +191,7 @@ void GStateNewGame::loadResources()
 
 	this -> current_selection = Selection::SLOT_1;
 
-	Game::instance (). get_fade (). fade_out ( 0, 0.002 );
+	Game::instance (). get_fade (). fade_out ( FADE_POSITION_X, FADE_POSITION_Y );
 }
 
 void GStateNewGame::load ()

@@ -195,7 +195,7 @@ void LevelOne::unload ()
 // Update the entities from Level 1.
 void LevelOne::updateEntities (const double DELTA_TIME )
 {
-
+	Log ( DEBUG ) << "\tLoading entities...";
 	// Populating the QuadTree.
 	this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 
@@ -219,6 +219,7 @@ void LevelOne::updateEntities (const double DELTA_TIME )
 // Update enemies from Level 1.
 void LevelOne::updateEnemies ( const double DELTA_TIME )
 {
+	Log ( DEBUG ) << "\tUpdate enemies...";
 	// Populating the QuadTree.
 	this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 
@@ -243,6 +244,7 @@ void LevelOne::updateEnemies ( const double DELTA_TIME )
 // Update the potions from Level 1.
 void LevelOne::updatePotions ( )
 {
+	Log ( DEBUG ) << "\tUpdate potions...";
 	// Populating the QuadTree.
 	this -> quadTree -> setObjects ( this -> tile_map -> getCollisionRects () );
 
@@ -265,6 +267,7 @@ void LevelOne::updatePotions ( )
 // Update the position and state from player.
 void LevelOne::updatePlayer ( )
 {
+	Log ( DEBUG ) << "\tUpdate player...";
 	/// @todo Maybe refactor this static Enemy::px, Enemy::py.
 	// Updating player info for the enemies.
 	Enemy::px = this -> player -> x;
@@ -323,6 +326,7 @@ void LevelOne::updatePlayer ( )
 // Update the potion collision on enemies.
 void LevelOne::updatePotionEnemyCollision ( )
 {
+	Log ( DEBUG ) << "\tUpdate Enemy Collision...";
 	// Updating the potion/enemy collision.
 	for ( auto potion : this -> player -> potions )
 	{
@@ -361,6 +365,7 @@ void LevelOne::updatePotionEnemyCollision ( )
 // Update the attack collision on enemies.
 void LevelOne::updateAttackEnemiesCollision ( )
 {
+	Log ( DEBUG ) << "\tUpdate Attack Enemies Collision...";
 	// Updating the player attack/enemy collision.
 	for ( auto enemy : this -> enemies )
 	{
@@ -402,6 +407,7 @@ void LevelOne::updateAttackEnemiesCollision ( )
 // Update the checkpoints from Level 1.
 void LevelOne::updateCheckpoints()
 {
+	Log ( DEBUG ) << "\tUpdate checkpoints...";
 	double player_x = this -> player -> get_bounding_box (). x;
 	double player_y = this -> player -> get_bounding_box (). y;
 
@@ -428,6 +434,7 @@ void LevelOne::updateCheckpoints()
 // Update Documents from Level 1.
 void LevelOne::updateDocuments( )
 {
+	Log ( DEBUG ) << "\tUpdate documents...";
 	// Checks the condition of the document to render
 	for ( auto document : this -> documents )
 	{
@@ -449,7 +456,7 @@ void LevelOne::updateDocuments( )
 */
 void LevelOne::update ( const double DELTA_TIME )
 {
-
+	Log ( DEBUG ) << "\tUpdate all entities...";
 	updateEntities( DELTA_TIME );
 
 	updateEnemies( DELTA_TIME );

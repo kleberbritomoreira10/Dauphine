@@ -15,6 +15,11 @@
 
 #include <string>
 
+#define SELECTOR_WIDTH 420
+#define SELECTOR_HEIGHT 102
+#define RENDER_POSITION_X 0
+#define RENDER_POSITION_Y 0
+
 /*
 The state for the New Game menu screen.
 The player can start a new game by selecting a new slot to save the game */
@@ -178,8 +183,8 @@ void GStateNewGame::loadResources()
 	assert( this -> background != nullptr );
 	assert( this -> selector != nullptr );
 
-	this -> selector -> setWidth ( 410 );
-	this -> selector -> setHeight ( 102 );
+	this -> selector -> setWidth ( SELECTOR_WIDTH );
+	this -> selector -> setHeight ( SELECTOR_HEIGHT );
 
 	this -> current_selection = Selection::SLOT_1;
 
@@ -244,9 +249,9 @@ void GStateNewGame::render ()
 		this -> selector -> render ( selectorXPosition, selectorYPosition [ current_selection ],
 		 nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 
-		this -> slot1 -> render ( 0, 0 );
-		this -> slot2 -> render ( 0, 0 );
-		this -> slot3 -> render ( 0, 0 );
+		this -> slot1 -> render ( RENDER_POSITION_X, RENDER_POSITION_Y );
+		this -> slot2 -> render ( RENDER_POSITION_X, RENDER_POSITION_Y );
+		this -> slot3 -> render ( RENDER_POSITION_X, RENDER_POSITION_Y );
 
 	}else
 	{

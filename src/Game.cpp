@@ -65,19 +65,22 @@ Game::Game () :
 	selector_X_position_right { 930, 930 },
 	selector_Y_position_right { 400, 470 }
 {
-	this -> window = new Window( Configuration::getScreenWidth(),
-		Configuration::getScreenHeight(), Configuration::getWindowTitle() );
 
-	assert( this -> window != nullptr && "The window should not be null!" );
+	Log( INFO ) << "Initializing constructor method";
+
+	this -> window = new Window( Configuration::getScreenWidth(),
+		Configuration::getScreenHeight(), Configuration::getWindowTitle() ); // Create a new window instance.
+
+	assert( this -> window != nullptr && "The window should not be null!" ); // Check if the menu is not null.
 
 	initializeStates();
 
 	getDialog();
 
 
-	this -> pause_image = getResources().get("res/images/pause_overlay.png");
-	this -> pause_selector = getResources().get("res/images/cursor_regular.png");
-	this -> pause_selector -> setWidth( WIDTH_VALUE );
+	this -> pause_image = getResources().get("res/images/pause_overlay.png"); // Get the paused menu image.
+	this -> pause_selector = getResources().get("res/images/cursor_regular.png"); // Get the cursor image.
+	this -> pause_selector -> setWidth( WIDTH_VALUE ); // Set the pause selector width.
 
 	this -> is_running = true;
 	FPSWrapper::initialize( this -> fps_manager );
@@ -86,13 +89,13 @@ Game::Game () :
 // Get all the dialogs image.
 void Game::getDialog()
 {
-	std::string path = "res/images/Dialog/dialog";
+	std::string path = "res/images/Dialog/dialog"; // The dialog image path.
 	std::string extension = ".png";
 
 	for( int i = 0; i < total_number_to_be_parameterized; i++ )
 	{
 		 this -> dialog[ i ] = nullptr;
-		 this -> dialog[ i ] = getResources().get( path + Util::toString(i) + extension );
+		 this -> dialog[ i ] = getResources().get( path + Util::toString(i) + extension ); // Get the dialog image.
 
 		if( this -> dialog[i] == nullptr )
 		{
@@ -100,7 +103,7 @@ void Game::getDialog()
 
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "Valid dialog image.";
 		}
 	}
 }
@@ -126,11 +129,11 @@ void Game::unload_current_state()
 {
 	if( this -> current_state != nullptr )
 	{
-		this -> current_state -> unload();
+		this -> current_state -> unload(); // Unload the current state.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "The current state is already null";
 	}
 }
 
@@ -138,10 +141,11 @@ void Game::delete_audio_handler()
 {
 	if( this -> audio_handler != nullptr )
 	{
-		delete this -> audio_handler;
+		delete this -> audio_handler; // Delete the audio handler.
 
-	}else{
-			// No action.
+	}else
+	{
+		Log( DEBUG ) << "The audio handler is already null";
 	}
 }
 
@@ -149,11 +153,11 @@ void Game::delete_input_handler()
 {
 	if( this -> input_handler != nullptr )
 	{
-		delete this -> input_handler;
+		delete this -> input_handler; // Delete the input handler.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "The input handler is already null";
 	}
 }
 
@@ -161,11 +165,11 @@ void Game::delete_resource_manager()
 {
 	if( this -> resource_manager != nullptr )
 	{
-		delete this -> resource_manager;
+		delete this -> resource_manager; // Delete the resource manager.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "The resource manager is already null";
 	}
 
 }
@@ -174,11 +178,11 @@ void Game::delete_fade_screen()
 {
 	if( this -> fade_screen != nullptr )
 	{
-		delete this -> fade_screen;
+		delete this -> fade_screen; // Delete the fade screen.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "The fade screen is already null";
 	}
 }
 
@@ -186,20 +190,20 @@ void Game::delete_window()
 {
 	if( this -> window != nullptr )
 	{
-		delete this -> window;
+		delete this -> window; // Delete the window.
 		this -> window = nullptr;
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "The window is already null";
 	}
 }
 
 void Game::runGame()
 {
-	this -> fade_screen = new FadeScreen();
+	this -> fade_screen = new FadeScreen(); // Create a new instance of fade screen.
 
-	this -> current_state = this -> states_map.at( GStates::SPLASH );
+	this -> current_state = this -> states_map.at( GStates::SPLASH ); // Get the state splash.
 	this -> current_state -> load();
 
 	// Get the first game time.
@@ -211,42 +215,45 @@ void Game::runGame()
 	while( this -> is_running )
 	{
 
-		const double frame_time = FPSWrapper::delay( this -> fps_manager );
-		accumulated_time += frame_time;
+		const double frame_time = FPSWrapper::delay( this -> fps_manager ); // Get the fps manager.
+
+		accumulated_time += frame_time; // Increment the acumulated time.
 
 		// Update.
 		while( accumulated_time >= delta_time )
 		{
-			this -> input_handler -> handleInput();
+			this -> input_handler -> handleInput(); // Calls the method to handle the inputs.
 
 			check_exit_signal();
 
 			get_current_selection();
 
-			assert( delta_time > INITIAL_TIME );
+			assert( delta_time > INITIAL_TIME ); // Check if variates the time.
 
-			time_verifications(delta_time);
+			time_verifications( delta_time );
 
-			this -> fade_screen -> update( delta_time );
+			this -> fade_screen -> update( delta_time ); // Updates the fade screen.
 
 			accumulated_time -= delta_time;
 			total_game_time += delta_time;
 		}
 
-		// Render of window.
-		window -> clear();
+		window -> clear(); // Render of window.
 
-		this -> current_state -> render();
+		this -> current_state -> render(); // Render current state
 
-		assert( total_number_to_be_parameterized > NO_NUMBERS_TO_BE_PARAMETERIZED );
+		assert( total_number_to_be_parameterized > NO_NUMBERS_TO_BE_PARAMETERIZED ); // Check if the there is any number
+																					// to be parameterized.
 
 		render_pause_and_dialog();
 
-		this -> fade_screen -> render();
+		this -> fade_screen -> render(); // Render fade screen.
 
-		window -> render();
+		window -> render(); // Render window.
 
 	}
+
+	Log( INFO ) << "Game rendered.";
 
 }
 
@@ -260,13 +267,13 @@ void Game::check_exit_signal()
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Quit flag is false.";
 	}
 }
 
 void Game::get_current_selection()
 {
-	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
+	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput(); // Get inputs.
 
 	if( keyStates[ GameKeys::ESCAPE ] && isPauseAble() )
 	{
@@ -275,31 +282,38 @@ void Game::get_current_selection()
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "State is not pausable.";
 	}
 }
 
+/**
+* Make time verifications.
+* @param delta_time: Time variation.
+*/
 void Game::time_verifications(const double delta_time)
 {
 	if( !this -> is_paused )
 	{
 
-		this -> current_state -> update( delta_time );
+		this -> current_state -> update( delta_time ); // Update the current state.
 
 	}
 	else if( !this -> is_cut_scene)
 	{
-		this -> passed_time += delta_time;
+		this -> passed_time += delta_time; // Increment passed time.
 		updatePause();
 	}
 	else
 	{
-		this -> passed_time += delta_time;
+		this -> passed_time += delta_time; // Increment passed time.
 		updateDialog();
 	}
 
 }
 
+/**
+* Renders the pause and dialog screen.
+*/
 void Game::render_pause_and_dialog()
 {
 	if( this -> is_paused )
@@ -317,18 +331,26 @@ void Game::render_pause_and_dialog()
 		}
 	}else
 	{
-		//No action.
+		Log( DEBUG ) << "is_cut_scene is false.";
 	}
 }
 
+/**
+* Sets all the states.
+* @param state_: The state to be setted.
+*/
 void Game::setState( const GStates state_ )
 {
 	/// @todo Implement the transition between states.
-	this -> current_state -> unload();
-	this -> current_state = this -> states_map.at( state_ );
-	this -> current_state -> load();
+	this -> current_state -> unload(); // Unload current state.
+	this -> current_state = this -> states_map.at( state_ ); // Get the current state.
+	this -> current_state -> load(); // Load the current state.
 }
 
+/**
+* Loads all the states.
+* Every new state implemented should be INITIALIZED here.
+*/
 void Game::initializeStates()
 {
 	// Initialize all the states in Game here.
@@ -351,6 +373,9 @@ void Game::initializeStates()
 	ADD_STATE_INSERT( VICTORY, GStateVictory );
 }
 
+/**
+* Render the dialog screen.
+*/
 void Game::renderDialog()
 {
 
@@ -358,15 +383,18 @@ void Game::renderDialog()
 
 	if( this -> dialog[ current_line ] )
 	{
-		this -> dialog[ current_line ] -> render( POSITION_X, POSITION_Y, nullptr, true );
+		this -> dialog[ current_line ] -> render( POSITION_X, POSITION_Y, nullptr, true ); // Render dialog.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Dialog is null.";
 	}
 
 }
 
+/**
+* Verify the current line.
+*/
 void Game::verify_current_line()
 {
 	if( current_line > total_number_to_be_parameterized )
@@ -375,15 +403,18 @@ void Game::verify_current_line()
 		return;
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "current_line < total_number_to_be_parameterized";
 	}
 }
 
+/**
+* Handle the dialogs.
+*/
 void Game::handleDialog()
 {
-	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
+	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput(); // Get inputs.
 
-	const double SELECTOR_DELAY_TIME = 0.2;
+	const double SELECTOR_DELAY_TIME = 0.2; 
 
 	if( keyStates[ GameKeys::SPACE ] == true )
 	{
@@ -392,11 +423,11 @@ void Game::handleDialog()
 			current_line++;
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "passed_time <= SELECTOR_DELAY_TIME";
 		}
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Key SPACE is false";
 	}
 }
 
@@ -407,17 +438,22 @@ void Game::updateDialog()
 
 }
 
+/**
+* Render the pause screen.
+*/
 void Game::renderPause()
 {
 	if( this -> pause_image != nullptr )
 	{
-		this -> pause_image -> render( POSITION_X, POSITION_Y, nullptr, true );
+		this -> pause_image -> render( POSITION_X, POSITION_Y, nullptr, true ); // Render pause image.
 
+		// Render pause selector.
 		this -> pause_selector -> render( selector_X_position_left[ current_selection ],
-			selector_Y_position_left[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
+			selector_Y_position_left[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE ); 
 
+		// Render pause selector horizontal.
 		this -> pause_selector -> render( selector_X_position_right[ current_selection ],
-			selector_Y_position_right[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
+			selector_Y_position_right[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL ); 
 
 	}else
 	{
@@ -431,16 +467,19 @@ void Game::updatePause()
 	handleSelectorMenu();
 }
 
+/**
+* Handle the selector menu.
+*/
 void Game::handleSelectorMenu()
 {
-	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput();
+	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput(); // Get inputs.
 
 	const double SELECTOR_DELAY_TIME = 0.2;
 
 	if( keyStates[ GameKeys::DOWN ] == true || keyStates[ GameKeys::RIGHT ] == true )
 	{
 
-		handle_selection_keys_down_and_right( SELECTOR_DELAY_TIME );
+		handle_selection_keys_down_and_right( SELECTOR_DELAY_TIME ); 
 
 	}else if( keyStates[ GameKeys::UP ] == true || keyStates[ GameKeys::LEFT ] == true )
 	{
@@ -458,10 +497,14 @@ void Game::handleSelectorMenu()
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Key SPACE is null";
 	}
 }
 
+/**
+* Handle the selection when key DOWN and RIGHT is selected.
+* @param SELECTOR_DELAY_TIME: The delay of the selector.
+*/
 void Game::handle_selection_keys_down_and_right( const double SELECTOR_DELAY_TIME )
 {
 	if( this -> passed_time >= SELECTOR_DELAY_TIME )
@@ -474,14 +517,19 @@ void Game::handle_selection_keys_down_and_right( const double SELECTOR_DELAY_TIM
 		{
 			current_selection = PSelection::RESUME;
 		}
-		this -> passed_time = INITIAL_TIME;
+
+		this -> passed_time = INITIAL_TIME; // Set passed time to 0.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "passed_time <= SELECTOR_DELAY_TIME";
 	}
 }
 
+/**
+* Handle the selection when key UP and LEFT is selected.
+* @param SELECTOR_DELAY_TIME: The delay of the selector.
+*/
 void Game::handle_selection_keys_up_and_left( const double SELECTOR_DELAY_TIME )
 {
 	if( this -> passed_time >= SELECTOR_DELAY_TIME )
@@ -495,17 +543,22 @@ void Game::handle_selection_keys_up_and_left( const double SELECTOR_DELAY_TIME )
 			current_selection = ( PSelection::TOTAL - 1 );
 		}
 
-		this -> passed_time = INITIAL_TIME;
+		this -> passed_time = INITIAL_TIME; // Setting the passed time to 0.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "passed_time <= SELECTOR_DELAY_TIME";
 	}
 }
 
+/**
+* Destroy all the states.
+*/
 void Game::destroyStates()
 {
-	std::map < GStates, StateGame * >::const_iterator iterator;
+	Log( INFO ) << "Destroying the states.";
+
+	std::map < GStates, StateGame * >::const_iterator iterator; // Create an iterator.
 
     for( iterator = this -> states_map.begin(); iterator != this -> states_map.end(); iterator++ )
     {
@@ -513,46 +566,88 @@ void Game::destroyStates()
     }
 }
 
+/**
+* Get the audio handler.
+* @return The Game audio_handler.
+*/
 AudioHandler &Game::get_audio_handler()
 {
-	return ( *( this -> audio_handler ));
+	Log( INFO ) << "Getting audio handler.";
+	return ( *( this -> audio_handler )); 
 }
 
+/**
+ * Get the user input.
+* @return The boolean array recieved from the InputHandler.
+*/
 std::array < bool, GameKeys::MAX > Game::getInput()
 {
+	Log( INFO ) << "Getting inputs.";
 	return this -> input_handler -> getKeyStates();
 }
 
+/**
+ * Get all the resources.
+* @return The resource manager.
+*/
 ResourceManager &Game::getResources()
 {
+	Log( INFO ) << "Getting the resource manager.";
 	return ( *( this -> resource_manager ) );
 }
 
+/**
+ * Get all the game saves.
+* @return The game save.
+*/
 GameSave &Game::get_saves()
 {
+	Log( INFO ) << "Getting game saves.";
 	return ( *( this -> game_save ) );
 }
 
+/**
+* Stops execution and closes the game.
+*/
 void Game::stop()
 {
 	this -> is_running = false;
 }
 
+/**
+* Clear the keys from the input.
+* @param KEY: keys from the input.
+*/
 void Game::clearKeyFromInput( const GameKeys KEY )
 {
 	this -> input_handler -> clearKey( KEY );
 }
 
+/**
+ * Get the fade.
+* @return The fade screen.
+*/
 FadeScreen &Game::get_fade()
 {
+	Log( INFO ) << "Getting fade screen.";
 	return ( *( this -> fade_screen ));
 }
 
+/**
+* Stops execution and closes the game.
+* @param width_: The new width value of the input.
+* @param height_: The new height value of the window.
+*/
 void Game::resizeWindow( const unsigned int width_, const unsigned int height_ )
 {
-	this -> window -> resize( width_, height_ );
+	Log( INFO ) << "Resizing the window.";
+	this -> window -> resize( width_, height_ ); // Resizes the window
 }
 
+/**
+* Verify if the game can be paused in an specific moment.
+* @return: Boolean value. True: The game can be paused. False: The game cannot be paused.
+*/
 bool Game::isPauseAble()
 {
 

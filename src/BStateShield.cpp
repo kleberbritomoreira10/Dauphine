@@ -21,7 +21,10 @@
 void BStateShield::enter()
 {
 	Log( DEBUG ) << "STATE SHIELD BOSS";
+
+	// Change the animation.
 	this -> boss -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES, false, TOTAL_TIME );
+
 	this -> boss -> has_shield = true;
 }
 
@@ -42,7 +45,7 @@ void BStateShield::update( const double DELTA_TIME )
 {
 	( ( void )DELTA_TIME ); // Unused.
 
-	this -> boss -> changeState( Boss::BStates::IDLE );
+	this -> boss -> changeState( Boss::BStates::IDLE ); // Set the state idle to the boss.
 }
 
 /**

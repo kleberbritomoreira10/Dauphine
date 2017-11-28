@@ -18,6 +18,8 @@
 #define WIDTH 50
 #define POSITION_X 0
 #define POSITION_Y 0
+#define FADE_PERCENTAGE 0
+#define FADE_TIME 0.002
 
 /**
 * The constructor.
@@ -58,7 +60,7 @@ GStateMenu::~GStateMenu()
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "shwing_animation is null";
 	}
 }
 
@@ -67,27 +69,26 @@ GStateMenu::~GStateMenu()
 */
 void GStateMenu::load()
 {
-	Log( DEBUG ) << "Loading menu...";
+	Log( INFO ) << "Loading menu...";
 
-	// Changing the music.
-	Game::instance().clearKeyFromInput( GameKeys::ESCAPE );
+	Game::instance().clearKeyFromInput( GameKeys::ESCAPE ); // Clear all the keys from input.
 
-	Game::instance().get_audio_handler().change_music( "res/audio/menu.mid" );
+	Game::instance().get_audio_handler().change_music( "res/audio/menu.mid" ); // Changing the music. 
 
-	LuaScript luaMenu( "lua/Menu.lua" );
-	const std::string path_title_screen = luaMenu.unlua_get<std::string>( "menu.images.titleScreen" );
-	const std::string path_cursor = luaMenu.unlua_get<std::string>( "menu.images.cursor" );
+	LuaScript luaMenu( "lua/Menu.lua" ); // Load lua menu.
+	const std::string path_title_screen = luaMenu.unlua_get< std::string >( "menu.images.titleScreen" ); // Path to the title screen.
+	const std::string path_cursor = luaMenu.unlua_get<std::string>( "menu.images.cursor" ); // Path to menu image cursor.
 
-    this -> menu_image = Game::instance().getResources().get( path_title_screen );
-    this -> menu_selector = Game::instance().getResources().get( path_cursor );
-    this -> attrack_mode_background = Game::instance().getResources().get( "res/images/title_background.png" );
-    this -> attract_mode = Game::instance().getResources().get( "res/images/attract.png" );
-    this -> attractClip.w = this -> attract_mode -> getWidth();
-    this -> shwing_animation = new Animation( 0, 0, 795, 360, 3, false );
-    this -> shwing = Game::instance().getResources().get( "res/images/shwing_sheet.png" );
-    this -> shwing_animation -> ANIMATION_LIMIT = 2;
+    this -> menu_image = Game::instance().getResources().get( path_title_screen ); // Loads the menu image
+    this -> menu_selector = Game::instance().getResources().get( path_cursor ); // Loads the menu selector.
+    this -> attrack_mode_background = Game::instance().getResources().get( "res/images/title_background.png" ); // Loads the attrack background.
+    this -> attract_mode = Game::instance().getResources().get( "res/images/attract.png" ); // Loads the attract mode.
+    this -> attractClip.w = this -> attract_mode -> getWidth(); // Loads the attract clip.
+    this -> shwing_animation = new Animation( 0, 0, 795, 360, 3, false ); // Loads the shwing animation.
+    this -> shwing = Game::instance().getResources().get( "res/images/shwing_sheet.png" ); // Loads the shwing.
+    this -> shwing_animation -> ANIMATION_LIMIT = 2; // Setting the animation limit.
 
-    Game::instance().get_fade().fade_out( 0, 0.002 );
+    Game::instance().get_fade().fade_out( FADE_PERCENTAGE, FADE_TIME );
 }
 
 /**
@@ -107,14 +108,14 @@ void GStateMenu::unload()
 */
 void GStateMenu::update( const double DELTA_TIME )
 {
-	assert( DELTA_TIME >= INITIAL_TIME );
+	assert( DELTA_TIME >= INITIAL_TIME ); // Checking if the time variates.
 	this -> passed_time += DELTA_TIME;
 
 	handleSelectorMenu();
 
-	this -> shwing_animation -> update( this -> shwing_clip, DELTA_TIME );
+	this -> shwing_animation -> update( this -> shwing_clip, DELTA_TIME ); // Update shwing animation.
 
-	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
+	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput(); // Get key states.
 
 	if( keyStates[ GameKeys::ESCAPE ] == true )
 	{
@@ -122,7 +123,7 @@ void GStateMenu::update( const double DELTA_TIME )
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Key state ESCAPE is false.";
 	}
 
 	change_shwing_animation();
@@ -132,12 +133,12 @@ void GStateMenu::change_shwing_animation()
 {
 	if( this -> is_shwing_activated )
 	{
-		 this -> shwing_animation -> changeAnimation( POSITION_X, POSITION_Y, 12, false, 2 );
+		 this -> shwing_animation -> changeAnimation( POSITION_X, POSITION_Y, 12, false, 2 ); // Changes the shwing animation.
 		 this -> is_shwing_activated = false;
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Shwing is not activated.";
 	}
 }
 
@@ -149,8 +150,8 @@ void GStateMenu::render()
 
 	if( this -> passed_time > 10 )
 	{
-		this -> attrack_mode_background -> render( POSITION_X, POSITION_Y, nullptr, true );
-		this -> attract_mode -> render( POSITION_X, POSITION_Y, &this -> attractClip, true );
+		this -> attrack_mode_background -> render( POSITION_X, POSITION_Y, nullptr, true ); // Render the attract mode background.
+		this -> attract_mode -> render( POSITION_X, POSITION_Y, &this -> attractClip, true ); // Render attract mode.
 
 		should_ignore = true;
 
@@ -163,7 +164,7 @@ void GStateMenu::render()
 
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "Passed time is < 75";
 		}
 
 	}else
@@ -195,13 +196,17 @@ void GStateMenu::handle_attract()
 
 void GStateMenu::render_menu()
 {
-	this -> menu_image -> render( POSITION_X, POSITION_Y, nullptr, true );
+	Log( INFO ) << "Rendering menu...";
+	
+	this -> menu_image -> render( POSITION_X, POSITION_Y, nullptr, true ); // Render the menu image.
 
-	this -> menu_selector -> setWidth( WIDTH );
+	this -> menu_selector -> setWidth( WIDTH ); // Render the menu selector.
 
+	// Render the menu selector with flip .
 	this -> menu_selector -> render( selector_X_position_left[ current_selection ],
 		selector_Y_position_left[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
 
+	// Render the menu selector with horizontal flip.
 	this -> menu_selector -> render( selector_X_position_right[ current_selection ],
 		selector_Y_position_right[ current_selection ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
 }
@@ -211,7 +216,9 @@ void GStateMenu::render_menu()
 */
 void GStateMenu::handleSelectorMenu()
 {
-	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput();
+	Log( INFO ) << "Loading Selector menu.";
+	
+	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput(); // Get the input states.
 
 	const double SELECTOR_DELAY_TIME = 0.2;
 
@@ -232,7 +239,7 @@ void GStateMenu::handleSelectorMenu()
 	{
 		verify_should_ignore();
 
-		Game::instance().setState( Game::GStates::NEW_GAME );
+		Game::instance().setState( Game::GStates::NEW_GAME ); // Set the state New Game.
 		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
@@ -243,7 +250,7 @@ void GStateMenu::handleSelectorMenu()
 
 		verify_should_ignore();
 
-		Game::instance().setState( Game::GStates::CONTINUE );
+		Game::instance().setState( Game::GStates::CONTINUE ); // Set the state continue.
 		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
@@ -253,7 +260,7 @@ void GStateMenu::handleSelectorMenu()
 	{
 		verify_should_ignore();
 
-		Game::instance().setState( Game::GStates::OPTIONS );
+		Game::instance().setState( Game::GStates::OPTIONS ); // Set the state options.
 		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
@@ -263,7 +270,7 @@ void GStateMenu::handleSelectorMenu()
 	{
 		verify_should_ignore();
 
-		Game::instance().setState( Game::GStates::CREDITS );
+		Game::instance().setState( Game::GStates::CREDITS ); // Set the state credits.
 		this -> passed_time = INITIAL_TIME;
 		this -> attractClip.y = 0;
 
@@ -303,7 +310,7 @@ void GStateMenu::handle_current_selection_down_and_right( const double SELECTOR_
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "passed_time <= SELECTOR_DELAY_TIME";
 	}
 }
 
@@ -324,6 +331,6 @@ void GStateMenu::handle_current_selection_up_and_left( const double SELECTOR_DEL
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "passed_time <= SELECTOR_DELAY_TIME";
 	}
 }

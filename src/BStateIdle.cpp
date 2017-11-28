@@ -21,6 +21,8 @@
 void BStateIdle::enter()
 {
 	Log( DEBUG ) << "STATE IDLE BOSS";
+
+	// Changing the boss animation.
 	this -> boss -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES, false, TOTAL_TIME_ANIMATION );
 }
 
@@ -39,42 +41,13 @@ void BStateIdle::exit()
 */
 void BStateIdle::update( const double DELTA_TIME )
 {
-	( ( void )DELTA_TIME ); // Unused.
 
-	// if( this -> boss -> is_right && this -> boss -> x > 1960 )
-	// {
-	// 	this -> boss -> is_right = false;
-	//
-	// }else if( !this -> boss -> is_right && this -> boss -> x < 300 )
-	// {
-	// 	this -> boss -> is_right = true;
-	//
-	// }else
-	// {
-	// 	this -> boss -> is_right = false;
-	// }
 	handle_boss_position();
 
-	// if( this -> boss -> is_right )
-	// {
-	// 	this -> boss -> move( false, true );
-	//
-	// }else
-	// {
-	// 	this -> boss -> move( true, false );
-	// }
-	//
-	// if( this -> boss -> saw_player )
-	// {
-	// 	this -> boss -> changeState( Boss::BStates::ATTACK );
-	//
-	// }else
-	// {
-	// 	// No action;
-	// }
 	handle_boss_movements();
 }
 
+// Handle the boss position in the game.
 void BStateIdle::handle_boss_position()
 {
 	if( this -> boss -> is_right && this -> boss -> x > 1960 )
@@ -91,6 +64,7 @@ void BStateIdle::handle_boss_position()
 	}
 }
 
+// Handle the boss movements in the game.
 void BStateIdle::handle_boss_movements()
 {
 	if( this -> boss -> is_right )
@@ -108,7 +82,7 @@ void BStateIdle::handle_boss_movements()
 
 	}else
 	{
-		// No action;
+		Log( DEBUG ) << "Invalid boss movement!";
 	}
 }
 

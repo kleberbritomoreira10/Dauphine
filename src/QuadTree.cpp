@@ -52,12 +52,12 @@ void QuadTree::clear()
 	{
 		if( this -> nodes[ i ] != nullptr)
 		{
-			this -> nodes[ i ] -> clear();
+			this -> nodes[ i ] -> clear(); // Clear the node.
 			this -> nodes[ i ] = nullptr;
 
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "The node is null.";
 		}
 	}
 }
@@ -67,6 +67,8 @@ void QuadTree::clear()
 */
 void QuadTree::split()
 {
+	Log( INFO ) << "Applying the split in objects of the QuadTree.";
+
 	const int subWidth = this -> bounds.w / 2;
 	const int subHeight = this -> bounds.h / 2;
 	const int position_x = this -> bounds.x;
@@ -77,7 +79,8 @@ void QuadTree::split()
 	SDL_Rect rect2 = { position_x, position_y + subHeight, subWidth, subHeight };
 	SDL_Rect rect3 = { position_x + subWidth, position_y + subHeight, subWidth, subHeight };
 
-	this -> nodes[ 0 ] = new QuadTree( this -> level + 1, rect0 );
+	// Creating instances of quadtree with different sdl rects.
+	this -> nodes[ 0 ] = new QuadTree( this -> level + 1, rect0 ); 
 	this -> nodes[ 1 ] = new QuadTree( this -> level + 1, rect1 );
 	this -> nodes[ 2 ] = new QuadTree(this -> level + 1, rect2 );
 	this -> nodes[ 3 ] = new QuadTree(this -> level + 1, rect3 );
@@ -106,22 +109,29 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 	// Object can completely fit within the left quadrants
 	if( rect_.x < vertical_mid_point && rect_.x + rect_.w < vertical_mid_point )
 	{
-		result_index = handle_index_left_quadrants( top_quadrant, bottom_quadrant );
+		result_index = handle_index_left_quadrants( top_quadrant, bottom_quadrant ); // Index of the left quadrants.
 
 	}else if ( rect_.x > vertical_mid_point ) // Object can completely fit within the right quadrants
 	{
-		result_index = handle_index_right_quadrants( top_quadrant, bottom_quadrant );
+		result_index = handle_index_right_quadrants( top_quadrant, bottom_quadrant ); // Index of the right quadrants.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "The rect_.x is < vertical_mid_point";
 	}
 
 	return result_index;
 }
 
+/**
+* Handle the index for objects of left quadrants
+* @param top_quadrant: The top quadrant of the QuadTree.
+* @param bottom_quadrant: The bottom quadrant of the QuadTree.
+*/
 int QuadTree::handle_index_left_quadrants( bool top_quadrant, bool bottom_quadrant )
 {
+	Log( INFO ) << "Handling left quadrants index....";
+
 	int index = -1;
 
 	if( top_quadrant )
@@ -138,8 +148,15 @@ int QuadTree::handle_index_left_quadrants( bool top_quadrant, bool bottom_quadra
 	}
 }
 
+/**
+* Handle the index for objects of right quadrants
+* @param top_quadrant: The top quadrant of the QuadTree.
+* @param bottom_quadrant: The bottom quadrant of the QuadTree.
+*/
 int QuadTree::handle_index_right_quadrants( bool top_quadrant, bool bottom_quadrant )
 {
+	Log( INFO ) << "Handling right quadrants index....";
+
 	int index = -1;
 
 	if ( top_quadrant )
@@ -168,20 +185,20 @@ void QuadTree::insert( CollisionRect rect_ ){
 
 		if( index != INDEX_NOT_ALLOWED )
 		{
-			nodes[ index ] -> insert( rect_ );
+			nodes[ index ] -> insert( rect_ ); // Inserting rect in the node array.
 			return;
 
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "Index not allowed";
 		}
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "The node is null";
 	}
 
-	this -> objects.push_back( rect_ );
+	this -> objects.push_back( rect_ ); // Adds a new rect in the array.
 
 	if( (int)this -> objects.size() > this -> max_number_of_quadtree_objects &&
 		level < this -> max_number_of_quadtree_objects )
@@ -192,17 +209,18 @@ void QuadTree::insert( CollisionRect rect_ ){
 
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "Node is not null!";
 		}
 
 		insert_all_objects();
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Invalid object size";
 	}
 }
 
+// Insert all the objects in the array nodes.
 void QuadTree::insert_all_objects()
 {
 	int i = 0;
@@ -225,7 +243,7 @@ void QuadTree::insert_all_objects()
 std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &returnObjects_, SDL_Rect rect_ )
 {
 
-	int index = getIndex( rect_ );
+	int index = getIndex( rect_ ); // Get the current index.
 
 	if( index != INDEX_NOT_ALLOWED && nodes[ FIRST_NODE ] != nullptr )
 	{
@@ -233,10 +251,11 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &ret
 
 	}else
 	{
-		//No action.
+		Log( DEBUG ) << "The Index is null!";
 	}
 
-	returnObjects_.insert( returnObjects_.end(), this -> objects.begin(), this -> objects.end() );
+	// Insert the objects in the vector
+	returnObjects_.insert( returnObjects_.end(), this -> objects.begin(), this -> objects.end() ); 
 
 	return returnObjects_;
 }
@@ -247,6 +266,8 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &ret
 */
 void QuadTree::setObjects( std::vector< CollisionRect > &objects_ )
 {
-	this -> objects.clear();
+	Log( INFO ) << "Updating the objects...";
+	
+	this -> objects.clear(); // Clear all the objects.
 	this -> objects = objects_;
 }

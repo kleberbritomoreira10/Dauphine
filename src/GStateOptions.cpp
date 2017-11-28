@@ -47,11 +47,13 @@ GStateOptions::GStateOptions() :
 	sfx_volume_text( nullptr )
 {
 	this -> resolution = new Text( 830.0, 365.0, "res/fonts/maturasc.ttf", TEXT_SIZE, \
-		possible_resolutions[current_resolution].c_str() );
+		possible_resolutions[current_resolution].c_str() ); // Load option text resolution.
+
 	this -> music_volume_text = new Text( 830.0, 468.0, "res/fonts/maturasc.ttf", TEXT_SIZE, \
-		Util::toString( this -> music_volume ).c_str() );
+		Util::toString( this -> music_volume ).c_str() ); // Load the music volume of the options menu.
+
 	this -> sfx_volume_text = new Text( 830.0, 580.0, "res/fonts/maturasc.ttf", TEXT_SIZE, \
-		Util::toString( this -> sfx_volume ).c_str() );
+		Util::toString( this -> sfx_volume ).c_str() ); // Load the sfx volume of the options menu.
 }
 
 /**
@@ -66,42 +68,45 @@ GStateOptions::~GStateOptions()
 	delete_sfx_volume_text();
 }
 
+// Delete all the resolutions.
 void GStateOptions::delete_resolution()
 {
 	if( this -> resolution != nullptr )
 	{
-		delete this -> resolution;
+		delete this -> resolution; // Delete the resolution instance.
 		this -> resolution = nullptr;
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Resolution is already null";
 	}
 }
 
+// Delete all the music volume.
 void GStateOptions::delete_music_volume_text()
 {
 	if( this -> music_volume_text != nullptr )
 	{
-		delete this -> music_volume_text;
+		delete this -> music_volume_text; // Delete the music volume instance.
 		this -> music_volume_text = nullptr;
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Music volume is already null.";
 	}
 }
 
+// Delete sfx volume.
 void GStateOptions::delete_sfx_volume_text()
 {
 	if( this -> sfx_volume_text != nullptr )
 	{
-		delete this -> sfx_volume_text;
+		delete this -> sfx_volume_text; // Delete sfx volume.
 		this -> sfx_volume_text = nullptr;
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Sfx volume is already null.";
 	}
 }
 
@@ -112,14 +117,19 @@ void GStateOptions::delete_sfx_volume_text()
 */
 void GStateOptions::update( const double DELTA_TIME )
 {
-	assert( DELTA_TIME > INITIAL_TIME );
+	assert( DELTA_TIME > INITIAL_TIME ); // Check there is a time variation.
 	this -> elapsedTime += DELTA_TIME;
 
+	// Update the options menu resolution.
 	this -> resolution -> changeText( possible_resolutions[ current_resolution ].c_str() );
+
+	//Change the options menu music volume.
 	this -> music_volume_text -> changeText( Util::toString( this -> music_volume).c_str() );
+
+	// Change the options menu sfx volume.
 	this -> sfx_volume_text -> changeText( Util::toString( this -> sfx_volume ).c_str() );
 
-	const std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput();
+	const std::array< bool, GameKeys::MAX > keyStates = Game::instance().getInput(); // Get key states from input.
 
 	if( keyStates[ GameKeys::ESCAPE ] == true)
 	{
@@ -127,7 +137,7 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "State ESCAPE is false";
 	}
 
 	const double SELECTOR_DELAY_TIME = 0.2;
@@ -162,11 +172,11 @@ void GStateOptions::update( const double DELTA_TIME )
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Invalid Key State";
 	}
 }
 
-
+// Handle the options when the key is DOWN.
 void GStateOptions::handle_current_option_down_key( const double SELECTOR_DELAY_TIME )
 {
 	if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
@@ -184,10 +194,11 @@ void GStateOptions::handle_current_option_down_key( const double SELECTOR_DELAY_
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "elapsedTime <= SELECTOR_DELAY_TIME";
 	}
 }
 
+// Handle the options when the key is UP.
 void GStateOptions::handle_current_option_up_key( const double SELECTOR_DELAY_TIME )
 {
 	if( this -> elapsedTime >= SELECTOR_DELAY_TIME)
@@ -205,10 +216,11 @@ void GStateOptions::handle_current_option_up_key( const double SELECTOR_DELAY_TI
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "elapsedTime <= SELECTOR_DELAY_TIME";
 	}
 }
 
+// Handle the options when the key is LEFT.
 void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_TIME )
 {
 	if( this->elapsedTime >= SELECTOR_DELAY_TIME )
@@ -233,7 +245,7 @@ void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_
 
 			}else
 			{
-				//No action.
+				Log( DEBUG ) << "Music volume is 0.";
 			}
 
 		}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
@@ -244,17 +256,18 @@ void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_
 
 			}else
 			{
-				// No action.
+				Log( DEBUG ) << "Sfx volume is 0.";
 			}
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "Invalid option.";
 		}
 
 		this -> elapsedTime = 0.0;
 	}
 }
 
+// Handle the options when the key is RIGHT.
 void GStateOptions::handle_current_option_right_key( const double SELECTOR_DELAY_TIME )
 {
 	if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
@@ -279,7 +292,7 @@ void GStateOptions::handle_current_option_right_key( const double SELECTOR_DELAY
 
 			}else
 			{
-				// No action.
+				Log( DEBUG ) << "Max volume exeeded";
 			}
 
 		}else if( this -> current_option == OPTIONS_VOLUME_SFX ) // Option == VOLUME SFX
@@ -290,7 +303,7 @@ void GStateOptions::handle_current_option_right_key( const double SELECTOR_DELAY
 
 			}else
 			{
-				// No action.
+				Log( DEBUG ) << "Max sfx volume exeeded.";
 			}
 
 		}else
@@ -309,9 +322,9 @@ void GStateOptions::render()
 {
 	render_options_image();
 
-	this -> resolution -> render( POSITION_X, POSITION_Y );
-	this -> music_volume_text -> render( POSITION_X, POSITION_Y );
-	this -> sfx_volume_text -> render( POSITION_X, POSITION_Y );
+	this -> resolution -> render( POSITION_X, POSITION_Y ); // Render the options menu resolution.
+	this -> music_volume_text -> render( POSITION_X, POSITION_Y ); // Render the options menu music volume text.
+	this -> sfx_volume_text -> render( POSITION_X, POSITION_Y ); // Render the options menu sfx volume text.
 
 	render_selector();
 
@@ -321,7 +334,7 @@ void GStateOptions::render_options_image()
 {
 	if( this -> options_image != nullptr )
 	{
-		this -> options_image -> render( POSITION_X, POSITION_Y, nullptr, true );
+		this -> options_image -> render( POSITION_X, POSITION_Y, nullptr, true ); // Render the options image.
 	}
 	else
 	{
@@ -333,9 +346,11 @@ void GStateOptions::render_selector()
 {
 		if( this -> selector != nullptr )
 		{
+			// Renders the selector of the options menu with none flip.
 			this -> selector -> render( selector_X_position_left[ current_option ],
 				selector_Y_position_left[ current_option ], nullptr, false, 0.0, nullptr, SDL_FLIP_NONE );
-
+			
+			// Renders the selector with horizontal flip.
 			this -> selector -> render( selector_X_position_right[ current_option ],
 				selector_Y_position_right[ current_option ], nullptr, false, 0.0, nullptr, SDL_FLIP_HORIZONTAL );
 		}
@@ -353,17 +368,21 @@ void GStateOptions::load()
 {
 	Log( DEBUG ) << "Loading options...";
 
-	LuaScript luaOptions( "lua/Options.lua" );
+	LuaScript luaOptions( "lua/Options.lua" ); // Load options from LUA.
+
+	// Path to options image.
 	const std::string path_options = luaOptions.unlua_get< std::string >( "options.images.dummy" );
+
+	// Path to options cursor image.
 	const std::string path_cursor = luaOptions.unlua_get< std::string >( "options.images.cursor" );
 
-	this -> current_resolution = RESOLUTION_960_540;
-	this -> current_option = OPTIONS_RESOLUTION;
+	this -> current_resolution = RESOLUTION_960_540; // Setting current resolution to 960x540.
+	this -> current_option = OPTIONS_RESOLUTION; // Setting options resolution.
 
-  this -> options_image = Game::instance().getResources().get( path_options );
-  this -> selector = Game::instance().getResources().get( path_cursor );
+  this -> options_image = Game::instance().getResources().get( path_options ); // Getting options image resource.
+  this -> selector = Game::instance().getResources().get( path_cursor ); // Getting selector image resource.
 
-  this -> selector -> setWidth( WIDTH_VALUE );
+  this -> selector -> setWidth( WIDTH_VALUE ); // Setting selector width
 }
 
 /**
@@ -387,25 +406,25 @@ void GStateOptions::applyOptions()
 
 		int resolution_X = 800;
 		int resolution_Y = 600;
-		Game::instance().resizeWindow( resolution_X, resolution_Y );
+		Game::instance().resizeWindow( resolution_X, resolution_Y ); // Resizes the window with the 800x600 resolution.
 
 	}else if( this -> current_resolution == RESOLUTION_768_432 )
 	{
 
 		int resolution_X = 768;
 		int resolution_Y = 432;
-		Game::instance().resizeWindow( resolution_X, resolution_Y );
+		Game::instance().resizeWindow( resolution_X, resolution_Y ); // Resizes the window with the 768x432 resolution.
 
 	}else if( this -> current_resolution == RESOLUTION_960_540 )
 	{
 
 		int resolution_X = 960;
 		int resolution_Y = 540;
-		Game::instance().resizeWindow( resolution_X, resolution_Y );
+		Game::instance().resizeWindow( resolution_X, resolution_Y ); // Resizes the window with the 960x540 resolution.
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Invalid Resolution!!";
 	}
 
 	apply_volume();

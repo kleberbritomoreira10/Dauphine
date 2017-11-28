@@ -59,31 +59,31 @@ Level::~Level()
 
 	}else
 	{
-		// No action.
+		Log( DEBUG ) << "Invalid option.";
 	}
 }
 
 void Level::delete_camera()
 {
-	delete this -> camera;
+	delete this -> camera; // Delete the camera.
 	this -> camera = nullptr;
 }
 
 void Level::delete_player_hud()
 {
-	delete this -> player_Hud;
+	delete this -> player_Hud; // Delete the player hud.
 	this -> player_Hud = nullptr;
 }
 
 void Level::delete_tile_map()
 {
-	delete this -> tile_map;
+	delete this -> tile_map; // Delete the tile map.
 	this -> tile_map = nullptr;
 }
 
 void Level::delete_quadTree()
 {
-	delete this -> quadTree;
+	delete this -> quadTree; // Delete the QuadTree,
 	this -> quadTree = nullptr;
 }
 
@@ -96,7 +96,9 @@ void Level::delete_quadTree()
 void Level::changeCheckpoints( int TOTAL_NUMBER_OF_CHECKPOINTS_, std::vector <double> checkpoints_X_,
 		std::vector <double> checkpoints_Y_ )
 {
-	assert( TOTAL_NUMBER_OF_CHECKPOINTS > 0 );
+	assert( TOTAL_NUMBER_OF_CHECKPOINTS > 0 ); // Check if the total number of checkpoints is > 0.
+
+	Log( INFO ) << "Changing checkpoints...";
 
 	this -> checkpoints_X = checkpoints_X_;
 	this -> checkpoints_Y = checkpoints_Y_;
@@ -104,11 +106,13 @@ void Level::changeCheckpoints( int TOTAL_NUMBER_OF_CHECKPOINTS_, std::vector <do
 
 }
 
+// Get the level width.
 unsigned int Level::getWidth()
 {
 	return this -> width;
 }
 
+// Get the level height.
 unsigned int Level::getHeight()
 {
 	return this -> height;
@@ -121,13 +125,13 @@ unsigned int Level::getHeight()
 void Level::set_player( Player *const player_ )
 {
 
-	assert( player_ );
+	assert( player_ ); // Check if the player instance is not null.
 
 	this -> player = player_;
 
 	if( this -> player != nullptr)
 	{
-		this -> player -> setLevelWH( this -> width, this -> height );
+		this -> player -> setLevelWH( this -> width, this -> height ); // Setting player Widht and Height.
 		addEntity( this -> player );
 
 	}else
@@ -151,7 +155,7 @@ void Level::set_camera( Camera *const camera_ )
 	{
 		if( this -> player != nullptr)
 		{
-			this -> camera -> setLevelWH( this -> width, this -> height );
+			this -> camera -> setLevelWH( this -> width, this -> height ); // Setting camera Widht and Height.
 
 		}else
 		{
@@ -179,7 +183,7 @@ void Level::setBoss( Boss *const BOSS ){
 	{
 		if( this -> player != nullptr )
 		{
-			this -> boss -> setLevelWH( this -> width, this -> height );
+			this -> boss -> setLevelWH( this -> width, this -> height ); // Setting Boss Widht and Height.
 
 		}else
 		{
@@ -204,7 +208,7 @@ void Level::clear_enemies()
 		enemy = nullptr;
 	}
 
-	this -> enemies.clear();
+	this -> enemies.clear(); // Clear all the enemies.
 }
 
 /**
@@ -218,5 +222,5 @@ void Level::clear_documents()
 		document = nullptr;
 	}
 
-	this -> documents.clear();
+	this -> documents.clear(); // Clear all the documents.
 }

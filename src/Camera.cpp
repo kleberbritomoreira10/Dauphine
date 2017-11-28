@@ -37,9 +37,13 @@ Camera::~Camera()
 */
 void Camera::update()
 {
+  Log( INFO ) << "Updating the camera position...";
   updatePosition();
 }
 
+/**
+* Getting the camera clip.
+*/
 SDL_Rect &Camera::getClip()
 {
   return this -> clip;
@@ -50,8 +54,10 @@ SDL_Rect &Camera::getClip()
 */
 void Camera::updatePosition()
 {
-
+  // Changing the camera position in the X axis.
   this -> clip.x = ( this -> entity -> x + this -> entity -> getWidth() / 2 ) - ( this -> clip.w / 2 );
+
+  // Changin the camera position in the Y axis.
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );
 
   update_position_x();
@@ -59,6 +65,9 @@ void Camera::updatePosition()
   update_position_y();
 }
 
+/**
+* Update the camera position in the X axis.
+*/
 void Camera::update_position_x()
 {
 
@@ -73,10 +82,13 @@ void Camera::update_position_x()
 
   }else
   {
-    // No action.
+    Log( INFO ) << "Invalid Position.";
   }
 }
 
+/**
+* Update the camera position in the X axiY.
+*/
 void Camera::update_position_y()
 {
 
@@ -91,7 +103,7 @@ void Camera::update_position_y()
 
   }else
   {
-    // No action.
+    Log( INFO ) << "Invalid Position.";
   }
 }
 
@@ -111,6 +123,6 @@ void Camera::centralizeOn( Entity *const entity_ )
 */
 void Camera::setLevelWH( const unsigned int width_, const unsigned int height_ )
 {
-  this -> level_width = width_;
-  this -> level_height = height_;
+  this -> level_width = width_; // Set the camera position width.
+  this -> level_height = height_; // Set the cameta position height.
 }

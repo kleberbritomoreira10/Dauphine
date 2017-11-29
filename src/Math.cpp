@@ -45,6 +45,7 @@ int Math::sign( const int number_to_be_parameterized )
 */
 int Math::sign( const double number_to_be_parameterized )
 {
+
   if( number_to_be_parameterized > 0.0 )
   {
     return VALID_NUMBER;

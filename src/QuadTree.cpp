@@ -9,6 +9,7 @@
 
 #include "QuadTree.h"
 #include <assert.h>
+#include "Logger.h"
 
 #define MAX_NUMBER_OF_NODES 4
 #define INDEX_NOT_ALLOWED -1

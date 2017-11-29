@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Configuration.h"
 #include "assert.h"
+#include "Logger.h"
 
 /**
 * The constructor.

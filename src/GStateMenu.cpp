@@ -147,6 +147,7 @@ void GStateMenu::change_shwing_animation()
 */
 void GStateMenu::render()
 {
+	assert( this -> passed_time >= 0 );
 
 	if( this -> passed_time > 10 )
 	{
@@ -292,8 +293,14 @@ void GStateMenu::verify_should_ignore()
 	}
 }
 
+/**
+* Handles current selection DOWN and RIGHT.
+* @param SELECTOR_DELAY_TIME: The delay of the selector.
+*/
 void GStateMenu::handle_current_selection_down_and_right( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME >= 0 );
+
 	if( this -> passed_time >= SELECTOR_DELAY_TIME )
 	{
 		if( current_selection < ( Selection::TOTAL - 1 ) )
@@ -314,8 +321,14 @@ void GStateMenu::handle_current_selection_down_and_right( const double SELECTOR_
 	}
 }
 
+/**
+* Handles current selection DOWN and RIGHT.
+* @param SELECTOR_DELAY_TIME: The delay of the selector.
+*/
 void GStateMenu::handle_current_selection_up_and_left( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME >= 0 );
+
 	if( this -> passed_time >= SELECTOR_DELAY_TIME )
 	{
 		if( current_selection > Selection::NEWGAME )

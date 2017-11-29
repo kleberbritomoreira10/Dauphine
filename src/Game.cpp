@@ -3,6 +3,7 @@
 #include "Configuration.h"
 #include <cassert>
 #include "Util.h"
+#include <assert.h>
 
 #include "GStateSplash.h"
 #include "LevelOne.h"
@@ -35,9 +36,15 @@
 #define NO_NUMBERS_TO_BE_PARAMETERIZED 0
 #define NO_LINES 0
 
+/**
+* Singleton imeplementation for Game.
+* @return The instance for a Game.
+*/
 Game &Game::instance ()
 {
 	static Game *instance = new Game();
+
+	assert( instance );
 	return *instance;
 }
 
@@ -171,7 +178,6 @@ void Game::delete_resource_manager()
 	{
 		Log( DEBUG ) << "The resource manager is already null";
 	}
-
 }
 
 void Game::delete_fade_screen()
@@ -210,6 +216,8 @@ void Game::runGame()
 	double total_game_time = INITIAL_TIME;
 	const double delta_time = 1.0 / 60.0;
 	double accumulated_time = INITIAL_TIME;
+
+	assert( delta_time == ( 1.0 / 60.0 ));
 
 	// This is the main game loop.
 	while( this -> is_running )
@@ -290,8 +298,10 @@ void Game::get_current_selection()
 * Make time verifications.
 * @param delta_time: Time variation.
 */
-void Game::time_verifications(const double delta_time)
+void Game::time_verifications( const double delta_time )
 {
+	assert( delta_time >= 0 );
+
 	if( !this -> is_paused )
 	{
 
@@ -345,6 +355,7 @@ void Game::setState( const GStates state_ )
 	this -> current_state -> unload(); // Unload current state.
 	this -> current_state = this -> states_map.at( state_ ); // Get the current state.
 	this -> current_state -> load(); // Load the current state.
+	assert( current_state );
 }
 
 /**
@@ -414,7 +425,7 @@ void Game::handleDialog()
 {
 	std::array < bool, GameKeys::MAX > keyStates = Game::instance().getInput(); // Get inputs.
 
-	const double SELECTOR_DELAY_TIME = 0.2; 
+	const double SELECTOR_DELAY_TIME = 0.2; // The delay of the selector.
 
 	if( keyStates[ GameKeys::SPACE ] == true )
 	{
@@ -474,7 +485,7 @@ void Game::handleSelectorMenu()
 {
 	std::array<bool, GameKeys::MAX> keyStates = Game::instance().getInput(); // Get inputs.
 
-	const double SELECTOR_DELAY_TIME = 0.2;
+	const double SELECTOR_DELAY_TIME = 0.2; // The delay of the selector.
 
 	if( keyStates[ GameKeys::DOWN ] == true || keyStates[ GameKeys::RIGHT ] == true )
 	{
@@ -507,6 +518,8 @@ void Game::handleSelectorMenu()
 */
 void Game::handle_selection_keys_down_and_right( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME > 0 );
+
 	if( this -> passed_time >= SELECTOR_DELAY_TIME )
 	{
 		if( current_selection < ( PSelection::TOTAL - 1 ))
@@ -532,6 +545,8 @@ void Game::handle_selection_keys_down_and_right( const double SELECTOR_DELAY_TIM
 */
 void Game::handle_selection_keys_up_and_left( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME > 0 );
+
 	if( this -> passed_time >= SELECTOR_DELAY_TIME )
 	{
 		if( current_selection > PSelection::RESUME )
@@ -573,6 +588,8 @@ void Game::destroyStates()
 AudioHandler &Game::get_audio_handler()
 {
 	Log( INFO ) << "Getting audio handler.";
+
+	assert( this -> audio_handler );
 	return ( *( this -> audio_handler )); 
 }
 
@@ -582,7 +599,9 @@ AudioHandler &Game::get_audio_handler()
 */
 std::array < bool, GameKeys::MAX > Game::getInput()
 {
-	Log( INFO ) << "Getting inputs.";
+	Log( INFO ) << "Getting inputs."; 
+
+	assert( this -> input_handler );
 	return this -> input_handler -> getKeyStates();
 }
 
@@ -593,6 +612,8 @@ std::array < bool, GameKeys::MAX > Game::getInput()
 ResourceManager &Game::getResources()
 {
 	Log( INFO ) << "Getting the resource manager.";
+
+	assert( this -> resource_manager );
 	return ( *( this -> resource_manager ) );
 }
 
@@ -603,6 +624,8 @@ ResourceManager &Game::getResources()
 GameSave &Game::get_saves()
 {
 	Log( INFO ) << "Getting game saves.";
+
+	assert( this -> game_save );
 	return ( *( this -> game_save ) );
 }
 
@@ -620,6 +643,7 @@ void Game::stop()
 */
 void Game::clearKeyFromInput( const GameKeys KEY )
 {
+	assert( KEY );
 	this -> input_handler -> clearKey( KEY );
 }
 
@@ -630,6 +654,8 @@ void Game::clearKeyFromInput( const GameKeys KEY )
 FadeScreen &Game::get_fade()
 {
 	Log( INFO ) << "Getting fade screen.";
+
+	assert( this -> fade_screen );
 	return ( *( this -> fade_screen ));
 }
 
@@ -640,6 +666,7 @@ FadeScreen &Game::get_fade()
 */
 void Game::resizeWindow( const unsigned int width_, const unsigned int height_ )
 {
+
 	Log( INFO ) << "Resizing the window.";
 	this -> window -> resize( width_, height_ ); // Resizes the window
 }

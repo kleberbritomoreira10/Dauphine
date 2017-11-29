@@ -75,6 +75,11 @@ void QuadTree::split()
 	const int position_x = this -> bounds.x;
 	const int position_y = this -> bounds.y;
 
+	assert( subWidth >= 0 );
+	assert( subHeight >= 0 );
+	assert( position_x >= 0 );
+	assert( position_y >= 0 );
+
 	SDL_Rect rect0 = { position_x + subWidth, position_y, subWidth, subHeight };
 	SDL_Rect rect1 = { position_x, position_y, subWidth, subHeight };
 	SDL_Rect rect2 = { position_x, position_y + subHeight, subWidth, subHeight };
@@ -93,7 +98,6 @@ void QuadTree::split()
 */
 int QuadTree::getIndex( SDL_Rect rect_ )
 {
-
 	// int index = -1;
 	int result_index = -1;
 	double vertical_mid_point = this -> bounds.x + ( this -> bounds.w / 2 );
@@ -121,7 +125,8 @@ int QuadTree::getIndex( SDL_Rect rect_ )
 		Log( DEBUG ) << "The rect_.x is < vertical_mid_point";
 	}
 
-	return result_index;
+	assert( result_index > -50 && result_index < 50 );
+	return result_index; 
 }
 
 /**
@@ -136,7 +141,7 @@ int QuadTree::handle_index_left_quadrants( bool top_quadrant, bool bottom_quadra
 	int index = -1;
 
 	if( top_quadrant )
-	{
+	{	
 		return index = 1;
 
 	}else if ( bottom_quadrant )
@@ -145,6 +150,7 @@ int QuadTree::handle_index_left_quadrants( bool top_quadrant, bool bottom_quadra
 
 	}else
 	{
+		assert( index );
 		return index;
 	}
 }
@@ -170,6 +176,7 @@ int QuadTree::handle_index_right_quadrants( bool top_quadrant, bool bottom_quadr
 
 	}else
 	{
+		assert( index );
 		return index;
 	}
 }
@@ -246,6 +253,8 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &ret
 
 	int index = getIndex( rect_ ); // Get the current index.
 
+	assert( index != 0 );
+
 	if( index != INDEX_NOT_ALLOWED && nodes[ FIRST_NODE ] != nullptr )
 	{
 		nodes[ index ] -> retrieve( returnObjects_, rect_ );
@@ -258,6 +267,7 @@ std::vector<CollisionRect> QuadTree::retrieve( std::vector< CollisionRect > &ret
 	// Insert the objects in the vector
 	returnObjects_.insert( returnObjects_.end(), this -> objects.begin(), this -> objects.end() ); 
 
+	assert( returnObjects_.capacity() > 0 );
 	return returnObjects_;
 }
 

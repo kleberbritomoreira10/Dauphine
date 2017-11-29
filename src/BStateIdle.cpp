@@ -9,6 +9,7 @@
 
 #include "BStateIdle.h"
 #include "Logger.h"
+#include <assert.h>
 
 #define POSITION_X 0
 #define POSITION_Y 0
@@ -91,5 +92,6 @@ void BStateIdle::handle_boss_movements()
 BStateIdle::BStateIdle( Boss *const BOSS ) :
 	StateBoss( BOSS )
 {
+	assert( BOSS );
 
 }

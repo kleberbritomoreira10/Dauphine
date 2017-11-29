@@ -179,6 +179,8 @@ void GStateOptions::update( const double DELTA_TIME )
 // Handle the options when the key is DOWN.
 void GStateOptions::handle_current_option_down_key( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME >= 0);
+
 	if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
 	{
 		if( this -> current_option == ( OPTIONS_TOTAL - 1 ) )
@@ -201,6 +203,8 @@ void GStateOptions::handle_current_option_down_key( const double SELECTOR_DELAY_
 // Handle the options when the key is UP.
 void GStateOptions::handle_current_option_up_key( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME >= 0);
+
 	if( this -> elapsedTime >= SELECTOR_DELAY_TIME)
 	{
 		if( this -> current_option == OPTIONS_RESOLUTION )
@@ -223,6 +227,8 @@ void GStateOptions::handle_current_option_up_key( const double SELECTOR_DELAY_TI
 // Handle the options when the key is LEFT.
 void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME >= 0);
+
 	if( this->elapsedTime >= SELECTOR_DELAY_TIME )
 	{
 		// Option == Resolution
@@ -270,6 +276,8 @@ void GStateOptions::handle_current_option_left_key( const double SELECTOR_DELAY_
 // Handle the options when the key is RIGHT.
 void GStateOptions::handle_current_option_right_key( const double SELECTOR_DELAY_TIME )
 {
+	assert( SELECTOR_DELAY_TIME >= 0);
+
 	if( this -> elapsedTime >= SELECTOR_DELAY_TIME )
 	{
 		// Option == Resolution
@@ -332,6 +340,8 @@ void GStateOptions::render()
 
 void GStateOptions::render_options_image()
 {
+	assert( this -> options_image != nullptr );
+
 	if( this -> options_image != nullptr )
 	{
 		this -> options_image -> render( POSITION_X, POSITION_Y, nullptr, true ); // Render the options image.
@@ -344,6 +354,8 @@ void GStateOptions::render_options_image()
 
 void GStateOptions::render_selector()
 {
+	assert( this -> selector != nullptr );
+	
 		if( this -> selector != nullptr )
 		{
 			// Renders the selector of the options menu with none flip.
@@ -382,7 +394,10 @@ void GStateOptions::load()
   this -> options_image = Game::instance().getResources().get( path_options ); // Getting options image resource.
   this -> selector = Game::instance().getResources().get( path_cursor ); // Getting selector image resource.
 
-  this -> selector -> setWidth( WIDTH_VALUE ); // Setting selector width
+  this -> selector -> setWidth( WIDTH_VALUE ); // Setting selector width.
+
+  assert( options_image != nullptr );
+  assert( selector != nullptr );
 }
 
 /**

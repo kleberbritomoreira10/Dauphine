@@ -10,6 +10,7 @@
 #include "PStateAerial.h"
 #include "Logger.h"
 #include "Game.h"
+#include <assert.h>
 
 #define POSITION_X 4
 #define POSITION_Y 3
@@ -79,5 +80,5 @@ void PStateAerial::handleInput( const std::array< bool, GameKeys::MAX > keyState
 PStateAerial::PStateAerial( Player *const player_ ) :
 	StatePlayer( player_ )
 {
-
+  assert( player_ );
 }

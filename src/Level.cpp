@@ -67,24 +67,28 @@ void Level::delete_camera()
 {
 	delete this -> camera; // Delete the camera.
 	this -> camera = nullptr;
+	assert( this -> camera == nullptr );
 }
 
 void Level::delete_player_hud()
 {
 	delete this -> player_Hud; // Delete the player hud.
 	this -> player_Hud = nullptr;
+	assert( this -> player_Hud == nullptr );
 }
 
 void Level::delete_tile_map()
 {
 	delete this -> tile_map; // Delete the tile map.
 	this -> tile_map = nullptr;
+	assert(this -> tile_map == nullptr );
 }
 
 void Level::delete_quadTree()
 {
 	delete this -> quadTree; // Delete the QuadTree,
 	this -> quadTree = nullptr;
+	assert( this -> quadTree = nullptr );
 }
 
 /**
@@ -109,12 +113,14 @@ void Level::changeCheckpoints( int TOTAL_NUMBER_OF_CHECKPOINTS_, std::vector <do
 // Get the level width.
 unsigned int Level::getWidth()
 {
+	assert( this -> width );
 	return this -> width;
 }
 
 // Get the level height.
 unsigned int Level::getHeight()
 {
+	assert( this -> height );
 	return this -> height;
 }
 

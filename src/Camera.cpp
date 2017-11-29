@@ -44,6 +44,7 @@ void Camera::update()
 
 /**
 * Getting the camera clip.
+* @return A instance of a Clip.
 */
 SDL_Rect &Camera::getClip()
 {
@@ -58,8 +59,11 @@ void Camera::updatePosition()
   // Changing the camera position in the X axis.
   this -> clip.x = ( this -> entity -> x + this -> entity -> getWidth() / 2 ) - ( this -> clip.w / 2 );
 
-  // Changin the camera position in the Y axis.
+  // Changing the camera position in the Y axis.
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );
+
+  assert( this -> clip.x );
+  assert( this -> clip.y );
 
   update_position_x();
 
@@ -114,6 +118,7 @@ void Camera::update_position_y()
 */
 void Camera::centralizeOn( Entity *const entity_ )
 {
+  assert( entity_ );
   this -> entity = entity_;
 }
 
@@ -124,6 +129,9 @@ void Camera::centralizeOn( Entity *const entity_ )
 */
 void Camera::setLevelWH( const unsigned int width_, const unsigned int height_ )
 {
+  assert( width_ );
+  assert( height_ );
+  
   this -> level_width = width_; // Set the camera position width.
   this -> level_height = height_; // Set the cameta position height.
 }

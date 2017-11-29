@@ -26,9 +26,13 @@
 */
 void BStateIcePrision::enter()
 {
-  // Log(DEBUG) << "STATE ICE PRISION BOSS";
-  this -> boss -> power = Game::instance().getResources().get( "res/images/ice_prision.png" );
-  this -> boss -> power_animation -> changeWidthHeight( WIDTH_VALUE, HEIGHT_VALUE );
+   Log( INFO ) << "STATE ICE PRISION BOSS";
+
+  // Load the boss Ice Prision Image
+  this -> boss -> power = Game::instance().getResources().get( "res/images/ice_prision.png" ); 
+  this -> boss -> power_animation -> changeWidthHeight( WIDTH_VALUE, HEIGHT_VALUE ); // Change animation width and Height.
+
+  // Change IcePrision animation.
   this -> boss -> power_animation -> changeAnimation( ANIMATION_POSITION_X, ANIMATION_POSITION_X, 2, false, 0.5 );
   this -> boss -> velocity_x_axis = 0;
   this -> boss -> velocity_y_axis = 0;
@@ -43,8 +47,12 @@ void BStateIcePrision::enter()
 */
 void BStateIcePrision::exit()
 {
+  Log( INFO ) << "Exiting Ice Prision state.";
+
   this -> boss -> power_is_activated = false;
   this -> boss -> player -> is_vulnerable = true;
+
+  // Changes the power animation.
   this -> boss -> power_animation -> changeAnimation( ANIMATION_POSITION_X, ANIMATION_POSITION_Y, 1, 
                                                     false, ANIMATION_TOTAL_TIME );
   prision_time = 0.0;
@@ -58,11 +66,12 @@ void BStateIcePrision::exit()
 */
 void BStateIcePrision::update( const double DELTA_TIME )
 {
-  assert( DELTA_TIME > 0 );
+  assert( DELTA_TIME > 0 ); // Check if the if time variation.
   prision_time += DELTA_TIME;
 
   if( prision_time > 1 )
   {
+    // Changes the ice prision animation.
     this -> boss -> power_animation -> changeAnimation( 2, ANIMATION_POSITION_Y, 1, false, ANIMATION_TOTAL_TIME );
 
     update_player();
@@ -75,11 +84,12 @@ void BStateIcePrision::update( const double DELTA_TIME )
 
   }else
   {
-    // No action.
+    Log( DEBUG ) << "Invalid prision time.";
   }
 
 }
 
+// Update all the player characteristcs when state ice prision.
 void BStateIcePrision::update_player()
 {
   if( Collision::rects_collided( this -> boss -> player -> get_bounding_box(),  { ( int )this -> boss -> power_X_axis,
@@ -92,16 +102,16 @@ void BStateIcePrision::update_player()
         this -> boss -> player -> is_vulnerable = false;
         this -> boss -> player -> velocity_x_axis = 0;
         this -> boss -> player -> velocity_y_axis = 0;
-        this -> boss -> player -> getAnimation() -> changeAnimation( 4, 8, 1, false, 0 );
+        this -> boss -> player -> getAnimation() -> changeAnimation( 4, 8, 1, false, 0 ); // Changes the ice prision animation.
 
     }else
     {
-      // No action.
+      Log( DEBUG ) << "Player is not vulnerable.";
     }
 
   }else
   {
-    // No action.
+    Log( DEBUG ) << "Invalid rects!";
   }
 }
 

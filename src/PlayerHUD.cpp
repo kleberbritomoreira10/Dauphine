@@ -10,13 +10,20 @@
 #define CAMERA_POSITION_X 0
 #define CAMERA_POSITION_Y 0
 
+/**
+* The constructor.
+* Creates the HUD by setting the position and sprite.
+* @param player_: Instance of the player.
+*/
 PlayerHUD::PlayerHUD( Player *const player_ ):
 
 	player( player_ ),
 	potions_left( new Text( TEXT_POSITION_X, TEXT_POSITION_Y, "res/fonts/maturasc.ttf", TEXT_SIZE, "Potions: x" ) )
 {
 
-	assert( player_ );
+	Log( INFO ) << "Loading PLayer HUD....";
+
+	assert( player_ ); // Check if the player instance is not null.
 
 	restart_hud_sprites();
 
@@ -30,7 +37,7 @@ void PlayerHUD::restart_hud_sprites()
 {
 	for( unsigned int i = 0; i < TOTAL_HUD; i++ )
 	{
-		this -> player_hud_sprites[ i ] = nullptr;
+		this -> player_hud_sprites[ i ] = nullptr; // Set null to all the player hud sprites.
 	}
 }
 
@@ -38,16 +45,20 @@ void PlayerHUD::restart_is_can_render_hud()
 {
 	for( int i = 0; i < TOTAL_HUD; i++ )
 	{
-		this -> is_can_render_hud[ i ] = true;
+		this -> is_can_render_hud[ i ] = true; // Set true to is_can_render_hud.
 	}
 }
 
+/**
+* The destructor.
+* Exits the current state and destroys all states.
+*/
 PlayerHUD::~PlayerHUD()
 {
 	if( this -> potions_left != nullptr)
 	{
 
-		delete this -> potions_left;
+		delete this -> potions_left; // Delete all the potions left.
 		this -> potions_left = nullptr;
 
 	}else
@@ -56,12 +67,17 @@ PlayerHUD::~PlayerHUD()
 	}
 }
 
+/**
+* Updates the HUD.
+* @see Player::updateInput, Player::updatePosition
+*/
 void PlayerHUD::update()
 {
 	if( this -> player != nullptr )
 	{
-		switch( this -> player -> life)
+		switch( this -> player -> life )
 		{
+			// Set the false to the is_can_render_hud.
 			case 2:
 				this -> is_can_render_hud[ 3 ] = false;
 				break;
@@ -81,10 +97,16 @@ void PlayerHUD::update()
 			Log( WARN ) << "Player is NULL!";
 		}
 
+		// Change the potions left HUD text.
 		this -> potions_left -> changeText( ( "Potions: " + Util::toString( this -> player -> potions_left ) ).c_str() );
 
 }
 
+/**
+* Renders the HUD.
+* Uses the HUD's sprite render method.
+* @see Sprite::render
+*/
 void PlayerHUD::render()
 {
 	render_hud_sprites();
@@ -92,26 +114,28 @@ void PlayerHUD::render()
 	render_potions_left();
 }
 
+// Render all the hud sprites.
 void PlayerHUD::render_hud_sprites()
 {
 	for( int i = 0; i < TOTAL_HUD; i++)
 	{
 		if( this -> is_can_render_hud[ i ])
 		{
-			this -> player_hud_sprites[ i ] -> render( CAMERA_POSITION_X, CAMERA_POSITION_Y );
+			this -> player_hud_sprites[ i ] -> render( CAMERA_POSITION_X, CAMERA_POSITION_Y ); // Render the hud sprites.
 
 		}else
 		{
-			// No action.
+			Log( DEBUG ) << "HUD cannot be rendered.";
 		}
 	}
 }
 
+// Render all the player's potions left.
 void PlayerHUD::render_potions_left()
 {
 	if( this -> potions_left != nullptr )
 	{
-		this -> potions_left -> render( CAMERA_POSITION_X, CAMERA_POSITION_Y );
+		this -> potions_left -> render( CAMERA_POSITION_X, CAMERA_POSITION_Y ); // Render all the player's potions left.
 
 	}else
 	{

@@ -9,11 +9,16 @@
 
 #include "PStateClimbing.h"
 #include "Logger.h"
+#include <assert.h>
 
 #define POSITION_X 0
 #define POSITION_Y 6
 #define NUMBER_OF_IMAGES_ANIMATION 4
 #define TOTAL_TIME_ANIMATION 1
+#define BOX_POSITION_X 58
+#define BOX_POSITION_Y 72
+#define BOX_WIDTH 130
+#define BOX_HEIGHT 145
 
 
 /**
@@ -23,12 +28,14 @@ void PStateClimbing::enter()
 {
 	Log( DEBUG ) << "STATE CLIMBING";
 
+	assert( this -> player != nullptr );
+
 	this -> player -> isClimbing = true;
 
-   	this -> box.x = 58;
-    this -> box.y = 72;
-    this -> box.w = 130;
-    this -> box.h = 145;
+   	this -> box.x = BOX_POSITION_X;
+    this -> box.y = BOX_POSITION_Y;
+    this -> box.w = BOX_WIDTH;
+    this -> box.h = BOX_HEIGHT;
 
 	// Changing the current state animation to state climbing animation.
     this -> player -> getAnimation() -> changeAnimation( POSITION_X, POSITION_Y, NUMBER_OF_IMAGES_ANIMATION, 
@@ -67,6 +74,7 @@ void PStateClimbing::exit()
 */
 void PStateClimbing::handleInput( const std::array<bool, GameKeys::MAX> keyStates_ )
 {
+	assert( this -> player != nullptr );
 
 	this -> player -> moveVertical( keyStates_[GameKeys::UP], keyStates_[ GameKeys::DOWN ]); // Moves player DOWN and UP
 
@@ -133,5 +141,5 @@ void PStateClimbing::handle_climbing_animation()
 PStateClimbing::PStateClimbing( Player *const player_ ) :
 	StatePlayer( player_ )
 {
-
+	assert( player_ );
 }

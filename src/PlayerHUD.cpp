@@ -65,6 +65,8 @@ PlayerHUD::~PlayerHUD()
 	{
 		Log( WARN ) << "Potions left HUD text is null";
 	}
+
+	assert( potions_left == nullptr );
 }
 
 /**
@@ -150,4 +152,10 @@ void PlayerHUD::initializeSprites()
 	this -> player_hud_sprites[ 2 ] = Game::instance().getResources().get( "res/images/hud/health_66.png" );
 	this -> player_hud_sprites[ 3 ] = Game::instance().getResources().get( "res/images/hud/health_99.png" );
 	this -> player_hud_sprites[ 4 ] = Game::instance().getResources().get( "res/images/hud/hud_no_health.png" );
+
+	assert( this -> player_hud_sprites[ 0 ] != nullptr );
+	assert( this -> player_hud_sprites[ 1 ] != nullptr );
+	assert( this -> player_hud_sprites[ 2 ] != nullptr );
+	assert( this -> player_hud_sprites[ 3 ] != nullptr );
+	assert( this -> player_hud_sprites[ 4 ] != nullptr );
 }

@@ -26,6 +26,8 @@
 */
 void BStateIcePrision::enter()
 {
+  assert( this -> boss != nullptr );
+  
    Log( INFO ) << "STATE ICE PRISION BOSS";
 
   // Load the boss Ice Prision Image
@@ -69,6 +71,8 @@ void BStateIcePrision::update( const double DELTA_TIME )
   assert( DELTA_TIME > 0 ); // Check if the if time variation.
   prision_time += DELTA_TIME;
 
+  assert( prision_time > 0);
+
   if( prision_time > 1 )
   {
     // Changes the ice prision animation.
@@ -92,6 +96,8 @@ void BStateIcePrision::update( const double DELTA_TIME )
 // Update all the player characteristcs when state ice prision.
 void BStateIcePrision::update_player()
 {
+  assert( this -> boss -> player  != nullptr );
+
   if( Collision::rects_collided( this -> boss -> player -> get_bounding_box(),  { ( int )this -> boss -> power_X_axis,
   ( int ) this -> boss -> power_Y_axis, WIDTH_VALUE, HEIGHT_VALUE }))
   {
@@ -122,5 +128,5 @@ void BStateIcePrision::update_player()
 BStateIcePrision::BStateIcePrision( Boss *const BOSS ) :
   StateBoss(BOSS)
 {
-
+  assert( BOSS != nullptr );
 }

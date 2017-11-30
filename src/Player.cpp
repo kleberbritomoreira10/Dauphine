@@ -379,6 +379,7 @@ void Player::changeState( const player_states state_ )
 Animation *Player::getAnimation()
 {
     return ( this -> animation );
+    Log( INFO ) << "Returning the animation from the Player";
 }
 
 /**
@@ -388,6 +389,7 @@ Animation *Player::getAnimation()
 bool Player::is_current_state(const player_states state_)
 {
     return ( this -> current_state == this -> states_map.at(state_) );
+    Log( INFO ) << "Returning the current state from Player";
 }
 
 /**
@@ -408,4 +410,5 @@ void Player::updateBoundingBox()
 bool Player::isDead()
 {
     return ( this -> life <= 0 );
+    Log( INFO ) << "Returning the life after player is dead.";
 }

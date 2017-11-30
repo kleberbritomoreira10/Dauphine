@@ -62,9 +62,6 @@ void Camera::updatePosition()
   // Changing the camera position in the Y axis.
   this -> clip.y = ( this -> entity -> y + this -> entity -> getHeight() / 2 ) - (this -> clip.h / 2 );
 
-  assert( this -> clip.x );
-  assert( this -> clip.y );
-
   update_position_x();
 
   update_position_y();

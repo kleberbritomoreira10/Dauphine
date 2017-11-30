@@ -31,7 +31,7 @@ class BStateIdle : public StateBoss
 		/**
 		* @see StateBoss::update
 		*/
-		virtual void update ();
+		virtual void update ( const double DELTA_TIME );
 
 		void handle_boss_position();
 

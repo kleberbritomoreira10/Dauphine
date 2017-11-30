@@ -38,9 +38,8 @@ void BStateIdle::exit()
 /**
 * Changing the static position of the boss in idle.
 */
-void BStateIdle::update( )
+void BStateIdle::update( const double DELTA_TIME )
 {
-
 	handle_boss_position();
 
 	handle_boss_movements();

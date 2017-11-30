@@ -55,52 +55,61 @@ void Configuration::initialize ()
 unsigned int Configuration::getResolutionWidth ()
 {
 	return Configuration::resolutionWidth;
+	Log( INFO ) << "Returning the game's width resolution";
 }
 
 // @return The game's height resolution. (10)
 unsigned int Configuration::getResolutionHeight ()
 {
 	return Configuration::resolutionHeight;
+	Log( INFO ) << "Returning the game's height resolution";
 }
 
 // @return The game's max framerate
 uint32_t Configuration::getMaxFramerate ()
 {
 	return Configuration::maxFramerate;
+	Log( INFO ) << "Returning the game's max framerate";
 }
 
 // @return The game window's title.
 std::string Configuration::getWindowTitle ()
 {
 	return Configuration::window_title;
+	Log( INFO ) << "Returning the game's window's title";
 }
 
 // @return The size of the logical rendering.
 unsigned int Configuration::getLogicalRenderSize ()
 {
 	return Configuration::logicalRenderSize;
+	Log( INFO ) << "Returning the size of the logical rendering";
 }
 
 // @return The screen width.
 unsigned int Configuration::getScreenWidth ()
 {
 	return Configuration::screenWidth;
+	Log( INFO ) << "Returning the screen width";
 }
 
 // @return The screen height.
 unsigned int Configuration::getScreenHeight ()
 {
 	return Configuration::screenHeight;
+	Log( INFO ) << "Returning the screen height";
 }
 
 // @return The width distance of the camera.
 unsigned int Configuration::getCameraDistanceWidth ()
 {
 	return Configuration::cameraDistanceWidth;
+	Log( INFO ) << "Returning the width distance of the camera";
 }
 
 // @return The height distance of the camera.
 unsigned int Configuration::getCameraDistanceHeight ()
 {
 	return Configuration::cameraDistanceHeight;
+	Log( INFO ) << "Returning the height distance of the camera";
 }

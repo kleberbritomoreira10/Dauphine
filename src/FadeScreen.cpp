@@ -73,6 +73,7 @@ bool FadeScreen::isFaded ()
 	}
 
 	return faded;
+	Log( INFO ) << "Returning the Faded screen";
 }
 
 /*

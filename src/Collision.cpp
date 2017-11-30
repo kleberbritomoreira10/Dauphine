@@ -1,5 +1,6 @@
 #include "Collision.h"
 #include <cmath>
+#include "Logger.h"
 
 bool Collision::rects_collided(const SDL_Rect& a_, const SDL_Rect& b_){
     // Calculate the sides of rect A.
@@ -45,21 +46,26 @@ Collision::RectangleSide Collision::rectsCollidedSide(const SDL_Rect& a_, const 
         if (wy > hx){
             if (wy > -hx){
                 return RectangleSide::TOP;
+                Log( INFO ) << "Returning the collision at the top of the rectangle";
             }
             else{
                 return RectangleSide::LEFT;
+                Log( INFO ) << "Returning the collision at the left of the rectangle";
             }
         }
         else{
             if (wy > -hx){
                 return RectangleSide::RIGHT;
+                Log( INFO ) << "Returning the collision at the right of the rectangle";
             }
             else{
                 return RectangleSide::BOTTOM;
+                Log( INFO ) << "Returning the collision at the bottom of the rectangle";
             }
         }
     }
     else{
         return RectangleSide::NONE;
+        Log( DEBUG ) << "No collision returning";
     }
 }

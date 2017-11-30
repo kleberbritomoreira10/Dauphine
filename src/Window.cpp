@@ -179,6 +179,7 @@ void Window::rescale( unsigned int size_)
 SDL_Renderer* Window::getRenderer()
 {
   return Window::sdl_renderer;
+  Log( INFO ) << "Returning Window SlD render";
 }
 
 /*

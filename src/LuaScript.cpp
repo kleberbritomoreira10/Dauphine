@@ -67,6 +67,7 @@ std::vector<int> LuaScript::unlua_getIntVector( const std::string& name_ )
   if ( lua_isnil( this -> luaState, -1) )
   {
     return std::vector<int>();
+    Log( INFO ) << "Returning an empty array";
   } else {
     // No action.
   }
@@ -81,6 +82,7 @@ std::vector<int> LuaScript::unlua_getIntVector( const std::string& name_ )
   //Method to clean
   unlua_clean();
   return v;
+  Log( INFO ) << "Returning an array with Lua State";
 }
 
 /*
@@ -175,6 +177,6 @@ bool LuaScript::unlua_getToStack( const std::string& variableName_ )
     Log(ERROR) << "Can't get " << variableName_ << ". " << var << " is not defined.";
     return false;
   } else {
-    return true;  
+    return true;
   }
 }

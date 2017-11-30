@@ -120,4 +120,5 @@ void FadeHandler::update( const double DELTA_TIME)
 double FadeHandler::getCurrentPercentage()
 {
 	return this -> current_percentage;
+	Log( INFO ) << "Returning the current percentage of fade";
 }

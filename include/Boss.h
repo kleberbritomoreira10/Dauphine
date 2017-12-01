@@ -95,29 +95,29 @@ class Boss : public DynamicEntity
     bool saw_player; // Boleean condition to know if the boss saw the player.
     std::vector < Potion *> potions;
 
-    unsigned int life; // Reference to Boss's life.
-    bool has_shield; // Condition to the shield of the boss
-    bool can_walk; // Condition for the boss to be able to walk.
-    Player *player; // Reference to the Player.
-    Animation *power_animation; // Reference to animation of Boss's power.
-    double power_X_axis; // Power in the x-axis.
-    double power_Y_axis; // Power in the y-axis.
-    bool power_is_activated; // Boleean condition to activated the power.
-    Sprite *power; // Referece to visual represetation of Boss power.
+    unsigned int life = 0; // Reference to Boss's life.
+    bool has_shield = false; // Condition to the shield of the boss
+    bool can_walk = false; // Condition for the boss to be able to walk.
+    Player *player = NULL; // Reference to the Player.
+    Animation *power_animation = NULL; // Reference to animation of Boss's power.
+    double power_X_axis = 0.0; // Power in the x-axis.
+    double power_Y_axis = 0.0; // Power in the y-axis.
+    bool power_is_activated = false; // Boleean condition to activated the power.
+    Sprite *power = NULL; // Referece to visual represetation of Boss power.
     SDL_Rect power_clip; // A structure that contains the definition of a rectangle, with the origin at the upper left.
     SDL_RendererFlip power_flip; // An enumeration of flags that can be used in the flip parameter.
-    Animation *shield_animation;// Reference to animation shield.
-    Sprite *shield; // Referece to visual represetation of Boss shield.
+    Animation *shield_animation = NULL;// Reference to animation shield.
+    Sprite *shield = NULL; // Referece to visual represetation of Boss shield.
     SDL_Rect shield_clip; // A structure that contains the definition of a rectangle, with the origin at the upper left.
 
   private:
     virtual void updateBoundingBox ();
     virtual void handleCollision ( std::array < bool, CollisionSide::SOLID_TOTAL > detections_ );
 
-    StateBoss *current_state; // Get the current state of the boss.
-    Animation *animation; // Copy to the animation of the boss.
+    StateBoss *current_state = NULL; // Get the current state of the boss.
+    Animation *animation = NULL; // Copy to the animation of the boss.
     std::map < BStates, StateBoss * > states_map;
-    bool dead; // Boleean condition to death os the boss.
+    bool dead = false; // Boleean condition to death os the boss.
 };
 
 #endif // INCLUDE_BOSS_H

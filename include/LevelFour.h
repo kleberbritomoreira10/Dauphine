@@ -61,7 +61,7 @@ class LevelFour : public Level
 		virtual void render ();
 
 		int items [ 2 ] [ NUMBER_ITEMS ]; // Upper index of items that appear in the game.
-		Sprite *image;  // The image attributed to the Sprite.
+		Sprite *image = NULL;  // The image attributed to the Sprite.
 		bool caught_items [ NUMBER_ITEMS ]; // Boolean condition for the number of items that were caught or not.
 
 };

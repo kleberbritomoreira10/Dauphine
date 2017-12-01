@@ -108,12 +108,12 @@ class GStateOptions : public StateGame
 
 		static const std::string possible_resolutions [ MAX_NUMBER_OF_RESOLUTIONS ]; // Array of possible resolutions >= 3
 
-		unsigned int music_volume = 0; // The value of the music volume.
-		unsigned int sfx_volume = 0; // The value of the sfx volume.
+		unsigned int music_volume; // The value of the music volume.
+		unsigned int sfx_volume; // The value of the sfx volume.
 
-		Text *resolution = NULL;
-		Text *music_volume_text = NULL; // The text  of music volume.
-		Text *sfx_volume_text = NULL; // The text of sfx volume.
+		Text *resolution;
+		Text *music_volume_text; // The text  of music volume.
+		Text *sfx_volume_text; // The text of sfx volume.
 };
 
 #endif // INCLUDE_GSTATEOPTIONS_H

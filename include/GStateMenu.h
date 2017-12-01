@@ -77,10 +77,10 @@ class GStateMenu : public StateGame
 
 		};
 
-		Sprite *menu_image = NULL; /**< The image shown on the menu. */
-		Sprite *menu_selector = NULL; /**< The selector shown on the menu. */
-		Sprite *attrack_mode_background = NULL; /**< The image shown on the menu. */
-		Sprite *attract_mode = NULL; /**< The selector shown on the menu. */
+		Sprite *menu_image; /**< The image shown on the menu. */
+		Sprite *menu_selector; /**< The selector shown on the menu. */
+		Sprite *attrack_mode_background; /**< The image shown on the menu. */
+		Sprite *attract_mode; /**< The selector shown on the menu. */
 		double passed_time = 0.0; /**< The time already elapsed since the beggining of the menu. */
 
 		int current_selection = 0;
@@ -94,10 +94,10 @@ class GStateMenu : public StateGame
 
 		SDL_Rect attractClip; /**< The clip shown on the credits. */
 
-		Animation *shwing_animation = NULL; // The shwing animation.
+		Animation *shwing_animation; // The shwing animation.
 		bool is_shwing_activated = false; // Boolean variable to verify if the swing is activated.
-		Sprite *shwing = NULL; // The shwing sprite.
-		SDL_Rect shwing_clip = NULL; // Instante of shwing clip.
+		Sprite *shwing; // The shwing sprite.
+		SDL_Rect shwing_clip; // Instante of shwing clip.
 };
 
 #endif // INCLUDE_GSTATEMENU_H

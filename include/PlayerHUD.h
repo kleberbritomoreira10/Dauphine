@@ -69,8 +69,8 @@ class PlayerHUD
 
 		Sprite *player_hud_sprites [ TOTAL_HUD ]; // Sprites player.
 		bool is_can_render_hud [ TOTAL_HUD ]; // Boolean array to verify if the hud can be rendered.
-		Player *player; // Instante of a player.
-		Text *potions_left; // Reference to the potions left.
+		Player *player = NULL; // Instante of a player.
+		Text *potions_left = NULL; // Reference to the potions left.
 };
 
 #endif //INCLUDE_PLAYERHUD_H

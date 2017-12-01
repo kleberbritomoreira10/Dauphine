@@ -31,12 +31,12 @@ class Level : public StateGame
 		/**
 		* @return The Level width.
 		*/
-		unsigned int getWidth();
+		unsigned int getWidth() = 0;
 
 		/**
 		* @return The Level height.
 		*/
-		unsigned int getHeight();
+		unsigned int getHeight() = 0;
 
 	protected:
 		/**
@@ -68,14 +68,14 @@ class Level : public StateGame
 		unsigned int width = 0; /**< Width that defines the horizontal limits. */
 		unsigned int height = 0; /**< Height that defines the vertical limits. */
 
-		Player *player; /**< The direct reference to player, even though its in the list. */
-		Camera *camera; /**< The current camera for that level. */
-		PlayerHUD *player_Hud; // The direct reference to player hud.
+		Player *player = NULL; /**< The direct reference to player, even though its in the list. */
+		Camera *camera = NULL; /**< The current camera for that level. */
+		PlayerHUD *player_Hud = NULL; // The direct reference to player hud.
 
-		Boss *boss; // The direct reference to the boss.
+		Boss *boss = NULL; // The direct reference to the boss.
 
-		TileMap *tile_map; // The direct reference to tile map.
-		QuadTree *quadTree; // The direct reference to quadtree.
+		TileMap *tile_map = NULL; // The direct reference to tile map.
+		QuadTree *quadTree = NULL; // The direct reference to quadtree.
 
 		Sprite *background; // Sprite of the background.
 		Sprite *backgroud_top; // Sprite of backgroud top.

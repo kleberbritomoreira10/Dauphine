@@ -172,16 +172,16 @@ class Game
 		Window *window; /**< The game Window. */
 		 bool is_running = false; /**< Whether the game is currently running/looping or not. */
 
-		Sprite *pause_image; // Sprite to pause the image.
-		Sprite *pause_selector; // Sprite to pause de selector.
+		Sprite *pause_image = NULL; // Sprite to pause the image.
+		Sprite *pause_selector = NULL; // Sprite to pause de selector.
 
-		AudioHandler *audio_handler; /**< The Game AudioHandler. */
-		InputHandler *input_handler; /**< The Game InputHandler. */
-		ResourceManager *resource_manager; /**< The Game ResourceManager. */
-		GameSave *game_save; // Save the game.
-		FadeScreen *fade_screen; // Fade the screen.
+		AudioHandler *audio_handler = NULL; /**< The Game AudioHandler. */
+		InputHandler *input_handler = NULL; /**< The Game InputHandler. */
+		ResourceManager *resource_manager = NULL; /**< The Game ResourceManager. */
+		GameSave *game_save = NULL; // Save the game.
+		FadeScreen *fade_screen = NULL; // Fade the screen.
 
-		StateGame *current_state; /**< The current state, which the game is in. */
+		StateGame *current_state = NULL; /**< The current state, which the game is in. */
 
 		std::map < GStates, StateGame *> states_map; /**< Map containing all possible states. */
 
